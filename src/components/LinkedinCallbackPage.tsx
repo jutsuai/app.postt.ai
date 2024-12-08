@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 export default function LinkedinCallbackPage() {
-  const navigate = useNavigate();
   const [params] = useSearchParams();
   const code = params.get("code");
 
@@ -20,7 +19,7 @@ export default function LinkedinCallbackPage() {
     }
   }, [code]);
 
-  const getAccessToken = async (code) => {
+  const getAccessToken = async (code: any) => {
     if (!code) return;
 
     setLoading(true);
@@ -56,14 +55,14 @@ export default function LinkedinCallbackPage() {
     }
   };
 
-  const postToLinkedin = async (e) => {
+  const postToLinkedin = async (e: any) => {
     e.preventDefault();
 
     if (!accessToken || !userInfo?.sub) return;
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:8000/api/v1/auth/linkedin/post", {
+      await axios.post("http://localhost:8000/api/v1/linkedin/post", {
         accessToken,
         postContent,
         sub: userInfo?.sub,
