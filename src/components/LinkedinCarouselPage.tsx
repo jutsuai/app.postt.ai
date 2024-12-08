@@ -11,23 +11,25 @@ function LinkedInUpload() {
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("accessToken");
-    if (storedToken) {
-      setAccessToken(storedToken);
-      getUserInfo(accessToken);
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      console.log("Stored token found:", token);
+      setAccessToken(token);
+      getUserInfo(token);
     }
   }, []);
 
-  const getUserInfo = async (accessToken: any) => {
-    console.log("accessToken", accessToken);
-
-    if (!accessToken) return;
+  const getUserInfo = async (token: any) => {
+    if (!token) {
+      console.error("Access token not found.");
+      return;
+    }
 
     setIsLoading(true);
     try {
       const response = await axios.post(
         "http://localhost:8000/api/v1/auth/linkedin/userinfo",
-        { accessToken }
+        { accessToken: token }
       );
       setUserInfo(response.data);
     } catch (error) {
