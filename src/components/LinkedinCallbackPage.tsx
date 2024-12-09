@@ -13,7 +13,7 @@ export default function LinkedinCallbackPage() {
   const [postContent, setPostContent] = useState("");
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("accessToken");
+    const storedToken = localStorage.getItem("accessToken") as any;
     if (storedToken) {
       setAccessToken(storedToken);
     }
