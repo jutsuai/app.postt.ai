@@ -23,10 +23,12 @@ export default function LinkedinCallbackPage() {
     setLoading(true);
 
     httpClient()
-      .post("/auth/linkedin/accessToken", { code })
+      .post("/auth/linkedin/callback", { code })
       .then((res) => {
         const data = res.data;
         console.log(data);
+
+        localStorage.setItem("_auth_user", JSON.stringify(data));
         localStorage.setItem("_auth_accessToken", data?.access_token);
 
         navigate("/");

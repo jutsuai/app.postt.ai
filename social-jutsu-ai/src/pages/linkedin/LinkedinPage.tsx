@@ -1,42 +1,63 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import httpClient from "../../lib/httpClient";
+import { useAuth } from "../../context/AuthContext";
 
 export default function LinkedinPage() {
-  const accessToken = localStorage.getItem("_auth_accessToken");
+  const { linkedin } = useAuth();
+
   const [loading, setLoading] = useState(false);
 
-  const [userInfo, setUserInfo] = useState<any>();
+  const [orgData, setOrgData] = useState<any>();
 
-  const handleUserData = async () => {
+  useEffect(() => {
+    fetchLinkedInPosts();
+  }, []);
+
+  const fetchLinkedInPosts = async () => {
+    const { accessToken, sub } = linkedin;
+
+    if (!accessToken) {
+      console.error("Access token not found. Please log in.");
+      return;
+    }
+
     setLoading(true);
 
-    console.log("accessToken", accessToken);
-
     httpClient()
-      .post("/auth/linkedin/userinfo", { accessToken })
+      .post("/linkedin/get-posts", { accessToken, sub })
       .then((res) => {
-        console.log("res", res.data);
-        setUserInfo(res.data);
+        const posts = res.data;
+        console.log("LinkedIn Posts:", posts);
+
+        // Optionally, set posts in state for rendering
+        // setPosts(posts);
       })
       .catch((err) => {
-        console.error("Error fetching user data:", err);
+        console.error("Error fetching LinkedIn posts:", err);
+        // Optionally handle navigation or error state
+        // navigate("/login");
       })
       .finally(() => {
         setLoading(false);
       });
   };
 
-  const [orgData, setOrgData] = useState<any>();
-
   const handleGetOrgData = async () => {
+    const { accessToken, sub } = linkedin;
+
+    if (!accessToken) {
+      console.error("Access token not found. Please log in.");
+      return;
+    }
+
     setLoading(true);
 
     console.log("accessToken", accessToken);
 
     httpClient()
-      .post("/auth/linkedin/getOrg", { accessToken })
+      .post("/linkedin/get-org", { accessToken, sub })
       .then((res) => {
         console.log("res", res.data);
         setOrgData(res.data);
@@ -63,39 +84,25 @@ export default function LinkedinPage() {
             Create Carousel
           </button>
         </Link>
+
+        <button
+          className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium"
+          onClick={() => handleGetOrgData()}
+        >
+          handleGetOrgData
+        </button>
       </div>
-
-      <button
-        className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium"
-        onClick={() => handleUserData()}
-      >
-        Get user data
-      </button>
-
-      <div className="flex items-center gap-2">
-        {/* Create a user card with userinfo */}
-
-        <img
-          src={userInfo?.picture}
-          alt="Profile"
-          className="w-12 h-12 rounded-full"
-        />
-
-        <div>
-          <p className="text-lg font-semibold">{userInfo?.name}</p>
-          <p className="text-sm text-gray-800">{userInfo?.email}</p>
-        </div>
-      </div>
-
-      {JSON.stringify(userInfo)}
-
-      <button
-        className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium"
-        onClick={() => handleGetOrgData()}
-      >
-        handleGetOrgData
-      </button>
+      -------------------------------------
       {JSON.stringify(orgData)}
+      -------------------------------------
+      <div>
+        <button
+          className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium"
+          onClick={() => fetchLinkedInPosts()}
+        >
+          Fetch LinkedIn Posts
+        </button>
+      </div>
     </div>
   );
 }
