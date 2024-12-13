@@ -7,6 +7,8 @@ import CreateCarouselPage from "./pages/linkedin/createCarouselPage/CreateCarous
 import CreatePostPage from "./pages/linkedin/CreatePostPage";
 import LinkedinCallbackPage from "./pages/auth/LinkedinCallbackPage";
 import Layout from "./layout/Layout";
+import OnboardingPage from "./pages/onboarding/OnboardingPage";
+import OnboardingFInish from "./pages/onboarding/OnboardingFInish";
 
 export default function Router() {
   return (
@@ -24,6 +26,10 @@ export default function Router() {
           <Route path="carousel/create" element={<CreateCarouselPage />} />
           <Route path="post/create" element={<CreatePostPage />} />
         </Route>
+      </Route>
+      <Route path="onboarding">
+        <Route path="" element={<OnboardingPage />} />
+        <Route path="finished" element={<OnboardingFInish />} />
       </Route>
     </Routes>
   );
