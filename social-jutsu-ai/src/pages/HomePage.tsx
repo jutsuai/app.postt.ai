@@ -32,7 +32,14 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="flex-1 flex flex-col justify-center items-center h-screen gap-10 bg-blue-950/5 ">
+    <div className="flex-1 flex flex-col justify-start items-start p-6 h-screen gap-10 bg-white ">
+      <div>
+        <TitleText />
+        <p className="text-black/50 font-medium text-sm">
+          Please sign in to your account
+        </p>
+      </div>
+
       <div className="flex flex-col justify-center items-center gap-3">
         <div className="flex flex-col justify-center items-center gap-3">
           <h1 className="text-4xl font-bold ">Home Page</h1>
@@ -65,3 +72,11 @@ export default function HomePage() {
     </div>
   );
 }
+
+const TitleText = () => {
+  return (
+    <h1 className="text-3xl leading-normal font-semibold text-black">
+      Where do you want to <span className="text-indigo-600">post</span>?
+    </h1>
+  );
+};
