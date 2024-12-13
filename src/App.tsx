@@ -1,27 +1,13 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router";
 import Router from "./Router";
+import { AuthProvider } from "./context/AuthContext";
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
-      {/* <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "1rem",
-        height: "100vh",
-        width: "100vw",
-      }}
-    > */}
-      <Router />
-      {/* <LoginButton />
-      --
-      <Dashboard /> */}
-      {/* </div> */}
+      <AuthProvider>
+        <Router />
+      </AuthProvider>
     </BrowserRouter>
   );
 }
-
-export default App;
