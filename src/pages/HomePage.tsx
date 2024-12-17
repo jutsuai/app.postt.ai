@@ -7,28 +7,66 @@ import Image from "@/components/Image";
 
 import { Badge } from "@/components/ui/badge";
 import { BsPlusSquare } from "react-icons/bs";
+import { cn } from "@/lib/utils";
 
 const writers = [
   {
     writer: "Blog Writer",
     avatar: "/homepage/blog-writer.png",
     platform: "Linkedin",
-    desciption: "Lorem ipsum dolor sit amet, consectetur adipiscing aliqua.",
+    description:
+      "Crafting engaging and thought-provoking blog articles for professional readers.",
     tags: ["blog", "writer"],
   },
   {
     writer: "Post Writer",
     avatar: "/homepage/post-writer.png",
-    platform: "Linkedin",
-    desciption: "Lorem ipsum dolor sit amet, consectetur adipiscing aliqua.",
-    tags: ["blog", "writer"],
+    platform: "Twitter",
+    description:
+      "Creating concise, impactful posts to maximize social media reach and engagement.",
+    tags: ["post", "reach"],
+  },
+
+  {
+    writer: "Script Writer",
+    avatar: "/homepage/blog-writer.png",
+    platform: "YouTube",
+    description:
+      "Writing captivating scripts to drive storytelling for videos and vlogs.",
+    tags: ["video", "content"],
   },
   {
-    writer: "Meme Writer",
+    writer: "Copywriter",
+    avatar: "/homepage/post-writer.png",
+    platform: "Instagram",
+    description:
+      "Crafting compelling captions and content to convert audiences into loyal followers.",
+    tags: ["social", "marketing"],
+  },
+  {
+    writer: "Technical Writer",
     avatar: "/homepage/meme-writer.png",
-    platform: "Linkedin",
-    desciption: "Lorem ipsum dolor sit amet, consectetur adipiscing aliqua.",
-    tags: ["blog", "writer"],
+    platform: "Medium",
+    description:
+      "Explaining complex concepts in simple, clear, and engaging technical articles.",
+    tags: ["tech", "documentation"],
+  },
+  {
+    writer: "Ghost Writer",
+    avatar: "/homepage/blog-writer.png",
+    platform: "Personal Blogs",
+    description:
+      "Writing in the background to bring someone else's vision to life seamlessly.",
+    tags: ["ghost", "writing"],
+  },
+
+  {
+    writer: "SEO Writer",
+    avatar: "/homepage/meme-writer.png",
+    platform: "Company Blogs",
+    description:
+      "Optimizing content to rank higher on search engines and attract organic traffic.",
+    tags: ["SEO", "optimization"],
   },
 ];
 
@@ -53,7 +91,7 @@ export default function HomePage() {
             <GoBell />
           </Button>
         </div>
-        <h1 className="text-3xl font-semibold mt-4">
+        <h1 className="text-3xl font-semibold mt-6">
           Discover Talented
           <br />
           <span className="text-primary">Content Creators</span>
@@ -73,7 +111,7 @@ export default function HomePage() {
           </Button>
         </div>
 
-        <div className="flex flex-col gap-4 mt-4">
+        <div className="flex flex-col gap-4 mt-6">
           <h6 className="text-lg font-semibold">Or Select a Writer</h6>
           <div className="grid grid-cols-2 gap-4">
             {writers.map((writer) => (
@@ -92,8 +130,13 @@ export default function HomePage() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing aliqua.
               </p>
               <div className="flex gap-2 flex-wrap">
-                {["Create", "Clone"]?.map((tag) => (
-                  <Badge className="rounded-3xl font-normal text-[10px]">
+                {["Create", "Clone"]?.map((tag, index) => (
+                  <Badge
+                    className={cn(
+                      "rounded-3xl font-normal text-[10px]",
+                      index > 0 && "bg-[#CDF202] text-black"
+                    )}
+                  >
                     {tag}
                   </Badge>
                 ))}
@@ -110,30 +153,37 @@ function WriterCard({
   writer,
   avatar,
   platform,
-  desciption,
+  description,
   tags,
 }: {
   writer: string;
   avatar: string;
   platform?: string;
-  desciption: string;
+  description: string;
   tags?: string[];
 }) {
   return (
     <div className="border transition-all duration-200 active:border-primary  shadow-md p-3 rounded-xl bg-background flex flex-col gap-2">
       <div className="flex items-center gap-4 ">
-        <div className="bg-muted flex-1 w-fit rounded-lg">
-          <Image src={avatar} alt="" className="" />
+        <div className="bg-muted flex-1 w-max rounded-lg">
+          <Image src={avatar} alt="" className="min-w-16" />
         </div>
-        <div className="flex-1">
-          <h6 className="text-lg font-semibold">{writer}</h6>
-          <p className="text-muted-foreground text-sm">{platform}</p>
+        <div className="flex-1 flex flex-col gap-1">
+          <h6 className="text-base font-semibold ">{writer}</h6>
+          <p className="text-muted-foreground text-xs">{platform}</p>
         </div>
       </div>
-      <p className="line-clamp-2 text-xs mt-auto">{desciption}</p>
+      <p className="line-clamp-2 text-xs mt-auto">{description}</p>
       <div className="flex gap-2 flex-wrap">
-        {tags?.map((tag) => (
-          <Badge className="rounded-3xl font-normal text-[10px]">{tag}</Badge>
+        {tags?.map((tag, index) => (
+          <Badge
+            className={cn(
+              "rounded-3xl font-normal text-[10px] capitalize",
+              index > 0 && "bg-[#CDF202] text-black"
+            )}
+          >
+            {tag}
+          </Badge>
         ))}
       </div>
     </div>

@@ -44,31 +44,45 @@ export default function Navbar() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white py-3 pt-4">
-      <ul className="flex justify-around">
-        {navItem.map((item) => (
-          <NavItems item={item} key={item?.title} pathname={pathname} />
+      <ul className="flex justify-around items-center">
+        {navItem.map((item, index) => (
+          <NavItems
+            item={item}
+            key={`${item?.title}-${index}`}
+            pathname={pathname}
+          />
         ))}
       </ul>
     </nav>
   );
 }
 
-function NavItems({ item, pathname }: any) {
+function NavItems({
+  item,
+  pathname,
+}: {
+  item: {
+    title: string;
+    icon: { active: React.ReactNode; inactive: React.ReactNode };
+    url: string;
+  };
+  pathname: string;
+}) {
   const checkMatch =
     (item?.url === "/" && pathname === "/") ||
-    item?.url.split("/")[1] === pathname.split("/")[1];
+    item?.url?.split("/")[1] === pathname?.split("/")[1];
 
   return (
-    <li key={item.title}>
+    <li className="w-full">
       <Link
         to={item.url}
         className={cn(
-          "flex flex-col text-2xl gap-2 items-center transition-all duration-200",
+          "flex flex-col   text-xl gap-2 items-center leading-none transition-all duration-200",
           checkMatch ? "text-primary" : "text-muted-foreground"
         )}
       >
         {item?.icon[checkMatch ? "active" : "inactive"]}
-        <span className="text-xs">{item?.title}</span>
+        <span className="text-[9px] font-medium">{item?.title}</span>
       </Link>
     </li>
   );

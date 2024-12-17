@@ -9,6 +9,9 @@ import LinkedinCallbackPage from "./pages/auth/LinkedinCallbackPage";
 import Layout from "./layout/Layout";
 import OnboardingPage from "./pages/onboarding/OnboardingPage";
 import OnboardingFInish from "./pages/onboarding/OnboardingFInish";
+import SchedulePage from "./pages/schedule/SchedulePage";
+import DiscoverPage from "./pages/discover/DiscoverPage";
+import ProfilePage from "./pages/profile/ProfilePage";
 
 export default function Router() {
   return (
@@ -31,6 +34,9 @@ export default function Router() {
 
       <Route path="/" element={<Layout />}>
         <Route path="" element={<HomePage />} />
+        <Route path="schedule" element={<SchedulePage />} />
+        <Route path="discover" element={<DiscoverPage />} />
+        <Route path="profile" element={<ProfilePage />} />
       </Route>
     </Routes>
   );
