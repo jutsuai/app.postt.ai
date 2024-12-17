@@ -13,23 +13,24 @@ import OnboardingFInish from "./pages/onboarding/OnboardingFInish";
 export default function Router() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route path="" element={<HomePage />} />
-
-        <Route element={<AuthLayout />}>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="auth/linkedin" element={<LinkedinCallbackPage />} />
-        </Route>
-
-        <Route path="/linkedin">
-          <Route index element={<LinkedinPage />} />
-          <Route path="carousel/create" element={<CreateCarouselPage />} />
-          <Route path="post/create" element={<CreatePostPage />} />
-        </Route>
+      <Route element={<AuthLayout />}>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="auth/linkedin" element={<LinkedinCallbackPage />} />
       </Route>
+
+      <Route path="linkedin">
+        <Route index element={<LinkedinPage />} />
+        <Route path="carousel/create" element={<CreateCarouselPage />} />
+        <Route path="post/create" element={<CreatePostPage />} />
+      </Route>
+
       <Route path="onboarding">
         <Route path="" element={<OnboardingPage />} />
         <Route path="finished" element={<OnboardingFInish />} />
+      </Route>
+
+      <Route path="/" element={<Layout />}>
+        <Route path="" element={<HomePage />} />
       </Route>
     </Routes>
   );

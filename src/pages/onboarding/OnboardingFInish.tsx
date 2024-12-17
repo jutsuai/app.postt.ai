@@ -1,9 +1,8 @@
 import Image from "@/components/Image";
-import React from "react";
 
 export default function OnboardingFInish() {
   return (
-    <div className="bg-[#6741FF] h-dvh flex flex-col w-full">
+    <div className="bg-primary h-dvh flex flex-col w-full">
       <svg
         width="274"
         height="339"

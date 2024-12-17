@@ -1,5 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import Image from "./Image";
 
 export default function Header() {
   const { isAuthenticated, user } = useAuth();
@@ -13,7 +14,7 @@ export default function Header() {
       <div>
         {isAuthenticated ? (
           <div className="flex items-center gap-2">
-            <img
+            <Image
               src={user?.avatar}
               alt="Profile"
               className="w-10 h-10 rounded-full"

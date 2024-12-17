@@ -42,7 +42,7 @@ export default function OnboardingPage() {
           <div
             key={index}
             className={`w-6 h-2 rounded ${
-              index === step ? "bg-[#6741FF]" : "bg-muted"
+              index === step ? "bg-primary" : "bg-muted"
             }`}
           ></div>
         ))}
@@ -81,12 +81,12 @@ export default function OnboardingPage() {
         {step === 0 ? (
           <h1 className="text-2xl font-semibold">
             Your automated{" "}
-            <span className="text-[#6741FF]">content creation</span> companion!
+            <span className="text-primary">content creation</span> companion!
             plan, create, and publish content.
           </h1>
         ) : step === 1 ? (
           <h1 className="text-2xl font-semibold">
-            <span className="text-[#6741FF]">Save your time</span> with Jutsu.
+            <span className="text-primary">Save your time</span> with Jutsu.
             Collaborate, create faster, and publish smarter.
           </h1>
         ) : null}
@@ -130,7 +130,7 @@ function LinkCard({
       <Button
         className={cn(
           "w-full rounded-lg",
-          isConnected ? "bg-[#6741FF] text-white" : "bg-background"
+          isConnected ? "bg-primary text-white" : "bg-background"
         )}
         variant="outline"
         size="sm"
