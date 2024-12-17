@@ -8,6 +8,7 @@ import Image from "@/components/Image";
 import { Badge } from "@/components/ui/badge";
 import { BsPlusSquare } from "react-icons/bs";
 import { cn } from "@/lib/utils";
+import WrapperContent from "@/components/wrapper/WrapperContent";
 
 const writers = [
   {
@@ -73,7 +74,7 @@ const writers = [
 export default function HomePage() {
   return (
     <Wrapper>
-      <div className="p-4 pb-20 flex flex-col gap-4">
+      <WrapperContent className="gap-4">
         <div className="flex items-center gap-4 justify-between">
           <div className="flex items-center gap-4">
             <Avatar>
@@ -144,7 +145,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </div>
+      </WrapperContent>
     </Wrapper>
   );
 }
