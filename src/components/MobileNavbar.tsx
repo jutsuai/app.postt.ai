@@ -53,15 +53,15 @@ export default function Navbar() {
 
   return (
     md && (
-      <nav className="fixed bottom-0 left-0 right-0 bg-background  ">
+      <nav className="fixed bottom-0 left-0 right-0 bg-transparent  ">
         <ul className="flex justify-around items-center">
           <NavItems item={navItem[0]} pathname={pathname} curve="right" />
           <div className="w-[140px]" />
           <div
-            className="absolute -top-8 left-1/2 -translate-x-1/2 size-[70px] bg-gradient-navbar p-[2px] rounded-full 
+            className="absolute -top-11 left-1/2 -translate-x-1/2 size-[75px] bg-gradient-navbar p-[2px] rounded-full 
   "
           >
-            <div className="p-[8px] w-full h-full bg-gradient-to-b from-transparent via-transparent to-background rounded-full">
+            <div className="p-[8px] w-full h-full bg-gradient-to-b from-transparent via-transparent to-transparent rounded-full ">
               <button className="w-full h-full bg-primary grid place-items-center rounded-full">
                 <div className="absolute bg-gradient-to-b from-transparent via-transparent rounded-full shadow-2xl shadow-primary to-primary/40 z-10 w-full h-full" />
                 <GoPlus className="size-7" />
@@ -96,7 +96,7 @@ function NavItems({
   return (
     <li
       className={cn(
-        "w-full py-2 pt-3 h-full  border-t-2 ",
+        "w-full py-2 pt-3 h-full bg-background border-t-2 ",
         curve === "left" ? "rounded-ss-3xl runded" : "rounded-se-3xl"
       )}
     >
