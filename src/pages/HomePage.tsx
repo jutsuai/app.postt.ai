@@ -1,7 +1,3 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { GoBell } from "react-icons/go";
-import { IoIosFlash, IoIosSearch } from "react-icons/io";
-import { Button } from "@/components/ui/button";
 import Wrapper from "@/components/wrapper/Wrapper";
 import Image from "@/components/Image";
 
@@ -10,6 +6,12 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import { FiPlus } from "react-icons/fi";
+import Header from "@/components/Header";
+import { useState } from "react";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
+import { FaRegBell } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
 
 const writers = [
   {
@@ -43,75 +45,29 @@ const writers = [
 ];
 
 export default function HomePage() {
+  const [searchText, setSearchText] = useState("");
+
+  const handleSubmit = () => {};
   return (
     <Wrapper>
       <WrapperContent className="gap-4">
-        <div className="flex items-center gap-4 justify-between">
-          <Avatar>
-            <AvatarImage src="https://i.pravatar.cc/300" alt="Profile" />
-            <AvatarFallback>JD</AvatarFallback>
-          </Avatar>
+        <Header
+          inputValue={searchText}
+          setInputValue={setSearchText}
+          placeHolder="Search an upcoming event..."
+          onClick={() => handleSubmit()}
+          buttonText="Search"
+        />
 
-          <Button variant="outline" size="icon" className="rounded-full">
-            <GoBell />
-          </Button>
-        </div>
-
-        <h1 className="text-4xl font-normal mt-4 leading-tight">
-          <span className="text-muted-foreground">Hello,</span>
-          <br />
-          <span className="font-semibold"> Adnan</span>
-        </h1>
-
-        <div className="flex  items-center bg-muted rounded-3xl justify-between max-w-sm focus-within:max-w-md transition-[max-width] duration-200 h-12">
-          <div className="w-20 h-full grid place-items-center text-muted-foreground">
-            <IoIosSearch className="text-2xl" />
-          </div>
-          <input
-            type="text"
-            placeholder="Write a title and let the AI generate"
-            className="w-full pr-4 h-full py-2 bg-transparent outline-none border-none text-sm"
-          />
-          <Button
-            size="sm"
-            className="rounded-3xl mr-2 font-semibold text-foreground"
-          >
-            <IoIosFlash />
-            Generate
-          </Button>
-        </div>
-
-        <div className="flex flex-col gap-4 mt-6">
-          <h6 className="text-lg font-semibold">Or Select a Writer</h6>
+        <div className="flex flex-col gap-4 mt-4">
+          <h6 className="text-lg font-semibold">Upcoming posts for today </h6>
           <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
-            {writers.map((writer) => (
-              <WriterCard {...writer} />
-            ))}
-            <div className="border transition-all duration-200 active:border-primary shadow-md p-3 rounded-xl bg-background flex flex-col gap-2">
-              <div className="flex items-center gap-4 ">
-                <div className="w-14 aspect-square grid place-items-center rounded-lg bg-primary">
-                  <FiPlus className="text-foreground size-8" />
-                </div>
-                <div className="flex-1">
-                  <h6 className="text-lg font-semibold">Create Writer</h6>
-                </div>
-              </div>
-              <p className="line-clamp-2 text-xs mt-auto">
-                Lorem ipsum dolor sit amet, consectetur adipiscing aliqua.
-              </p>
-              <div className="flex gap-2 flex-wrap">
-                {["Create", "Clone"]?.map((tag, index) => (
-                  <Badge
-                    className={cn(
-                      "rounded-3xl font-normal text-[10px]",
-                      index > 0 && "bg-secondary-accent text-black"
-                    )}
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            </div>
+            <StatsCard
+              title="Today's scheduled posts"
+              value="19"
+              icon={<FaRegBell />}
+              backgroundColor="bg-primary-accent/50"
+            />
           </div>
         </div>
       </WrapperContent>
@@ -119,42 +75,40 @@ export default function HomePage() {
   );
 }
 
-function WriterCard({
-  writer,
-  avatar,
-  platform,
-  description,
-  tags,
+function StatsCard({
+  title,
+  value,
+  icon,
+  backgroundColor,
 }: {
-  writer: string;
-  avatar: string;
-  platform?: string;
-  description: string;
-  tags?: string[];
+  title: string;
+  value: string;
+  icon: any;
+  backgroundColor: string;
 }) {
   return (
-    <div className="border transition-all duration-200 active:border-primary  shadow-md p-3 rounded-xl bg-background flex flex-col gap-2">
-      <div className="flex items-center gap-4 ">
-        <div className="bg-muted flex-1 w-max rounded-lg">
-          <Image src={avatar} alt="" className="min-w-16" />
-        </div>
-        <div className="flex-1 flex flex-col gap-1">
-          <h6 className="text-base font-semibold ">{writer}</h6>
-          <p className="text-muted-foreground text-xs">{platform}</p>
-        </div>
+    <div
+      className={cn("flex flex-col gap-4  p-4 rounded-3xl", backgroundColor)}
+    >
+      <div className="flex items-center justify-between">
+        <Button
+          size="icon"
+          className="rounded-full text-foreground"
+          variant="secondary"
+        >
+          {icon}
+        </Button>
+        <Button size="icon" className="rounded-full" variant="ghost">
+          <BsThreeDotsVertical />
+        </Button>
       </div>
-      <p className="line-clamp-2 text-xs mt-auto">{description}</p>
-      <div className="flex gap-2 flex-wrap">
-        {tags?.map((tag, index) => (
-          <Badge
-            className={cn(
-              "rounded-3xl font-normal text-[10px] capitalize text-black",
-              index > 0 && "bg-secondary-accent "
-            )}
-          >
-            {tag}
-          </Badge>
-        ))}
+      <div className="flex flex-col gap-2">
+        <p className="text-3xl font-bold">19</p>
+        <p className="text-muted-foreground text-xs">
+          Today's
+          <br />
+          scheduled posts
+        </p>
       </div>
     </div>
   );

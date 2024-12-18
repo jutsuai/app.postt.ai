@@ -12,6 +12,7 @@ import OnboardingFInish from "./pages/onboarding/OnboardingFInish";
 import SchedulePage from "./pages/schedule/SchedulePage";
 import DiscoverPage from "./pages/discover/DiscoverPage";
 import ProfilePage from "./pages/profile/ProfilePage";
+import AddWriter from "./pages/addWriter/AddWriter";
 
 export default function Router() {
   return (
@@ -34,6 +35,7 @@ export default function Router() {
 
       <Route path="/" element={<Layout />}>
         <Route path="" element={<HomePage />} />
+        <Route path="add" element={<AddWriter />} />
         <Route path="schedule" element={<SchedulePage />} />
         <Route path="discover" element={<DiscoverPage />} />
         <Route path="profile" element={<ProfilePage />} />
