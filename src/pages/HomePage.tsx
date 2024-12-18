@@ -6,9 +6,10 @@ import Wrapper from "@/components/wrapper/Wrapper";
 import Image from "@/components/Image";
 
 import { Badge } from "@/components/ui/badge";
-import { BsPlusSquare } from "react-icons/bs";
+
 import { cn } from "@/lib/utils";
 import WrapperContent from "@/components/wrapper/WrapperContent";
+import { FiPlus } from "react-icons/fi";
 
 const writers = [
   {
@@ -18,6 +19,7 @@ const writers = [
     description:
       "Crafting engaging and thought-provoking blog articles for professional readers.",
     tags: ["blog", "writer"],
+    id: 1,
   },
   {
     writer: "Post Writer",
@@ -26,48 +28,17 @@ const writers = [
     description:
       "Creating concise, impactful posts to maximize social media reach and engagement.",
     tags: ["post", "reach"],
+    id: 2,
   },
 
   {
     writer: "Script Writer",
-    avatar: "/homepage/blog-writer.png",
+    avatar: "/homepage/meme-writer.png",
     platform: "YouTube",
     description:
       "Writing captivating scripts to drive storytelling for videos and vlogs.",
     tags: ["video", "content"],
-  },
-  {
-    writer: "Copywriter",
-    avatar: "/homepage/post-writer.png",
-    platform: "Instagram",
-    description:
-      "Crafting compelling captions and content to convert audiences into loyal followers.",
-    tags: ["social", "marketing"],
-  },
-  {
-    writer: "Technical Writer",
-    avatar: "/homepage/meme-writer.png",
-    platform: "Medium",
-    description:
-      "Explaining complex concepts in simple, clear, and engaging technical articles.",
-    tags: ["tech", "documentation"],
-  },
-  {
-    writer: "Ghost Writer",
-    avatar: "/homepage/blog-writer.png",
-    platform: "Personal Blogs",
-    description:
-      "Writing in the background to bring someone else's vision to life seamlessly.",
-    tags: ["ghost", "writing"],
-  },
-
-  {
-    writer: "SEO Writer",
-    avatar: "/homepage/meme-writer.png",
-    platform: "Company Blogs",
-    description:
-      "Optimizing content to rank higher on search engines and attract organic traffic.",
-    tags: ["SEO", "optimization"],
+    id: 3,
   },
 ];
 
@@ -76,28 +47,23 @@ export default function HomePage() {
     <Wrapper>
       <WrapperContent className="gap-4">
         <div className="flex items-center gap-4 justify-between">
-          <div className="flex items-center gap-4">
-            <Avatar>
-              <AvatarImage src="https://i.pravatar.cc/300" alt="Profile" />
-              <AvatarFallback>JD</AvatarFallback>
-            </Avatar>
-            <div>
-              <h4 className="text-xl font-semibold">Discover</h4>
-              <p className="text-muted-foreground text-xs">
-                Enjoy automatic content
-              </p>
-            </div>
-          </div>
+          <Avatar>
+            <AvatarImage src="https://i.pravatar.cc/300" alt="Profile" />
+            <AvatarFallback>JD</AvatarFallback>
+          </Avatar>
+
           <Button variant="outline" size="icon" className="rounded-full">
             <GoBell />
           </Button>
         </div>
-        <h1 className="text-3xl font-semibold mt-6">
-          Discover Talented
+
+        <h1 className="text-4xl font-normal mt-4 leading-tight">
+          <span className="text-muted-foreground">Hello,</span>
           <br />
-          <span className="text-primary">Content Creators</span>
+          <span className="font-semibold"> Adnan</span>
         </h1>
-        <div className="flex  items-center bg-muted rounded-3xl justify-between h-12">
+
+        <div className="flex  items-center bg-muted rounded-3xl justify-between max-w-sm focus-within:max-w-md transition-[max-width] duration-200 h-12">
           <div className="w-20 h-full grid place-items-center text-muted-foreground">
             <IoIosSearch className="text-2xl" />
           </div>
@@ -106,7 +72,10 @@ export default function HomePage() {
             placeholder="Write a title and let the AI generate"
             className="w-full pr-4 h-full py-2 bg-transparent outline-none border-none text-sm"
           />
-          <Button size="sm" className="rounded-3xl mr-2">
+          <Button
+            size="sm"
+            className="rounded-3xl mr-2 font-semibold text-foreground"
+          >
             <IoIosFlash />
             Generate
           </Button>
@@ -114,14 +83,14 @@ export default function HomePage() {
 
         <div className="flex flex-col gap-4 mt-6">
           <h6 className="text-lg font-semibold">Or Select a Writer</h6>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
             {writers.map((writer) => (
               <WriterCard {...writer} />
             ))}
             <div className="border transition-all duration-200 active:border-primary shadow-md p-3 rounded-xl bg-background flex flex-col gap-2">
               <div className="flex items-center gap-4 ">
                 <div className="w-14 aspect-square grid place-items-center rounded-lg bg-primary">
-                  <BsPlusSquare className="text-white size-10" />
+                  <FiPlus className="text-foreground size-8" />
                 </div>
                 <div className="flex-1">
                   <h6 className="text-lg font-semibold">Create Writer</h6>
@@ -135,7 +104,7 @@ export default function HomePage() {
                   <Badge
                     className={cn(
                       "rounded-3xl font-normal text-[10px]",
-                      index > 0 && "bg-[#CDF202] text-black"
+                      index > 0 && "bg-secondary-accent text-black"
                     )}
                   >
                     {tag}
@@ -179,8 +148,8 @@ function WriterCard({
         {tags?.map((tag, index) => (
           <Badge
             className={cn(
-              "rounded-3xl font-normal text-[10px] capitalize",
-              index > 0 && "bg-[#CDF202] text-black"
+              "rounded-3xl font-normal text-[10px] capitalize text-black",
+              index > 0 && "bg-secondary-accent "
             )}
           >
             {tag}
