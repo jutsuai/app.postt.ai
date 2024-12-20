@@ -5,7 +5,7 @@ import httpClient from "../../lib/httpClient";
 import { useAuth } from "../../context/AuthContext";
 
 export default function LinkedinPage() {
-  const { linkedin } = useAuth();
+  const { linkedin, user } = useAuth();
 
   const [loading, setLoading] = useState(false);
 
@@ -45,7 +45,10 @@ export default function LinkedinPage() {
   };
 
   const handleGetOrgData = async () => {
-    const { accessToken, sub } = linkedin;
+    const {
+      tokens: { access_token: accessToken },
+      id: sub,
+    } = user;
 
     if (!accessToken) {
       console.error("Access token not found. Please log in.");
@@ -56,8 +59,10 @@ export default function LinkedinPage() {
 
     console.log("accessToken", accessToken);
 
+    console.log("Hi from get posts");
+
     httpClient()
-      .post("/linkedin/get-org", { accessToken, sub })
+      .get("/linkedin/organizations?accessToken=" + accessToken)
       .then((res) => {
         console.log("res", res.data);
         setOrgData(res.data);
@@ -73,6 +78,11 @@ export default function LinkedinPage() {
   return (
     <div className="flex  flex-col p-4 gap-4">
       <div className="flex gap-4 ">
+        <Link to="/login">
+          <button className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium">
+            Login
+          </button>
+        </Link>
         <Link to="/linkedin/post/create">
           <button className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium">
             Create Post

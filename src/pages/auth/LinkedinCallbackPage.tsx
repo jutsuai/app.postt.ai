@@ -23,7 +23,7 @@ export default function LinkedinCallbackPage() {
     setLoading(true);
 
     httpClient()
-      .post("/auth/linkedin/callback", { code })
+      .post("/linkedin/callback", { code })
       .then((res) => {
         const data = res.data;
         console.log(data);

@@ -77,7 +77,7 @@ export default function LoginPage() {
 
         <div className="flex gap-3">
           {/* LinkedIn Button */}
-          <Link to={import.meta.env.VITE_API_URL + "/auth/linkedin"}>
+          <Link to={import.meta.env.VITE_API_URL + "/linkedin/accessToken"}>
             <button className="flex-1 inline-flex justify-center py-3 items-center gap-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-gray-700 font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
               <FaLinkedin />
               LinkedIn
