@@ -5,7 +5,7 @@ import { LuWandSparkles } from "react-icons/lu";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ContentTab from "./_components/ContentTab";
 import SettingsTab from "./_components/SettingsTab";
-import Image from "@/components/Image";
+
 import {
   RiPencilLine,
   RiSettings4Line,
@@ -14,6 +14,8 @@ import {
   RiDownloadLine,
 } from "react-icons/ri";
 import PreviewSection from "./_components/PreviewSection";
+import { motion } from "framer-motion";
+import { MdDeleteOutline } from "react-icons/md";
 
 const tabs = [
   { name: "Content", icon: <RiPencilLine /> },
@@ -54,7 +56,9 @@ export default function CreateCarouselPage() {
   const [avatarPosition, setAvatarPosition] = useState("left");
 
   const [avatarEnabled, setAvatarEnabled] = useState(true);
-  const [avatarUrl, setAvatarUrl] = useState("https://via.placeholder.com/40");
+  const [avatarUrl, setAvatarUrl] = useState(
+    "https://thispersondoesnotexist.com"
+  );
 
   const [avatarNameEnabled, setAvatarNameEnabled] = useState(true);
   const [avatarName, setAvatarName] = useState("Test User");
@@ -90,7 +94,15 @@ export default function CreateCarouselPage() {
         </div>
       </div>
 
-      <div className="bg-background relative py-14 px-10 w-full h-full max-w-6xl rounded-t-[5rem] ">
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{ duration: 0.5 }}
+        className="bg-background relative py-14 px-10 w-full h-full max-w-6xl rounded-t-[5rem] "
+      >
         {/* Main Content Area */}
 
         <div className="space-y-8 container">
@@ -182,26 +194,39 @@ export default function CreateCarouselPage() {
           </div>
 
           {/* Bottom Carousel Thumbnails */}
-          <div className="flex gap-4 flex-wrap py-2">
+          <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(100px,1fr))]  ">
             {slides?.map((slide, index) => (
-              <div
-                key={index}
-                style={{
-                  backgroundImage: backgroundImageUrl
-                    ? `url(${backgroundImageUrl})`
-                    : `url(https://i.pinimg.com/736x/65/21/c4/6521c4eecdbe234ed8d11202086f9f27.jpg)`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                onClick={() => {
-                  setTitleText(slide.title);
-                  setSubtitleText(slide.subtitle);
-                }}
-                className="min-w-[100px] aspect-[14/16] transition-all opacity-80 hover:opacity-100 duration-200 px-1 rounded-md  shadow-md cursor-pointer"
-              >
-                <div className=" text-xs font-bold break-words text-wrap text-white mt-2 ">
-                  {slide.title}
+              <div key={index} className="relative">
+                <div
+                  style={{
+                    backgroundImage: backgroundImageUrl
+                      ? `url(${backgroundImageUrl})`
+                      : `url(https://ipfs.near.social/ipfs/bafkreihasoknfohlxfcngttgfevlluyrgwoapozojske3cc6yabozoajoe)`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                  onClick={() => {
+                    setTitleText(slide.title);
+                    setSubtitleText(slide.subtitle);
+                  }}
+                  className=" aspect-[14/16]  transition-all opacity-80 hover:opacity-100 duration-200 px-1 rounded-md  shadow-md cursor-pointer"
+                >
+                  <p className=" text-[9px] font-bold break-words text-wrap text-white mt-2 pt-7 pl-1 ">
+                    {slide.title}
+                  </p>
                 </div>
+                {index > 0 && (
+                  <button
+                    onClick={() => {
+                      setSlides((prev) => {
+                        return prev?.filter((_, i) => i !== index);
+                      });
+                    }}
+                    className="text-red-500 absolute  bottom-1 p-1 rounded-full bg-background right-1"
+                  >
+                    <MdDeleteOutline className="text-sm" />
+                  </button>
+                )}
               </div>
             ))}
 
@@ -212,19 +237,19 @@ export default function CreateCarouselPage() {
                   return [
                     ...prev,
                     {
-                      title: `Slide ${slides?.length} title`,
-                      subtitle: `Slide ${slides?.length} subtitle`,
+                      title: `Slide ${prev?.length} title`,
+                      subtitle: `Slide ${prev?.length} subtitle`,
                     },
                   ];
                 })
               }
-              className="min-w-[100px] border-2 border-dashed  rounded-md p-2 flex-shrink-0 flex items-center justify-center cursor-pointer text-muted-foreground bg-primary/20"
+              className="  border-2 aspect-[14/16] h-full border-dashed  rounded-md my-2 mb-0.5  flex items-center justify-center cursor-pointer text-muted-foreground bg-primary/20"
             >
               +
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
     // </div>
   );

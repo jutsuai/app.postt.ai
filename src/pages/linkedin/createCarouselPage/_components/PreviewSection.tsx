@@ -36,17 +36,17 @@ export default function PreviewSection({
         style={{
           backgroundImage: backgroundImageUrl
             ? `url(${backgroundImageUrl})`
-            : `url(https://i.pinimg.com/736x/65/21/c4/6521c4eecdbe234ed8d11202086f9f27.jpg)`,
+            : `url(https://ipfs.near.social/ipfs/bafkreihasoknfohlxfcngttgfevlluyrgwoapozojske3cc6yabozoajoe)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
 
           aspectRatio: "1 / 1.25",
         }}
       >
-        <div className="z-10 space-y-2">
+        <div className="z-10 space-y-2 mt-32">
           {titleEnabled && (
             <h1
-              className="text-2xl font-bold text-indigo-900 leading-tight"
+              className="text-3xl text-white font-bold leading-tight"
               style={{ textAlign: titlePosition }}
             >
               {titleText}
@@ -54,7 +54,7 @@ export default function PreviewSection({
           )}
           {subtitleEnabled && (
             <p
-              className="text-gray-600  text-sm"
+              className="text-white/80 font-medium text-sm max-w-xs"
               style={{ textAlign: subtitlePosition }}
             >
               {subtitleText}
@@ -72,14 +72,14 @@ export default function PreviewSection({
           )}
           <div className="text-sm">
             {avatarNameEnabled && (
-              <div className="font-medium text-indigo-900">{avatarName}</div>
+              <div className="font-bold text-white  ">{avatarName}</div>
             )}
             {avatarUserNameEnabled && (
-              <div className="text-muted-foreground">@{avatarUserName}</div>
+              <div className="text-white/80 text-xs">@{avatarUserName}</div>
             )}
           </div>
         </div>
-        <div className="absolute z-0 inset-0 bg-white bg-opacity-50 pointer-events-none rounded-md" />
+        {/* <div className="absolute z-0 inset-0 bg-white bg-opacity-50 pointer-events-none rounded-md" /> */}
       </div>
     </div>
   );
