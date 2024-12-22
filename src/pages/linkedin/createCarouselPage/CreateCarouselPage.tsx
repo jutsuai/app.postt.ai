@@ -69,7 +69,7 @@ export default function CreateCarouselPage() {
 
   return (
     // <div className="h-full w-full ">
-    <div className=" container max-w-5xl flex flex-col items-center py-8 space-y-8">
+    <div className="flex flex-col items-center pt-10 space-y-10 bg-primary h-full w-full">
       {/* Top bar */}
       <div className="bg-muted p-1 w-full relative  rounded-xl focus-within:max-w-xl max-w-lg transition-all duration-300">
         <div className="flex items-center justify-between border-primary transition-colors border-2  duration-200 bg-background rounded-lg">
@@ -90,135 +90,140 @@ export default function CreateCarouselPage() {
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full h-full">
-        {/* Left Preview Area */}
-        <PreviewSection
-          backgroundImageUrl={backgroundImageUrl}
-          titleText={titleText}
-          titlePosition={titlePosition}
-          titleEnabled={titleEnabled}
-          subtitleText={subtitleText}
-          subtitlePosition={subtitlePosition}
-          subtitleEnabled={subtitleEnabled}
-          avatarUrl={avatarUrl}
-          avatarName={avatarName}
-          avatarEnabled={avatarEnabled}
-          avatarNameEnabled={avatarNameEnabled}
-          avatarUserName={avatarUserName}
-          avatarUserNameEnabled={avatarUserNameEnabled}
-        />
+      <div className="bg-background relative py-14 px-10 w-full h-full max-w-6xl rounded-t-[5rem] ">
+        {/* Main Content Area */}
 
-        {/* Right Sidebar */}
-        <div className="flex flex-col gap-4 h-full w-full">
-          <Tabs
-            value={activeTab}
-            onValueChange={setActiveTab}
-            className="w-full"
-          >
-            <TabsList className="w-full">
-              {tabs?.map((tab) => (
-                <TabsTrigger
-                  key={tab?.name}
-                  value={tab?.name}
-                  className="data-[state=active]:bg-primary gap-1 px-0 w-full"
-                >
-                  {tab?.icon} {tab?.name}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
-
-          {/* Content for Active Tab */}
-          {activeTab === "Content" && (
-            <ContentTab
-              titleEnabled={titleEnabled}
-              setTitleEnabled={setTitleEnabled}
-              titleText={titleText}
-              setTitleText={setTitleText}
-              subtitleEnabled={subtitleEnabled}
-              setSubtitleEnabled={setSubtitleEnabled}
-              subtitleText={subtitleText}
-              setSubtitleText={setSubtitleText}
+        <div className="space-y-8 container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full h-full">
+            {/* Left Preview Area */}
+            <PreviewSection
               backgroundImageUrl={backgroundImageUrl}
-              setBackgroundImageUrl={setBackgroundImageUrl}
+              titleText={titleText}
               titlePosition={titlePosition}
-              setTitlePosition={setTitlePosition}
+              titleEnabled={titleEnabled}
+              subtitleText={subtitleText}
               subtitlePosition={subtitlePosition}
-              setSubtitlePosition={setSubtitlePosition}
-              positionOptions={positionOptions}
-            />
-          )}
-
-          {activeTab === "Settings" && (
-            <SettingsTab
+              subtitleEnabled={subtitleEnabled}
               avatarUrl={avatarUrl}
-              setAvatarUrl={setAvatarUrl}
               avatarName={avatarName}
-              setAvatarName={setAvatarName}
-              avatarUserName={avatarUserName}
-              setAvatarUserName={setAvatarUserName}
               avatarEnabled={avatarEnabled}
-              setAvatarEnabled={setAvatarEnabled}
               avatarNameEnabled={avatarNameEnabled}
-              setAvatarNameEnabled={setAvatarNameEnabled}
+              avatarUserName={avatarUserName}
               avatarUserNameEnabled={avatarUserNameEnabled}
-              setAvatarUserNameEnabled={setAvatarUserNameEnabled}
-              avatarPosition={avatarPosition}
-              setAvatarPosition={setAvatarPosition}
-              positionOptions={positionOptions}
             />
-          )}
 
-          {activeTab !== "Content" && activeTab !== "Settings" && (
-            <div className="text-gray-500">
-              <p className="text-sm">No content for this tab yet.</p>
-            </div>
-          )}
-        </div>
-      </div>
+            {/* Right Sidebar */}
+            <div className="flex flex-col gap-4 h-full w-full">
+              <Tabs
+                value={activeTab}
+                onValueChange={setActiveTab}
+                className="w-full"
+              >
+                <TabsList className="w-full">
+                  {tabs?.map((tab) => (
+                    <TabsTrigger
+                      key={tab?.name}
+                      value={tab?.name}
+                      className="data-[state=active]:bg-primary gap-1 px-0 w-full"
+                    >
+                      {tab?.icon} {tab?.name}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
 
-      {/* Bottom Carousel Thumbnails */}
-      <div className="flex space-x-2 mr-auto py-2">
-        {slides?.map((slide, index) => (
-          <div
-            key={index}
-            style={{
-              backgroundImage: backgroundImageUrl
-                ? `url(${backgroundImageUrl})`
-                : `url(https://i.pinimg.com/736x/65/21/c4/6521c4eecdbe234ed8d11202086f9f27.jpg)`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-            onClick={() => {
-              setTitleText(slide.title);
-              setSubtitleText(slide.subtitle);
-            }}
-            className="min-w-[100px] aspect-[14/16] transition-all opacity-80 hover:opacity-100 duration-200 px-1 rounded-md  shadow-md cursor-pointer"
-          >
-            <div className=" text-xs font-bold break-words text-wrap text-white mt-2 ">
-              {slide.title}
+              {/* Content for Active Tab */}
+              {activeTab === "Content" && (
+                <ContentTab
+                  titleEnabled={titleEnabled}
+                  setTitleEnabled={setTitleEnabled}
+                  titleText={titleText}
+                  setTitleText={setTitleText}
+                  subtitleEnabled={subtitleEnabled}
+                  setSubtitleEnabled={setSubtitleEnabled}
+                  subtitleText={subtitleText}
+                  setSubtitleText={setSubtitleText}
+                  backgroundImageUrl={backgroundImageUrl}
+                  setBackgroundImageUrl={setBackgroundImageUrl}
+                  titlePosition={titlePosition}
+                  setTitlePosition={setTitlePosition}
+                  subtitlePosition={subtitlePosition}
+                  setSubtitlePosition={setSubtitlePosition}
+                  positionOptions={positionOptions}
+                />
+              )}
+
+              {activeTab === "Settings" && (
+                <SettingsTab
+                  avatarUrl={avatarUrl}
+                  setAvatarUrl={setAvatarUrl}
+                  avatarName={avatarName}
+                  setAvatarName={setAvatarName}
+                  avatarUserName={avatarUserName}
+                  setAvatarUserName={setAvatarUserName}
+                  avatarEnabled={avatarEnabled}
+                  setAvatarEnabled={setAvatarEnabled}
+                  avatarNameEnabled={avatarNameEnabled}
+                  setAvatarNameEnabled={setAvatarNameEnabled}
+                  avatarUserNameEnabled={avatarUserNameEnabled}
+                  setAvatarUserNameEnabled={setAvatarUserNameEnabled}
+                  avatarPosition={avatarPosition}
+                  setAvatarPosition={setAvatarPosition}
+                  positionOptions={positionOptions}
+                />
+              )}
+
+              {activeTab !== "Content" && activeTab !== "Settings" && (
+                <div className="text-gray-500">
+                  <p className="text-sm">No content for this tab yet.</p>
+                </div>
+              )}
             </div>
           </div>
-        ))}
 
-        {/* Add new slide placeholder */}
-        <button
-          onClick={() =>
-            setSlides((prev) => {
-              return [
-                ...prev,
-                {
-                  title: `Slide ${slides?.length} title`,
-                  subtitle: `Slide ${slides?.length} subtitle`,
-                },
-              ];
-            })
-          }
-          className="min-w-[100px] border-2 border-dashed  rounded-md p-2 flex-shrink-0 flex items-center justify-center cursor-pointer text-muted-foreground bg-primary/20"
-        >
-          +
-        </button>
+          {/* Bottom Carousel Thumbnails */}
+          <div className="flex gap-4 flex-wrap py-2">
+            {slides?.map((slide, index) => (
+              <div
+                key={index}
+                style={{
+                  backgroundImage: backgroundImageUrl
+                    ? `url(${backgroundImageUrl})`
+                    : `url(https://i.pinimg.com/736x/65/21/c4/6521c4eecdbe234ed8d11202086f9f27.jpg)`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+                onClick={() => {
+                  setTitleText(slide.title);
+                  setSubtitleText(slide.subtitle);
+                }}
+                className="min-w-[100px] aspect-[14/16] transition-all opacity-80 hover:opacity-100 duration-200 px-1 rounded-md  shadow-md cursor-pointer"
+              >
+                <div className=" text-xs font-bold break-words text-wrap text-white mt-2 ">
+                  {slide.title}
+                </div>
+              </div>
+            ))}
+
+            {/* Add new slide placeholder */}
+            <button
+              onClick={() =>
+                setSlides((prev) => {
+                  return [
+                    ...prev,
+                    {
+                      title: `Slide ${slides?.length} title`,
+                      subtitle: `Slide ${slides?.length} subtitle`,
+                    },
+                  ];
+                })
+              }
+              className="min-w-[100px] border-2 border-dashed  rounded-md p-2 flex-shrink-0 flex items-center justify-center cursor-pointer text-muted-foreground bg-primary/20"
+            >
+              +
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     // </div>
