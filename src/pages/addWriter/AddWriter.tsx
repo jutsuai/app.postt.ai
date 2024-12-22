@@ -9,6 +9,7 @@ import { FiPlus } from "react-icons/fi";
 import Header from "@/components/Header";
 import { useState } from "react";
 import { IoIosFlash } from "react-icons/io";
+import TopBar from "@/components/TopBar";
 
 const writers = [
   {
@@ -47,18 +48,10 @@ export default function AddWriter() {
   const handleSubmit = () => {};
   return (
     <Wrapper>
-      <WrapperContent className="gap-4">
-        <Header
-          inputValue={generateText}
-          setInputValue={setGenerateText}
-          placeHolder="Write a title and let the AI generate"
-          onClick={() => handleSubmit()}
-          buttonText="Generate"
-          buttonIcon={<IoIosFlash />}
-        />
-
-        <div className="flex flex-col gap-4 mt-6">
-          <h6 className="text-lg font-semibold">Or Select a Writer</h6>
+      <WrapperContent className="gap-8">
+        <TopBar />
+        <div className="flex flex-col gap-6 ">
+          <h6 className="text-2xl font-semibold">Select a Writer</h6>
           <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
             {writers.map((writer) => (
               <WriterCard {...writer} />

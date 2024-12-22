@@ -29,12 +29,12 @@ export default function Router() {
       </Route>
 
       <Route path="onboarding">
-        <Route path="" element={<OnboardingPage />} />
+        <Route index element={<OnboardingPage />} />
         <Route path="finished" element={<OnboardingFInish />} />
       </Route>
 
       <Route path="/" element={<Layout />}>
-        <Route path="" element={<HomePage />} />
+        <Route index element={<HomePage />} />
         <Route path="add" element={<AddWriter />} />
         <Route path="schedule" element={<SchedulePage />} />
         <Route path="discover" element={<DiscoverPage />} />

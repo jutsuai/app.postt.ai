@@ -1,3 +1,6 @@
+import TopBar from "@/components/TopBar";
+import Wrapper from "@/components/wrapper/Wrapper";
+import WrapperContent from "@/components/wrapper/WrapperContent";
 import React, { useState } from "react";
 
 interface Event {
@@ -46,73 +49,78 @@ const Calendar: React.FC = () => {
   const toggleCalendar = () => setIsExpanded(!isExpanded);
 
   return (
-    <div className="w-full max-w-md mx-auto bg-gray-50 rounded-md shadow-md p-4 font-sans">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold text-gray-800">
-          {currentDate.toLocaleString("default", {
-            month: "long",
-            year: "numeric",
-          })}
-        </h1>
-        <button
-          onClick={toggleCalendar}
-          className="bg-indigo-500 text-white px-3 py-1 rounded hover:bg-indigo-600"
-        >
-          {isExpanded ? "Collapse" : "Expand"}
-        </button>
-      </div>
-
-      {/* Conditionally Render Full Calendar */}
-      {isExpanded && (
-        <>
-          {/* Days of the Week */}
-          <div className="grid grid-cols-7 text-center text-gray-500 mb-2">
-            {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
-              <div key={day} className="p-2 font-semibold">
-                {day}
-              </div>
-            ))}
-          </div>
-
-          {/* Dates Grid */}
-          <div className="grid grid-cols-7 text-center">
-            {generateDaysInMonth().map((day, idx) => (
-              <div
-                key={idx}
-                className={`p-2 ${
-                  day
-                    ? "hover:bg-gray-200 cursor-pointer rounded-md"
-                    : "invisible"
-                } ${
-                  day === currentDate.getDate()
-                    ? "bg-indigo-500 text-white font-bold"
-                    : ""
-                }`}
-              >
-                {day || ""}
-              </div>
-            ))}
-          </div>
-        </>
-      )}
-
-      {/* Event List */}
-      <div className="mt-6 bg-white rounded-lg shadow p-4">
-        <h2 className="text-lg font-semibold mb-2">Today</h2>
-        {events.map((event) => (
-          <div
-            key={event.id}
-            className={`border-l-4 ${event.color} rounded-lg p-3 mb-4`}
+    <Wrapper>
+      <WrapperContent className="gap-8">
+        <TopBar />
+        {/* <div className="w-full  bg-gray-50 rounded-md shadow-md p-4 font-sans"> */}
+        {/* Header */}
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-xl font-bold text-gray-800">
+            {currentDate.toLocaleString("default", {
+              month: "long",
+              year: "numeric",
+            })}
+          </h1>
+          <button
+            onClick={toggleCalendar}
+            className="bg-indigo-500 text-white px-3 py-1 rounded hover:bg-indigo-600"
           >
-            <h3 className="font-semibold text-gray-700">{event.title}</h3>
-            <p className="text-sm text-gray-500">
-              {event.startTime} - {event.endTime}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
+            {isExpanded ? "Collapse" : "Expand"}
+          </button>
+        </div>
+
+        {/* Conditionally Render Full Calendar */}
+        {isExpanded && (
+          <>
+            {/* Days of the Week */}
+            <div className="grid grid-cols-7 text-center text-gray-500 mb-2">
+              {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
+                <div key={day} className="p-2 font-semibold">
+                  {day}
+                </div>
+              ))}
+            </div>
+
+            {/* Dates Grid */}
+            <div className="grid grid-cols-7 text-center">
+              {generateDaysInMonth().map((day, idx) => (
+                <div
+                  key={idx}
+                  className={`p-2 ${
+                    day
+                      ? "hover:bg-gray-200 cursor-pointer rounded-md"
+                      : "invisible"
+                  } ${
+                    day === currentDate.getDate()
+                      ? "bg-indigo-500 text-white font-bold"
+                      : ""
+                  }`}
+                >
+                  {day || ""}
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Event List */}
+        <div className="mt-6 bg-white rounded-lg shadow p-4">
+          <h2 className="text-lg font-semibold mb-2">Today</h2>
+          {events.map((event) => (
+            <div
+              key={event.id}
+              className={`border-l-4 ${event.color} rounded-lg p-3 mb-4`}
+            >
+              <h3 className="font-semibold text-gray-700">{event.title}</h3>
+              <p className="text-sm text-gray-500">
+                {event.startTime} - {event.endTime}
+              </p>
+            </div>
+          ))}
+        </div>
+        {/* </div> */}
+      </WrapperContent>
+    </Wrapper>
   );
 };
 

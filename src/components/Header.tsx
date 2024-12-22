@@ -1,7 +1,7 @@
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import TopBar from "./TopBar";
 import { Button } from "./ui/button";
-import { GoBell } from "react-icons/go";
-import { IoIosFlash, IoIosSearch } from "react-icons/io";
+
+import { IoIosSearch } from "react-icons/io";
 
 export default function Header({
   inputValue,
@@ -20,16 +20,7 @@ export default function Header({
 }) {
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-4 justify-between">
-        <Avatar>
-          <AvatarImage src="https://i.pravatar.cc/300" alt="Profile" />
-          <AvatarFallback>JD</AvatarFallback>
-        </Avatar>
-
-        <Button variant="outline" size="icon" className="rounded-full">
-          <GoBell />
-        </Button>
-      </div>
+      <TopBar />
 
       <h1 className="text-4xl font-normal mt-4 leading-tight">
         <span className="text-muted-foreground">Hello,</span>
