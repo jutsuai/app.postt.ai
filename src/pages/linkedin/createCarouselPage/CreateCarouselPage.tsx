@@ -25,7 +25,7 @@ const tabs = [
   { name: "Download", icon: <RiDownloadLine /> },
 ];
 
-const positionOptions = ["left", "right", "center", "top", "bottom"];
+const positionOptions = ["left", "center", "right"];
 
 const slidesData = [
   {

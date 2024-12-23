@@ -54,7 +54,7 @@ export default function PreviewSection({
           )}
           {subtitleEnabled && (
             <p
-              className="text-white/80 font-medium text-sm max-w-xs"
+              className="text-white/80 font-medium text-sm "
               style={{ textAlign: subtitlePosition }}
             >
               {subtitleText}
