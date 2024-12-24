@@ -29,7 +29,7 @@ export default function LinkedinCallbackPage() {
         console.log(data);
 
         localStorage.setItem("_auth_user", JSON.stringify(data));
-        localStorage.setItem("_auth_accessToken", data?.access_token);
+        localStorage.setItem("_auth_accessToken", data?.tokens?.access_token);
 
         navigate("/");
       })
