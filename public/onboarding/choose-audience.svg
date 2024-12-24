@@ -1,0 +1,37 @@
+<svg width="140" height="140" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g clip-path="url(#clip0_485_21166)">
+<rect width="140" height="140" rx="70" fill="#B4B4FF"/>
+<path d="M80.3179 44.0164C47.231 -1.87537 8.98637 23.2329 -6.00006 41.5235L79.75 -107L208.355 -32.75L162.605 46.4913C148.962 64.7879 113.405 89.9082 80.3179 44.0164Z" fill="url(#paint0_linear_485_21166)"/>
+<path d="M80.6418 73.2731C136.488 82.3275 145.777 37.5303 143.441 13.9999L187.828 179.656L44.3881 218.091L20.7062 129.709C17.4154 107.124 24.7955 64.2187 80.6418 73.2731Z" fill="url(#paint1_linear_485_21166)"/>
+<rect x="20" y="32" width="100" height="108" rx="16" fill="white"/>
+<rect x="32" y="106" width="76" height="14" rx="7" fill="#EFF0F9"/>
+<rect x="37" y="111" width="35" height="4" rx="2" fill="#DFE1EF"/>
+<rect x="20" y="32" width="100" height="108" rx="16" fill="url(#paint2_linear_485_21166)"/>
+<circle cx="70" cy="62" r="16" fill="#1CBE8E"/>
+<rect x="59" y="50" width="22" height="23" fill="url(#pattern0_485_21166)"/>
+<rect x="32" y="136" width="76" height="14" rx="7" fill="#555857"/>
+<rect x="32" y="86" width="76" height="14" rx="7" fill="#EFF0F9"/>
+<rect x="37" y="91" width="14" height="4" rx="2" fill="#DFE1EF"/>
+</g>
+<defs>
+<pattern id="pattern0_485_21166" patternContentUnits="objectBoundingBox" width="1" height="1">
+<use xlink:href="#image0_485_21166" transform="matrix(0.0111111 0 0 0.010628 0 0.0217391)"/>
+</pattern>
+<linearGradient id="paint0_linear_485_21166" x1="29.4106" y1="-208.81" x2="58.3023" y2="78.6485" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.39"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint1_linear_485_21166" x1="295.414" y1="216.051" x2="71.7206" y2="33.2172" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.39"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint2_linear_485_21166" x1="70" y1="32" x2="70" y2="195.5" gradientUnits="userSpaceOnUse">
+<stop offset="0.409027" stop-color="#DDD9E8" stop-opacity="0"/>
+<stop offset="1" stop-color="#DDD9E8"/>
+</linearGradient>
+<clipPath id="clip0_485_21166">
+<rect width="140" height="140" rx="70" fill="white"/>
+</clipPath>
+<image id="image0_485_21166" width="90" height="90" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB7ElEQVR4nO3bXU4UQRiF4bliHybKLvRCcG2MO0BxKyBsAlyAyAXxnKrgfZPCMQETYPoHqvrr90nqhgwz/Z2cdM9UUqsVAAAAAGC4lNInSUeSftj+s1kXkr6mlPZHvDWKnPOu7TPb3TPrNOf87u6f0I+kD5K0Rch3q7xW0vueH7NsOefdPiHfC/t3Sult7eufDUknfUO+t85qX/9sHnweHvK/tVd7juZJ+jY2aElfas/RPP39Cje20Re152ie7ZsJgr6pPcdSgs6151jKreO89hzNk3Q0wcPwsPYczUsp7U/Q6I+155gFSccjQj6tff2zYfuNpOsBtwx+gvdVNohKcH1CZlNpoLL1Ken7FiGfsJk0Adt75Wd1+dq2+Z5d1vnmbzz4AAAAAGD2uq7bkfTZ9q8Bu3WXktblPWrP0TxJ6wk2+9e152iehzX5/3VVe47m2b6cIOiu9hyLuHWYoJ+3eRiuxzb7FToRkwmaoEMxjSboUEyjCToU02iCDsU0mqBDMY0m6FBMowk6FNNogg7FNJqgQzGNJuhQTKMJOhTTaIIOxTSaoEMxjSboUEyjCToU02iCDsU0uqnjbx3H4l75DIs5Fve0iZvMsbiXPv72yPr56AcvjV7w1mH7oPZ84Y6/+eHijDgAAAAArLZwCwHIkFZZtpRwAAAAAElFTkSuQmCC"/>
+</defs>
+</svg>

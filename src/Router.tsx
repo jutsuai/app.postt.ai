@@ -13,6 +13,8 @@ import SchedulePage from "./pages/schedule/SchedulePage";
 import DiscoverPage from "./pages/discover/DiscoverPage";
 import ProfilePage from "./pages/profile/ProfilePage";
 import AddWriter from "./pages/addWriter/AddWriter";
+import AuthPage from "./pages/auth/AuthPage";
+import SignupPage from "./pages/auth/signup/SignupPage";
 
 export default function Router() {
   return (
@@ -20,6 +22,10 @@ export default function Router() {
       <Route element={<AuthLayout />}>
         <Route path="login" element={<LoginPage />} />
         <Route path="auth/linkedin" element={<LinkedinCallbackPage />} />
+        <Route path="auth">
+          <Route index element={<AuthPage />} />
+          <Route path="signup" element={<SignupPage />} />
+        </Route>
       </Route>
 
       <Route path="linkedin">
