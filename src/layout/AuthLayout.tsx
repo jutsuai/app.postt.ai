@@ -9,17 +9,27 @@ export default function AuthLayout() {
           <Image
             src="/onboarding/bg-accent-1.svg"
             alt=""
-            className="w-full min-w-[1024px]"
+            className="w-full absolute top-4"
           />
-          <Image src="/postt-logo.svg" alt="" className="w-52 mx-auto" />
+          <Image
+            src="/postt-logo.svg"
+            alt=""
+            className="w-60 mx-auto my-auto"
+          />
+
           <Image
             src="/onboarding/bg-accent-2.svg"
             alt=""
-            className="w-full min-w-[1024px]"
+            className="w-full absolute bottom-4"
           />
         </div>
       </div>
-      <div className="w-full md:max-w-xl h-full flex items-center sm:max-w-lg">
+      <div className="w-full relative z-10 md:max-w-xl h-full flex items-center sm:max-w-lg">
+        <Image
+          src="/onboarding/auth-model.png"
+          alt=""
+          className="absolute hidden lg:inline-block -left-[32.6rem] drop-shadow-[20px_0px_20px_rgba(0,0,0,0.15)]"
+        />
         <Outlet />
       </div>
     </div>
