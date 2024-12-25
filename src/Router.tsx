@@ -15,6 +15,7 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import AddWriter from "./pages/addWriter/AddWriter";
 import AuthPage from "./pages/auth/AuthPage";
 import SignupPage from "./pages/auth/signup/SignupPage";
+import OnboardSuccess from "./pages/auth/signup/OnboardSuccess";
 
 export default function Router() {
   return (
@@ -24,9 +25,12 @@ export default function Router() {
         <Route path="auth/linkedin" element={<LinkedinCallbackPage />} />
         <Route path="auth">
           <Route index element={<AuthPage />} />
-          <Route path="signup" element={<SignupPage />} />
+          <Route path="signup">
+            <Route index element={<SignupPage />} />
+          </Route>
         </Route>
       </Route>
+      <Route path="auth/signup/onboard-success" element={<OnboardSuccess />} />
 
       <Route path="linkedin">
         <Route index element={<LinkedinPage />} />
