@@ -6,10 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import { FiPlus } from "react-icons/fi";
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import { useState } from "react";
 import { IoIosFlash } from "react-icons/io";
-import TopBar from "@/components/TopBar";
+import TopBar from "@/components/header/TopBar";
 
 const writers = [
   {

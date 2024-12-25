@@ -15,7 +15,7 @@ export default function ChooseAudience({ navigate }: { navigate: any }) {
     navigate("/auth/signup?onboarding=preview");
   };
   return (
-    <div className="flex min-w-96 flex-col items-center gap-4">
+    <div className="flex min-w-96 pt-6 flex-col items-center gap-4">
       <Image
         src="/onboarding/choose-audience.svg"
         alt=""
@@ -35,15 +35,14 @@ export default function ChooseAudience({ navigate }: { navigate: any }) {
             className="focus-within:border-primary-foreground h-16 border  rounded-xl px-3 py-2 flex flex-col gap-1 w-full"
           >
             <p className="text-sm font-medium">{data}</p>
-            <textarea
-              placeholder="Your audience"
-              className="w-full border-none p-0 outline-none text-xs h-6 resize-none"
-              rows={1}
+            <input
+              placeholder="Type the answer here.."
+              className="w-full border-none p-0 outline-none text-xs h-6 "
             />
           </div>
         ))}
 
-        <Button className="rounded-3xl">Next</Button>
+        <Button className="rounded-full mt-4">Next</Button>
       </form>
     </div>
   );

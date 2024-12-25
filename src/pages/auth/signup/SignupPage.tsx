@@ -89,7 +89,7 @@ export default function SignupPage() {
           }
         }}
       >
-        <DrawerContent className="px-4 pb-14 mx-4">
+        <DrawerContent className="px-6 pb-14 mx-4">
           <DrawerHeader>
             <DrawerTitle />
           </DrawerHeader>

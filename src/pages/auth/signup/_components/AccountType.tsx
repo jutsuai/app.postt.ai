@@ -9,7 +9,7 @@ export default function AccountType({
   navigate: any;
 }) {
   return (
-    <div className="flex pt-4 flex-col items-center gap-3">
+    <div className="flex pt-6 flex-col items-center gap-4">
       <Image
         src="/onboarding/account-type.svg"
         alt=""
@@ -25,7 +25,7 @@ export default function AccountType({
           setValue("accountType", "personal");
           navigate("?onboarding=audience");
         }}
-        className="w-full mt-4 h-11 justify-start active:border-primary hover:border-primary rounded-lg hover:text-foreground hover:bg-primary/20"
+        className="w-full mt-4 h-[52px] justify-start active:border-primary hover:border-primary rounded-lg hover:text-foreground hover:bg-primary/20"
         variant="outline"
       >
         Personal
@@ -35,7 +35,7 @@ export default function AccountType({
           setValue("accountType", "business");
           navigate("?onboarding=audience");
         }}
-        className="w-full  h-11 justify-start active:border-primary hover:border-primary rounded-lg hover:text-foreground hover:bg-primary/20"
+        className="w-full h-[52px] justify-start active:border-primary hover:border-primary rounded-lg hover:text-foreground hover:bg-primary/20"
         variant="outline"
       >
         Business

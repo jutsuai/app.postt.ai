@@ -6,13 +6,14 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import { FiPlus } from "react-icons/fi";
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 import { FaRegBell } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { MdOutlineAvTimer } from "react-icons/md";
+import { IoStopwatchOutline } from "react-icons/io5";
 
 const writers = [
   {
@@ -46,23 +47,13 @@ const writers = [
 ];
 
 export default function HomePage() {
-  const [searchText, setSearchText] = useState("");
-
-  const handleSubmit = () => {};
   return (
     <Wrapper>
-      <WrapperContent className="gap-4">
-        <Header
-          inputValue={searchText}
-          setInputValue={setSearchText}
-          placeHolder="Search an upcoming event..."
-          onClick={() => handleSubmit()}
-          buttonText="Search"
-        />
+      <WrapperContent className="gap-4 bg-muted/80 h-dvh overflow-y-auto">
+        <Header />
 
-        <div className="flex flex-col gap-4 mt-4">
-          <h6 className="text-lg font-semibold">Upcoming posts for today </h6>
-          <div className="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
+        <div className="grid sm:grid-cols-8 gap-8  sm:px-4">
+          <div className="grid grid-cols-2 bg-background p-4 rounded-2xl col-span-5 gap-4">
             <div className="flex flex-col gap-4 bg-primary-accent/40 p-4 rounded-3xl">
               <div className="flex items-center justify-between">
                 <Button
@@ -85,28 +76,55 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col gap-4 bg-secondary-accent/40 p-4 rounded-3xl">
-              <div className="flex items-center justify-between">
-                <Button
-                  size="icon"
-                  className="rounded-full text-foreground bg-secondary-accent"
-                  variant="secondary"
-                >
-                  <MdOutlineAvTimer />
-                </Button>
-                <Button size="icon" className="rounded-full" variant="ghost">
-                  <BsThreeDotsVertical />
-                </Button>
+            <div className="flex flex-col gap-4 ">
+              <div className="flex flex-col gap-4 bg-foreground/90 p-4 rounded-3xl">
+                <div className="flex items-center justify-between">
+                  <Button
+                    size="icon"
+                    className="rounded-full text-background bg-muted-foreground"
+                    variant="secondary"
+                  >
+                    <IoStopwatchOutline />
+                  </Button>
+                  <Button size="icon" className="rounded-full" variant="ghost">
+                    <BsThreeDotsVertical />
+                  </Button>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="text-3xl font-bold text-background">5</p>
+                  <p className="text-muted/60 text-xs">
+                    Total
+                    <br />
+                    draft posts
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <p className="text-3xl font-bold">5</p>
-                <p className="text-muted-foreground text-xs">
-                  Total
-                  <br />
-                  draft posts
-                </p>
+              <div className="flex flex-col gap-4 bg-secondary-accent/40 p-4 rounded-3xl">
+                <div className="flex items-center justify-between">
+                  <Button
+                    size="icon"
+                    className="rounded-full text-foreground bg-secondary-accent"
+                    variant="secondary"
+                  >
+                    <MdOutlineAvTimer />
+                  </Button>
+                  <Button size="icon" className="rounded-full" variant="ghost">
+                    <BsThreeDotsVertical />
+                  </Button>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <p className="text-3xl font-bold">5</p>
+                  <p className="text-muted-foreground text-xs">
+                    Total
+                    <br />
+                    draft posts
+                  </p>
+                </div>
               </div>
             </div>
+          </div>
+          <div className="bg-background h-full w-full col-span-3 p-4 rounded-2xl">
+            <h3 className="font-semibold text-lg ">Upcoming posts</h3>
           </div>
         </div>
       </WrapperContent>

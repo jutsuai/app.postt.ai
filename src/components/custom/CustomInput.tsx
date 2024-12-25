@@ -33,10 +33,7 @@ const CustomInput = forwardRef<
     <div className="grid w-full gap-2">
       {props?.label && (
         <Label
-          className={cn(
-            "flex gap-1 leading-tight text-muted-foreground",
-            labelClassName
-          )}
+          className={cn("flex gap-1 leading-tight ", labelClassName)}
           htmlFor={props?.id}
         >
           {props?.label}

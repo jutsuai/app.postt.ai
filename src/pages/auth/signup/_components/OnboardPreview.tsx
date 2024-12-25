@@ -21,8 +21,10 @@ export default function OnboardPreview({ navigate }: { navigate: any }) {
           <IoCloseOutline />
         </Button>
       </div>
-      <div className="w-full flex-1 h-full p-4 flex flex-col gap-6 mb-4">
-        <div className="w-full h-full bg-muted-foreground/25 rounded-3xl"></div>
+      <div className="w-full flex-1 h-full p-4 px-6 flex flex-col items-center justify-center gap-6 mb-4">
+        <div className="w-full flex flex-col items-center justify-center h-full bg-muted-foreground/25 rounded-2xl">
+          Preview
+        </div>
         <div className="flex gap-4 max-w-44 mx-auto w-full">
           {[1, 2, 3].map((_, index) => (
             <div
@@ -46,7 +48,7 @@ export default function OnboardPreview({ navigate }: { navigate: any }) {
             onClick={() => {
               navigate("?onboarding=connect");
             }}
-            className="bg-background w-full hover:bg-background/80 rounded-3xl"
+            className="bg-background w-full hover:bg-background/80 rounded-full"
           >
             Publish
           </Button>
@@ -54,7 +56,7 @@ export default function OnboardPreview({ navigate }: { navigate: any }) {
             onClick={() => {
               navigate("?onboarding=connect");
             }}
-            className=" w-full rounded-3xl border border-foreground"
+            className=" w-full rounded-full border border-foreground"
           >
             Schedule
           </Button>

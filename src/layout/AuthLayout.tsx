@@ -16,7 +16,11 @@ export default function AuthLayout() {
             alt=""
             className="w-60 mx-auto my-auto"
           />
-
+          <Image
+            src="/onboarding/auth-model.png"
+            alt=""
+            className="absolute hidden lg:inline-block right-[32.2rem] bottom-0 z-20 drop-shadow-[20px_0px_20px_rgba(0,0,0,0.15)]"
+          />
           <Image
             src="/onboarding/bg-accent-2.svg"
             alt=""
@@ -25,11 +29,6 @@ export default function AuthLayout() {
         </div>
       </div>
       <div className="w-full relative z-10 md:max-w-xl h-full flex items-center sm:max-w-lg">
-        <Image
-          src="/onboarding/auth-model.png"
-          alt=""
-          className="absolute hidden lg:inline-block -left-[32.6rem] drop-shadow-[20px_0px_20px_rgba(0,0,0,0.15)]"
-        />
         <Outlet />
       </div>
     </div>
