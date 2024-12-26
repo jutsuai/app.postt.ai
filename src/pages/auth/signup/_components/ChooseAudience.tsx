@@ -15,7 +15,7 @@ export default function ChooseAudience({ navigate }: { navigate: any }) {
     navigate("/auth/signup?onboarding=preview");
   };
   return (
-    <div className="flex min-w-96 pt-6 flex-col items-center gap-4">
+    <div className="flex sm:min-w-96 pt-6 -mx-6 -mb-14 px-6 pb-10 flex-col items-center gap-4 max-h-[90dvh] overflow-y-auto">
       <Image
         src="/onboarding/choose-audience.svg"
         alt=""

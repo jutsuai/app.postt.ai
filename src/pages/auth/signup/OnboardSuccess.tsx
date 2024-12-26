@@ -28,7 +28,7 @@ export default function OnboardSuccess() {
           {days.map((day, index) => (
             <div
               key={day}
-              className="flex flex-col gap-2 justify-center items-center font-medium text-sm"
+              className="flex flex-col gap-2 justify-center items-center font-medium text-xs sm:text-sm"
             >
               <p
                 className={cn(completed[index] && "text-primary font-semibold")}
@@ -37,7 +37,7 @@ export default function OnboardSuccess() {
               </p>
               <div
                 className={cn(
-                  "size-11 text-primary text-lg bg-primary-foreground/60 border-8 border-background rounded-full grid place-items-center",
+                  "sm:size-11 size-8 text-primary sm:text-lg bg-primary-foreground/60 sm:border-8 border-4 border-background rounded-full grid place-items-center",
                   completed[index] &&
                     " border-primary shadow-lg shadow-black/30"
                 )}
@@ -48,10 +48,10 @@ export default function OnboardSuccess() {
           ))}
         </div>
 
-        <p className="text-gray-700">
+        <p className="text-muted-foreground text-xs sm:text-sm">
           Keep it up, you're{" "}
-          <span className="text-blue-600 font-bold">5 days</span> away from a{" "}
-          <span className="text-blue-600 font-bold">7 day streak!</span>
+          <span className="text-primary font-bold">5 days</span> away from a{" "}
+          <span className="text-primary font-bold">7 day streak!</span>
         </p>
       </div>
 

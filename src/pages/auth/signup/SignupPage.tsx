@@ -91,7 +91,7 @@ export default function SignupPage() {
       >
         <DrawerContent className="px-6 pb-14 mx-4">
           <DrawerHeader>
-            <DrawerTitle />
+            <DrawerTitle hidden />
           </DrawerHeader>
           {onboarding === "accounttype" ? (
             <AccountType setValue={setValue} navigate={navigate} />
