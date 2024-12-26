@@ -7,7 +7,7 @@ import useBreakpoint from "@/lib/useBreakpoint";
 export default function TopBar() {
   const { sm } = useBreakpoint();
   return (
-    <div className="flex h-full items-center -m-4 px-4 py-8 gap-4 justify-between sm:bg-background">
+    <div className="flex h-full items-center -m-4 px-7 py-8 gap-4 justify-between sm:bg-background">
       {sm ? (
         <Avatar>
           <AvatarImage src="https://i.pravatar.cc/300" alt="Profile" />
