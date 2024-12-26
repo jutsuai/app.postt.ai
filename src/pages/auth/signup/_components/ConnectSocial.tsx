@@ -6,7 +6,7 @@ export default function ConnectSocial({ navigate }: { navigate: any }) {
     navigate("/auth/signup/onboard-success");
   };
   return (
-    <div className="flex  h-[80dvh]  max-w-md  justify-center flex-col items-center gap-4">
+    <div className="flex  h-[80dvh]  max-w-md  justify-center flex-col items-center px-4 gap-4">
       <Image
         src="/onboarding/social-linkedin.svg"
         alt=""
