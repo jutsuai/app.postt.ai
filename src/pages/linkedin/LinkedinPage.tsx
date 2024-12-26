@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import httpClient from "../../lib/httpClient";
 import { useAuth } from "../../context/AuthContext";
+import { Button } from "@/components/ui/button";
 
 export default function LinkedinPage() {
   const { linkedin, user } = useAuth();
@@ -75,6 +76,34 @@ export default function LinkedinPage() {
       });
   };
 
+  const [loadingPost, setLoadingPost] = useState(false);
+  const [text, setText] = useState("");
+
+  const handlePost = async (orgId: any) => {
+    console.log("Posting to org:", orgId);
+    setLoadingPost(true);
+
+    const data = {
+      accessToken: user?.tokens?.access_token,
+
+      content: text,
+    };
+
+    httpClient()
+      .post(`/linkedin/organizations/${orgId}/post/text`, data)
+      .then((res) => {
+        console.log("Post response:", res.data);
+
+        // Optionally, set posts in state for rendering
+      })
+      .catch((err) => {
+        console.error("Error posting:", err);
+      })
+      .finally(() => {
+        setLoadingPost(false);
+      });
+  };
+
   return (
     <div className="flex  flex-col p-4 gap-4">
       <div className="flex gap-4 ">
@@ -102,9 +131,27 @@ export default function LinkedinPage() {
           handleGetOrgData
         </button>
       </div>
+      {/*  */}
       -------------------------------------
       {JSON.stringify(orgData)}
       -------------------------------------
+      <button onClick={() => handlePost(91137041)}>91137041</button>
+      {/*  */}
+      {orgData?.map((org: any) => (
+        <Button key={org.id} onClick={() => handlePost(org.id)}>
+          <h1>{org.name}</h1>
+          <h2>{org.id}</h2>
+          <h3>{org.logoUrl}</h3>
+        </Button>
+      ))}
+      {/*  */}
+      {loadingPost && <h1>Loading Post...</h1>}
+      {/*  */}
+      <input
+        type="text"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
       <div>
         <button
           className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium"
