@@ -7,14 +7,13 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export default function AppSidebarContent() {
   const { pathname } = useLocation();
-
-  // const { sm } = useBreakpoint();
+  const navigate = useNavigate();
   const { open: sidebarMode } = useSidebar();
 
   const content = [
@@ -128,47 +127,38 @@ export default function AppSidebarContent() {
 
               return (
                 <SidebarMenuItem
+                  onClick={() => navigate(item.url)}
                   key={item?.label}
                   className={cn(
-                    "transition-all duration-200 hover:!bg-primary-accent/60 !rounded-full",
-                    sidebarMode ? "mx-4 px-2 py-1.5" : "mx-1.5 py-1.5 pl-1"
+                    "transition-all duration-200 cursor-pointer hover:!bg-primary-accent/60 !rounded-full",
+                    sidebarMode ? "mx-2 px-2 py-1.5" : "mx-1.5 py-1.5 pl-1"
                   )}
                 >
-                  <SidebarMenuButton asChild className="hover:!bg-transparent">
-                    <Link
-                      to={item.url}
-                      className="!rounded-full hover:!bg-transparent"
-                      onClick={() => {
-                        // if (sm) {
-                        //   toggleSidebar();
-                        // }
-                      }}
-                    >
-                      {checkMatch && (
-                        <motion.span
-                          key={item?.label}
-                          className="absolute inset-0 !rounded-full !bg-primary-accent/60"
-                          layoutId="activeSidebarItem"
-                          transition={{ duration: 0.2 }}
-                        />
+                  <SidebarMenuButton className="hover:!bg-transparent">
+                    {checkMatch && (
+                      <motion.span
+                        key={item?.label}
+                        className="absolute inset-0 !rounded-full !bg-primary-accent/60"
+                        layoutId="activeSidebarItem"
+                        transition={{ duration: 0.2 }}
+                      />
+                    )}
+                    <span
+                      className={cn(
+                        "z-10 transition-colors duration-200",
+                        checkMatch ? "text-primary" : "text-muted-foreground"
                       )}
-                      <span
-                        className={cn(
-                          "z-10 transition-colors duration-200",
-                          checkMatch ? "text-primary" : "text-muted-foreground"
-                        )}
-                      >
-                        {item.icon}
-                      </span>
-                      <span
-                        className={cn(
-                          "z-10 font-semibold text-sm transition-colors duration-200",
-                          checkMatch ? "text-primary" : "text-muted-foreground"
-                        )}
-                      >
-                        {item.label}
-                      </span>
-                    </Link>
+                    >
+                      {item.icon}
+                    </span>
+                    <span
+                      className={cn(
+                        "z-10 font-semibold text-sm transition-colors duration-200",
+                        checkMatch ? "text-primary" : "text-muted-foreground"
+                      )}
+                    >
+                      {item.label}
+                    </span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               );

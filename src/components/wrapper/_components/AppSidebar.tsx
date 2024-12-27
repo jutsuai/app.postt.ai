@@ -1,7 +1,7 @@
 import { Sidebar, SidebarRail } from "@/components/ui/sidebar";
 import AppSidebarHeader from "./AppSidebarHeader";
 import AppSidebarContent from "./AppSidebarContent";
-// import AppSidebarFooter from "./AppSidebarFooter";
+import AppSidebarFooter from "./AppSidebarFooter";
 
 export default function AppSidebar() {
   return (
@@ -14,7 +14,7 @@ export default function AppSidebar() {
         <AppSidebarContent />
 
         {/* Sidebar Footer Section */}
-        {/* <AppSidebarFooter /> */}
+        <AppSidebarFooter />
 
         <SidebarRail />
       </Sidebar>

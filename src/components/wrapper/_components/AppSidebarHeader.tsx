@@ -27,7 +27,7 @@ export default function AppSidebarHeader() {
           <svg
             className={cn(
               " h-7 w-fit min-w-fit overflow-hidden fill-current duration-150 transition-[margin-left]",
-              sidebarMode ? "ml-4" : "ml-3"
+              sidebarMode ? "ml-2" : "ml-3"
             )}
             width="285"
             height="87"
@@ -68,34 +68,7 @@ export default function AppSidebarHeader() {
               fill="#090909"
             />
           </svg>
-
-          {/* <p
-            className={cn(
-              "mb-0.5 ml-1 text-xs font-bold text-muted-foreground",
-              sidebarMode ? "sm:inline" : "hidden",
-            )}
-          >
-            BETA
-          </p> */}
         </Link>
-
-        {/* <div className="hidden justify-between gap-2 sm:flex">
-          <QuickSearchDialog>
-            <SidebarMenuItem
-              className={cn(
-                "mt-4 box-border rounded-full bg-muted-foreground/40 from-[#574ce3] to-[#1BD9FE] !p-0.5 transition-all hover:bg-gradient-to-r",
-                sidebarMode ? "w-full" : "w-[calc(100%+5px)]",
-              )}
-            >
-              <SidebarMenuButton className="box-border w-full justify-start gap-2 rounded-full bg-background font-medium transition hover:bg-background">
-                <span className="">
-                  <LuSearch className="size-3.5" />
-                </span>
-                <span>{t("Quick Search")}</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </QuickSearchDialog>
-        </div> */}
       </SidebarMenu>
       <Button
         onClick={toggleSidebar}
