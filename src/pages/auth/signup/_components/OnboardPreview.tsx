@@ -9,7 +9,7 @@ export default function OnboardPreview({ navigate }: { navigate: any }) {
   return (
     // <div className="absolute grid place-items-center z-10 bg-background sm:bg-transparent inset-0 sm:bg-gradient-to-b from-foreground/50 via-transparent to-foreground/50">
     <div className="sm:max-w-md px-4 sm:p-6 bg-background  w-full h-full  border-none flex flex-col gap-4 shadow-none justify-center rounded-none sm:rounded-2xl">
-      <div className="flex py-2 items-center justify-between ">
+      <div className="flex pt-4 items-center justify-between ">
         <Button
           onClick={() => window.history.back()}
           variant="ghost"
@@ -47,7 +47,7 @@ export default function OnboardPreview({ navigate }: { navigate: any }) {
           ))}
         </div>
       </div>
-      <div className="p-7 rounded-2xl space-y-4 bg-primary-foreground">
+      <div className="p-7 z-10 rounded-2xl space-y-4 bg-primary-foreground">
         <p className="font-semibold text-center">
           Done! Does it look good for you? Click on Publish to share it with the
           world.
