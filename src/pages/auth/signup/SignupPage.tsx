@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import useBreakpoint from "@/lib/useBreakpoint";
 import { IoIosArrowBack } from "react-icons/io";
@@ -16,7 +16,7 @@ import ChooseAudience from "./_components/ChooseAudience";
 import OnboardPreview from "./_components/OnboardPreview";
 import ConnectSocial from "./_components/ConnectSocial";
 
-type FormValues = {
+export type SignupFormValues = {
   firstName: string;
   lastName: string;
   email: string;
@@ -24,12 +24,11 @@ type FormValues = {
   acceptTerms: boolean;
 
   type: "personal" | "organization";
-  // accountType: "personal" | "business";
 
-  targetAudience: String;
-  industry: String;
-  valueProposition: String;
-  brandPersonality: String;
+  targetAudience: string;
+  industry: string;
+  valueProposition: string;
+  brandPersonality: string;
 };
 
 export default function SignupPage() {
@@ -37,11 +36,13 @@ export default function SignupPage() {
     register,
     handleSubmit,
     setValue,
-
+    watch,
     formState: { errors },
-  } = useForm<FormValues>();
-
-  const navigate = useNavigate();
+  } = useForm<SignupFormValues>({
+    defaultValues: {
+      acceptTerms: true,
+    },
+  });
 
   const [searchParams] = useSearchParams();
   const onboarding = searchParams.get("onboarding");
@@ -49,12 +50,6 @@ export default function SignupPage() {
   const bp = useBreakpoint();
 
   const [acceptTerms, setAcceptTerms] = useState(true);
-
-  const onSubmit: SubmitHandler<FormValues> = (initialData) => {
-    const data = { ...initialData, acceptTerms: acceptTerms };
-    console.log(data);
-    navigate("?onboarding=accounttype");
-  };
 
   return !bp?.sm && onboarding && onboarding !== "preview" ? (
     <div className="p-6  bg-background rounded-2xl w-[28rem]">
@@ -67,25 +62,30 @@ export default function SignupPage() {
         <IoIosArrowBack /> Back
       </Button>
       {onboarding === "accounttype" ? (
-        <AccountType setValue={setValue} navigate={navigate} />
+        <AccountType setValue={setValue} />
       ) : onboarding === "audience" ? (
-        <ChooseAudience navigate={navigate} />
+        <ChooseAudience
+          handleSubmit={handleSubmit}
+          register={register}
+          watch={watch}
+          errors={errors}
+        />
       ) : onboarding === "connect" ? (
-        <ConnectSocial navigate={navigate} />
+        <ConnectSocial />
       ) : null}
     </div>
   ) : (
     <>
       {onboarding === "preview" || onboarding === "connect" ? (
-        <OnboardPreview navigate={navigate} />
+        <OnboardPreview />
       ) : (
         <LocalSignup
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
           errors={errors}
           register={register}
           acceptTerms={acceptTerms}
           setAcceptTerms={setAcceptTerms}
+          handleSubmit={handleSubmit}
+          setValue={setValue}
         />
       )}
       <Drawer
@@ -106,11 +106,16 @@ export default function SignupPage() {
             <DrawerTitle hidden />
           </DrawerHeader>
           {onboarding === "accounttype" ? (
-            <AccountType setValue={setValue} navigate={navigate} />
+            <AccountType setValue={setValue} />
           ) : onboarding === "audience" ? (
-            <ChooseAudience navigate={navigate} />
+            <ChooseAudience
+              handleSubmit={handleSubmit}
+              register={register}
+              watch={watch}
+              errors={errors}
+            />
           ) : onboarding === "connect" ? (
-            <ConnectSocial navigate={navigate} />
+            <ConnectSocial />
           ) : null}
         </DrawerContent>
       </Drawer>

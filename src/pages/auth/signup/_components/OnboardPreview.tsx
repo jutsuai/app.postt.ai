@@ -3,8 +3,10 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoCloseOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
-export default function OnboardPreview({ navigate }: { navigate: any }) {
+export default function OnboardPreview() {
+  const navigate = useNavigate();
   const [tab, setTab] = useState(0);
   return (
     // <div className="absolute grid place-items-center z-10 bg-background sm:bg-transparent inset-0 sm:bg-gradient-to-b from-foreground/50 via-transparent to-foreground/50">

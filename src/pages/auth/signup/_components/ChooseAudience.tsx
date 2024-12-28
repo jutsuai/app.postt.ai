@@ -1,20 +1,47 @@
 import Image from "@/components/Image";
 import { Button } from "@/components/ui/button";
+import { SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { SignupFormValues } from "../SignupPage";
+import { cn } from "@/lib/utils";
 
-export default function ChooseAudience({ navigate }: { navigate: any }) {
+export default function ChooseAudience({
+  handleSubmit,
+  register,
+  watch,
+  errors,
+}: {
+  handleSubmit: any;
+  register: any;
+  watch: any;
+  errors: any;
+}) {
+  const navigate = useNavigate();
+
   const linkedInAudience = [
-    "What is your audience?",
-    "What is your industry?",
-    "What is your value proposition?",
-    "What tone and style do you prefer?",
+    {
+      dataName: "targetAudience",
+      question: "What is your audience?",
+    },
+    {
+      dataName: "industry",
+      question: "What is your industry?",
+    },
+    {
+      dataName: "valueProposition",
+      question: "What is your value proposition?",
+    },
+    {
+      dataName: "brandPersonality",
+      question: "What tone and style do you prefer?",
+    },
   ];
 
-  const onSubmit = (e: any) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<SignupFormValues> = (data) => {
     console.log("submitted");
 
     console.log("navigating to next page");
-    console.log(e);
+    console.log(data);
     // navigate("/signup?onboarding=preview");
   };
   return (
@@ -25,27 +52,44 @@ export default function ChooseAudience({ navigate }: { navigate: any }) {
         className="size-[140px]"
       />
       <h3 className="text-xl text-center font-semibold">
-        Hi Adnan, let's give you full experience
+        Hi {watch("firstName") || "there"}, let's give you full experience
       </h3>
       <p className="text-muted-foreground text-sm -mt-2 text-center">
-        answer to get a Linkedin Post
+        Answer to get a Linkedin Post
       </p>
 
-      <form onSubmit={onSubmit} className="w-full flex flex-col gap-4 mt-3">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full flex flex-col gap-4 mt-3"
+      >
         {linkedInAudience.map((data, index) => (
           <div
             key={index}
-            className="focus-within:border-primary-foreground h-16 border  rounded-xl px-3 py-2 flex flex-col gap-1 w-full"
+            className={cn(
+              " h-16 border rounded-xl px-3 py-2 flex flex-col gap-1 w-full",
+              errors[data?.dataName]
+                ? "border-red-500 focus-within:border-red-500"
+                : "focus-within:border-primary-foreground"
+            )}
           >
-            <p className="text-sm font-medium">{data}</p>
+            <p className="text-sm font-medium">
+              {data?.question}{" "}
+              <span className="text-base font-medium leading-none text-red-800">
+                *
+              </span>
+            </p>
             <input
+              type="text"
+              {...register(data?.dataName, {
+                required: "This field is required",
+              })}
               placeholder="Type the answer here.."
               className="w-full border-none p-0 outline-none text-xs h-6 "
             />
           </div>
         ))}
 
-        <Button className="rounded-full mt-4">Next</Button>
+        <Button className="rounded-full mt-2">Next</Button>
       </form>
     </div>
   );

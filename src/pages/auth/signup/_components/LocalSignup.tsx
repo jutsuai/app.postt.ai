@@ -11,26 +11,33 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authButtons from "../../_components/authButtonData";
 import { cn } from "@/lib/utils";
 import Image from "@/components/Image";
+import { SubmitHandler } from "react-hook-form";
+import { SignupFormValues } from "../SignupPage";
 
 export default function LocalSignup({
-  handleSubmit,
-  onSubmit,
+  setValue,
   errors,
   register,
   acceptTerms,
   setAcceptTerms,
+  handleSubmit,
 }: {
-  handleSubmit: any;
-  onSubmit: any;
+  setValue: any;
   errors: any;
   register: any;
-  acceptTerms: any;
+  acceptTerms: boolean;
   setAcceptTerms: any;
+  handleSubmit: any;
 }) {
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<SignupFormValues> = () => {
+    navigate("?onboarding=accounttype");
+  };
   return (
     <div className="h-full flex items-center sm:bg-transparent bg-background">
       <Card className="sm:max-w-md sm:h-auto w-full border-none shadow-none sm:border  rounded-none sm:rounded-3xl">
@@ -102,7 +109,10 @@ export default function LocalSignup({
                 <Checkbox
                   id="acceptTerms"
                   checked={acceptTerms}
-                  onCheckedChange={(e) => setAcceptTerms(e)}
+                  onCheckedChange={(e) => {
+                    setAcceptTerms(e);
+                    setValue("acceptTerms", e);
+                  }}
                 />
                 <Label
                   htmlFor="acceptTerms"

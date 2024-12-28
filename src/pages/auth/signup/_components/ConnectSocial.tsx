@@ -1,7 +1,10 @@
 import Image from "@/components/Image";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
-export default function ConnectSocial({ navigate }: { navigate: any }) {
+export default function ConnectSocial() {
+  const navigate = useNavigate();
+
   const handleSubmit = () => {
     navigate("/signup/onboard-success");
   };

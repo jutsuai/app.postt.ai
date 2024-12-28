@@ -1,13 +1,9 @@
 import Image from "@/components/Image";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
-export default function AccountType({
-  setValue,
-  navigate,
-}: {
-  setValue: any;
-  navigate: any;
-}) {
+export default function AccountType({ setValue }: { setValue: any }) {
+  const navigate = useNavigate();
   return (
     <div className="flex pt-6 flex-col items-center gap-4 sm:max-w-md">
       <Image
@@ -22,7 +18,7 @@ export default function AccountType({
 
       <Button
         onClick={() => {
-          setValue("accountType", "personal");
+          setValue("type", "personal");
           navigate("?onboarding=audience");
         }}
         className="w-full mt-4 h-[52px] justify-start active:border-primary hover:border-primary rounded-lg hover:text-foreground hover:bg-primary/20"
@@ -32,13 +28,13 @@ export default function AccountType({
       </Button>
       <Button
         onClick={() => {
-          setValue("accountType", "organization");
+          setValue("type", "organization");
           navigate("?onboarding=audience");
         }}
         className="w-full h-[52px] justify-start active:border-primary hover:border-primary rounded-lg hover:text-foreground hover:bg-primary/20"
         variant="outline"
       >
-        Business
+        Organization
       </Button>
     </div>
   );
