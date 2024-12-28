@@ -21,7 +21,7 @@ export default function AuthLayout() {
             <Image
               src="/onboarding/auth-model.png"
               alt=""
-              className="absolute h-[100%] hidden md:inline-block bottom-0 right-0 xl:-translate-x-20 z-20 drop-shadow-[20px_0px_20px_rgba(0,0,0,0.15)]"
+              className="absolute  hidden md:inline-block bottom-0 right-0 xl:-translate-x-20 z-20 drop-shadow-[20px_0px_20px_rgba(0,0,0,0.15)]"
             />
             <Image
               src="/onboarding/bg-accent-2.svg"
