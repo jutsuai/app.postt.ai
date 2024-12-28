@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 export default function ChooseAudience({ navigate }: { navigate: any }) {
   const linkedInAudience = [
     "What is your audience?",
-    "Who is your target audience?",
     "What is your industry?",
     "What is your value proposition?",
+    "What tone and style do you prefer?",
   ];
 
   const onSubmit = (e: any) => {

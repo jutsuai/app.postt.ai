@@ -32,7 +32,7 @@ export default function AccountType({
       </Button>
       <Button
         onClick={() => {
-          setValue("accountType", "business");
+          setValue("accountType", "organization");
           navigate("?onboarding=audience");
         }}
         className="w-full h-[52px] justify-start active:border-primary hover:border-primary rounded-lg hover:text-foreground hover:bg-primary/20"
