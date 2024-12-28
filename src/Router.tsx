@@ -16,19 +16,39 @@ import SignupPage from "./pages/auth/signup/SignupPage";
 import OnboardSuccess from "./pages/auth/signup/OnboardSuccess";
 
 export default function Router() {
+  // const { isAuthenticated  } = useAuth();
+  const isAuthenticated = false;
+
+  return isAuthenticated === null ? (
+    <div>Loading...</div>
+  ) : isAuthenticated ? (
+    <AppRouter />
+  ) : (
+    <RootRouter />
+  );
+}
+
+const RootRouter = () => {
   return (
     <Routes>
-      <Route element={<AuthLayout />}>
+      <Route path="/" element={<AuthLayout />}>
+        <Route index element={<AuthPage />} />
+
         <Route path="login" element={<LoginPage />} />
         <Route path="auth/linkedin" element={<LinkedinCallbackPage />} />
-        <Route path="auth">
-          <Route index element={<AuthPage />} />
-          <Route path="signup">
-            <Route index element={<SignupPage />} />
-          </Route>
+
+        <Route path="signup">
+          <Route index element={<SignupPage />} />
         </Route>
       </Route>
-      <Route path="auth/signup/onboard-success" element={<OnboardSuccess />} />
+    </Routes>
+  );
+};
+
+const AppRouter = () => {
+  return (
+    <Routes>
+      <Route path="onboarding" element={<OnboardSuccess />} />
 
       <Route path="linkedin">
         <Route index element={<LinkedinPage />} />
@@ -45,4 +65,4 @@ export default function Router() {
       </Route>
     </Routes>
   );
-}
+};

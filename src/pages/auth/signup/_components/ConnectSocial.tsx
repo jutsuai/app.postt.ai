@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 export default function ConnectSocial({ navigate }: { navigate: any }) {
   const handleSubmit = () => {
-    navigate("/auth/signup/onboard-success");
+    navigate("/signup/onboard-success");
   };
   return (
     <div className="flex  h-[80dvh]  max-w-md  justify-center flex-col items-center px-4 gap-4">

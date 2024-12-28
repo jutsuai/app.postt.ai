@@ -7,6 +7,7 @@ import { MdDone } from "react-icons/md";
 export default function OnboardSuccess() {
   const days = ["M", "T", "W", "T", "F", "S", "S"];
   const completed = [false, true, false, true, true, false, false];
+
   return (
     <div className="w-dvw h-dvh bg-primary-foreground/60 overflow-hidden relative flex flex-col justify-center items-center">
       <Image

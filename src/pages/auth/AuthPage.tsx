@@ -45,7 +45,7 @@ export default function AuthPage() {
           </p>
 
           <div className="grid grid-cols-2 max-w-xs mx-auto gap-2 px-4 items-center">
-            <Link to="/auth/signin" className="w-full">
+            <Link to="/login" className="w-full">
               <Button
                 variant="outline"
                 className="bg-foreground hover:bg-foreground border-muted-foreground h-10 w-full  text-white rounded-3xl"
@@ -53,7 +53,7 @@ export default function AuthPage() {
                 Sign In
               </Button>
             </Link>
-            <Link to="/auth/signup" className="w-full">
+            <Link to="/signup" className="w-full">
               <Button className="rounded-3xl w-full h-10 text-black">
                 Register
               </Button>
