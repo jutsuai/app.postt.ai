@@ -22,7 +22,14 @@ type FormValues = {
   email: string;
   password: string;
   acceptTerms: boolean;
-  accountType: "personal" | "business";
+
+  type: "personal" | "organization";
+  // accountType: "personal" | "business";
+
+  targetAudience: String;
+  industry: String;
+  valueProposition: String;
+  brandPersonality: String;
 };
 
 export default function SignupPage() {
