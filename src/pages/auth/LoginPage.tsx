@@ -1,118 +1,124 @@
-import React from "react";
-import { FaFacebook, FaGoogle, FaLinkedin } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
+import authButtons from "./_components/authButtonData";
+import { cn } from "@/lib/utils";
+import Image from "@/components/Image";
+import CustomInput from "@/components/custom/CustomInput";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+type FormValues = {
+  email: string;
+  password: string;
+};
 
 export default function LoginPage() {
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    // Handle your form submission logic here
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
 
-  const handleSocialLogin = (provider: any) => {
-    // Implement social login logic with the given provider
-    console.log(`Logging in with ${provider}`);
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    console.log(data);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900">Welcome Back</h2>
-          <p className="text-gray-500 mt-2">Sign in to your account</p>
-        </div>
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+    <div className="h-full w-full sm:max-w-md flex items-center sm:bg-transparent bg-background">
+      <Card className=" sm:h-auto w-full border-none shadow-none  rounded-none sm:rounded-3xl">
+        <CardHeader>
+          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardDescription>
+            Enter your email below to login to your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="gap-8 flex flex-col">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="grid gap-4">
+              <CustomInput
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Invalid email format",
+                  },
+                })}
+                id="email"
+                type="email"
+                placeholder="user@jutsu.ai"
+                autoComplete="email"
+                label="Email"
+                errors={errors}
+              />
+              <CustomInput
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters",
+                  },
+                  // validate: (value) => validateStrongPass(value),
+                })}
+                id="password"
+                type="password"
+                placeholder="********"
+                autoComplete="password"
+                label="Password"
+                errors={errors}
+              />
+            </div>
+            <Button
+              type="submit"
+              className="w-full rounded-full text-black mt-6"
             >
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="you@example.com"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
-              required
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="flex justify-between text-sm font-medium text-gray-700"
-            >
-              <span>Password</span>
-              <a href="#" className="text-indigo-600 hover:text-indigo-500">
-                Forgot?
-              </a>
-            </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="••••••••"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full flex justify-center py-3 px-4 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
-          >
-            Sign in
-          </button>
-        </form>
-
-        <div className="relative mt-6">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300"></div>
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">
+              Login
+            </Button>
+          </form>
+          <div className="flex items-center gap-4 w-full max-w-sm mx-auto">
+            <Separator className="flex-1" />
+            <span className="text-sm text-muted-foreground">
               Or continue with
             </span>
+
+            <Separator className="flex-1" />
           </div>
-        </div>
-
-        <div className="flex gap-3">
-          {/* LinkedIn Button */}
-          <Link to={import.meta.env.VITE_API_URL + "/linkedin/accessToken"}>
-            <button className="flex-1 inline-flex justify-center py-3 items-center gap-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-gray-700 font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
-              <FaLinkedin />
-              LinkedIn
-            </button>
-          </Link>
-
-          {/* Facebook Button */}
-          <button
-            onClick={() => handleSocialLogin("Facebook")}
-            className="flex-1 inline-flex items-center gap-2 justify-center py-3 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-gray-700 font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
-          >
-            <FaFacebook />
-            Facebook
-          </button>
-
-          {/* Google Button */}
-          <button
-            onClick={() => handleSocialLogin("Google")}
-            className="flex-1 inline-flex items-center gap-2 justify-center py-3 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-gray-700 font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
-          >
-            <FaGoogle />
-            Google
-          </button>
-        </div>
-
-        <p className="mt-6 text-center text-sm text-gray-600">
-          Don&apos;t have an account?{" "}
-          <a
-            href="#"
-            className="text-indigo-600 hover:text-indigo-500 font-medium"
-          >
+          <div className="flex gap-4 mx-auto">
+            {authButtons.map((button, index) => (
+              <Button
+                key={index}
+                variant="outline"
+                size="icon"
+                className={cn("rounded-lg", `text-[${button.accent}`)}
+              >
+                {button.logo ? (
+                  <Image
+                    src={button.logo}
+                    className="h-4 w-4"
+                    alt={button.label}
+                  />
+                ) : (
+                  button.icon
+                )}
+              </Button>
+            ))}
+          </div>
+          <p className="text-xs text-center"></p>
+        </CardContent>
+        <CardFooter className="text-center flex items-center justify-center text-xs -mt-6 gap-1 ">
+          Don't have an account?{" "}
+          <Link className="text-primary" to={"/signup"}>
             Sign up
-          </a>
-        </p>
-      </div>
+          </Link>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

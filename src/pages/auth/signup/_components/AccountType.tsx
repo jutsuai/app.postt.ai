@@ -9,7 +9,7 @@ export default function AccountType({
   navigate: any;
 }) {
   return (
-    <div className="flex pt-6 flex-col items-center gap-4">
+    <div className="flex pt-6 flex-col items-center gap-4 sm:max-w-md">
       <Image
         src="/onboarding/account-type.svg"
         alt=""

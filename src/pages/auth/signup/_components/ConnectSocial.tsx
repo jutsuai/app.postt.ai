@@ -6,13 +6,13 @@ export default function ConnectSocial({ navigate }: { navigate: any }) {
     navigate("/signup/onboard-success");
   };
   return (
-    <div className="flex  h-[80dvh]  max-w-md  justify-center flex-col items-center px-4 gap-4">
+    <div className="flex h-[80dvh] sm:h-auto sm:pt-6  max-w-md  justify-center flex-col items-center gap-4">
       <Image
         src="/onboarding/social-linkedin.svg"
         alt=""
         className="size-[140px]"
       />
-      <h3 className="text-lg font-semibold text-center w-dvw">
+      <h3 className="text-lg font-semibold text-center ">
         Great, let's connect your
         <br /> Linkedin account
       </h3>

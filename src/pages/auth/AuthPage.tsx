@@ -10,7 +10,7 @@ export default function AuthPage() {
   return (
     <>
       {sm && (
-        <>
+        <div className="absolute inset-0 bg-primary-foreground/60 overflow-hidden ">
           <Image
             src="/onboarding/bg-accent-1.svg"
             alt=""
@@ -31,11 +31,11 @@ export default function AuthPage() {
             alt=""
             className="w-full absolute bottom-56"
           />
-        </>
+        </div>
       )}
-      <div className="z-10 grid place-items-center absolute sm:relative  left-0 right-0 bottom-0 bg-foreground sm:bg-transparent  bg-gradient-to-b sm:from-transparent sm:to-transparent from-foreground/50 via-transparent to-foreground/50">
-        <div className="bg-gradient-to-b right-0 left-0 h-8 sm:hidden absolute sm:relative -top-8 to-foreground via-black/80 from-transparent " />
-        <div className="sm:bg-foreground max-w-md py-6 sm:p-6 sm:rounded-xl text-center">
+      <div className="z-10 grid place-items-center absolute sm:relative  left-0 right-0 bottom-0  sm:bg-transparent  bg-gradient-to-t from-transparent to-foreground">
+        {/* <div className="bg-gradient-to-b right-0 left-0 h-8 sm:hidden absolute sm:relative -top-8 to-foreground via-black/80 from-transparent " /> */}
+        <div className="sm:bg-foreground max-w-md py-6 pt-12 sm:p-6 sm:rounded-xl text-center">
           <h1 className="text-white text-xl font-medium">
             Automate content creation
           </h1>
@@ -48,13 +48,13 @@ export default function AuthPage() {
             <Link to="/login" className="w-full">
               <Button
                 variant="outline"
-                className="bg-foreground hover:bg-foreground border-muted-foreground h-10 w-full  text-white rounded-3xl"
+                className="bg-foreground hover:bg-foreground border-muted-foreground  w-full  text-white rounded-full"
               >
                 Sign In
               </Button>
             </Link>
             <Link to="/signup" className="w-full">
-              <Button className="rounded-3xl w-full h-10 text-black">
+              <Button className="rounded-full w-full  text-black">
                 Register
               </Button>
             </Link>

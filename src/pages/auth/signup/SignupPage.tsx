@@ -57,8 +57,13 @@ export default function SignupPage() {
   };
 
   return !bp?.sm && onboarding && onboarding !== "preview" ? (
-    <div className="p-4 border bg-background rounded-2xl min-w-96 shadow-lg">
-      <Button onClick={() => window.history.back()} variant="ghost" size="sm">
+    <div className="p-6  bg-background rounded-2xl w-[28rem]">
+      <Button
+        onClick={() => window.history.back()}
+        variant="ghost"
+        size="sm"
+        className="-ml-2"
+      >
         <IoIosArrowBack /> Back
       </Button>
       {onboarding === "accounttype" ? (

@@ -33,7 +33,7 @@ export default function LocalSignup({
 }) {
   return (
     <div className="h-full flex items-center sm:bg-transparent bg-background">
-      <Card className="sm:max-w-md sm:h-auto w-full border-none shadow-none sm:border sm:shadow rounded-none sm:rounded-3xl">
+      <Card className="sm:max-w-md sm:h-auto w-full border-none shadow-none sm:border  rounded-none sm:rounded-3xl">
         <CardHeader>
           <CardTitle className="text-2xl">Create an account</CardTitle>
           <CardDescription>
@@ -157,9 +157,9 @@ export default function LocalSignup({
           </div>
           <p className="text-xs text-center"></p>
         </CardContent>
-        <CardFooter className="text-center flex items-center justify-center text-xs -mt-4 text-muted-foreground ">
+        <CardFooter className="text-center gap-1 flex items-center justify-center text-xs -mt-6  ">
           Don't have an account?{" "}
-          <Link className="text-primary" to={""}>
+          <Link className="text-primary" to={"/login"}>
             Login
           </Link>
         </CardFooter>
