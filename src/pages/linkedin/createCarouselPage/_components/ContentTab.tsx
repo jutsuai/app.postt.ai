@@ -31,10 +31,10 @@ export default function ContentTab() {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium">Title</span>
-          <PositionStyle
+          {/* <PositionStyle
             position={titlePosition}
             setPosition={setTitlePosition}
-          />
+          /> */}
           <Switch checked={titleEnabled} onCheckedChange={setTitleEnabled} />
         </div>
 
@@ -54,27 +54,36 @@ export default function ContentTab() {
         />
       </div>
 
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-medium">Subtitle</span>
-          <PositionStyle
+      {previewIndex > 0 && (
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium">Subtitle</span>
+            {/* <PositionStyle
             position={subtitlePosition}
             setPosition={setSubtitlePosition}
-          />
-          <Switch
-            checked={subtitleEnabled}
-            onCheckedChange={setSubtitleEnabled}
+          /> */}
+            <Switch
+              checked={subtitleEnabled}
+              onCheckedChange={setSubtitleEnabled}
+            />
+          </div>
+
+          <Input
+            type="text"
+            value={slides[previewIndex].subtitle}
+            onChange={(e) => {
+              const newSlides = [...slides];
+              newSlides[previewIndex] = {
+                ...newSlides[previewIndex],
+                subtitle: e.target.value,
+              };
+              setSlides(newSlides);
+            }}
+            disabled={!subtitleEnabled}
+            className="bg-background"
           />
         </div>
-
-        <Input
-          type="text"
-          value={subtitleText}
-          onChange={(e) => setSubtitleText(e.target.value)}
-          disabled={!subtitleEnabled}
-          className="bg-background"
-        />
-      </div>
+      )}
       {/* Background Image URL */}
       <UploadTool
         label="Background Image"

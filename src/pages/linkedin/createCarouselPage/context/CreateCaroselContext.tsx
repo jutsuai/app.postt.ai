@@ -39,7 +39,6 @@ export function CreateCaroselProvider({ children }: { children: any }) {
   const [titlePosition, setTitlePosition] = useState("left");
 
   const [subtitleEnabled, setSubtitleEnabled] = useState(true);
-  const [subtitleText, setSubtitleText] = useState("");
   const [subtitlePosition, setSubtitlePosition] = useState("left");
 
   const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
@@ -73,8 +72,7 @@ export function CreateCaroselProvider({ children }: { children: any }) {
     setTitlePosition,
     subtitleEnabled,
     setSubtitleEnabled,
-    subtitleText,
-    setSubtitleText,
+
     subtitlePosition,
     setSubtitlePosition,
     backgroundImageUrl,

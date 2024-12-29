@@ -27,9 +27,12 @@ export default function PreviewSection() {
             <p className="outlined-text opacity-10  -translate-x-7 -translate-y-[40%] top-0 left-0 absolute text-[400px] font-extrabold">
               {previewIndex}
             </p>
-            <h6 className="text-lg font-medium ml-20 max-w-sm ">
-              {slides[previewIndex].title}
-            </h6>
+            <div className="ml-20 max-w-sm space-y-1 -translate-y-2">
+              <h6 className="text-xl font-semibold ">
+                {slides[previewIndex].title}
+              </h6>
+              <p className="text-sm">{slides[previewIndex].subtitle}</p>
+            </div>
           </div>
         ) : (
           <div className="z-10 space-y-2 my-auto translate-y-1/2">
