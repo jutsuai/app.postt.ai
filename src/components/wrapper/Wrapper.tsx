@@ -11,7 +11,7 @@ export default function Wrapper({
   className?: string;
 }) {
   return (
-    <div className="flex h-dvh w-dvw">
+    <div className="flex h-full w-full items-start justify-start">
       <AppSidebar />
       <SidebarInset className={cn("w-full", className)}>
         {children}
