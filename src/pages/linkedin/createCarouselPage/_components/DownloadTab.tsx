@@ -49,15 +49,16 @@ const MyDocument = ({
   subtitlePosition: string;
 }) => (
   <Document>
-    <Page size="A4" style={styles.page}>
+    {/* Set the page size to 512x512 */}
+    <Page size={[512, 512]} style={styles.page}>
       {/* Title Section */}
       <View style={{ ...styles.section, textAlign: titlePosition }}>
-        <Text style={styles.title}>asddsaadsdasdsadsa</Text>
+        <Text style={styles.title}>{titleText}</Text>
       </View>
 
       {/* Subtitle Section */}
       <View style={{ ...styles.section, textAlign: subtitlePosition }}>
-        <Text style={styles.subtitle}>adssdadsadsadsa</Text>
+        <Text style={styles.subtitle}>{subtitleText}</Text>
       </View>
     </Page>
   </Document>
