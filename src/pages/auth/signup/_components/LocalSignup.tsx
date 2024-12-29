@@ -19,19 +19,17 @@ import { Controller, SubmitHandler } from "react-hook-form";
 import { SignupFormValues } from "../SignupPage";
 
 export default function LocalSignup({
-  setValue,
-  getValues,
+  watch,
   errors,
   register,
   handleSubmit,
   control,
 }: {
-  setValue: any;
-  getValues: any;
   errors: any;
   register: any;
   handleSubmit: any;
   control: any;
+  watch: any;
 }) {
   const navigate = useNavigate();
 
@@ -109,7 +107,6 @@ export default function LocalSignup({
                 <Controller
                   name="acceptTerms"
                   control={control}
-                  defaultValue={false} // Set the initial value
                   render={({ field }) => (
                     <Checkbox
                       id="acceptTerms"
@@ -137,7 +134,7 @@ export default function LocalSignup({
               </div>
             </div>
             <Button
-              disabled={!getValues("acceptTerms")}
+              disabled={!watch("acceptTerms")}
               type="submit"
               className="w-full rounded-full text-black mt-6"
             >

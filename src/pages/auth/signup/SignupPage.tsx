@@ -37,11 +37,10 @@ export default function SignupPage() {
     setValue,
     watch,
     control,
-    getValues,
     formState: { errors },
   } = useForm<SignupFormValues>({
     defaultValues: {
-      acceptTerms: false,
+      // Add default values here
     },
   });
 
@@ -82,9 +81,8 @@ export default function SignupPage() {
           errors={errors}
           register={register}
           handleSubmit={handleSubmit}
-          setValue={setValue}
-          getValues={getValues}
           control={control}
+          watch={watch}
         />
       )}
       <Drawer
