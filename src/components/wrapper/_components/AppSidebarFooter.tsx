@@ -3,48 +3,32 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+
 import { FiLogOut } from "react-icons/fi";
 
 export default function AppSidebarFooter() {
   const { logout } = useAuth();
+  const { open: sidebarMode } = useSidebar();
 
   return (
     <SidebarFooter>
-      <SidebarMenu className="justify-center px-2 items-center">
+      <SidebarMenu className="w-full">
         <SidebarMenuItem
+          onClick={logout}
           className={cn(
             "transition-all duration-200 cursor-pointer hover:!bg-primary-accent/60 !rounded-full",
-            "h-11 w-full px-2",
-            "justify-center items-center flex"
+            sidebarMode ? "mx-2 px-2 py-1.5" : "mx-1.5 py-1.5 pl-1"
           )}
         >
-          <SidebarMenuButton
-            className="hover:!bg-transparent gap-2"
-            onClick={logout}
-          >
-            <motion.span
-              className="absolute inset-0 !rounded-full !bg-primary-accent/60"
-              layoutId="activeSidebarItem"
-              transition={{ duration: 0.2 }}
-            />
-            <span
-              className={cn(
-                "z-10 transition-colors duration-200",
-                "text-muted-foreground"
-              )}
-            >
+          <SidebarMenuButton className="hover:!bg-transparent">
+            <span className="z-10 transition-colors duration-200 ">
               <FiLogOut className="size-5" />
             </span>
-            <span
-              className={cn(
-                "z-10 font-semibold text-sm transition-colors duration-200",
-                "text-muted-foreground"
-              )}
-            >
+            <span className="z-10 font-semibold text-sm transition-colors duration-200 ">
               Logout
             </span>
           </SidebarMenuButton>

@@ -63,14 +63,14 @@ export default function Navbar() {
           >
             <div className="p-[16px] translate-y-2 w-full h-full bg-transparent rounded-full">
               <Link to="/add">
-                <button className="w-full group-hover/plusButton:-translate-y-2 transition-transform h-full bg-primary-foreground/60 grid place-items-center rounded-full">
+                <button className="w-full group-hover/plusButton:-translate-y-2 transition-transform h-full bg-primary-foreground grid place-items-center rounded-full">
                   {/* <div className="absolute bg-gradient-to-b from-transparent via-transparent rounded-full shadow-2xl shadow-primary to-primary/40 -z-10 w-full h-full" /> */}
                   <GoPlus className="size-7" />
                 </button>
               </Link>
             </div>
           </div>
-          <div className="absolute z-[-1] bottom-0 h-[80%] left-1/2 -translate-x-1/2 w-1/2 bg-background" />
+          <div className="absolute z-[-1] bottom-0 h-[80%] left-1/2 -translate-x-1/2 w-1/2  bg-gradient-to-t from-background via-background to-transparent" />
           <NavItems item={navItem[1]} pathname={pathname} curve="left" />
         </ul>
       </nav>

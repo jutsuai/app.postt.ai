@@ -11,40 +11,36 @@ import { cn } from "@/lib/utils";
 export default function HomePage() {
   return (
     <Wrapper>
-      <WrapperContent className="gap-4 bg-muted/80 h-dvh overflow-y-auto">
+      <WrapperContent className="gap-6 bg-muted/80 h-dvh overflow-y-auto">
         <Header />
 
-        <div className="flex items-start md:flex-row flex-col gap-8 sm:px-4 w-full">
+        <div className="flex items-start lg:flex-row flex-col gap-8 sm:px-4 w-full">
           <div className="flex flex-col gap-8 flex-grow w-full">
-            <div className="grid grid-cols-2 w-full bg-background p-8 rounded-3xl gap-8">
+            <div className="grid grid-cols-2 w-full bg-background p-4 sm:p-8 rounded-3xl gap-4 sm:gap-6">
               <div className="flex flex-col gap-4 bg-primary-accent/40 p-4 rounded-2xl">
                 <div className="flex items-center justify-between">
                   <Button
                     size="icon"
-                    className="rounded-full size-12 text-foreground bg-primary-accent"
+                    className="rounded-full  text-foreground bg-primary-accent"
                     variant="secondary"
                   >
                     <FaRegBell className="" />
                   </Button>
-                  <Button
-                    size="icon"
-                    className="rounded-full size-12"
-                    variant="ghost"
-                  >
+                  <Button size="icon" className="rounded-full " variant="ghost">
                     <MdArrowOutward />
                   </Button>
                 </div>
                 <div className="flex flex-col gap-4 mt-auto">
-                  <p className="text-6xl font-bold">19</p>
-                  <p className="text-muted-foreground font-medium text-lg">
+                  <p className="sm:text-6xl text-5xl font-bold">19</p>
+                  <p className="text-muted-foreground font-medium text-base sm:text-lg">
                     Today's
                     <br />
                     scheduled posts
                   </p>
                 </div>
               </div>
-              <div className="flex flex-col gap-4 ">
-                <div className="flex flex-col gap-4 bg-foreground/90 p-4  rounded-2xl">
+              <div className="flex flex-col sm:gap-6 gap-4">
+                <div className="flex flex-col gap-4 bg-foreground/90 p-4 rounded-2xl">
                   <div className="flex items-center justify-between">
                     <Button
                       size="icon"
@@ -55,14 +51,14 @@ export default function HomePage() {
                     </Button>
                     <Button
                       size="icon"
-                      className="rounded-full text-muted size-12"
+                      className="rounded-full text-muted "
                       variant="ghost"
                     >
                       <MdArrowOutward />
                     </Button>
                   </div>
                   <div className="flex flex-col gap-2 mt-8">
-                    <p className="text-xl font-medium text-background">
+                    <p className="text-base sm:text-xl font-medium text-background">
                       Video Content
                     </p>
                   </div>
@@ -78,19 +74,21 @@ export default function HomePage() {
                     </Button>
                     <Button
                       size="icon"
-                      className="rounded-full size-12"
+                      className="rounded-full "
                       variant="ghost"
                     >
                       <MdArrowOutward />
                     </Button>
                   </div>
                   <div className="flex flex-col gap-2 mt-8">
-                    <p className="text-xl font-medium">Image Content</p>
+                    <p className="text-base sm:text-xl font-medium">
+                      Image Content
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="bg-background p-8 rounded-2xl w-full">
+            <div className="bg-background p-4 sm:p-8 rounded-2xl w-full">
               <h3 className="font-semibold text-xl mb-4">Ideas</h3>
               <div className="flex flex-col gap-4 ">
                 {ideasData.map((item, index) => (
@@ -114,13 +112,13 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <div className="bg-background flex-shrink h-full flex flex-col gap-6 w-full  p-8 rounded-2xl">
+          <div className="bg-background flex-shrink h-full flex flex-col gap-6 w-full p-4 sm:p-8 rounded-2xl">
             <h3 className="font-semibold text-xl ">Upcoming posts</h3>
             <div className="flex flex-col gap-4">
               {[...Array(4)].map((_, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 h-28 border rounded-2xl"
+                  className="flex items-center justify-between p-2 sm:p-3 h-28 border rounded-2xl"
                 >
                   <div className="flex flex-col h-full p-2">
                     <p className="text-xs font-medium opacity-90">
