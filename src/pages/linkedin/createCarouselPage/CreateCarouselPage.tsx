@@ -17,6 +17,7 @@ import PreviewSection from "./_components/PreviewSection";
 import { motion } from "framer-motion";
 import { MdDeleteOutline } from "react-icons/md";
 import Wrapper from "@/components/wrapper/Wrapper";
+import DownloadTab from "./_components/DownloadTab";
 
 const tabs = [
   { name: "Content", icon: <RiPencilLine /> },
@@ -169,6 +170,26 @@ export default function CreateCarouselPage() {
 
                 {activeTab === "Settings" && (
                   <SettingsTab
+                    avatarUrl={avatarUrl}
+                    setAvatarUrl={setAvatarUrl}
+                    avatarName={avatarName}
+                    setAvatarName={setAvatarName}
+                    avatarUserName={avatarUserName}
+                    setAvatarUserName={setAvatarUserName}
+                    avatarEnabled={avatarEnabled}
+                    setAvatarEnabled={setAvatarEnabled}
+                    avatarNameEnabled={avatarNameEnabled}
+                    setAvatarNameEnabled={setAvatarNameEnabled}
+                    avatarUserNameEnabled={avatarUserNameEnabled}
+                    setAvatarUserNameEnabled={setAvatarUserNameEnabled}
+                    avatarPosition={avatarPosition}
+                    setAvatarPosition={setAvatarPosition}
+                    positionOptions={positionOptions}
+                  />
+                )}
+
+                {activeTab === "Download" && (
+                  <DownloadTab
                     avatarUrl={avatarUrl}
                     setAvatarUrl={setAvatarUrl}
                     avatarName={avatarName}
