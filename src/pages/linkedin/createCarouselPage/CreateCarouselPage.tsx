@@ -71,7 +71,7 @@ export default function CreateCarouselPage() {
                 {activeTab === "Content" && <ContentTab />}
 
                 {activeTab === "Settings" && <SettingsTab />}
-                {activeTab === "Settings" && <DownloadTab />}
+                {activeTab === "Download" && <DownloadTab />}
 
                 {activeTab !== "Content" && activeTab !== "Settings" && (
                   <div className="text-gray-500">
