@@ -12,6 +12,7 @@ import {
   StyleSheet,
   PDFDownloadLink,
 } from "@react-pdf/renderer";
+import { useCarosel } from "../context/CreateCaroselContext";
 
 // Create styles
 const styles = StyleSheet.create({
@@ -64,35 +65,26 @@ const MyDocument = ({
   </Document>
 );
 
-export default function DownloadTab({
-  titleEnabled,
-  setTitleEnabled,
-  titleText,
-  setTitleText,
-  subtitleEnabled,
-  setSubtitleEnabled,
-  subtitleText,
-  setSubtitleText,
-  titlePosition,
-  setTitlePosition,
-  subtitlePosition,
-  setSubtitlePosition,
-  positionOptions,
-}: {
-  titleEnabled: boolean;
-  setTitleEnabled: (value: boolean) => void;
-  titleText: string;
-  setTitleText: (value: string) => void;
-  subtitleEnabled: boolean;
-  setSubtitleEnabled: (value: boolean) => void;
-  subtitleText: string;
-  setSubtitleText: (value: string) => void;
-  titlePosition: string;
-  setTitlePosition: (value: string) => void;
-  subtitlePosition: string;
-  setSubtitlePosition: (value: string) => void;
-  positionOptions: string[];
-}) {
+export default function DownloadTab() {
+  const {
+    titleEnabled,
+    setTitleEnabled,
+    titleText,
+    setTitleText,
+    subtitleEnabled,
+    setSubtitleEnabled,
+    subtitleText,
+    setSubtitleText,
+    titlePosition,
+    setTitlePosition,
+    subtitlePosition,
+    setSubtitlePosition,
+    positionOptions,
+    slides,
+    previewIndex,
+    setSlides,
+  }: any = useCarosel();
+
   return (
     <div className="space-y-6 bg-muted shadow-md p-4 border rounded-lg h-full">
       <h3 className="text-base font-semibold">Download</h3>
@@ -108,8 +100,15 @@ export default function DownloadTab({
         {titleEnabled && (
           <>
             <Input
-              value={titleText}
-              onChange={(e) => setTitleText(e.target.value)}
+              value={slides[previewIndex].title}
+              onChange={(e) => {
+                const newSlides = [...slides];
+                newSlides[previewIndex] = {
+                  ...newSlides[previewIndex],
+                  title: e.target.value,
+                };
+                setSlides(newSlides);
+              }}
               placeholder="Enter Title"
             />
             <select

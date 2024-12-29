@@ -1,17 +1,17 @@
 import { cn } from "@/lib/utils";
+import { useCarosel } from "../context/CreateCaroselContext";
 
 export default function PositionStyle({
-  positionOptions,
   position: initialPosition,
   setPosition,
 }: {
-  positionOptions: string[];
   position: string;
   setPosition: (value: string) => void;
 }) {
+  const { positionOptions } = useCarosel();
   return (
     <div className="border ml-auto mr-3 flex items-center justify-around overflow-hidden rounded-md bg-background">
-      {positionOptions?.map((position) => (
+      {(positionOptions as any)?.map((position: any) => (
         <>
           <button
             key={position}
@@ -19,7 +19,7 @@ export default function PositionStyle({
             className={cn(
               "text-xs transition-all duration-200 p-1 px-2 capitalize",
               initialPosition === position
-                ? " bg-primary"
+                ? " bg-primary-foreground"
                 : " text-muted-foreground hover:text-foreground"
             )}
           >

@@ -17,6 +17,7 @@ import OnboardSuccess from "./pages/auth/signup/OnboardSuccess";
 import { useAuth } from "./context/AuthContext";
 import ReportsPage from "./pages/reports/ReportsPage";
 import CreatePage from "./pages/create/CreatePage";
+import CreateCarouselLayout from "./pages/linkedin/createCarouselPage/CreateCarouselLayout";
 
 export default function Router() {
   const { isAuthenticated } = useAuth();
@@ -71,7 +72,7 @@ const AppRouter = () => {
         <Route path="create">
           <Route index element={<CreatePage />} />
           <Route path="post" element={<CreatePostPage />} />
-          <Route path="carousel" element={<CreateCarouselPage />} />
+          <Route path="carousel" element={<CreateCarouselLayout />} />
         </Route>
       </Route>
     </Routes>
