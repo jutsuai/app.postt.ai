@@ -13,7 +13,7 @@ export default function OnboardPreview() {
     <div className="sm:max-w-md px-4 sm:p-6 bg-background  w-full h-full  border-none flex flex-col gap-4 shadow-none justify-center rounded-none sm:rounded-2xl">
       <div className="flex pt-4 items-center justify-between ">
         <Button
-          onClick={() => window.history.back()}
+          onClick={() => navigate(-1)}
           variant="ghost"
           size="sm"
           className="-ml-2"

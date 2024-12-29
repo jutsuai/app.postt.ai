@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import useBreakpoint from "@/lib/useBreakpoint";
 import { IoIosArrowBack } from "react-icons/io";
 import {
@@ -47,12 +47,14 @@ export default function SignupPage() {
   const [searchParams] = useSearchParams();
   const onboarding = searchParams.get("onboarding");
 
+  const navigate = useNavigate();
+
   const bp = useBreakpoint();
 
   return !bp?.sm && onboarding && onboarding !== "preview" ? (
     <div className="p-6  bg-background rounded-2xl w-[28rem]">
       <Button
-        onClick={() => window.history.back()}
+        onClick={() => navigate(-1)}
         variant="ghost"
         size="sm"
         className="-ml-2"
@@ -94,7 +96,7 @@ export default function SignupPage() {
         }
         onOpenChange={(open) => {
           if (!open) {
-            window.history.back();
+            navigate(-1);
           }
         }}
       >
