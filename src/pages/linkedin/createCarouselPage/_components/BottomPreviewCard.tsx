@@ -7,7 +7,7 @@ export default function BottomPreviewCard({ slide, index }: any) {
     setSlides,
     setTitleText,
     setSubtitleText,
-    backgroundImageUrl,
+
     titleEnabled,
     titlePosition,
     slides,
@@ -20,6 +20,7 @@ export default function BottomPreviewCard({ slide, index }: any) {
     avatarUserNameEnabled,
     avatarUserName,
     setShowLastSlide,
+    backgroundImageUrl,
   }: any = useCarosel();
 
   return (
@@ -32,7 +33,7 @@ export default function BottomPreviewCard({ slide, index }: any) {
         className="aspect-[4/5] relative bg-background overflow-hidden flex flex-col justify-center transition-all opacity-80 hover:opacity-100 duration-200 px-3 rounded-md  shadow-md cursor-pointer"
       >
         <img
-          src="/carousel/bg-light.webp"
+          src={backgroundImageUrl || "/carousel/bg-light.webp"}
           className="absolute z-0 inset-0 pointer-events-none"
         />
 

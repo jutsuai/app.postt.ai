@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FaPlus } from "react-icons/fa";
 import { useCarosel } from "../context/CreateCaroselContext";
 import BottomPreviewCard from "./BottomPreviewCard";
 
@@ -9,9 +9,8 @@ export default function BottomSection() {
     avatarUrl,
     avatarName,
     avatarUserName,
-    previewIndex,
-    setPreviewIndex,
-    showLastSlide,
+
+    backgroundImageUrl,
     setShowLastSlide,
   }: any = useCarosel();
 
@@ -30,7 +29,7 @@ export default function BottomSection() {
         className="aspect-[4/5] relative bg-background overflow-hidden flex flex-col justify-center transition-all opacity-80 hover:opacity-100 duration-200 px-3 rounded-md  shadow-md cursor-pointer"
       >
         <img
-          src="/carousel/bg-light.webp"
+          src={backgroundImageUrl || "/carousel/bg-light.webp"}
           className="absolute z-0 inset-0 pointer-events-none"
         />
         <div className="flex items-center space-x-1 z-10 ">
@@ -51,7 +50,8 @@ export default function BottomSection() {
           </div>
         </div>
       </div>
-      <button
+
+      <div
         onClick={() =>
           setSlides((prev: any) => {
             return [
@@ -63,10 +63,12 @@ export default function BottomSection() {
             ];
           })
         }
-        className="  border-2 aspect-[14/16] h-full border-dashed  rounded-md my-2 mb-0.5  flex items-center justify-center cursor-pointer text-muted-foreground bg-primary/20"
+        className="aspect-[4/5] relative bg-primary-foreground/60 overflow-hidden flex flex-col justify-center transition-all opacity-80 hover:opacity-100 duration-200 px-3 rounded-md  shadow-md cursor-pointer"
       >
-        +
-      </button>
+        <div className="flex items-center justify-center">
+          <FaPlus />
+        </div>
+      </div>
     </div>
   );
 }

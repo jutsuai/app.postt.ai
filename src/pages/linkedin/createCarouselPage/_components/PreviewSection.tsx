@@ -14,12 +14,13 @@ export default function PreviewSection() {
     showLastSlide,
     slides,
     previewIndex,
+    backgroundImageUrl,
   }: any = useCarosel();
   return (
     <div className="p-3 bg-muted relative shadow-md border w-full h-full rounded-xl">
       <div className="h-full w-full flex overflow-hidden bg-background justify-center  flex-col rounded-lg p-6 aspect-[4/5] relative">
         <img
-          src="/carousel/bg-light.webp"
+          src={backgroundImageUrl || "/carousel/bg-light.webp"}
           className="absolute z-0 inset-0 pointer-events-none"
         />
 
