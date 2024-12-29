@@ -9,8 +9,10 @@ export const AuthProvider = ({ children }: { children: any }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   const [user, setUser] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
   const [accessToken, setAccessToken] = useState<any>(null);
-  const [linkedin, setLinkedin] = useState<any>(null);
+
+  // const [linkedin, setLinkedin] = useState<any>(null);
 
   useEffect(() => {
     checkAuth();
@@ -26,13 +28,35 @@ export const AuthProvider = ({ children }: { children: any }) => {
       console.log("userCookie", userCookie);
 
       setUser(userCookie);
-      setLinkedin(userCookie?.linkedin);
       setIsAuthenticated(true);
     } catch (error) {
       console.error("Error checking auth:", error);
       setIsAuthenticated(false);
     } finally {
       setLoadingCheck(false);
+    }
+  };
+
+  const saveUserData = async (data: any) => {
+    setLoading(true);
+
+    try {
+      setUser(data);
+      setProfile(data.profile);
+      setAccessToken(data.accessToken);
+
+      localStorage.setItem("_auth_user", JSON.stringify(data));
+      localStorage.setItem("_auth_accessToken", data.accessToken);
+
+      setIsAuthenticated(true);
+
+      console.log("User data saved");
+    } catch (error) {
+      console.error("Error saving user data:", error);
+
+      setIsAuthenticated(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -43,7 +67,9 @@ export const AuthProvider = ({ children }: { children: any }) => {
     isAuthenticated,
     accessToken,
     user,
-    linkedin,
+
+    //
+    saveUserData,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

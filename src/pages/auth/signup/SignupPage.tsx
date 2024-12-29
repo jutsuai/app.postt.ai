@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
 import useBreakpoint from "@/lib/useBreakpoint";
 import { IoIosArrowBack } from "react-icons/io";
 import {
@@ -37,10 +36,12 @@ export default function SignupPage() {
     handleSubmit,
     setValue,
     watch,
+    control,
+    getValues,
     formState: { errors },
   } = useForm<SignupFormValues>({
     defaultValues: {
-      acceptTerms: true,
+      acceptTerms: false,
     },
   });
 
@@ -48,8 +49,6 @@ export default function SignupPage() {
   const onboarding = searchParams.get("onboarding");
 
   const bp = useBreakpoint();
-
-  const [acceptTerms, setAcceptTerms] = useState(true);
 
   return !bp?.sm && onboarding && onboarding !== "preview" ? (
     <div className="p-6  bg-background rounded-2xl w-[28rem]">
@@ -82,10 +81,10 @@ export default function SignupPage() {
         <LocalSignup
           errors={errors}
           register={register}
-          acceptTerms={acceptTerms}
-          setAcceptTerms={setAcceptTerms}
           handleSubmit={handleSubmit}
           setValue={setValue}
+          getValues={getValues}
+          control={control}
         />
       )}
       <Drawer

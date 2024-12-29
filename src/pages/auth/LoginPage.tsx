@@ -92,22 +92,24 @@ export default function LoginPage() {
           </div>
           <div className="flex gap-4 mx-auto">
             {authButtons.map((button, index) => (
-              <Button
-                key={index}
-                variant="outline"
-                size="icon"
-                className={cn("rounded-lg", `text-[${button.accent}`)}
-              >
-                {button.logo ? (
-                  <Image
-                    src={button.logo}
-                    className="h-4 w-4"
-                    alt={button.label}
-                  />
-                ) : (
-                  button.icon
-                )}
-              </Button>
+              <Link key={index} to={button.link}>
+                <Button
+                  key={index}
+                  variant="outline"
+                  size="icon"
+                  className={cn("rounded-lg", `text-[${button.accent}`)}
+                >
+                  {button.logo ? (
+                    <Image
+                      src={button.logo}
+                      className="h-4 w-4"
+                      alt={button.label}
+                    />
+                  ) : (
+                    button.icon
+                  )}
+                </Button>
+              </Link>
             ))}
           </div>
           <p className="text-xs text-center"></p>

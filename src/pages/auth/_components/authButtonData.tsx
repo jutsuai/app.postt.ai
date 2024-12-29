@@ -10,15 +10,15 @@ const authButtons = [
   {
     label: "LinkedIn",
     icon: <FaLinkedin className="h-full w-full text-[#0077B5]" />,
-    link: `${import.meta.env.VITE_API_URL}/auth/github`,
+    link: `${import.meta.env.VITE_API_URL}/auth/linkedin`,
     accent: "#0077B5",
   },
-  {
-    label: "Github",
-    icon: <FaGithub className="h-full w-full" />,
-    link: `${import.meta.env.VITE_API_URL}/auth/github`,
-    accent: "#24292e",
-  },
+  // {
+  //   label: "Github",
+  //   icon: <FaGithub className="h-full w-full" />,
+  //   link: `${import.meta.env.VITE_API_URL}/auth/github`,
+  //   accent: "#24292e",
+  // },
   // {
   //   label: "Near",
   //   icon: <SiNear className="h-4 w-4" />,

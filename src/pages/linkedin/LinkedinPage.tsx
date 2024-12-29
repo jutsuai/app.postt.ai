@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import httpClient from "../../lib/httpClient";
 import { useAuth } from "../../context/AuthContext";
 import { Button } from "@/components/ui/button";
+import Wrapper from "@/components/wrapper/Wrapper";
 
 export default function LinkedinPage() {
   const { linkedin, user } = useAuth();
@@ -105,61 +106,63 @@ export default function LinkedinPage() {
   };
 
   return (
-    <div className="flex  flex-col p-4 gap-4">
-      <div className="flex gap-4 ">
-        <Link to="/login">
-          <button className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium">
-            Login
-          </button>
-        </Link>
-        <Link to="/linkedin/post/create">
-          <button className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium">
-            Create Post
-          </button>
-        </Link>
+    <Wrapper>
+      <div className="flex w-full flex-col p-4 gap-4">
+        <div className="flex gap-4 ">
+          <Link to="/login">
+            <button className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium">
+              Login
+            </button>
+          </Link>
+          <Link to="/linkedin/post/create">
+            <button className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium">
+              Create Post
+            </button>
+          </Link>
 
-        <Link to="/linkedin/carousel/create">
-          <button className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium">
-            Create Carousel
-          </button>
-        </Link>
+          <Link to="/linkedin/carousel/create">
+            <button className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium">
+              Create Carousel
+            </button>
+          </Link>
 
-        <button
-          className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium"
-          onClick={() => handleGetOrgData()}
-        >
-          handleGetOrgData
-        </button>
+          <button
+            className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium"
+            onClick={() => handleGetOrgData()}
+          >
+            handleGetOrgData
+          </button>
+        </div>
+        {/*  */}
+        -------------------------------------
+        {JSON.stringify(orgData)}
+        -------------------------------------
+        <button onClick={() => handlePost(91137041)}>91137041</button>
+        {/*  */}
+        {orgData?.map((org: any) => (
+          <Button key={org.id} onClick={() => handlePost(org.id)}>
+            <h1>{org.name}</h1>
+            <h2>{org.id}</h2>
+            <h3>{org.logoUrl}</h3>
+          </Button>
+        ))}
+        {/*  */}
+        {loadingPost && <h1>Loading Post...</h1>}
+        {/*  */}
+        <input
+          type="text"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <div>
+          <button
+            className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium"
+            onClick={() => fetchLinkedInPosts()}
+          >
+            Fetch LinkedIn Posts
+          </button>
+        </div>
       </div>
-      {/*  */}
-      -------------------------------------
-      {JSON.stringify(orgData)}
-      -------------------------------------
-      <button onClick={() => handlePost(91137041)}>91137041</button>
-      {/*  */}
-      {orgData?.map((org: any) => (
-        <Button key={org.id} onClick={() => handlePost(org.id)}>
-          <h1>{org.name}</h1>
-          <h2>{org.id}</h2>
-          <h3>{org.logoUrl}</h3>
-        </Button>
-      ))}
-      {/*  */}
-      {loadingPost && <h1>Loading Post...</h1>}
-      {/*  */}
-      <input
-        type="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <div>
-        <button
-          className="inline-flex justify-center py-3 px-4 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition font-medium"
-          onClick={() => fetchLinkedInPosts()}
-        >
-          Fetch LinkedIn Posts
-        </button>
-      </div>
-    </div>
+    </Wrapper>
   );
 }

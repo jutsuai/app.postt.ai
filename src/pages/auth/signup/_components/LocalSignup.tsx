@@ -15,23 +15,23 @@ import { Link, useNavigate } from "react-router-dom";
 import authButtons from "../../_components/authButtonData";
 import { cn } from "@/lib/utils";
 import Image from "@/components/Image";
-import { SubmitHandler } from "react-hook-form";
+import { Controller, SubmitHandler } from "react-hook-form";
 import { SignupFormValues } from "../SignupPage";
 
 export default function LocalSignup({
   setValue,
+  getValues,
   errors,
   register,
-  acceptTerms,
-  setAcceptTerms,
   handleSubmit,
+  control,
 }: {
   setValue: any;
+  getValues: any;
   errors: any;
   register: any;
-  acceptTerms: boolean;
-  setAcceptTerms: any;
   handleSubmit: any;
+  control: any;
 }) {
   const navigate = useNavigate();
 
@@ -106,14 +106,21 @@ export default function LocalSignup({
                 errors={errors}
               />
               <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="acceptTerms"
-                  checked={acceptTerms}
-                  onCheckedChange={(e) => {
-                    setAcceptTerms(e);
-                    setValue("acceptTerms", e);
-                  }}
+                <Controller
+                  name="acceptTerms"
+                  control={control}
+                  defaultValue={false} // Set the initial value
+                  render={({ field }) => (
+                    <Checkbox
+                      id="acceptTerms"
+                      checked={field.value} // Bind to the field's value
+                      onCheckedChange={(e) => {
+                        field.onChange(e ?? false);
+                      }}
+                    />
+                  )}
                 />
+
                 <Label
                   htmlFor="acceptTerms"
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -130,7 +137,7 @@ export default function LocalSignup({
               </div>
             </div>
             <Button
-              disabled={!acceptTerms}
+              disabled={!getValues("acceptTerms")}
               type="submit"
               className="w-full rounded-full text-black mt-6"
             >

@@ -14,10 +14,14 @@ import AddWriter from "./pages/addWriter/AddWriter";
 import AuthPage from "./pages/auth/AuthPage";
 import SignupPage from "./pages/auth/signup/SignupPage";
 import OnboardSuccess from "./pages/auth/signup/OnboardSuccess";
+import { useAuth } from "./context/AuthContext";
+import ReportsPage from "./pages/reports/ReportsPage";
+import CreatePage from "./pages/create/CreatePage";
 
 export default function Router() {
-  // const { isAuthenticated  } = useAuth();
-  const isAuthenticated = false;
+  const { isAuthenticated } = useAuth();
+
+  // const isAuthenticated = false;
 
   return isAuthenticated === null ? (
     <div>Loading...</div>
@@ -48,20 +52,23 @@ const RootRouter = () => {
 const AppRouter = () => {
   return (
     <Routes>
-      <Route path="onboarding" element={<OnboardSuccess />} />
-
-      <Route path="linkedin">
-        <Route index element={<LinkedinPage />} />
-        <Route path="carousel/create" element={<CreateCarouselPage />} />
-        <Route path="post/create" element={<CreatePostPage />} />
-      </Route>
-
       <Route path="/" element={<Layout />}>
+        <Route path="onboarding" element={<OnboardSuccess />} />
+
+        <Route path="linkedin">
+          <Route index element={<LinkedinPage />} />
+          <Route path="carousel/create" element={<CreateCarouselPage />} />
+          <Route path="post/create" element={<CreatePostPage />} />
+        </Route>
+
         <Route index element={<HomePage />} />
         <Route path="add" element={<AddWriter />} />
         <Route path="schedule" element={<SchedulePage />} />
         <Route path="discover" element={<DiscoverPage />} />
         <Route path="profile" element={<ProfilePage />} />
+
+        <Route path="reports" element={<ReportsPage />} />
+        <Route path="create" element={<CreatePage />} />
       </Route>
     </Routes>
   );

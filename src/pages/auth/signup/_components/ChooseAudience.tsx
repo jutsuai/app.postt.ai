@@ -4,6 +4,10 @@ import { SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { SignupFormValues } from "../SignupPage";
 import { cn } from "@/lib/utils";
+import httpClient from "@/lib/httpClient";
+import { useState } from "react";
+import { AiOutlineLoading } from "react-icons/ai";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ChooseAudience({
   handleSubmit,
@@ -16,6 +20,7 @@ export default function ChooseAudience({
   watch: any;
   errors: any;
 }) {
+  const { saveUserData } = useAuth();
   const navigate = useNavigate();
 
   const linkedInAudience = [
@@ -37,11 +42,32 @@ export default function ChooseAudience({
     },
   ];
 
+  const [loading, setLoading] = useState(false);
+
   const onSubmit: SubmitHandler<SignupFormValues> = (data) => {
+    setLoading(true);
     console.log("submitted");
 
     console.log("navigating to next page");
     console.log(data);
+
+    httpClient()
+      .post("/auth/signup", data)
+      .then((res) => {
+        const data = res.data;
+        console.log("====== onSubmit: ", data);
+
+        saveUserData(data);
+
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log("====== onSubmit: ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
     // navigate("/signup?onboarding=preview");
   };
   return (
@@ -89,7 +115,13 @@ export default function ChooseAudience({
           </div>
         ))}
 
-        <Button className="rounded-full mt-2">Next</Button>
+        <Button className="rounded-full mt-2" type="submit" disabled={loading}>
+          {loading ? (
+            <AiOutlineLoading className="animate-spin !size-4" />
+          ) : (
+            "Next"
+          )}
+        </Button>
       </form>
     </div>
   );
