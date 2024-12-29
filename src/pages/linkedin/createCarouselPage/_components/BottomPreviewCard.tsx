@@ -19,17 +19,21 @@ export default function BottomPreviewCard({ slide, index }: any) {
     avatarNameEnabled,
     avatarUserNameEnabled,
     avatarUserName,
+    setShowLastSlide,
   }: any = useCarosel();
 
   return (
-    <div className="w-full h-full bg-muted p-0.5 rounded-md">
+    <div className="w-full relative h-full bg-muted p-0.5 rounded-md">
       <div
-        onClick={() => setPreviewIndex(index)}
+        onClick={() => {
+          setPreviewIndex(index);
+          setShowLastSlide(false);
+        }}
         className="aspect-[4/5] relative bg-background overflow-hidden flex flex-col justify-center transition-all opacity-80 hover:opacity-100 duration-200 px-3 rounded-md  shadow-md cursor-pointer"
       >
         <img
-          src="/carousel/bg-carousel-1.svg"
-          className="absolute z-0 top-0 h-[40%] right-0 w-[40%] pointer-events-none"
+          src="/carousel/bg-light.webp"
+          className="absolute z-0 inset-0 pointer-events-none"
         />
 
         {index > 0 ? (
@@ -42,17 +46,14 @@ export default function BottomPreviewCard({ slide, index }: any) {
             </h6>
           </div>
         ) : (
-          // <div className="z-10 space-y-2 my-auto translate-y-1/2">
-          // {titleEnabled && (
           <h1
-            className="text-[60%] my-auto font-bold pt-4 break-words text-wrap max-w-[75%]"
+            className="text-[60%] z-10 my-auto font-bold pt-4 break-words text-wrap max-w-[75%]"
             style={{ textAlign: titlePosition }}
           >
             {slides[index].title}
           </h1>
-          //   )}
-          // </div>
         )}
+
         <div className="flex items-center z-10 space-x-1 -translate-x-2 mt-auto h-7">
           {avatarEnabled && (
             <img
@@ -74,8 +75,9 @@ export default function BottomPreviewCard({ slide, index }: any) {
       {index > 0 && (
         <button
           onClick={() => {
-            setSlides((prev: any) => {
-              return prev?.filter((_, i) => i !== index);
+            setSlides((prev) => {
+              setPreviewIndex(index - 1);
+              return prev.filter((_, i) => i !== index);
             });
           }}
           className="text-red-500 absolute  bottom-1 p-1 rounded-full bg-background right-1"

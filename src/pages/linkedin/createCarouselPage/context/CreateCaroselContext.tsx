@@ -57,6 +57,8 @@ export function CreateCaroselProvider({ children }: { children: any }) {
   const [avatarUserNameEnabled, setAvatarUserNameEnabled] = useState(true);
   const [avatarUserName, setAvatarUserName] = useState("test");
 
+  const [showLastSlide, setShowLastSlide] = useState(false);
+
   const value: any = {
     topic,
     setTopic,
@@ -95,6 +97,9 @@ export function CreateCaroselProvider({ children }: { children: any }) {
     tabs,
     previewIndex,
     setPreviewIndex,
+
+    showLastSlide,
+    setShowLastSlide,
   };
   return (
     <CreateCaroselContext.Provider value={value}>
