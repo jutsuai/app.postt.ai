@@ -20,11 +20,12 @@ import CreatePage from "./pages/create/CreatePage";
 
 export default function Router() {
   const { isAuthenticated } = useAuth();
-
   // const isAuthenticated = false;
 
+  console.log("isAuthenticated", isAuthenticated);
+
   return isAuthenticated === null ? (
-    <div>Loading...</div>
+    <div>...Loading...</div>
   ) : isAuthenticated ? (
     <AppRouter />
   ) : (
@@ -57,8 +58,6 @@ const AppRouter = () => {
 
         <Route path="linkedin">
           <Route index element={<LinkedinPage />} />
-          <Route path="carousel/create" element={<CreateCarouselPage />} />
-          <Route path="post/create" element={<CreatePostPage />} />
         </Route>
 
         <Route index element={<HomePage />} />
@@ -68,7 +67,12 @@ const AppRouter = () => {
         <Route path="profile" element={<ProfilePage />} />
 
         <Route path="reports" element={<ReportsPage />} />
-        <Route path="create" element={<CreatePage />} />
+
+        <Route path="create">
+          <Route index element={<CreatePage />} />
+          <Route path="post" element={<CreatePostPage />} />
+          <Route path="carousel" element={<CreateCarouselPage />} />
+        </Route>
       </Route>
     </Routes>
   );

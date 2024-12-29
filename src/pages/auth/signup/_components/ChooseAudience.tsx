@@ -20,8 +20,7 @@ export default function ChooseAudience({
   watch: any;
   errors: any;
 }) {
-  const { saveUserData } = useAuth();
-  const navigate = useNavigate();
+  const { signupWithEmail } = useAuth();
 
   const linkedInAudience = [
     {
@@ -45,30 +44,29 @@ export default function ChooseAudience({
   const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<SignupFormValues> = (data) => {
-    setLoading(true);
-    console.log("submitted");
+    signupWithEmail(data);
+    // setLoading(true);
+    // console.log("submitted");
 
-    console.log("navigating to next page");
-    console.log(data);
+    // console.log("navigating to next page");
+    // console.log(data);
 
-    httpClient()
-      .post("/auth/signup", data)
-      .then((res) => {
-        const data = res.data;
-        console.log("====== onSubmit: ", data);
+    // httpClient()
+    //   .post("/auth/signup", data)
+    //   .then((res) => {
+    //     const data = res.data;
+    //     console.log("====== onSubmit: ", data);
 
-        saveUserData(data);
+    //     saveUserData(data);
 
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log("====== onSubmit: ", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-
-    // navigate("/signup?onboarding=preview");
+    //     navigate("/");
+    //   })
+    //   .catch((err) => {
+    //     console.log("====== onSubmit: ", err);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   };
   return (
     <div className="flex pt-6 -mx-6 -mb-14 sm:-mb-10  px-6 pb-10 flex-col items-center gap-4 max-h-[90dvh] sm:max-h-none overflow-y-auto">

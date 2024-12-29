@@ -1,8 +1,12 @@
+import httpClient from "@/lib/httpClient";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext<any | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: any }) => {
+  const navigate = useNavigate();
+
   const [loadingCheck, setLoadingCheck] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -27,6 +31,12 @@ export const AuthProvider = ({ children }: { children: any }) => {
 
       console.log("userCookie", userCookie);
 
+      if (!userCookie) {
+        setIsAuthenticated(false);
+        setLoadingCheck(false);
+        return;
+      }
+
       setUser(userCookie);
       setIsAuthenticated(true);
     } catch (error) {
@@ -35,6 +45,48 @@ export const AuthProvider = ({ children }: { children: any }) => {
     } finally {
       setLoadingCheck(false);
     }
+  };
+
+  const signupWithEmail = async (data: any) => {
+    setLoading(true);
+
+    httpClient()
+      .post("/auth/signup", data)
+      .then((res) => {
+        const data = res.data;
+        console.log("====== signupWithEmail: ", data);
+
+        saveUserData(data);
+
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log("====== signupWithEmail error: ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const loginWithEmail = async (email: string, password: string) => {
+    setLoading(true);
+
+    httpClient()
+      .post("/auth/login", { email, password })
+      .then((res) => {
+        const data = res.data;
+        console.log("====== loginWithEmail: ", data);
+
+        saveUserData(data);
+
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log("====== loginWithEmail error: ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const saveUserData = async (data: any) => {
@@ -60,6 +112,29 @@ export const AuthProvider = ({ children }: { children: any }) => {
     }
   };
 
+  const logout = async () => {
+    setLoading(true);
+
+    try {
+      localStorage.removeItem("_auth_user");
+      localStorage.removeItem("_auth_accessToken");
+
+      setUser(null);
+      setProfile(null);
+      setAccessToken(null);
+
+      setIsAuthenticated(false);
+
+      console.log("User logged out");
+    } catch (error) {
+      console.error("Error logging out:", error);
+
+      setIsAuthenticated(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const value: any = {
     loadingCheck,
     loading,
@@ -70,6 +145,11 @@ export const AuthProvider = ({ children }: { children: any }) => {
 
     //
     saveUserData,
+    logout,
+
+    //
+    loginWithEmail,
+    signupWithEmail,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

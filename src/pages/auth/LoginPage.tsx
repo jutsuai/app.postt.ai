@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import Image from "@/components/Image";
 import CustomInput from "@/components/custom/CustomInput";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useAuth } from "@/context/AuthContext";
 
 type FormValues = {
   email: string;
@@ -21,6 +22,8 @@ type FormValues = {
 };
 
 export default function LoginPage() {
+  const { loginWithEmail } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -29,6 +32,7 @@ export default function LoginPage() {
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
+    loginWithEmail(data.email, data.password);
   };
 
   return (
