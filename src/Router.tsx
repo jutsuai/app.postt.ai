@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import AuthLayout from "./layout/AuthLayout";
 import LoginPage from "./pages/auth/LoginPage";
@@ -46,6 +46,8 @@ const RootRouter = () => {
         <Route path="signup">
           <Route index element={<SignupPage />} />
         </Route>
+
+        <Route path="*" element={<Navigate to="/" />} />
       </Route>
     </Routes>
   );

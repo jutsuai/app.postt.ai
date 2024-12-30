@@ -1,8 +1,5 @@
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
-import UploadTool from "@/components/UploadTool";
-import { cn } from "@/lib/utils";
-import PositionStyle from "./PositionStyle";
 import { Button } from "@/components/ui/button";
 import {
   Page,
@@ -13,6 +10,9 @@ import {
   PDFDownloadLink,
 } from "@react-pdf/renderer";
 import { useCarosel } from "../context/CreateCaroselContext";
+import httpClient from "@/lib/httpClient";
+import { useState } from "react";
+import axios from "axios";
 
 // Create styles
 const styles = StyleSheet.create({
@@ -84,6 +84,84 @@ export default function DownloadTab() {
     previewIndex,
     setSlides,
   }: any = useCarosel();
+
+  const [loading, setLoading] = useState(false);
+  const handleDownloadPDF = () => {
+    setLoading(true);
+
+    const data = {
+      title: "titleText",
+      subtitle: "subtitleText",
+      backgroundImageUrl:
+        "https://images.unsplash.com/photo-1629649095671-46de327d1734?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    };
+
+    // // Make the API request
+    // httpClient()
+    //   .post("/generators/carousel", data, { responseType: "blob" }) // Use "blob" to handle binary data
+    //   .then((response) => {
+    //     // Create a URL for the binary data
+    //     const blob = new Blob([response.data], { type: "image/png" });
+    //     const url = URL.createObjectURL(blob);
+
+    //     // Create a temporary link element
+    //     const link = document.createElement("a");
+    //     link.href = url;
+    //     link.download = "generated.png"; // File name for the downloaded PNG
+    //     document.body.appendChild(link);
+    //     link.click(); // Trigger the download
+    //     link.remove(); // Clean up the link element
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error downloading PNG:", error);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false); // Hide the loading state
+    //   });
+
+    axios
+      .post("http://localhost:8000/api/v1/generators/carousel", data, {
+        responseType: "blob",
+      }) // Use "blob" to handle binary data
+      .then((response) => {
+        // // Create a URL for the binary data
+        // const blob = new Blob([response.data], { type: "image/png" });
+        // const url = URL.createObjectURL(blob);
+        // // Create a temporary link element
+        // const link = document.createElement("a");
+        // link.href = url;
+        // link.download = "generated.png"; // File name for the downloaded PNG
+        // document.body.appendChild(link);
+        // link.click(); // Trigger the download
+        // link.remove(); // Clean up the link element
+      })
+      .catch((error) => {
+        console.error("Error downloading PNG:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
+    //   httpClient()
+    //     .post("/generators/carousel", data, { responseType: "blob" })
+    //     .then((res) => {
+    //       const blob = new Blob([res.data], { type: "application/pdf" });
+    //       const url = URL.createObjectURL(blob);
+    //       const link = document.createElement("a");
+    //       link.href = url;
+    //       link.download = "generated.pdf";
+    //       document.body.appendChild(link);
+    //       link.click();
+    //       link.remove();
+    //     })
+    //     .catch((err) => {
+    //       console.error("====== handleDownloadPDF error: ", err);
+    //     })
+    //     .finally(() => {
+    //       setLoading(false);
+    //     });
+    // };
+  };
 
   return (
     <div className="space-y-6 bg-muted shadow-md p-4 border rounded-lg h-full">
@@ -175,6 +253,7 @@ export default function DownloadTab() {
           }
         </PDFDownloadLink>
       </div>
+      <Button onClick={() => handleDownloadPDF()}>Download PDF</Button>
     </div>
   );
 }

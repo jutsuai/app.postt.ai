@@ -13,7 +13,7 @@ const tabs = [
   { name: "Content", icon: <RiPencilLine /> },
   { name: "Settings", icon: <RiSettings4Line /> },
   { name: "Theme", icon: <RiPaletteLine /> },
-  { name: "Preview", icon: <RiEyeLine /> },
+  // { name: "Preview", icon: <RiEyeLine /> },
   { name: "Download", icon: <RiDownloadLine /> },
 ];
 
