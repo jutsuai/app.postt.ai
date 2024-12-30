@@ -12,9 +12,65 @@ import WrapperContent from "@/components/wrapper/WrapperContent";
 import { useCarosel } from "./context/CreateCaroselContext";
 import BottomSection from "./_components/BottomSection";
 import DownloadTab from "./_components/DownloadTab";
+import { useState } from "react";
 
 export default function CreateCarouselPage() {
   const { topic, setTopic, activeTab, setActiveTab, tabs }: any = useCarosel();
+
+  const [data, setData] = useState({
+    createdBy: {
+      name: "John Doe",
+      avatar: "https://randomuser.me/api/portrait.jpg",
+    },
+
+    startSlide: {
+      visible: true,
+      title: "How to create a carousel post on LinkedIn",
+      description: "Learn how to make engaging content.",
+      image: "https://example.com/start-image.jpg",
+    },
+
+    slides: [
+      {
+        title: "1",
+        description: "This is the first slide",
+        image: "https://example.com/slide1.jpg",
+      },
+      {
+        title: "2",
+        description: "This is the second slide",
+        image: "https://example.com/slide2.jpg",
+      },
+      {
+        title: "3",
+        description: "This is the third slide",
+        image: "https://example.com/slide3.jpg",
+      },
+    ],
+
+    endSlide: {
+      visible: true,
+      title: "Thank you for watching!",
+      description: "Follow me for more content",
+      image: "https://example.com/end-slide.jpg",
+    },
+
+    customizations: {
+      backgroundColor: "#ffffff",
+      fontColor: "#000000",
+      title: { visible: true },
+      description: { visible: true },
+      content: {
+        horizontal: "center", // left | center | right
+        vertical: "center", // left | center | right
+      },
+      createdBy: {
+        visible: true,
+        horizontal: "center", // left | center | right
+        vertical: "center", // left | center | right
+      },
+    },
+  });
 
   return (
     <Wrapper>
@@ -25,6 +81,7 @@ export default function CreateCarouselPage() {
             <div className="px-3 ">
               <RiAiGenerate />
             </div>
+
             <input
               type="text"
               value={topic}
@@ -32,9 +89,10 @@ export default function CreateCarouselPage() {
               placeholder="Enter a topic for your carousel..."
               className="outline-none border-none w-full py-3 pr-3"
             />
+
             <Button className=" mr-2 h-9 text-sm">
               <LuWandSparkles />
-              Genarate Carosol
+              Generate Carousel
             </Button>
           </div>
         </div>
