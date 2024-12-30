@@ -1,7 +1,8 @@
 import Image from "@/components/Image";
 import { useCarosel } from "../context/CreateCaroselContext";
+import { cn } from "@/lib/utils";
 
-export default function PreviewSection() {
+export default function PreviewSection({ className }: { className?: string }) {
   const {
     titleEnabled,
     titlePosition,
@@ -17,7 +18,12 @@ export default function PreviewSection() {
     backgroundImageUrl,
   }: any = useCarosel();
   return (
-    <div className="p-3 bg-muted relative shadow-md border w-full h-full rounded-xl">
+    <div
+      className={cn(
+        "p-3 bg-muted relative shadow-md border w-full h-full rounded-xl",
+        className
+      )}
+    >
       <div className="h-full w-full flex overflow-hidden bg-background justify-center  flex-col rounded-lg p-6 aspect-[4/5] relative">
         <img
           src={backgroundImageUrl || "/carousel/bg-light.webp"}
