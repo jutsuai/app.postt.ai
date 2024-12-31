@@ -192,8 +192,8 @@ export default function SocialMediaSchedule() {
                 <RenderDateSection key={section.id} section={section} />
               )
           )}
-          <div className="absolute inset-0 bg-background rounded-t-[5rem] z-[1]" />
-          <div className="absolute bottom-0 -top-6 max-w-md mx-auto left-0 right-0 bg-muted/50 rounded-t-[6rem]" />
+          <div className="absolute inset-0 bg-background rounded-t-[4rem] z-[1]" />
+          <div className="absolute bottom-0 -top-6 max-w-[95%] mx-auto left-0 right-0 bg-muted/50 rounded-t-[6rem]" />
         </div>
       </WrapperContent>
     </Wrapper>
