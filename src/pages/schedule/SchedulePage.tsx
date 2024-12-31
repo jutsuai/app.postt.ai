@@ -1,127 +1,201 @@
-import TopBar from "@/components/header/TopBar";
 import Wrapper from "@/components/wrapper/Wrapper";
 import WrapperContent from "@/components/wrapper/WrapperContent";
-import React, { useState } from "react";
+import ScheduleHeader from "./_components/ScheduleHeader";
+import { useState } from "react";
+import RenderDateSection from "./_components/RenderDateSection";
 
-interface Event {
-  id: number;
-  title: string;
-  startTime: string;
-  endTime: string;
-  color: string;
-}
+const data = [
+  {
+    id: "friday-25",
+    date: "2025-08-25", // Changed from "Friday 25"
+    slots: [
+      {
+        id: "friday-25-slot-1",
+        time: "09:00",
+        posts: [
+          {
+            id: "post-1",
+            title: "Adalan Motivation",
+            platform: "Twitter",
+            image:
+              "https://images.unsplash.com/a-person-holding-a-white-cat-in-their-hands-411UrGnMfmc?q=20&w=100",
+            caption: "Rise and shine! Here's to a productive day ahead. ☀️",
+          },
+        ],
+      },
+      {
+        id: "friday-25-slot-2",
+        time: "15:00",
+        posts: [
+          {
+            id: "post-2",
+            title: "Team Spotlight",
+            platform: "LinkedIn",
+            image:
+              "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=20&w=100",
+            caption: "Meet Alice, the powerhouse behind our operations. 💼",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "saturday-26",
+    date: "2024-12-31", // Changed from "Saturday 26"
+    slots: [
+      {
+        id: "saturday-26-slot-1",
+        time: "11:00",
+        posts: [
+          {
+            id: "post-3",
+            title: "Weekend Offer",
+            platform: "Facebook",
+            image:
+              "https://images.unsplash.com/photo-1519340333755-56e9c22bdf9a?q=20&w=100",
+            caption: "Exclusive weekend deals live now! 🔥 #ShopNow",
+          },
+        ],
+      },
+      {
+        id: "saturday-26-slot-2",
+        time: "17:00",
+        posts: [
+          {
+            id: "post-4",
+            title: "User Poll",
+            platform: "Twitter",
+            image: "",
+            caption:
+              "What's your go-to productivity hack? 🛠️ #ShareYourThoughts",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "sunday-27",
+    date: "2025-01-27", // Changed from "Sunday 27"
+    slots: [
+      {
+        id: "sunday-27-slot-1",
+        time: "10:00",
+        posts: [
+          {
+            id: "post-5",
+            title: "Inspirational Quote",
+            platform: "Instagram",
+            image:
+              "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=20&w=100",
+            caption:
+              "Do what you can, with what you have, where you are. – Roosevelt 🌟",
+          },
+        ],
+      },
+      {
+        id: "sunday-27-slot-2",
+        time: "19:00",
+        posts: [
+          {
+            id: "post-6",
+            title: "Weekly Recap",
+            platform: "LinkedIn",
+            image:
+              "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=20&w=100",
+            caption:
+              "Highlights from this week! What was your favorite moment? 🚀",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "monday-28",
+    date: "2025-01-2", // Changed from "Monday 28"
+    slots: [
+      {
+        id: "monday-28-slot-1",
+        time: "08:30",
+        posts: [
+          {
+            id: "post-7",
+            title: "Morning Motivation",
+            platform: "Twitter",
+            image:
+              "https://images.unsplash.com/photo-1557682262-4f5d17a2f64d?q=20&w=100",
+            caption: "Start the week strong with a positive mindset! 💪",
+          },
+        ],
+      },
+      {
+        id: "monday-28-slot-2",
+        time: "13:00",
+        posts: [
+          {
+            id: "post-8",
+            title: "Product Update",
+            platform: "Facebook",
+            image:
+              "https://images.unsplash.com/photo-1557682224-dfb2d948f352?q=20&w=100",
+            caption:
+              "Exciting new features have landed in our app! 🚀 #Innovation",
+          },
+        ],
+      },
+      {
+        id: "friday-25-slot-1",
+        time: "09:00",
+        posts: [
+          {
+            id: "post-1",
+            title: "Adalan Motivation",
+            platform: "Twitter",
+            image:
+              "https://images.unsplash.com/a-person-holding-a-white-cat-in-their-hands-411UrGnMfmc?q=20&w=100",
+            caption: "Rise and shine! Here's to a productive day ahead. ☀️",
+          },
+        ],
+      },
+      {
+        id: "friday-25-slot-2",
+        time: "15:00",
+        posts: [
+          {
+            id: "post-2",
+            title: "Team Spotlight",
+            platform: "LinkedIn",
+            image:
+              "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=20&w=100",
+            caption: "Meet Alice, the powerhouse behind our operations. 💼",
+          },
+        ],
+      },
+    ],
+  },
+];
 
-const Calendar: React.FC = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const [events] = useState<Event[]>([
-    {
-      id: 1,
-      title: "Moodboard & Concept",
-      startTime: "07:30 AM",
-      endTime: "09:30 AM",
-      color: "border-orange-500 bg-orange-100",
-    },
-    {
-      id: 2,
-      title: "Sketching & Drawing",
-      startTime: "10:00 AM",
-      endTime: "12:00 PM",
-      color: "border-indigo-500 bg-indigo-100",
-    },
-  ]);
-
-  // Helper to generate days in month
-  const generateDaysInMonth = () => {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-    const calendar: (number | null)[] = Array(firstDay === 0 ? 6 : firstDay - 1)
-      .fill(null)
-      .concat([...Array(daysInMonth).keys()].map((i) => i + 1));
-    return calendar;
-  };
-
-  // Toggle Calendar View
-  const toggleCalendar = () => setIsExpanded(!isExpanded);
-
+export default function SocialMediaSchedule() {
+  const [selectedDate, setSelectedDate] = useState(new Date());
   return (
     <Wrapper>
-      <WrapperContent className="gap-8">
-        <TopBar />
-        {/* <div className="w-full  bg-gray-50 rounded-md shadow-md p-4 font-sans"> */}
-        {/* Header */}
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-xl font-bold text-gray-800">
-            {currentDate.toLocaleString("default", {
-              month: "long",
-              year: "numeric",
-            })}
-          </h1>
-          <button
-            onClick={toggleCalendar}
-            className="bg-indigo-500 text-white px-3 py-1 rounded hover:bg-indigo-600"
-          >
-            {isExpanded ? "Collapse" : "Expand"}
-          </button>
+      <WrapperContent className="bg-primary-foreground/60 pb-0 w-full">
+        <ScheduleHeader
+          data={data}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
+
+        <div className="rounded-t-[4rem] relative p-8 pb-10 -mx-4 px-8">
+          {data.map(
+            (section) =>
+              new Date(section.date).getDate() == selectedDate.getDate() && (
+                <RenderDateSection key={section.id} section={section} />
+              )
+          )}
+          <div className="absolute inset-0 bg-background rounded-t-[5rem] z-[1]" />
+          <div className="absolute bottom-0 -top-6 max-w-md mx-auto left-0 right-0 bg-muted/50 rounded-t-[6rem]" />
         </div>
-
-        {/* Conditionally Render Full Calendar */}
-        {isExpanded && (
-          <>
-            {/* Days of the Week */}
-            <div className="grid grid-cols-7 text-center text-gray-500 mb-2">
-              {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
-                <div key={day} className="p-2 font-semibold">
-                  {day}
-                </div>
-              ))}
-            </div>
-
-            {/* Dates Grid */}
-            <div className="grid grid-cols-7 text-center">
-              {generateDaysInMonth().map((day, idx) => (
-                <div
-                  key={idx}
-                  className={`p-2 ${
-                    day
-                      ? "hover:bg-gray-200 cursor-pointer rounded-md"
-                      : "invisible"
-                  } ${
-                    day === currentDate.getDate()
-                      ? "bg-indigo-500 text-white font-bold"
-                      : ""
-                  }`}
-                >
-                  {day || ""}
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-
-        {/* Event List */}
-        <div className="mt-6 bg-white rounded-lg shadow p-4">
-          <h2 className="text-lg font-semibold mb-2">Today</h2>
-          {events.map((event) => (
-            <div
-              key={event.id}
-              className={`border-l-4 ${event.color} rounded-lg p-3 mb-4`}
-            >
-              <h3 className="font-semibold text-gray-700">{event.title}</h3>
-              <p className="text-sm text-gray-500">
-                {event.startTime} - {event.endTime}
-              </p>
-            </div>
-          ))}
-        </div>
-        {/* </div> */}
       </WrapperContent>
     </Wrapper>
   );
-};
-
-export default Calendar;
+}

@@ -8,6 +8,6 @@ export default function WrapperContent({
   children: React.ReactNode;
 }) {
   return (
-    <div className={cn(className, "p-4  pb-20 flex flex-col")}>{children}</div>
+    <div className={cn("p-4 pb-20 flex flex-col", className)}>{children}</div>
   );
 }

@@ -11,12 +11,12 @@ import { cn } from "@/lib/utils";
 export default function HomePage() {
   return (
     <Wrapper>
-      <WrapperContent className="gap-6 bg-muted/80 h-dvh overflow-y-auto">
+      <WrapperContent className="gap-6 sm:bg-muted/80 h-dvh overflow-y-auto">
         <Header />
 
-        <div className="flex items-start lg:flex-row flex-col gap-8 sm:px-4 w-full">
+        <div className="flex items-start lg:flex-row flex-col gap-12 sm:gap-8 sm:px-4 w-full">
           <div className="flex flex-col gap-8 flex-grow w-full">
-            <div className="grid grid-cols-2 w-full bg-background p-4 sm:p-8 rounded-3xl gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 w-full sm:bg-background sm:p-8 rounded-3xl gap-4 sm:gap-6">
               <div className="flex flex-col gap-4 bg-primary-accent/40 p-4 rounded-2xl">
                 <div className="flex items-center justify-between">
                   <Button
@@ -57,7 +57,7 @@ export default function HomePage() {
                       <MdArrowOutward />
                     </Button>
                   </div>
-                  <div className="flex flex-col gap-2 mt-8">
+                  <div className="flex flex-col gap-2 mt-4 sm:mt-8">
                     <p className="text-base sm:text-xl font-medium text-background">
                       Video Content
                     </p>
@@ -80,7 +80,7 @@ export default function HomePage() {
                       <MdArrowOutward />
                     </Button>
                   </div>
-                  <div className="flex flex-col gap-2 mt-8">
+                  <div className="flex flex-col gap-2 mt-4 sm:mt-8">
                     <p className="text-base sm:text-xl font-medium">
                       Image Content
                     </p>
@@ -88,13 +88,13 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            <div className="bg-background p-4 sm:p-8 rounded-2xl w-full">
+            <div className="sm:bg-background  sm:p-8 rounded-2xl w-full">
               <h3 className="font-semibold text-xl mb-4">Ideas</h3>
               <div className="flex flex-col gap-4 ">
                 {ideasData.map((item, index) => (
                   <div
                     key={index}
-                    className="border p-3 px-4 rounded-2xl flex gap-3 items-center text-muted-foreground"
+                    className="border p-2 sm:p-3 px-2 text-sm sm:text-base sm:px-4 rounded-2xl flex gap-3 items-center text-muted-foreground"
                   >
                     <div
                       className={cn(
@@ -112,7 +112,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          <div className="bg-background flex-shrink h-full flex flex-col gap-6 w-full p-4 sm:p-8 rounded-2xl">
+          <div className="sm:bg-background flex-shrink h-full flex flex-col gap-6 w-full  sm:p-8 rounded-2xl">
             <h3 className="font-semibold text-xl ">Upcoming posts</h3>
             <div className="flex flex-col gap-4">
               {[...Array(4)].map((_, index) => (
