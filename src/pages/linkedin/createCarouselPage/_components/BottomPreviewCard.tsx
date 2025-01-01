@@ -1,91 +1,85 @@
-import React from "react";
-import { useCarosel } from "../context/CreateCaroselContext";
-import { MdDeleteOutline } from "react-icons/md";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
-export default function BottomPreviewCard({ slide, index }: any) {
-  const {
-    setSlides,
-    setTitleText,
-    setSubtitleText,
+export default function BottomPreviewCard({
+  slide,
+  customizations,
+  selectedSlide,
+  setSelectedSlide,
+  totalSlides,
+  pageIndex,
 
-    titleEnabled,
-    titlePosition,
-    slides,
-    previewIndex,
-    setPreviewIndex,
-    avatarEnabled,
-    avatarUrl,
-    avatarName,
-    avatarNameEnabled,
-    avatarUserNameEnabled,
-    avatarUserName,
-    setShowLastSlide,
-    backgroundImageUrl,
-  }: any = useCarosel();
-
+  setSlides,
+}: any) {
   return (
-    <div className="w-full relative h-full bg-muted p-0.5 rounded-md">
-      <div
+    <div className="w-full relative h-full bg-muted p-0.5 rounded-xl">
+      <Button
         onClick={() => {
-          setPreviewIndex(index);
-          setShowLastSlide(false);
+          setSelectedSlide(pageIndex);
         }}
-        className="aspect-[4/5] relative bg-background overflow-hidden flex flex-col justify-center transition-all opacity-80 hover:opacity-100 duration-200 px-3 rounded-md  shadow-md cursor-pointer"
+        className={cn(
+          "w-full h-full rounded-md overflow-hidden flex items-center justify-center",
+
+          selectedSlide === pageIndex ? "ring-4" : "",
+          slide?.visible ? "opacity-100" : "opacity-25"
+        )}
       >
         <img
-          src={backgroundImageUrl || "/carousel/bg-light.webp"}
-          className="absolute z-0 inset-0 pointer-events-none"
+          src={slide?.image}
+          className="absolute z-0 inset-0 rounded-lg pointer-events-none"
+          style={{
+            objectFit: "cover",
+            width: "100%",
+            height: "100%",
+          }}
         />
 
-        {index > 0 ? (
-          <div className="z-10 space-y-4 my-auto translate-y-1/3 h-full">
-            <p className="outlined-text opacity-10 -translate-x-2 -translate-y-[40%] top-0 left-0 absolute text-[80px] font-extrabold">
-              {index}
-            </p>
-            <h6 className="text-[3px] font-normal ml-4 max-w-sm ">
-              {slides[index].title}
-            </h6>
-          </div>
-        ) : (
-          <h1
-            className="text-[60%] z-10 my-auto font-bold pt-4 break-words text-wrap max-w-[75%]"
-            style={{ textAlign: titlePosition }}
-          >
-            {slides[index].title}
-          </h1>
-        )}
-
-        <div className="flex items-center z-10 space-x-1 -translate-x-2 mt-auto h-7">
-          {avatarEnabled && (
-            <img
-              src={avatarUrl}
-              alt={avatarName}
-              className="w-3 h-3 rounded-full"
-            />
-          )}
-          <div className="">
-            {avatarNameEnabled && (
-              <div className="text-[4px]">{avatarName}</div>
-            )}
-            {avatarUserNameEnabled && (
-              <div className="font-bold text-[5px] ">@{avatarUserName}</div>
-            )}
-          </div>
-        </div>
-      </div>
-      {index > 0 && (
-        <button
-          onClick={() => {
-            setSlides((prev) => {
-              setPreviewIndex(index - 1);
-              return prev.filter((_, i) => i !== index);
-            });
+        <p
+          className="text-lg z-20 font-semibold"
+          style={{
+            color: customizations?.fontColor,
           }}
-          className="text-red-500 absolute  bottom-1 p-1 rounded-full bg-background right-1"
         >
-          <MdDeleteOutline className="text-sm" />
-        </button>
-      )}
+          {slide?.pageType === "start"
+            ? "Start"
+            : slide?.pageType === "end"
+            ? "End"
+            : pageIndex}
+        </p>
+      </Button>
+
+      <Button
+        onClick={() => {
+          setSlides((prev: any) => {
+            return prev.map((item: any, index: any) => {
+              if (index === pageIndex) {
+                return {
+                  ...item,
+                  visible: !item.visible,
+                };
+              }
+              return item;
+            });
+          });
+        }}
+        className="absolute top-2 left-2 p-1 bg-background rounded-md h-6 w-6 flex items-center justify-center"
+      >
+        {slide?.visible ? <FaEye /> : <FaEyeSlash />}
+      </Button>
+
+      <Button
+        disabled={slide?.pageType === "start" || slide?.pageType === "end"}
+        onClick={() => {
+          setSlides((prev: any) => {
+            return prev.filter((_, index: any) => index !== pageIndex);
+          });
+        }}
+        className="absolute top-2 right-2 p-1 bg-background rounded-md h-6 w-6 flex items-center justify-center"
+      >
+        <MdDelete />
+      </Button>
     </div>
   );
 }

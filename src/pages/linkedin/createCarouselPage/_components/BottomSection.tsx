@@ -1,68 +1,54 @@
 import { FaPlus } from "react-icons/fa";
-import { useCarosel } from "../context/CreateCaroselContext";
 import BottomPreviewCard from "./BottomPreviewCard";
 
-export default function BottomSection() {
-  const {
-    slides,
-    setSlides,
-    avatarUrl,
-    avatarName,
-    avatarUserName,
-
-    backgroundImageUrl,
-    setShowLastSlide,
-  }: any = useCarosel();
-
+export default function BottomSection({
+  customizations,
+  slides,
+  setSlides,
+  selectedSlide,
+  setSelectedSlide,
+}: {
+  customizations: any;
+  slides: any;
+  setSlides: any;
+  selectedSlide: any;
+  setSelectedSlide: any;
+}) {
   return (
     <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(100px,1fr))]  ">
-      {slides?.map((slide, index) => (
-        <BottomPreviewCard slide={slide} index={index} key={slide.title} />
+      {slides?.map((slide: any, index: any) => (
+        <BottomPreviewCard
+          key={index}
+          totalSlides={slides?.length}
+          setSlides={setSlides}
+          //
+          pageIndex={index}
+          slide={slide}
+          customizations={customizations}
+          //
+          selectedSlide={selectedSlide}
+          setSelectedSlide={setSelectedSlide}
+        />
       ))}
 
-      {/* Add new slide placeholder */}
       <div
         onClick={() => {
-          setShowLastSlide(true);
-          // setPreviewIndex(0);
-        }}
-        className="aspect-[4/5] relative bg-background overflow-hidden flex flex-col justify-center transition-all opacity-80 hover:opacity-100 duration-200 px-3 rounded-md  shadow-md cursor-pointer"
-      >
-        <img
-          src={backgroundImageUrl || "/carousel/bg-light.webp"}
-          className="absolute z-0 inset-0 pointer-events-none"
-        />
-        <div className="flex items-center space-x-1 z-10 ">
-          <div className="p-0.5 bg-background border border-muted-foreground rounded-full">
-            <img
-              src={avatarUrl}
-              alt={avatarName}
-              className="size-5 rounded-full"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <div className="text-[6px]">{avatarName}</div>
-
-            <div className="font-bold text-[6px] line-clamp-1">
-              @{avatarUserName}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        onClick={() =>
+          // create a new slide before the end slide
           setSlides((prev: any) => {
             return [
-              ...prev,
+              ...prev.slice(0, prev.length - 1),
               {
-                title: `Slide ${prev?.length} title`,
-                subtitle: `Slide ${prev?.length} subtitle`,
+                pageType: "slide",
+                visible: true,
+                pageIndex: prev.length - 1,
+                title: "Slide " + prev.length,
+                description: "This is the " + prev.length + " slide",
+                image: slides[prev.length - 1].image,
               },
+              prev[prev.length - 1],
             ];
-          })
-        }
+          });
+        }}
         className="aspect-[4/5] relative bg-primary-foreground/60 overflow-hidden flex flex-col justify-center transition-all opacity-80 hover:opacity-100 duration-200 px-3 rounded-md  shadow-md cursor-pointer"
       >
         <div className="flex items-center justify-center">

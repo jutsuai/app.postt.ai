@@ -1,23 +1,16 @@
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import UploadTool from "@/components/UploadTool";
-import { useCarosel } from "../context/CreateCaroselContext";
+import { useState } from "react";
 
-export default function SettingsTab() {
-  const {
-    avatarEnabled,
-    setAvatarEnabled,
-    avatarUrl,
-    setAvatarUrl,
-    avatarNameEnabled,
-    setAvatarNameEnabled,
-    avatarName,
-    setAvatarName,
-    avatarUserNameEnabled,
-    setAvatarUserNameEnabled,
-    avatarUserName,
-    setAvatarUserName,
-  }: any = useCarosel();
+export default function SettingsTab({ createdBy, setCreatedBy }) {
+  const [avatarEnabled, setAvatarEnabled] = useState(true);
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [avatarNameEnabled, setAvatarNameEnabled] = useState(true);
+  const [avatarName, setAvatarName] = useState("");
+  const [avatarUserNameEnabled, setAvatarUserNameEnabled] = useState(true);
+  const [avatarUserName, setAvatarUserName] = useState("");
+
   return (
     <div className="space-y-6 bg-muted border shadow-md p-4 rounded-lg h-full">
       <h3 className="text-base font-semibold">Settings</h3>
@@ -46,8 +39,8 @@ export default function SettingsTab() {
         </div>
         <Input
           type="text"
-          value={avatarName}
-          onChange={(e) => setAvatarName(e.target.value)}
+          value={createdBy.name}
+          onChange={(e) => setCreatedBy({ ...createdBy, name: e.target.value })}
           placeholder="Test User"
           className="bg-background"
           disabled={!avatarNameEnabled}
@@ -63,8 +56,10 @@ export default function SettingsTab() {
         </div>
         <Input
           type="text"
-          value={avatarUserName}
-          onChange={(e) => setAvatarUserName(e.target.value)}
+          value={createdBy.username}
+          onChange={(e) =>
+            setCreatedBy({ ...createdBy, username: e.target.value })
+          }
           placeholder="test"
           className="bg-background"
           disabled={!avatarUserNameEnabled}

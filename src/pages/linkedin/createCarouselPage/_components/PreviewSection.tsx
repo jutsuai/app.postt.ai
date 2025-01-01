@@ -9,7 +9,7 @@ export default function PreviewSection({
 
   createdBy,
 
-  curIndex,
+  pageIndex,
   title,
   description,
   image,
@@ -22,15 +22,13 @@ export default function PreviewSection({
 
   createdBy: any;
 
-  curIndex: any;
+  pageIndex: any;
   title: string;
   description: string;
   image: string;
 
   customizations: any;
 }) {
-  console.log("=========", pageType);
-
   return (
     <div
       className={cn(
@@ -54,7 +52,7 @@ export default function PreviewSection({
         />
       ) : (
         <SlidePage
-          curIndex={curIndex}
+          pageIndex={pageIndex}
           title={title}
           description={description}
           image={image}
@@ -81,25 +79,29 @@ const StartPage = ({
   pageType: string;
 }) => {
   return (
-    <div className="h-full w-full flex overflow-hidden bg-background justify-center flex-col  p-6 aspect-[4/5] relative">
+    <div
+      className="h-full w-full flex overflow-hidden bg-background justify-center flex-col p-6  relative"
+      style={{ aspectRatio: customizations?.height / customizations?.width }}
+    >
       <img
         src={image || "/carousel/bg-light.webp"}
-        className="absolute z-0 inset-0 w-full h-full pointer-events-none"
+        className="absolute z-0 inset-0 w-full h-full pointer-events-none object-cover"
+        style={{ aspectRatio: customizations?.height / customizations?.width }}
       />
 
       <div
         className={cn(
-          "z-10  w-full space-y-2 my-auto",
+          "z-10  w-full space-y-2 my-auto  h-full flex",
 
-          customizations?.createdBy?.horizontal === "left"
+          customizations?.content?.horizontal === "left"
             ? "justify-start"
-            : customizations?.createdBy?.horizontal === "center"
+            : customizations?.content?.horizontal === "center"
             ? "justify-center"
             : "justify-end",
 
-          customizations?.createdBy?.vertical === "top"
+          customizations?.content?.vertical === "top"
             ? "items-start"
-            : customizations?.createdBy?.vertical === "center"
+            : customizations?.content?.vertical === "center"
             ? "items-center"
             : "items-end"
         )}
@@ -107,7 +109,14 @@ const StartPage = ({
         {customizations?.title?.visible && (
           <h1
             className="text-6xl text-gray-800 font-semibold leading-normal"
-            style={{ textAlign: customizations?.content?.horizontal }}
+            style={{
+              textAlign:
+                customizations?.content?.horizontal === "left"
+                  ? "start"
+                  : customizations?.content?.horizontal === "center"
+                  ? "center"
+                  : "end",
+            }}
           >
             {title}
           </h1>
@@ -138,7 +147,7 @@ const StartPage = ({
             className="w-12 h-12 rounded-full object-cover"
           />
 
-          <div className="">
+          <div>
             <div className="text-base font-bold">{createdBy?.name}</div>
             <div className="text-xs">@{createdBy?.username}</div>
           </div>
@@ -158,14 +167,18 @@ const EndPage = ({
   customizations: any;
 }) => {
   return (
-    <div className="h-full w-full flex overflow-hidden bg-background justify-center items-center p-6 relative">
+    <div
+      className="h-full w-full flex overflow-hidden bg-background justify-center items-center p-6 relative"
+      style={{ aspectRatio: customizations?.height / customizations?.width }}
+    >
       <img
         src={image || "/carousel/bg-light.webp"}
-        className="absolute z-0 inset-0 w-full h-full pointer-events-none"
+        className="absolute z-0 inset-0 w-full h-full pointer-events-none object-cover"
+        style={{ aspectRatio: customizations?.height / customizations?.width }}
       />
 
       <p
-        className="absolute bottom-10 right-10 p-4 text-xs"
+        className="absolute bottom-0 right-0 p-4 text-xs"
         style={{
           color: customizations?.fontColor,
         }}
@@ -175,87 +188,8 @@ const EndPage = ({
 
       <div
         className={cn(
-          "flex w-full h-full z-10 ",
+          "flex w-full h-full z-10 gap-4",
 
-          customizations?.createdBy?.horizontal === "left"
-            ? "justify-start"
-            : customizations?.createdBy?.horizontal === "center"
-            ? "justify-center"
-            : "justify-end",
-
-          customizations?.createdBy?.vertical === "top"
-            ? "items-start"
-            : customizations?.createdBy?.vertical === "center"
-            ? "items-center"
-            : "items-end"
-        )}
-      >
-        <div
-          className={cn(
-            "gap-6 flex items-center",
-
-            customizations?.createdBy?.horizontal === "left"
-              ? "justify-start"
-              : customizations?.createdBy?.horizontal === "center"
-              ? "justify-center"
-              : "justify-end",
-
-            customizations?.createdBy?.vertical === "top"
-              ? "items-start"
-              : customizations?.createdBy?.vertical === "center"
-              ? "items-center"
-              : "items-end"
-          )}
-        >
-          <div className="p-2 rounded-full ring-[2px] ring-black/25">
-            <Image
-              src={createdBy?.avatar}
-              alt={createdBy?.username}
-              className="w-44 h-44 min-h-44 min-w-44 rounded-full"
-            />
-          </div>
-
-          <div
-            className="text-7xl font-semibold"
-            style={{
-              color: customizations?.fontColor,
-            }}
-          >
-            {createdBy?.name}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const SlidePage = ({
-  curIndex,
-  title,
-  description,
-  image,
-  createdBy,
-  customizations,
-  pageType,
-}: {
-  curIndex: number;
-  title: string;
-  description: string;
-  image: string;
-  createdBy: any;
-  customizations: any;
-  pageType: string;
-}) => {
-  return (
-    <div className="h-full w-full flex overflow-hidden bg-background justify-center flex-col  p-6 aspect-[4/5] relative">
-      <img
-        src={image || "/carousel/bg-light.webp"}
-        className="absolute z-0 inset-0 w-full h-full pointer-events-none"
-      />
-
-      <div
-        className={cn(
-          "z-10 space-y-4 my-auto translate-y-1/3 h-full",
           customizations?.content?.horizontal === "left"
             ? "justify-start"
             : customizations?.content?.horizontal === "center"
@@ -269,14 +203,86 @@ const SlidePage = ({
             : "items-end"
         )}
       >
-        <p className="outlined-text opacity-10  -translate-x-7 -translate-y-[40%] top-0 left-0 absolute text-[400px] font-extrabold">
-          {curIndex}
-        </p>
-        <div className="ml-20 max-w-sm space-y-1 -translate-y-2">
-          <h6 className="text-xl font-semibold ">{title}</h6>
-
-          <p className="text-base">{description}</p>
+        <div className="p-2 rounded-full ring-[2px] ring-black/25">
+          <Image
+            src={createdBy?.avatar}
+            alt={createdBy?.username}
+            className="h-40 w-40 min-h-40 min-w-40 rounded-full"
+          />
         </div>
+
+        <div
+          className="text-6xl h-44 items-center flex   font-semibold"
+          style={{
+            color: customizations?.fontColor,
+            textAlign:
+              customizations?.content?.horizontal === "left"
+                ? "start"
+                : customizations?.content?.horizontal === "center"
+                ? "center"
+                : "end",
+          }}
+        >
+          {createdBy?.name}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const SlidePage = ({
+  pageIndex,
+  title,
+  description,
+  image,
+  createdBy,
+  customizations,
+  pageType,
+}: {
+  pageIndex: number;
+  title: string;
+  description: string;
+  image: string;
+  createdBy: any;
+  customizations: any;
+  pageType: string;
+}) => {
+  return (
+    <div
+      className="h-full w-full flex overflow-hidden bg-background justify-center flex-col  p-6  relative"
+      style={{ aspectRatio: customizations?.height / customizations?.width }}
+    >
+      <img
+        src={image || "/carousel/bg-light.webp"}
+        className="absolute z-0 inset-0 w-full h-full pointer-events-none object-cover"
+        style={{ aspectRatio: customizations?.height / customizations?.width }}
+      />
+
+      <div
+        className={cn(
+          "z-10 ml-20 gap-0 my-auto flex flex-col  relative h-full",
+          customizations?.content?.horizontal === "left"
+            ? "items-start"
+            : customizations?.content?.horizontal === "center"
+            ? "items-center"
+            : "items-end",
+
+          customizations?.content?.vertical === "top"
+            ? "justify-start"
+            : customizations?.content?.vertical === "center"
+            ? "justify-center"
+            : "justify-end"
+        )}
+      >
+        {customizations?.pageIndex?.visible && (
+          <p className="outlined-text opacity-10  -translate-x-24 -translate-y-[10%] top-0 left-0 absolute text-[400px] font-extrabold">
+            {pageIndex}
+          </p>
+        )}
+
+        <h6 className="text-xl font-semibold ">{title}</h6>
+
+        <p className="text-base">{description}</p>
       </div>
 
       {pageType !== "end" && customizations?.createdBy?.visible && (
@@ -313,7 +319,7 @@ const SlidePage = ({
           </div>
 
           <div
-            className="h-10 w-10 rounded-full flex items-center justify-center"
+            className="h-10 w-10 min-w-10 rounded-full flex items-center justify-center"
             style={{
               backgroundColor: customizations?.fontColor,
 

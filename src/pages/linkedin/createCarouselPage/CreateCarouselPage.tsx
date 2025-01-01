@@ -9,68 +9,96 @@ import PreviewSection from "./_components/PreviewSection";
 
 import Wrapper from "@/components/wrapper/Wrapper";
 import WrapperContent from "@/components/wrapper/WrapperContent";
-import { useCarosel } from "./context/CreateCaroselContext";
 import BottomSection from "./_components/BottomSection";
 import DownloadTab from "./_components/DownloadTab";
 import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function CreateCarouselPage() {
-  const { topic, setTopic, activeTab, setActiveTab, tabs }: any = useCarosel();
-
-  const [data, setData] = useState({
-    createdBy: {
-      name: "John Doe",
-      avatar: "https://randomuser.me/api/portrait.jpg",
-    },
-
-    startSlide: {
+  const { user } = useAuth();
+  // const [data, setData] = useState({
+  const [slides, setSlides] = useState([
+    {
+      pageType: "start",
       visible: true,
       title: "How to create a carousel post on LinkedIn",
-      description: "Learn how to make engaging content.",
-      image: "https://example.com/start-image.jpg",
+      image: "https://i.ibb.co.com/1K7VDBQ/bg-light.webp",
     },
-
-    slides: [
-      {
-        title: "1",
-        description: "This is the first slide",
-        image: "https://example.com/slide1.jpg",
-      },
-      {
-        title: "2",
-        description: "This is the second slide",
-        image: "https://example.com/slide2.jpg",
-      },
-      {
-        title: "3",
-        description: "This is the third slide",
-        image: "https://example.com/slide3.jpg",
-      },
-    ],
-
-    endSlide: {
+    {
+      pageType: "slide",
       visible: true,
-      title: "Thank you for watching!",
-      description: "Follow me for more content",
-      image: "https://example.com/end-slide.jpg",
+      title: "Slide 1",
+      description: "This is the first slide",
+      image: "https://i.ibb.co.com/1K7VDBQ/bg-light.webp",
+    },
+    {
+      pageType: "slide",
+      visible: true,
+      title: "Slide 2",
+      description: "This is the second slide",
+      image: "https://i.ibb.co.com/1K7VDBQ/bg-light.webp",
+    },
+    {
+      pageType: "slide",
+      visible: true,
+      title: "Slide 3",
+      description: "This is the third slide",
+      image: "https://i.ibb.co.com/1K7VDBQ/bg-light.webp",
+    },
+    {
+      pageType: "end",
+      visible: true,
+      image: "https://i.ibb.co.com/1K7VDBQ/bg-light.webp",
+    },
+  ]);
+
+  const [createdBy, setCreatedBy] = useState({
+    name: `${user?.firstName} ${user?.lastName}`,
+    username: user?.username || user?.email,
+    avatar:
+      user?.avatar || "https://avatars.githubusercontent.com/u/8743993?v=4",
+  });
+
+  const [customizations, setCustomizations] = useState({
+    backgroundColor: "#ffffff",
+    fontColor: "#000000",
+    pageIndex: {
+      visible: true,
+    },
+    title: {
+      visible: true,
+    },
+    description: {
+      visible: true,
+    },
+    content: {
+      horizontal: "left", // left | center | right
+      vertical: "center", // top | center | bottom
+    },
+    createdBy: {
+      visible: true,
+      horizontal: "left", // left | center | right
+      vertical: "center", // top | center | bottom
     },
 
-    customizations: {
-      backgroundColor: "#ffffff",
-      fontColor: "#000000",
-      title: { visible: true },
-      description: { visible: true },
-      content: {
-        horizontal: "center", // left | center | right
-        vertical: "center", // left | center | right
-      },
-      createdBy: {
-        visible: true,
-        horizontal: "center", // left | center | right
-        vertical: "center", // left | center | right
-      },
-    },
+    // aspectRatio: "4/5",
+    height: 640,
+    width: 512,
   });
+
+  //
+  const [selectedSlide, setSelectedSlide] = useState(0);
+
+  const [activeTab, setActiveTab] = useState("Content");
+  const [tabs, setTabs] = useState([
+    { name: "Content", icon: "📝" },
+    { name: "Settings", icon: "⚙️" },
+    { name: "Download", icon: "📥" },
+  ]);
+
+  const [topic, setTopic] = useState(
+    "How to create a carousel post on LinkedIn"
+  );
 
   return (
     <Wrapper>
@@ -103,7 +131,12 @@ export default function CreateCarouselPage() {
           <div className="space-y-8 container">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full h-full">
               {/* Left Preview Area */}
-              <PreviewSection />
+              <PreviewSection
+                {...slides[selectedSlide]}
+                pageIndex={selectedSlide}
+                createdBy={createdBy}
+                customizations={customizations}
+              />
 
               {/* Right Sidebar */}
               <div className="flex flex-col gap-4 h-full w-full">
@@ -126,10 +159,30 @@ export default function CreateCarouselPage() {
                 </Tabs>
 
                 {/* Content for Active Tab */}
-                {activeTab === "Content" && <ContentTab />}
+                {activeTab === "Content" && (
+                  <ContentTab
+                    slides={slides}
+                    setSlides={setSlides}
+                    selectedSlide={selectedSlide}
+                    //
+                    customizations={customizations}
+                    setCustomizations={setCustomizations}
+                  />
+                )}
 
-                {activeTab === "Settings" && <SettingsTab />}
-                {activeTab === "Download" && <DownloadTab />}
+                {activeTab === "Settings" && (
+                  <SettingsTab
+                    createdBy={createdBy}
+                    setCreatedBy={setCreatedBy}
+                  />
+                )}
+                {activeTab === "Download" && (
+                  <DownloadTab
+                    slides={slides}
+                    customizations={customizations}
+                    createdBy={createdBy}
+                  />
+                )}
 
                 {activeTab !== "Content" && activeTab !== "Settings" && (
                   <div className="text-gray-500">
@@ -140,7 +193,13 @@ export default function CreateCarouselPage() {
             </div>
 
             {/* Bottom Carousel Thumbnails */}
-            <BottomSection />
+            <BottomSection
+              customizations={customizations}
+              slides={slides}
+              setSlides={setSlides}
+              selectedSlide={selectedSlide}
+              setSelectedSlide={setSelectedSlide}
+            />
           </div>
         </div>
       </WrapperContent>

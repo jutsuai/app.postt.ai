@@ -1,6 +1,5 @@
 import React from "react";
 import PreviewSection from "../linkedin/createCarouselPage/_components/PreviewSection";
-import { CreateCaroselProvider } from "../linkedin/createCarouselPage/context/CreateCaroselContext";
 import { useSearchParams } from "react-router-dom";
 
 const data = {
@@ -21,21 +20,21 @@ const data = {
 
   slides: [
     {
-      curIndex: 1,
+      pageIndex: 1,
       title: "Slide 1",
       description: "This is the first slide",
       image:
         "https://plus.unsplash.com/premium_photo-1671829480432-9b0f10d869ef?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
-      curIndex: 2,
+      pageIndex: 2,
       title: "Slide 2",
       description: "This is the second slide",
       image:
         "https://plus.unsplash.com/premium_photo-1671829480432-9b0f10d869ef?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
-      curIndex: 3,
+      pageIndex: 3,
       title: "Slide 3",
       description: "This is the third slide",
       image:
@@ -80,7 +79,7 @@ export default function RestrictedLinkedinCarouselPage() {
   // pageType
   // createdBy
   // customizations
-  // curIndex
+  // pageIndex
   // title
   // description
   // image
@@ -88,7 +87,7 @@ export default function RestrictedLinkedinCarouselPage() {
   const pageType = searchParams.get("pageType");
   const createdBy = searchParams.get("createdBy") || "";
   const customizations = searchParams.get("customizations") || "";
-  const curIndex = searchParams.get("curIndex") || "";
+  const pageIndex = searchParams.get("pageIndex") || "";
   const title = searchParams.get("title") || "";
   const description = searchParams.get("description") || "";
   const image = searchParams.get("image") || "";
@@ -97,44 +96,42 @@ export default function RestrictedLinkedinCarouselPage() {
   console.log(createdBy);
 
   return (
-    <CreateCaroselProvider>
-      <PreviewSection
-        className="p-0 rounded-none"
-        // //
-        // pageType="slide" // start | end | slide
-        // createdBy={data.createdBy}
-        // customizations={data.customizations}
-        // //
-        // curIndex={data.slides[0].curIndex}
-        // // title={data.slides[0].title}
-        // title={data.startSlide?.title}
-        // description={data.slides[0].description}
-        // image={data.slides[0].image}
-        //
+    <PreviewSection
+      className="p-0 rounded-none"
+      // //
+      // pageType="slide" // start | end | slide
+      // createdBy={data.createdBy}
+      // customizations={data.customizations}
+      // //
+      // pageIndex={data.slides[0].pageIndex}
+      // // title={data.slides[0].title}
+      // title={data.startSlide?.title}
+      // description={data.slides[0].description}
+      // image={data.slides[0].image}
+      //
 
-        //
-        //
-        //
+      //
+      //
+      //
 
-        pageType={pageType}
-        createdBy={JSON.parse(createdBy || "{}")}
-        customizations={JSON.parse(customizations || "{}")}
-        curIndex={curIndex}
-        title={title}
-        description={description}
-        image={image}
+      pageType={pageType}
+      createdBy={JSON.parse(createdBy || "{}")}
+      customizations={JSON.parse(customizations || "{}")}
+      pageIndex={pageIndex}
+      title={title}
+      description={description}
+      image={image}
 
-        //
-        // pageType="slide" // start | end | slide
-        // createdBy={data.createdBy}
-        // customizations={data.customizations}
-        // //
-        // curIndex={data.slides[0].curIndex}
-        // // title={data.slides[0].title}
-        // title={data.startSlide?.title}
-        // description={data.slides[0].description}
-        // image={data.slides[0].image}
-      />
-    </CreateCaroselProvider>
+      //
+      // pageType="slide" // start | end | slide
+      // createdBy={data.createdBy}
+      // customizations={data.customizations}
+      // //
+      // pageIndex={data.slides[0].pageIndex}
+      // // title={data.slides[0].title}
+      // title={data.startSlide?.title}
+      // description={data.slides[0].description}
+      // image={data.slides[0].image}
+    />
   );
 }

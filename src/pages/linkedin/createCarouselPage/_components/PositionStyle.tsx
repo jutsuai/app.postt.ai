@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { useCarosel } from "../context/CreateCaroselContext";
 
 export default function PositionStyle({
   position: initialPosition,
@@ -8,7 +7,10 @@ export default function PositionStyle({
   position: string;
   setPosition: (value: string) => void;
 }) {
-  const { positionOptions } = useCarosel();
+  // const { positionOptions } = useCarosel();
+
+  const positionOptions = ["center", "left", "right"];
+
   return (
     <div className="border ml-auto mr-3 flex items-center justify-around overflow-hidden rounded-md bg-background">
       {(positionOptions as any)?.map((position: any) => (
