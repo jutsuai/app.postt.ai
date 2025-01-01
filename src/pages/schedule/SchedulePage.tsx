@@ -1,8 +1,9 @@
 import Wrapper from "@/components/wrapper/Wrapper";
 import WrapperContent from "@/components/wrapper/WrapperContent";
-import ScheduleHeader from "./_components/ScheduleHeader";
-import { useState } from "react";
+import ScheduleCalendar from "./_components/ScheduleCalendar";
+import { useMemo, useState } from "react";
 import RenderDateSection from "./_components/RenderDateSection";
+import { PiCalendarXDuotone } from "react-icons/pi";
 
 const data = [
   {
@@ -176,24 +177,48 @@ const data = [
 
 export default function SocialMediaSchedule() {
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const scheduleData = useMemo(() => {
+    return data.filter(
+      (section) =>
+        new Date(section.date).toLocaleDateString() ==
+        selectedDate.toLocaleDateString()
+    );
+  }, [selectedDate]);
+
   return (
     <Wrapper>
-      <WrapperContent className="bg-primary-foreground/60 pb-0 w-full">
-        <ScheduleHeader
+      <WrapperContent className="bg-primary-foreground/60 md:grid gap-8 grid-cols-6 pb-0 w-full">
+        <ScheduleCalendar
           data={data}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
+          className="col-span-4 md:h-[calc(100dvh-1rem)] pb-4"
         />
 
-        <div className="rounded-t-[4rem] relative p-8 pb-10 -mx-4 px-8">
-          {data.map(
-            (section) =>
-              new Date(section.date).getDate() == selectedDate.getDate() && (
-                <RenderDateSection key={section.id} section={section} />
-              )
+        <div className="rounded-t-[4rem] md:rounded-xl md:bg-background col-span-2 relative p-8 pb-10 -mx-4 md:-mx-0 md:mb-4 px-8">
+          {scheduleData && scheduleData?.length > 0 ? (
+            <RenderDateSection section={scheduleData[0]} />
+          ) : (
+            <div className="flex items-center flex-col relative z-10 md:mt-0  pb-24 md:pb-0 mt-10 gap-2 justify-center h-full opacity-70">
+              <PiCalendarXDuotone className="text-6xl text-muted-foreground/100" />
+
+              <p className=" text-lg font-semibold">
+                No posts scheduled for this day
+              </p>
+              <h4 className="text-sm font-medium text-muted-foreground">
+                {selectedDate.toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </h4>
+            </div>
           )}
-          <div className="absolute inset-0 bg-background rounded-t-[4rem] z-[1]" />
-          <div className="absolute bottom-0 -top-6 max-w-[95%] mx-auto left-0 right-0 bg-muted/50 rounded-t-[6rem]" />
+          {/* )
+          )} */}
+          <div className="absolute md:hidden inset-0 bg-background rounded-t-[4rem] z-[1]" />
+          <div className="absolute md:hidden bottom-0 -top-6 max-w-[95%] mx-auto left-0 right-0 bg-muted/50 rounded-t-[6rem]" />
         </div>
       </WrapperContent>
     </Wrapper>

@@ -43,12 +43,16 @@ export default function CreatePage() {
             you today?
           </h1>
 
-          <div className="w-full h-14 max-w-lg bg-muted focus-within:shadow-lg transition-all p-px rounded-full">
+          <div className="w-full h-14 flex items-center pr-3 max-w-lg bg-muted focus-within:shadow-lg transition-all p-px rounded-full">
             <input
               type="text"
               placeholder="Write a Topic to generate a post"
               className="w-full h-full outline-none  px-4 bg-muted rounded-full"
             />
+            <Button size="sm" className="rounded-full  px-8 py-5">
+              <LuWandSparkles />
+              Genarate
+            </Button>
           </div>
 
           <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-3xl">
@@ -56,11 +60,6 @@ export default function CreatePage() {
               <PostCard {...item} key={index} />
             ))}
           </div>
-
-          <Button className="rounded-full px-8">
-            <LuWandSparkles />
-            Genarate
-          </Button>
         </div>
       </WrapperContent>
     </Wrapper>

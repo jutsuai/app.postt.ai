@@ -1,5 +1,3 @@
-import Image from "@/components/Image";
-
 export default function RenderDateSection({ section }: { section: any }) {
   const renderPost = (post: any) => (
     <div
@@ -24,7 +22,7 @@ export default function RenderDateSection({ section }: { section: any }) {
 
   const renderSlot = (slot: any) => (
     <div key={slot.id} className="flex gap-4 mt-1 w-full">
-      <div className="w-12 flex flex-col items-end">
+      <div className="w-12 flex flex-col items-center">
         <span className="text-xs font-medium">{slot.time}</span>
         <span className="text-xs text-muted-foreground">AM</span>
       </div>
@@ -36,7 +34,7 @@ export default function RenderDateSection({ section }: { section: any }) {
   );
 
   return (
-    <div className="mb-10 relative z-10">
+    <div className="mb-14 md:mb-0 relative z-10">
       <div className="flex justify-between items-center">
         <h2 className="text-base font-semibold ">
           {new Date(section.date).toLocaleDateString("en-US", {
@@ -47,7 +45,7 @@ export default function RenderDateSection({ section }: { section: any }) {
         </h2>
       </div>
       <div className="flex flex-col gap-4 mt-4">
-        {section.slots.map(renderSlot)}
+        {section?.slots?.length > 0 && section.slots.map(renderSlot)}
       </div>
     </div>
   );
