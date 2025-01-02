@@ -1,14 +1,20 @@
 import Wrapper from "@/components/wrapper/Wrapper";
 import WrapperContent from "@/components/wrapper/WrapperContent";
-import ScheduleCalendar from "./_components/ScheduleCalendar";
+import "@/calender.css";
+
 import { useMemo, useState } from "react";
 import RenderDateSection from "./_components/RenderDateSection";
 import { PiCalendarXDuotone } from "react-icons/pi";
 
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
+
+const localizer = momentLocalizer(moment);
+
 const data = [
   {
     id: "friday-25",
-    date: "2025-08-25", // Changed from "Friday 25"
+    start: "2025-08-25", // Changed from "Friday 25"
     slots: [
       {
         id: "friday-25-slot-1",
@@ -42,7 +48,7 @@ const data = [
   },
   {
     id: "saturday-26",
-    date: "2024-12-31", // Changed from "Saturday 26"
+    start: "2024-12-31", // Changed from "Saturday 26"
     slots: [
       {
         id: "saturday-26-slot-1",
@@ -76,7 +82,7 @@ const data = [
   },
   {
     id: "sunday-27",
-    date: "2025-01-27", // Changed from "Sunday 27"
+    start: "2025-01-27", // Changed from "Sunday 27"
     slots: [
       {
         id: "sunday-27-slot-1",
@@ -112,7 +118,7 @@ const data = [
   },
   {
     id: "monday-28",
-    date: "2025-01-2", // Changed from "Monday 28"
+    start: "2025-01-2", // Changed from "Monday 28"
     slots: [
       {
         id: "monday-28-slot-1",
@@ -175,8 +181,38 @@ const data = [
   },
 ];
 
+const transformDataToEvents = (data: any) => {
+  const events: any = [];
+
+  data.forEach((day: any) => {
+    const dayDate = new Date(day.start);
+
+    day.slots.forEach((slot: any) => {
+      const [hour, minute] = slot.time.split(":");
+      const slotStart = new Date(dayDate);
+      slotStart.setHours(hour, minute);
+
+      slot.posts.forEach((post: any) => {
+        events.push({
+          title: `${post.title} (${post.platform})`,
+          start: slotStart,
+          end: new Date(slotStart), // End same as start for single-time events
+          id: post.id,
+          platform: post.platform,
+          caption: post.caption,
+          image: post.image,
+        });
+      });
+    });
+  });
+
+  return events;
+};
+
 export default function SocialMediaSchedule() {
+  // console.log(calcnercss);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const events = useMemo(() => transformDataToEvents(data), [data]);
 
   const scheduleData = useMemo(() => {
     return data.filter(
@@ -186,15 +222,40 @@ export default function SocialMediaSchedule() {
     );
   }, [selectedDate]);
 
+  const eventStyleGetter = (event) => {
+    return {
+      style: {
+        backgroundColor: "hsl(252 100% 63%)",
+        color: "white",
+        borderRadius: "5px",
+        padding: "5px",
+        fontSize: "12px",
+      },
+    };
+  };
   return (
     <Wrapper>
-      <WrapperContent className="bg-primary-foreground/60 md:grid gap-8 grid-cols-6 pb-0 w-full">
-        <ScheduleCalendar
+      <WrapperContent className="bg-muted/80 md:grid gap-8 grid-cols-6 pb-0 w-full">
+        {/* <ScheduleCalendar
           data={data}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
           className="col-span-4 md:h-[calc(100dvh-1rem)] pb-4"
-        />
+        /> */}
+        <div className="col-span-4 md:h-[calc(100dvh-1rem)] pb-4">
+          <Calendar
+            localizer={localizer}
+            eventPropGetter={eventStyleGetter}
+            tooltipAccessor={(event) => `${event.caption}`}
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+            style={{
+              height: "100%",
+              borderRadius: "5rem",
+            }}
+          />
+        </div>
 
         <div className="rounded-t-[4rem] md:rounded-xl md:bg-background col-span-2 relative p-8 pb-10 -mx-4 md:-mx-0 md:mb-4 px-8">
           {scheduleData && scheduleData?.length > 0 ? (
@@ -215,8 +276,7 @@ export default function SocialMediaSchedule() {
               </h4>
             </div>
           )}
-          {/* )
-          )} */}
+
           <div className="absolute md:hidden inset-0 bg-background rounded-t-[4rem] z-[1]" />
           <div className="absolute md:hidden bottom-0 -top-6 max-w-[95%] mx-auto left-0 right-0 bg-muted/50 rounded-t-[6rem]" />
         </div>
