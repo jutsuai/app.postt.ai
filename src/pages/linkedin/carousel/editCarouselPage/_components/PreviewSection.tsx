@@ -81,7 +81,11 @@ const StartPage = ({
   return (
     <div
       className="h-full w-full flex overflow-hidden bg-background justify-center flex-col p-6  relative"
-      style={{ aspectRatio: customizations?.height / customizations?.width }}
+      style={{
+        aspectRatio: customizations?.height / customizations?.width,
+        minHeight: customizations?.height,
+        maxHeight: customizations?.height,
+      }}
     >
       <img
         src={image || "/carousel/bg-light.webp"}
@@ -169,7 +173,11 @@ const EndPage = ({
   return (
     <div
       className="h-full w-full flex overflow-hidden bg-background justify-center items-center p-6 relative"
-      style={{ aspectRatio: customizations?.height / customizations?.width }}
+      style={{
+        aspectRatio: customizations?.height / customizations?.width,
+        minHeight: customizations?.height,
+        maxHeight: customizations?.height,
+      }}
     >
       <img
         src={image || "/carousel/bg-light.webp"}
@@ -250,7 +258,11 @@ const SlidePage = ({
   return (
     <div
       className="h-full w-full flex overflow-hidden bg-background justify-center flex-col  p-6  relative"
-      style={{ aspectRatio: customizations?.height / customizations?.width }}
+      style={{
+        aspectRatio: customizations?.height / customizations?.width,
+        minHeight: customizations?.height,
+        maxHeight: customizations?.height,
+      }}
     >
       <img
         src={image || "/carousel/bg-light.webp"}

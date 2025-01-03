@@ -14,7 +14,7 @@ import DownloadTab from "./_components/DownloadTab";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 
-export default function CreateCarouselPage() {
+export default function EditCarouselPage() {
   const { user } = useAuth();
   // const [data, setData] = useState({
   const [slides, setSlides] = useState([
@@ -82,7 +82,7 @@ export default function CreateCarouselPage() {
     },
 
     // aspectRatio: "4/5",
-    height: 640,
+    height: 660,
     width: 512,
   });
 

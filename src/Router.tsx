@@ -3,7 +3,6 @@ import HomePage from "./pages/HomePage";
 import AuthLayout from "./layout/AuthLayout";
 import LoginPage from "./pages/auth/LoginPage";
 import LinkedinPage from "./pages/linkedin/LinkedinPage";
-import CreateCarouselPage from "./pages/linkedin/createCarouselPage/CreateCarouselPage";
 import CreatePostPage from "./pages/linkedin/CreatePostPage";
 import LinkedinCallbackPage from "./pages/auth/LinkedinCallbackPage";
 import Layout from "./layout/Layout";
@@ -18,6 +17,8 @@ import { useAuth } from "./context/AuthContext";
 import ReportsPage from "./pages/reports/ReportsPage";
 import CreatePage from "./pages/create/CreatePage";
 import LinkedinCarouselPage from "./pages/restricted/RestrictedLinkedinCarouselPage";
+import CarouselsPage from "./pages/linkedin/carousel/CarouselsPage";
+import EditCarouselPage from "./pages/linkedin/carousel/editCarouselPage/EditCarouselPage";
 
 export default function Router() {
   const { isAuthenticated } = useAuth();
@@ -84,7 +85,11 @@ const AppRouter = () => {
         <Route path="create">
           <Route index element={<CreatePage />} />
           <Route path="post" element={<CreatePostPage />} />
-          <Route path="carousel" element={<CreateCarouselPage />} />
+
+          <Route path="carousel">
+            <Route index element={<CarouselsPage />} />
+            <Route path=":id" element={<EditCarouselPage />} />
+          </Route>
         </Route>
       </Route>
     </Routes>

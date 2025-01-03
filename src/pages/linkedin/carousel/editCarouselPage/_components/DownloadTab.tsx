@@ -23,7 +23,7 @@ export default function DownloadTab({
     };
 
     axios
-      .post("http://localhost:8000/api/v1/generators/carousel", data, {
+      .post("http://localhost:8000/api/v1/create/carousel/generate", data, {
         responseType: "blob", // Important to handle binary data like PDF
       })
       .then((response) => {
