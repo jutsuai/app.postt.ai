@@ -4,17 +4,61 @@ import { MdCalendarMonth } from "react-icons/md";
 import { CiBoxList } from "react-icons/ci";
 import { cn } from "@/lib/utils";
 import useBreakpoint from "@/lib/useBreakpoint";
-const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const initialDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function getFullDayName(abbreviation) {
+  switch (abbreviation) {
+    case "Sun":
+      return "Sunday";
+    case "Mon":
+      return "Monday";
+    case "Tue":
+      return "Tuesday";
+    case "Wed":
+      return "Wednesday";
+    case "Thu":
+      return "Thursday";
+    case "Fri":
+      return "Friday";
+    case "Sat":
+      return "Saturday";
+    default:
+      return "Invalid day abbreviation";
+  }
+}
+
+function changeDays(days: string[], startDay: string) {
+  const startIndex = days.indexOf(startDay);
+  if (startIndex === -1) {
+    throw new Error("Invalid start day");
+  }
+  return [...days.slice(startIndex), ...days.slice(0, startIndex)];
+}
 
 export default function ScheduleCalendar({
   selectedDate,
   setSelectedDate,
   data,
+  startDay,
+  setStartDay,
   className,
 }: {
   selectedDate: Date;
   setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
   data: any;
+  startDay: string;
+  setStartDay: React.Dispatch<React.SetStateAction<string>>;
   className?: string;
 }) {
   const [showFullCalendar, setShowFullCalendar] = useState(false);
@@ -26,15 +70,29 @@ export default function ScheduleCalendar({
     );
   }, [data]);
 
+  const days = useMemo(() => {
+    if (startDay === "Sun") {
+      return initialDays;
+    } else {
+      return changeDays(initialDays, startDay);
+    }
+  }, [startDay]);
+
   const dates = useMemo(() => {
     const year = selectedDate.getFullYear();
     const month = selectedDate.getMonth();
+    const startingDayIndex = initialDays.indexOf(
+      changeDays(initialDays, startDay)[0]
+    );
 
     const firstDayOfMonth = new Date(year, month, 1).getDay();
     const totalDaysInMonth = new Date(year, month + 1, 0).getDate();
 
+    // Calculate the offset based on the starting day
+    const offset = (firstDayOfMonth - startingDayIndex + 7) % 7;
+
     // Calculate days from the previous month
-    const prevMonthDays = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
+    const prevMonthDays = offset;
     const prevMonth = month === 0 ? 11 : month - 1;
     const prevYear = month === 0 ? year - 1 : year;
     const totalDaysInPrevMonth = new Date(prevYear, prevMonth + 1, 0).getDate();
@@ -76,23 +134,24 @@ export default function ScheduleCalendar({
     }
 
     return daysArray;
-  }, [selectedDate, scheduleDates]);
-  const weekDates = useMemo(() => {
-    const getDayFromMonday = (date: any) => {
-      const day = date.getDay();
-      return day === 0 ? 6 : day - 1; // Adjust Sunday (0) to 6, and shift others back by 1
-    };
+  }, [selectedDate, scheduleDates, startDay]);
 
-    const currentDayOfWeek = getDayFromMonday(selectedDate);
+  const weekDates = useMemo(() => {
+    const startingDayIndex = initialDays.indexOf(
+      changeDays(initialDays, startDay)[0]
+    );
+
+    const day = selectedDate.getDay();
+    const offset = (day - startingDayIndex + 7) % 7;
 
     const weekArray = Array.from({ length: 7 }, (_, i) => {
       const date = new Date(selectedDate);
-      date.setDate(selectedDate.getDate() - currentDayOfWeek + i);
+      date.setDate(selectedDate.getDate() - offset + i);
       return { date, hasSchedule: scheduleDates.has(date.toDateString()) };
     });
 
     return weekArray;
-  }, [selectedDate, scheduleDates]);
+  }, [selectedDate, scheduleDates, startDay]);
 
   const changeMonth = (increment: number) => {
     const newDate = new Date(
@@ -110,21 +169,62 @@ export default function ScheduleCalendar({
 
   return (
     <div className={cn(" w-full", className)}>
-      <div className="flex  flex-col gap-4 h-full">
-        <div className="flex items-center justify-between mb-2 md:mb-4">
-          <div className="flex items-center gap-2">
-            <button onClick={() => changeMonth(-1)} className="p-1">
-              <FiChevronLeft className="h-4 w-4" />
-            </button>
-            <h4 className="text-xl font-bold">
+      <div className="flex  flex-col gap-4 h-full ">
+        <div className="flex items-center justify-between">
+          <div className="flex w-full items-center gap-4">
+            <Button
+              variant="outline"
+              onClick={() => setSelectedDate(new Date())}
+              className="md:h-11 h-9 px-4 md:px-6 text-sm  border-muted md:border-border  rounded-3xl"
+            >
+              Today
+            </Button>
+            <div className="flex items-center">
+              <Button
+                onClick={() => changeMonth(-1)}
+                size="icon"
+                variant="ghost"
+                className="rounded-full"
+              >
+                <FiChevronLeft />
+              </Button>
+              <Button
+                onClick={() => changeMonth(1)}
+                size="icon"
+                variant="ghost"
+                className="rounded-full"
+              >
+                <FiChevronRight />
+              </Button>
+            </div>
+            <h4 className="text-xl ">
               {selectedDate.toLocaleString("default", {
-                month: "short",
+                month: "long",
                 year: "numeric",
               })}
             </h4>
-            <button onClick={() => changeMonth(1)} className="p-1">
-              <FiChevronRight className="h-4 w-4" />
-            </button>
+            <Select value={startDay} onValueChange={setStartDay}>
+              <SelectTrigger className="w-[120px] rounded-full h-11 ml-auto hidden pl-4 font-medium text-sm md:flex bg-background">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="rounded-2xl w-40">
+                <SelectGroup>
+                  <SelectLabel>Day starts from:</SelectLabel>
+                  {initialDays.map((day) => (
+                    <SelectItem
+                      className={cn(
+                        day === startDay && "font-semibold",
+                        "rounded-xl"
+                      )}
+                      key={day}
+                      value={day}
+                    >
+                      {getFullDayName(day)}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           <div className="flex md:hidden transition-all  duration-200 bg-muted h-9 border rounded-full">
             <button
@@ -148,15 +248,15 @@ export default function ScheduleCalendar({
           </div>
         </div>
         {!md || showFullCalendar ? (
-          <div className="flex flex-col gap-2 h-full pb-0">
-            <div className="grid grid-cols-7 items-stretch gap-2 justify-items-center  w-full">
-              {days.map((day, index) => (
+          <div className="flex flex-col h-full pb-0 gap-2 md:gap-0 overflow-hidden md:rounded-2xl rounded-lg md:bg-background">
+            <div className="grid grid-cols-7 gap-2 md:gap-0 items-stretch  justify-items-center md:border-b  w-full">
+              {days?.map((day, index) => (
                 <span
                   key={day}
                   className={cn(
-                    "text-center text-sm w-10 font-medium",
-                    (index + 1 === selectedDate.getDay() ||
-                      (index === 6 && selectedDate.getDay() === 0)) &&
+                    "text-center text-sm font-semibold md:border-r f w-full md:py-3",
+                    index % 7 === 6 && "md:border-r-0",
+                    initialDays[selectedDate?.getDay()] === day &&
                       "text-primary"
                   )}
                 >
@@ -165,32 +265,36 @@ export default function ScheduleCalendar({
               ))}
             </div>
 
-            <div className="grid grid-cols-7 grid-rows-6 items-stretch gap-3 justify-items-center h-full w-full">
-              {dates.map((item, index) => (
+            <div className="grid grid-cols-7 grid-rows-6 md:gap-0 gap-3 items-stretch  justify-items-center h-full w-full">
+              {dates?.map((item, index) => (
                 <button
                   key={index}
                   className={cn(
-                    "text-center relative py-2 text-sm w-full h-full hover:bg-primary-foreground rounded-xl ",
-                    !item?.date && "pointer-events-none",
+                    "text-center relative md:border-b md:border-r rounded-xl md:rounded-none flex md:items-start items-center justify-center md:pt-2 text-sm w-full py-2 md:h-full hover:bg-primary-foreground/50 active:bg-primary-foreground/70 md:hover:bg-primary-accent/50 md:active:bg-primary-accent/70",
+                    index % 7 === 6 && "md:border-r-0",
+                    index >= 35 && "border-b-0",
+                    !item?.isCurrentMonth && "bg-secondary-accent/15",
                     item?.date &&
                       item?.date.toDateString() === selectedDate.toDateString()
-                      ? "bg-primary-foreground "
-                      : "text-muted-foreground"
+                      ? "bg-primary-foreground md:bg-primary-accent/60"
+                      : "text-muted-foreground/80"
                   )}
-                  onClick={() =>
-                    item?.date && setSelectedDate(new Date(item.date))
-                  }
+                  onClick={() => {
+                    if (item?.date) {
+                      setSelectedDate(new Date(item?.date));
+                    }
+                  }}
                 >
                   <span
                     className={cn(
-                      "font-normal",
+                      "font-normal text-xs",
                       item?.isCurrentMonth && "text-foreground font-medium"
                     )}
                   >
                     {formatDate(item?.date)}
                   </span>
                   {item?.hasSchedule && (
-                    <div className="absolute font-extrabold text-3xl text-primary -bottom-1 right-0 left-0">
+                    <div className="absolute font-extrabold text-3xl md:text-4xl text-primary -bottom-1 md:bottom-1 right-0 left-0">
                       .
                     </div>
                   )}
@@ -201,13 +305,12 @@ export default function ScheduleCalendar({
         ) : (
           <div className="flex flex-col gap-2">
             <div className="grid grid-cols-7 items-stretch gap-2 justify-items-center  w-full">
-              {days.map((day, index) => (
+              {days.map((day) => (
                 <span
                   key={day}
                   className={cn(
-                    "text-center text-sm w-10 font-medium",
-                    (index + 1 === selectedDate.getDay() ||
-                      (index === 6 && selectedDate.getDay() === 0)) &&
+                    "text-center text-sm w-10 font-semibold",
+                    initialDays[selectedDate?.getDay()] === day &&
                       "text-primary"
                   )}
                 >
@@ -216,16 +319,19 @@ export default function ScheduleCalendar({
               ))}
             </div>
             <div className="grid grid-cols-7 gap-3 justify-items-center w-full ">
-              {weekDates.map((item, index) => (
+              {weekDates?.map((item, index) => (
                 <button
                   key={index}
                   className={cn(
-                    "text-center relative py-2 text-sm w-full hover:bg-primary-foreground rounded-xl ",
-                    selectedDate.toDateString() === item?.date.toDateString()
-                      ? "bg-primary-foreground "
-                      : "text-muted-foreground"
+                    "text-center relative py-2 text-xs w-full hover:bg-primary-foreground font-medium rounded-xl ",
+                    selectedDate?.toDateString() ===
+                      item?.date.toDateString() && "bg-primary-foreground "
                   )}
-                  onClick={() => setSelectedDate(item?.date)}
+                  onClick={() => {
+                    if (item?.date) {
+                      setSelectedDate(new Date(item?.date));
+                    }
+                  }}
                 >
                   <span className="">{formatDate(item?.date)}</span>
 
