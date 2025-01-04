@@ -21,8 +21,8 @@ import CarouselsPage from "./pages/linkedin/carousel/CarouselsPage";
 import EditCarouselPage from "./pages/linkedin/carousel/editCarouselPage/EditCarouselPage";
 
 export default function Router() {
-  const { isAuthenticated } = useAuth();
-  // const isAuthenticated = false;
+  // const { isAuthenticated } = useAuth();
+  const isAuthenticated = true;
 
   console.log("isAuthenticated", isAuthenticated);
 
@@ -44,7 +44,7 @@ const RootRouter = () => {
       </Route>
 
       <Route path="/" element={<AuthLayout />}>
-        <Route index element={<AuthPage />} />
+        <Route index element={<Navigate replace to={"/login"} />} />
 
         <Route path="login" element={<LoginPage />} />
         <Route path="auth/linkedin" element={<LinkedinCallbackPage />} />

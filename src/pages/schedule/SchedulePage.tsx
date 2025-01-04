@@ -188,7 +188,7 @@ export default function SocialMediaSchedule() {
 
   return (
     <Wrapper>
-      <WrapperContent className="bg-primary-foreground/60 md:grid gap-8 grid-cols-6 pb-0 w-full">
+      <WrapperContent className="md:bg-muted bg-primary-foreground/60 md:grid gap-8 grid-cols-6 pb-0 w-full">
         <ScheduleCalendar
           data={data}
           selectedDate={selectedDate}

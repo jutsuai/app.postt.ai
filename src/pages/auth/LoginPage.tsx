@@ -79,10 +79,7 @@ export default function LoginPage() {
                 errors={errors}
               />
             </div>
-            <Button
-              type="submit"
-              className="w-full rounded-full text-black mt-6"
-            >
+            <Button type="submit" className="w-full rounded-full  mt-6">
               Login
             </Button>
           </form>

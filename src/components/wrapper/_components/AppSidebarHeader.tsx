@@ -74,7 +74,7 @@ export default function AppSidebarHeader() {
         onClick={toggleSidebar}
         size="icon"
         variant="outline"
-        className="absolute hover:bg-backgrond z-30 size-7 rounded-full -right-3.5 top-7"
+        className="absolute hover:bg-backgrond z-50 size-7 rounded-full -right-3.5 top-7"
       >
         {sidebarMode ? (
           <MdOutlineKeyboardArrowLeft className="scale-105" />

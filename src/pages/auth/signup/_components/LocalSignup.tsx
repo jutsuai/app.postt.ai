@@ -136,7 +136,7 @@ export default function LocalSignup({
             <Button
               disabled={!watch("acceptTerms")}
               type="submit"
-              className="w-full rounded-full text-black mt-6"
+              className="w-full rounded-full  mt-6"
             >
               Register
             </Button>

@@ -7,10 +7,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { HiSparkles } from "react-icons/hi2";
 
 import Wrapper from "@/components/wrapper/Wrapper";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import { LuWandSparkles } from "react-icons/lu";
+import Header from "@/components/header/Header";
+import TopBar from "@/components/header/TopBar";
 
 const configData = [
   {
@@ -33,74 +36,74 @@ const configData = [
 export default function CreatePage() {
   return (
     <Wrapper>
-      <WrapperContent className="gap-6 sm:bg-muted/80 justify-center items-center sm:pb-8 sm:p-8 ">
-        <div className="flex flex-col gap-8 sm:gap-12 items-center justify-center min-h-[calc(100dvh-4rem)] w-full bg-background p-4 sm:p-8 rounded-3xl">
-          <h1 className="text-4xl md:text-[2.6rem] text-center font-medium">
-            How can we{" "}
-            <span className="bg-gradient-to-r from-foreground to-primary text-transparent bg-clip-text">
-              assist
-            </span>{" "}
-            you today?
-          </h1>
-
-          <div className="w-full h-14 flex items-center pr-3 max-w-lg bg-muted focus-within:shadow-lg transition-all p-px rounded-full">
-            <input
-              type="text"
-              placeholder="Write a Topic to generate a post"
-              className="w-full h-full outline-none  px-4 bg-muted rounded-full"
-            />
-            <Button size="sm" className="rounded-full  px-8 py-5">
-              <LuWandSparkles />
-              Genarate
-            </Button>
+      <div className=" h-20 pt-6 px-4 z-10 bg-background">
+        <TopBar />
+      </div>
+      <WrapperContent className="items-center justify-center bg-background h-full pb-8 p-8 gap-8 ">
+        <div
+          className="flex-1 z-10 bg-background relative overflow-hidden flex items-center flex-col  justify-between w-full rounded-3xl"
+          // style={{
+          //   boxShadow: "0px 0px 30px 0px #60a5fa5a",
+          // }}
+        >
+          <div className="flex flex-col items-center gap-8 pt-32">
+            <HiSparkles className="text-4xl" />
+            <h1 className="text-3xl font-semibold text-center">
+              Mark,
+              <br /> What do you want to create?
+            </h1>
           </div>
-
-          <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-3xl">
-            {configData.map((item, index) => (
-              <PostCard {...item} key={index} />
-            ))}
+          <div className="w-full pb-20 md:max-w-[80%] flex flex-col gap-4 z-10">
+            <h2 className="font-semibold text-sm  text-muted-foreground">
+              Suggestions on what to ask Our AI
+            </h2>
+            <div className="flex flex-wrap items-center gap-6">
+              {suggestions.map((suggestion, index) => (
+                <SuggestionCard key={index} content={suggestion} />
+              ))}
+            </div>
           </div>
+          <div className="floating-background-blur-2 z-0 bottom-20 opacity-40 right-[25%]" />
+          <div className="floating-background-blur-1 z-0 opacity-40 bottom-20 left-[25%]" />
         </div>
+        <div
+          className="p-8 z-10 bg-background  rounded-3xl w-full"
+          // style={{
+          //   boxShadow: "0px 0px 30px 0px #60a5fa5a",
+          // }}
+        >
+          <input
+            type="text"
+            placeholder="Ask me anything about your projects"
+            className="bg-muted p-4 rounded-xl w-full outline-none"
+          />
+        </div>
+        <div className="floating-background-blur-1 !bg-[#60a5fa] z-0 opacity-25 !w-full !h-full bottom-0" />
       </WrapperContent>
     </Wrapper>
   );
 }
 
-function PostCard({
-  header,
-  subheader,
+function SuggestionCard({
+  content,
   onClick,
-  options,
 }: {
-  header: string;
-  subheader: string;
+  content: string;
   onClick?: () => void;
-  options: string[];
 }) {
   return (
-    <div
+    <button
       onClick={onClick}
-      className="p-5 flex flex-col gap-2 border rounded-2xl shadow hover:shadow-lg cursor-pointer transition"
+      className="py-4 px-6 rounded-xl text-sm border border-background font-medium hover:shadow-md transition-all bg-background"
     >
-      <h2 className="text-xl font-medium">{header}</h2>
-      <p className="mt-8 text-sm text-muted-foreground">{subheader}</p>
-      {/* <Separator /> */}
-      <Select defaultValue={options[0]}>
-        <SelectTrigger className="w-full rounded-full bg-muted">
-          <SelectValue placeholder="" />
-        </SelectTrigger>
-        <SelectContent className="rounded-2xl">
-          {options.map((option, index) => (
-            <SelectItem
-              key={index}
-              className="rounded-full capitalize focus:text-background focus:bg-primary-foreground"
-              value={option}
-            >
-              {option}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
+      {content}
+    </button>
   );
 }
+
+const suggestions = [
+  "What can I ask you to do?",
+  "What can you help me with?",
+  "How can you assist me?",
+  "What can you do for me?",
+];

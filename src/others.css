@@ -11,3 +11,22 @@
   -webkit-text-stroke: 2px;
   /* -webkit-text-stroke-color: ; */
 }
+
+.floating-background-blur-1 {
+  position: absolute;
+  width: 271.35px;
+  height: 271.35px;
+  background: rgb(15, 2, 255);
+  filter: blur(226.128px);
+  /* animation: floatAnimation2 50s infinite linear; */
+}
+
+.floating-background-blur-2 {
+  position: absolute;
+  width: 219.8px;
+  height: 219.8px;
+  background: rgb(255, 119, 0);
+  filter: blur(245px);
+  transform: rotate(90deg);
+  /* animation: floatAnimation2 50s infinite linear; */
+}

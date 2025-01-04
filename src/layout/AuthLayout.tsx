@@ -10,26 +10,12 @@ export default function AuthLayout() {
           &copy;{new Date().getFullYear()} All Right Reserved
         </p>
       </div>
-      <div className="flex-1 p-6 h-full lg:block hidden">
-        <div className="rounded-3xl h-full p-8 bg-primary-foreground/60 relative  overflow-x-hidden">
-          <div className="flex flex-col justify-between py-16  h-full">
-            <Image
-              src="/onboarding/bg-accent-1.svg"
-              alt=""
-              className="w-full absolute top-6 left-0 right-0"
-            />
-            <Image
-              src="/onboarding/auth-model.png"
-              alt=""
-              className="absolute  hidden md:inline-block bottom-0 right-0 xl:-translate-x-20 z-20 drop-shadow-[20px_0px_20px_rgba(0,0,0,0.15)]"
-            />
-            <Image
-              src="/onboarding/bg-accent-2.svg"
-              alt=""
-              className="w-full absolute bottom-6 left-0 right-0"
-            />
-          </div>
-        </div>
+      <div className="flex-1 p-6 pr-10 h-full lg:block hidden">
+        <Image
+          src="/newcover.jpeg"
+          alt=""
+          className="h-full w-full object-cover object-center -mr-10 rounded-3xl"
+        />
       </div>
     </div>
   );
