@@ -4,25 +4,25 @@ import AuthLayout from "./layout/AuthLayout";
 import LoginPage from "./pages/auth/LoginPage";
 import LinkedinPage from "./pages/linkedin/LinkedinPage";
 import CreatePostPage from "./pages/linkedin/CreatePostPage";
-import LinkedinCallbackPage from "./pages/auth/LinkedinCallbackPage";
+import LinkedinCallbackPage from "./pages/auth/linkedin/LinkedinCallbackPage";
 import Layout from "./layout/Layout";
 import SchedulePage from "./pages/schedule/SchedulePage";
 import DiscoverPage from "./pages/discover/DiscoverPage";
 import ProfilePage from "./pages/profile/ProfilePage";
 import AddWriter from "./pages/addWriter/AddWriter";
-import AuthPage from "./pages/auth/AuthPage";
 import SignupPage from "./pages/auth/signup/SignupPage";
 import OnboardSuccess from "./pages/auth/signup/OnboardSuccess";
-import { useAuth } from "./context/AuthContext";
 import ReportsPage from "./pages/reports/ReportsPage";
 import CreatePage from "./pages/create/CreatePage";
 import LinkedinCarouselPage from "./pages/restricted/RestrictedLinkedinCarouselPage";
 import CarouselsPage from "./pages/linkedin/carousel/CarouselsPage";
 import EditCarouselPage from "./pages/linkedin/carousel/editCarouselPage/EditCarouselPage";
+import { useAuth } from "./context/AuthContext";
+import ConnectLinkedinPage from "./pages/auth/linkedin/ConnectLinkedinPage";
 
 export default function Router() {
-  // const { isAuthenticated } = useAuth();
-  const isAuthenticated = true;
+  const { isAuthenticated } = useAuth();
+  // const isAuthenticated = true;
 
   console.log("isAuthenticated", isAuthenticated);
 
@@ -72,6 +72,7 @@ const AppRouter = () => {
 
         <Route path="linkedin">
           <Route index element={<LinkedinPage />} />
+          <Route path="connect" element={<ConnectLinkedinPage />} />
         </Route>
 
         <Route index element={<HomePage />} />

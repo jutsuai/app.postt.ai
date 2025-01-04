@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import authButtons from "./_components/authButtonData";
 import { cn } from "@/lib/utils";
 import Image from "@/components/Image";
-import CustomInput from "@/components/custom/CustomInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useAuth } from "@/context/AuthContext";
 
@@ -22,18 +21,18 @@ type FormValues = {
 };
 
 export default function LoginPage() {
-  const { loginWithEmail } = useAuth();
+  const { loginWithLinkedin } = useAuth();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>();
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
-    loginWithEmail(data.email, data.password);
-  };
+  // const onSubmit: SubmitHandler<FormValues> = (data) => {
+  //   console.log(data);
+  //   loginWithEmail(data.email, data.password);
+  // };
 
   return (
     <div className="h-full w-full sm:max-w-md flex items-center sm:bg-transparent bg-background">
@@ -45,7 +44,7 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="gap-8 flex flex-col">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          {/* <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-4">
               <CustomInput
                 {...register("email", {
@@ -66,8 +65,8 @@ export default function LoginPage() {
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
-                    value: 8,
-                    message: "Password must be at least 8 characters",
+                    value: 6,
+                    message: "Password must be at least 6 characters",
                   },
                   // validate: (value) => validateStrongPass(value),
                 })}
@@ -82,7 +81,15 @@ export default function LoginPage() {
             <Button type="submit" className="w-full rounded-full  mt-6">
               Login
             </Button>
-          </form>
+          </form> */}
+
+          <Button
+            className="w-full rounded-full mt-6"
+            onClick={() => loginWithLinkedin()}
+          >
+            Continue with Linkedin
+          </Button>
+
           <div className="flex items-center gap-4 w-full max-w-sm mx-auto">
             <Separator className="flex-1" />
             <span className="text-sm text-muted-foreground">

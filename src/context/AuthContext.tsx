@@ -62,6 +62,8 @@ export const AuthProvider = ({ children }: { children: any }) => {
       })
       .catch((err) => {
         console.log("====== signupWithEmail error: ", err);
+
+        alert(err.response.data.message);
       })
       .finally(() => {
         setLoading(false);
@@ -89,16 +91,34 @@ export const AuthProvider = ({ children }: { children: any }) => {
       });
   };
 
-  const saveUserData = async (data: any) => {
+  const loginWithLinkedin = async (code: any) => {
+    setLoading(true);
+
+    httpClient()
+      .post("/auth/linkedin", { code })
+      .then((res) => {
+        const authUrl = res.data?.data;
+
+        window.location.replace(authUrl);
+      })
+      .catch((err) => {
+        console.log("====== loginWithLinkedin error: ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const saveUserData = async (responce: any) => {
     setLoading(true);
 
     try {
-      setUser(data);
-      setProfile(data.profile);
-      setAccessToken(data.accessToken);
+      setUser(responce?.data);
+      setProfile(responce?.data?.profile);
+      setAccessToken(responce?.token);
 
-      localStorage.setItem("_auth_user", JSON.stringify(data));
-      localStorage.setItem("_auth_accessToken", data.accessToken);
+      localStorage.setItem("_auth_user", JSON.stringify(responce?.data));
+      localStorage.setItem("_auth_accessToken", responce?.token);
 
       setIsAuthenticated(true);
 
@@ -150,6 +170,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
     //
     loginWithEmail,
     signupWithEmail,
+    loginWithLinkedin,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

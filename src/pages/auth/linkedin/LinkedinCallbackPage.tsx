@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import httpClient from "../../lib/httpClient";
 import { AiOutlineLoading } from "react-icons/ai";
+import httpClient from "@/lib/httpClient";
 
 export default function LinkedinCallbackPage() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export default function LinkedinCallbackPage() {
     setLoading(true);
 
     httpClient()
-      .post("/linkedin/callback", { code })
+      .post("/auth/linkedin/callback", { code })
       .then((res) => {
         const data = res.data;
         console.log(data);
