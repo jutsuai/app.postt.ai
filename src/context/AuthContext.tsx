@@ -109,7 +109,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
     setLoading(true);
 
     httpClient()
-      .post("/auth/linkedin")
+      .get("/auth/linkedin")
       .then((res) => {
         const authUrl = res.data?.data;
 

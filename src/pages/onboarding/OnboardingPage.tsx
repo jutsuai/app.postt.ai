@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import AccountType from "@/pages/onboarding/_components/AccountType";
 import ChooseAudience from "@/pages/onboarding/_components/ChooseAudience";
 // import OnboardPreview from "@/pages/onboarding/_components/OnboardPreview";
-import ConnectSocial from "@/pages/linkedin/ConnectLinkedinPage";
+import ConnectSocial from "@/pages/linkedin/connection/ConnectLinkedinPage";
 import { Button } from "@/components/ui/button";
 import { IoChevronBack } from "react-icons/io5";
 import { cn } from "@/lib/utils";

@@ -2,30 +2,34 @@ import Image from "@/components/Image";
 import { Button } from "@/components/ui/button";
 import httpClient from "@/lib/httpClient";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function ConnectLinkedinPage() {
-  const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false);
   const handleSubmit = () => {
     setLoading(true);
 
     httpClient()
-      .post(`/linkedin/management`)
+      .get(`/linkedin/management`)
       .then((res) => {
         console.log(res.data);
-        navigate("?step=brand");
+
+        // check if  res.data.data is an linkedin url
+
+        if (res.data.data.includes("linkedin.com")) {
+          window.location.replace(res.data.data);
+        }
       })
       .catch((err) => {
         console.error(err);
+        toast.error(err?.response?.data?.message || "An error occurred");
       })
       .finally(() => {
         setLoading(false);
       });
   };
   return (
-    <div className="flex w-full justify-center flex-col items-center gap-4">
+    <div className="container mx-auto my-10 flex w-full justify-center flex-col items-center gap-4">
       <Image
         src="/onboarding/social-linkedin.svg"
         alt=""
