@@ -123,6 +123,31 @@ export const AuthProvider = ({ children }: { children: any }) => {
       });
   };
 
+  const linkedinCallback = async (code: any) => {
+    setLoading(true);
+
+    httpClient()
+      .post("/auth/linkedin/callback", { code })
+      .then((res) => {
+        const data = res.data;
+        console.log("====== linkedinCallback: ", data);
+
+        saveUserData(data);
+
+        if (data?.data?.onboarding?.step1) {
+          navigate("/");
+        } else {
+          navigate("/onboarding");
+        }
+      })
+      .catch((err) => {
+        console.log("====== linkedinCallback error: ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const saveUserData = async (responce: any) => {
     setLoading(true);
 
@@ -199,6 +224,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
     loginWithEmail,
     signupWithEmail,
     loginWithLinkedin,
+    linkedinCallback,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

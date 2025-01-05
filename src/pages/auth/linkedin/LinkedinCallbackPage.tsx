@@ -1,56 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, memo } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { AiOutlineLoading } from "react-icons/ai";
-import httpClient from "@/lib/httpClient";
 import { useAuth } from "@/context/AuthContext";
+import { toast } from "sonner";
+import { VscLoading } from "react-icons/vsc";
 
-export default function LinkedinCallbackPage() {
+function LinkedinCallbackPage() {
   const navigate = useNavigate();
-  const [params] = useSearchParams();
-  const code = params.get("code");
+  const { linkedinCallback } = useAuth();
+  const [searchParams] = useSearchParams();
 
-  const { saveUserData } = useAuth();
+  const code = searchParams.get("code");
+  const error = searchParams.get("error");
 
-  const [loading, setLoading] = useState(false);
+  // Ref to prevent duplicate calls
+  const callbackCalled = useRef(false);
 
   useEffect(() => {
-    if (!code) return;
-
-    getAccessToken(code);
-  }, [code]);
-
-  const getAccessToken = async (code: any) => {
-    if (!code) return;
-
-    setLoading(true);
-
-    httpClient()
-      .post("/auth/linkedin/callback", { code })
-      .then((res) => {
-        const data = res.data;
-        console.log(data);
-
-        saveUserData(data);
-
-        localStorage.setItem("_auth_user", JSON.stringify(data.data));
-        localStorage.setItem("_auth_accessToken", data?.token);
-
-        navigate("/");
-      })
-      .catch((err) => {
-        console.error("Error fetching access token:", err);
-        navigate("/login");
-      })
-      .finally(() => {
-        setLoading(false);
+    if (code && !callbackCalled.current) {
+      console.log("LinkedIn code:", code);
+      linkedinCallback(code);
+      callbackCalled.current = true;
+    } else if (error) {
+      toast.error("Invalid request", {
+        description: "The request is invalid. Please try again.",
       });
-  };
+      navigate("/login");
+    }
+  }, [code, error, linkedinCallback, navigate]);
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen gap-6">
-      {loading && <AiOutlineLoading className="animate-spin text-6xl" />}
-
-      <p className="text-base">Loading: {loading ? "true" : "false"}</p>
+    <div className="flex h-screen w-full items-center justify-center">
+      <VscLoading size={24} className="size-20 animate-spin" />
     </div>
   );
 }
+
+export default memo(LinkedinCallbackPage);
