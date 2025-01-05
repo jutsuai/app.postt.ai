@@ -41,7 +41,6 @@ export default function SignupPage() {
   const step = searchParams.get("step");
 
   const navigate = useNavigate();
-
   const bp = useBreakpoint();
 
   //   // Disable signup logic by short-circuiting the render
