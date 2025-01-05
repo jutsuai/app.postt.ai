@@ -23,6 +23,7 @@ import OnboardingPage from "./pages/onboarding/OnboardingPage";
 import ConnectLinkedinPage from "./pages/linkedin/connection/ConnectLinkedinPage";
 import ConnectLinkedinCallbackPage from "./pages/linkedin/connection/ConnectLinkedinCallbackPage";
 import ConnectLinkedinSuccessPage from "./pages/linkedin/connection/ConnectLinkedinSuccessPage";
+import CreateTextPage from "./pages/create/text/CreateTextPage";
 
 export default function Router() {
   const { isAuthenticated } = useAuth();
@@ -103,6 +104,7 @@ const AppRouter = () => {
         <Route path="create">
           <Route index element={<CreatePage />} />
           <Route path="post" element={<CreatePostPage />} />
+          <Route path="text" element={<CreateTextPage />} />
 
           <Route path="carousel">
             <Route index element={<CarouselsPage />} />

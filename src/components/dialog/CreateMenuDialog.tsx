@@ -18,12 +18,12 @@ const menus = [
   },
   {
     name: "Carousel Post",
-    url: "/create/carousel",
+    url: "/create/carousel/testId",
     icon: <BiCarousel />,
   },
   {
     name: "Image Post",
-    url: "/create/carousel",
+    url: "/create/carousel/testId",
     icon: <FaRegImage />,
   },
 ];
@@ -74,12 +74,12 @@ function MenuCard({
       >
         <div className="flex bg-primary-accent/60 w-full  flex-col items-center justify-center gap-4 border p-6 rounded-[8px]">
           <motion.div
-            initial={{ scale: 0.2, rotate: 15 }}
+            initial={{ scale: 0.5, rotate: 15 }}
             animate={{
               scale: 1,
               rotate: 0,
             }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             className="text-5xl text-primary group-hover/createCard:!scale-110 transition-all duration-200"
           >
             {icon}
