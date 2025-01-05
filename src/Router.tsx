@@ -22,6 +22,7 @@ import { useAuth } from "./context/AuthContext";
 import OnboardingPage from "./pages/onboarding/OnboardingPage";
 import ConnectLinkedinPage from "./pages/linkedin/connection/ConnectLinkedinPage";
 import ConnectLinkedinCallbackPage from "./pages/linkedin/connection/ConnectLinkedinCallbackPage";
+import ConnectLinkedinSuccessPage from "./pages/linkedin/connection/ConnectLinkedinSuccessPage";
 
 export default function Router() {
   const { isAuthenticated } = useAuth();
@@ -83,11 +84,12 @@ const AppRouter = () => {
 
         <Route path="linkedin">
           <Route index element={<LinkedinPage />} />
-          <Route path="connect" element={<ConnectLinkedinPage />} />
-          <Route
-            path="connect/callback"
-            element={<ConnectLinkedinCallbackPage />}
-          />
+
+          <Route path="connect">
+            <Route index element={<ConnectLinkedinPage />} />
+            <Route path="callback" element={<ConnectLinkedinCallbackPage />} />
+            <Route path="success" element={<ConnectLinkedinSuccessPage />} />
+          </Route>
         </Route>
 
         <Route index element={<HomePage />} />
