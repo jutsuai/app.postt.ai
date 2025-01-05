@@ -66,7 +66,7 @@ const AppRouter = () => {
       <Route path="/" element={<Layout />}>
         <Route path="auth/linkedin" element={<LinkedinCallbackPage />} />
 
-        <Route path="onboarding">
+        <Route path="onboarding" element={<AuthLayout />}>
           <Route index element={<OnboardingPage />} />
 
           <Route path="success" element={<OnboardSuccess />} />
