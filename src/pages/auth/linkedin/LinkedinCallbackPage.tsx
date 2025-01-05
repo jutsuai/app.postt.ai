@@ -7,8 +7,8 @@ import { VscLoading } from "react-icons/vsc";
 function LinkedinCallbackPage() {
   const navigate = useNavigate();
   const { linkedinCallback } = useAuth();
-  const [searchParams] = useSearchParams();
 
+  const [searchParams] = useSearchParams();
   const code = searchParams.get("code");
   const error = searchParams.get("error");
 
@@ -26,7 +26,7 @@ function LinkedinCallbackPage() {
       });
       navigate("/login");
     }
-  }, [code, error, linkedinCallback, navigate]);
+  }, [code, error, linkedinCallback]);
 
   return (
     <div className="flex h-screen w-full items-center justify-center">
@@ -35,4 +35,4 @@ function LinkedinCallbackPage() {
   );
 }
 
-export default memo(LinkedinCallbackPage);
+export default LinkedinCallbackPage;
