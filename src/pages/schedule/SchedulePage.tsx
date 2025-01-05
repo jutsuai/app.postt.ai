@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import RenderDateSection from "./_components/RenderDateSection";
 import { PiCalendarXDuotone } from "react-icons/pi";
 
-type DaysTypes = "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat";
+export type DaysTypes = "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat";
 
 const data = [
   {
@@ -191,7 +191,7 @@ export default function SocialMediaSchedule() {
 
   return (
     <Wrapper>
-      <WrapperContent className="md:bg-muted bg-primary-foreground/60 md:grid gap-8 grid-cols-6 pb-0 w-full">
+      <WrapperContent className="md:bg-muted bg-primary-foreground/60 md:grid gap-4 grid-cols-6 pb-0 w-full">
         <ScheduleCalendar
           data={data}
           selectedDate={selectedDate}
