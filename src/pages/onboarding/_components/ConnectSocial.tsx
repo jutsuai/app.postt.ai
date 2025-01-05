@@ -1,15 +1,16 @@
 import Image from "@/components/Image";
 import { Button } from "@/components/ui/button";
+
 import { useNavigate } from "react-router-dom";
 
 export default function ConnectSocial() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    navigate("/signup/onboard-success");
+    navigate("?step=brand");
   };
   return (
-    <div className="flex h-[80dvh] sm:h-auto sm:pt-6  max-w-md  justify-center flex-col items-center gap-4">
+    <div className="flex w-full justify-center flex-col items-center gap-4">
       <Image
         src="/onboarding/social-linkedin.svg"
         alt=""

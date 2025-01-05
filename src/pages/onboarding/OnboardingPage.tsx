@@ -3,10 +3,14 @@
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import useBreakpoint from "@/lib/useBreakpoint";
-import AccountType from "@/pages/auth/signup/_components/AccountType";
-import ChooseAudience from "@/pages/auth/signup/_components/ChooseAudience";
-import OnboardPreview from "@/pages/auth/signup/_components/OnboardPreview";
-import ConnectSocial from "@/pages/auth/signup/_components/ConnectSocial";
+import AccountType from "@/pages/onboarding/_components/AccountType";
+import ChooseAudience from "@/pages/onboarding/_components/ChooseAudience";
+import OnboardPreview from "@/pages/onboarding/_components/OnboardPreview";
+import ConnectSocial from "@/pages/onboarding/_components/ConnectSocial";
+import { Button } from "@/components/ui/button";
+import { IoChevronBack } from "react-icons/io5";
+import { cn } from "@/lib/utils";
+import BrandDetails from "./_components/BrandDetails";
 
 export type OnboardingFormValues = {
   firstName: string;
@@ -23,13 +27,13 @@ export type OnboardingFormValues = {
   brandPersonality: string;
 };
 
-export default function SignupPage() {
+export default function OnboardingPage() {
   const {
     register,
     handleSubmit,
     setValue,
     watch,
-    control,
+
     formState: { errors },
   } = useForm<OnboardingFormValues>({
     defaultValues: {
@@ -44,49 +48,29 @@ export default function SignupPage() {
 
   const bp = useBreakpoint();
 
-  //   // Disable signup logic by short-circuiting the render
-  //   if (!onboarding) {
-  //     return null; // Return null or placeholder component when signup is disabled
-  //   }
-
-  //   return !bp?.sm && onboarding && onboarding !== "preview" ? (
-  //     <div className="p-6 bg-background rounded-2xl w-[28rem]">
-  //       <Button
-  //         onClick={() => navigate(-1)}
-  //         variant="ghost"
-  //         size="sm"
-  //         className="-ml-2"
-  //       >
-  //         <IoIosArrowBack /> Back
-  //       </Button>
-  //       {onboarding === "accounttype" ? (
-  //         <AccountType setValue={setValue} />
-  //       ) : onboarding === "audience" ? (
-  //         <ChooseAudience
-  //           handleSubmit={handleSubmit}
-  //           register={register}
-  //           watch={watch}
-  //           errors={errors}
-  //         />
-  //       ) : onboarding === "connect" ? (
-  //         <ConnectSocial />
-  //       ) : null}
-  //     </div>
-  //   ) : (
-
+  console.log("step", step);
   return (
-    <div className="w-full h-full bg-red-100">
-      {/* <OnboardPreview /> */}
-
-      {step === "connect" ? (
-        <ConnectSocial />
-      ) : step === "audience" ? (
+    <div className="lg:max-w-md w-full flex flex-col gap-2 px-4 items-start  pt-[7dvh]">
+      <Button
+        onClick={() => navigate(-1)}
+        variant="ghost"
+        size="sm"
+        className={cn(!step && "opacity-0 pointer-events-none")}
+      >
+        <IoChevronBack />
+        Back
+      </Button>
+      {step === "audience" ? (
         <ChooseAudience
           handleSubmit={handleSubmit}
           register={register}
           watch={watch}
           errors={errors}
         />
+      ) : step === "connect" ? (
+        <ConnectSocial />
+      ) : step === "brand" ? (
+        <BrandDetails />
       ) : (
         <AccountType setValue={setValue} />
       )}

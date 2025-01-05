@@ -2,7 +2,7 @@ import Image from "@/components/Image";
 import { Button } from "@/components/ui/button";
 import { SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { SignupFormValues } from "../SignupPage";
+import { SignupFormValues } from "../../auth/signup/SignupPage";
 import { cn } from "@/lib/utils";
 import httpClient from "@/lib/httpClient";
 import { useState } from "react";
@@ -42,9 +42,15 @@ export default function ChooseAudience({
   ];
 
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<SignupFormValues> = (data) => {
-    signupWithEmail(data);
+    if (data?.type === "organization") {
+      navigate("?step=brand");
+      return;
+    }
+    navigate("?step=connect");
+    // signupWithEmail(data);
     // setLoading(true);
     // console.log("submitted");
 
@@ -69,7 +75,7 @@ export default function ChooseAudience({
     //   });
   };
   return (
-    <div className="flex pt-6 -mx-6 -mb-14 sm:-mb-10  px-6 pb-10 flex-col items-center gap-4 max-h-[90dvh] sm:max-h-none overflow-y-auto">
+    <div className="flex w-full flex-col items-center gap-4 ">
       <Image
         src="/onboarding/choose-audience.svg"
         alt=""
@@ -105,7 +111,7 @@ export default function ChooseAudience({
             <input
               type="text"
               {...register(data?.dataName, {
-                required: "This field is required",
+                required: false,
               })}
               placeholder="Type the answer here.."
               className="w-full border-none p-0 outline-none text-xs h-6 "

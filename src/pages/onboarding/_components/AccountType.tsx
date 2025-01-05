@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function AccountType({ setValue }: { setValue: any }) {
   const navigate = useNavigate();
   return (
-    <div className="flex pt-6 flex-col items-center gap-4 sm:max-w-md">
+    <div className="flex flex-col items-center gap-4 w-full">
       <Image
         src="/onboarding/account-type.svg"
         alt=""

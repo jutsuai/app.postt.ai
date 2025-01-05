@@ -12,13 +12,31 @@ import { Link } from "react-router-dom";
 import authButtons from "./_components/authButtonData";
 import { cn } from "@/lib/utils";
 import Image from "@/components/Image";
-import { useAuth } from "@/context/AuthContext";
+import CustomInput from "@/components/custom/CustomInput";
+import { useForm } from "react-hook-form";
+
+type FormValue = {
+  email: string;
+  password: string;
+};
 
 export default function LoginPage() {
-  const { loginWithLinkedin } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValue>({
+    defaultValues: {
+      // Add default values here
+    },
+  });
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
 
   return (
-    <div className="h-full w-full sm:max-w-md flex items-center sm:bg-transparent bg-background">
+    <div className="h-[calc(100dvh-4rem)] min-h-[500px] w-full sm:max-w-md flex items-center sm:bg-transparent bg-background">
       <Card className=" sm:h-auto w-full border-none shadow-none  rounded-none sm:rounded-3xl">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
@@ -27,12 +45,44 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="gap-8 flex flex-col">
-          <Button
-            className="w-full rounded-full mt-6"
-            onClick={() => loginWithLinkedin()}
-          >
-            Continue with Linkedin
-          </Button>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="grid gap-4">
+              <CustomInput
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Invalid email format",
+                  },
+                })}
+                id="email"
+                type="email"
+                placeholder="user@jutsu.ai"
+                autoComplete="email"
+                label="Email"
+                errors={errors}
+              />
+              <CustomInput
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 8 characters",
+                  },
+                  // validate: (value) => validateStrongPass(value),
+                })}
+                id="password"
+                type="password"
+                placeholder="********"
+                autoComplete="new-password"
+                label="Password"
+                errors={errors}
+              />
+            </div>
+            <Button type="submit" className="w-full rounded-full  mt-6">
+              Login
+            </Button>
+          </form>
 
           <div className="flex items-center gap-4 w-full max-w-sm mx-auto">
             <Separator className="flex-1" />

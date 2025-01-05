@@ -10,10 +10,10 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import LocalSignup from "./_components/LocalSignup";
-import AccountType from "./_components/AccountType";
-import ChooseAudience from "./_components/ChooseAudience";
-import OnboardPreview from "./_components/OnboardPreview";
-import ConnectSocial from "./_components/ConnectSocial";
+import AccountType from "../../onboarding/_components/AccountType";
+import ChooseAudience from "../../onboarding/_components/ChooseAudience";
+import OnboardPreview from "../../onboarding/_components/OnboardPreview";
+import ConnectSocial from "../../onboarding/_components/ConnectSocial";
 
 export type SignupFormValues = {
   firstName: string;
