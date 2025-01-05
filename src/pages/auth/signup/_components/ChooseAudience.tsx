@@ -20,7 +20,8 @@ export default function ChooseAudience({
   watch: any;
   errors: any;
 }) {
-  const { signupWithEmail } = useAuth();
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const linkedInAudience = [
     {
@@ -44,30 +45,22 @@ export default function ChooseAudience({
   const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<SignupFormValues> = (data) => {
-    signupWithEmail(data);
-    // setLoading(true);
-    // console.log("submitted");
+    setLoading(true);
 
-    // console.log("navigating to next page");
-    // console.log(data);
-
-    // httpClient()
-    //   .post("/auth/signup", data)
-    //   .then((res) => {
-    //     const data = res.data;
-    //     console.log("====== onSubmit: ", data);
-
-    //     saveUserData(data);
-
-    //     navigate("/");
-    //   })
-    //   .catch((err) => {
-    //     console.log("====== onSubmit: ", err);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
+    httpClient()
+      .put(`/users/${user?._id}/profile`, data)
+      .then((res) => {
+        console.log(res.data);
+        navigate("?step=connect");
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
+
   return (
     <div className="flex pt-6 -mx-6 -mb-14 sm:-mb-10  px-6 pb-10 flex-col items-center gap-4 max-h-[90dvh] sm:max-h-none overflow-y-auto">
       <Image

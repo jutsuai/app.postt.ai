@@ -18,7 +18,7 @@ import LinkedinCarouselPage from "./pages/restricted/RestrictedLinkedinCarouselP
 import CarouselsPage from "./pages/linkedin/carousel/CarouselsPage";
 import EditCarouselPage from "./pages/linkedin/carousel/editCarouselPage/EditCarouselPage";
 import { useAuth } from "./context/AuthContext";
-import ConnectLinkedinPage from "./pages/auth/linkedin/ConnectLinkedinPage";
+// import ConnectLinkedinPage from "./pages/auth/linkedin/ConnectLinkedinPage";
 import OnboardingPage from "./pages/onboarding/OnboardingPage";
 
 export default function Router() {
@@ -79,7 +79,7 @@ const AppRouter = () => {
 
         <Route path="linkedin">
           <Route index element={<LinkedinPage />} />
-          <Route path="connect" element={<ConnectLinkedinPage />} />
+          {/* <Route path="connect" element={<ConnectLinkedinPage />} /> */}
         </Route>
 
         <Route index element={<HomePage />} />
