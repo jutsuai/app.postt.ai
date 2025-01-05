@@ -12,27 +12,10 @@ import { Link } from "react-router-dom";
 import authButtons from "./_components/authButtonData";
 import { cn } from "@/lib/utils";
 import Image from "@/components/Image";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { useAuth } from "@/context/AuthContext";
-
-type FormValues = {
-  email: string;
-  password: string;
-};
 
 export default function LoginPage() {
   const { loginWithLinkedin } = useAuth();
-
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<FormValues>();
-
-  // const onSubmit: SubmitHandler<FormValues> = (data) => {
-  //   console.log(data);
-  //   loginWithEmail(data.email, data.password);
-  // };
 
   return (
     <div className="h-full w-full sm:max-w-md flex items-center sm:bg-transparent bg-background">
@@ -44,45 +27,6 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="gap-8 flex flex-col">
-          {/* <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid gap-4">
-              <CustomInput
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Invalid email format",
-                  },
-                })}
-                id="email"
-                type="email"
-                placeholder="user@jutsu.ai"
-                autoComplete="email"
-                label="Email"
-                errors={errors}
-              />
-              <CustomInput
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters",
-                  },
-                  // validate: (value) => validateStrongPass(value),
-                })}
-                id="password"
-                type="password"
-                placeholder="********"
-                autoComplete="password"
-                label="Password"
-                errors={errors}
-              />
-            </div>
-            <Button type="submit" className="w-full rounded-full  mt-6">
-              Login
-            </Button>
-          </form> */}
-
           <Button
             className="w-full rounded-full mt-6"
             onClick={() => loginWithLinkedin()}

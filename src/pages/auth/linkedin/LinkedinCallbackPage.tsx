@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { AiOutlineLoading } from "react-icons/ai";
 import httpClient from "@/lib/httpClient";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LinkedinCallbackPage() {
   const navigate = useNavigate();
-
   const [params] = useSearchParams();
   const code = params.get("code");
+
+  const { saveUserData } = useAuth();
 
   const [loading, setLoading] = useState(false);
 
@@ -28,8 +30,10 @@ export default function LinkedinCallbackPage() {
         const data = res.data;
         console.log(data);
 
-        localStorage.setItem("_auth_user", JSON.stringify(data));
-        localStorage.setItem("_auth_accessToken", data?.tokens?.access_token);
+        saveUserData(data);
+
+        localStorage.setItem("_auth_user", JSON.stringify(data.data));
+        localStorage.setItem("_auth_accessToken", data?.token);
 
         navigate("/");
       })

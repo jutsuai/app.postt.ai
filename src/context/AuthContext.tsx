@@ -1,6 +1,7 @@
 import httpClient from "@/lib/httpClient";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const AuthContext = createContext<any | undefined>(undefined);
 
@@ -29,11 +30,24 @@ export const AuthProvider = ({ children }: { children: any }) => {
       const usr = localStorage.getItem("_auth_user");
       const userCookie = usr ? JSON.parse(usr) : null;
 
-      console.log("userCookie", userCookie);
-
-      if (!userCookie) {
+      if (!userCookie?._id) {
         setIsAuthenticated(false);
         setLoadingCheck(false);
+
+        toast.error("User not found");
+
+        logout();
+        return;
+      }
+
+      const token = localStorage.getItem("_auth_accessToken");
+      if (!token || token === "null" || token === "undefined") {
+        setIsAuthenticated(false);
+        setLoadingCheck(false);
+
+        toast.error("Access token not found");
+
+        logout();
         return;
       }
 
@@ -116,6 +130,20 @@ export const AuthProvider = ({ children }: { children: any }) => {
       setUser(responce?.data);
       setProfile(responce?.data?.profile);
       setAccessToken(responce?.token);
+
+      if (!responce?.token) {
+        toast.error("User token not found");
+
+        logout();
+        return;
+      }
+
+      if (!responce?.data?._id) {
+        toast.error("User data not found");
+
+        logout();
+        return;
+      }
 
       localStorage.setItem("_auth_user", JSON.stringify(responce?.data));
       localStorage.setItem("_auth_accessToken", responce?.token);

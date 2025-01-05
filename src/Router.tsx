@@ -19,6 +19,7 @@ import CarouselsPage from "./pages/linkedin/carousel/CarouselsPage";
 import EditCarouselPage from "./pages/linkedin/carousel/editCarouselPage/EditCarouselPage";
 import { useAuth } from "./context/AuthContext";
 import ConnectLinkedinPage from "./pages/auth/linkedin/ConnectLinkedinPage";
+import OnboardingPage from "./pages/onboarding/OnboardingPage";
 
 export default function Router() {
   const { isAuthenticated } = useAuth();
@@ -63,7 +64,13 @@ const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="onboarding" element={<OnboardSuccess />} />
+        <Route path="auth/linkedin" element={<LinkedinCallbackPage />} />
+
+        <Route path="onboarding">
+          <Route index element={<OnboardingPage />} />
+
+          <Route path="success" element={<OnboardSuccess />} />
+        </Route>
 
         {/* Carousel */}
         <Route path="restricted">
@@ -92,6 +99,8 @@ const AppRouter = () => {
             <Route path=":id" element={<EditCarouselPage />} />
           </Route>
         </Route>
+
+        <Route path="*" element={<div>404 Page Not Found</div>} />
       </Route>
     </Routes>
   );

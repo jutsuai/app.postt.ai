@@ -19,7 +19,7 @@ export default function AccountType({ setValue }: { setValue: any }) {
       <Button
         onClick={() => {
           setValue("type", "personal");
-          navigate("?onboarding=audience");
+          navigate("?step=audience");
         }}
         className="w-full mt-4 h-[52px] justify-start active:border-primary hover:border-primary rounded-lg hover:text-foreground hover:bg-primary/20"
         variant="outline"
@@ -29,7 +29,7 @@ export default function AccountType({ setValue }: { setValue: any }) {
       <Button
         onClick={() => {
           setValue("type", "organization");
-          navigate("?onboarding=audience");
+          navigate("?step=audience");
         }}
         className="w-full h-[52px] justify-start active:border-primary hover:border-primary rounded-lg hover:text-foreground hover:bg-primary/20"
         variant="outline"

@@ -14,6 +14,7 @@ export default function App() {
           </SidebarProvider>
         </AuthProvider>
       </BrowserRouter>
+
       <Toaster />
     </>
   );
