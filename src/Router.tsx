@@ -11,7 +11,7 @@ import DiscoverPage from "./pages/discover/DiscoverPage";
 import ProfilePage from "./pages/profile/ProfilePage";
 import AddWriter from "./pages/addWriter/AddWriter";
 import SignupPage from "./pages/auth/signup/SignupPage";
-import OnboardSuccess from "./pages/auth/signup/OnboardSuccess";
+import OnboardSuccess from "./pages/onboarding/_components/OnboardSuccess";
 import ReportsPage from "./pages/reports/ReportsPage";
 import CreatePage from "./pages/create/CreatePage";
 import LinkedinCarouselPage from "./pages/restricted/RestrictedLinkedinCarouselPage";
@@ -22,8 +22,8 @@ import { useAuth } from "./context/AuthContext";
 import OnboardingPage from "./pages/onboarding/OnboardingPage";
 
 export default function Router() {
-  const { isAuthenticated } = useAuth();
-  // const isAuthenticated = true;
+  // const { isAuthenticated } = useAuth();
+  const isAuthenticated = true;
 
   console.log("isAuthenticated", isAuthenticated);
 
@@ -66,8 +66,10 @@ const AppRouter = () => {
       <Route path="/" element={<Layout />}>
         <Route path="auth/linkedin" element={<LinkedinCallbackPage />} />
 
-        <Route path="onboarding" element={<AuthLayout />}>
-          <Route index element={<OnboardingPage />} />
+        <Route path="onboarding">
+          <Route element={<AuthLayout />}>
+            <Route index element={<OnboardingPage />} />
+          </Route>
 
           <Route path="success" element={<OnboardSuccess />} />
         </Route>

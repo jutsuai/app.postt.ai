@@ -34,10 +34,10 @@ export default function LocalSignup({
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<SignupFormValues> = () => {
-    navigate("?onboarding=accounttype");
+    navigate("onboarding");
   };
   return (
-    <div className="h-full flex items-center sm:bg-transparent bg-background">
+    <div className="h-[calc(100dvh-4rem)] min-h-[600px]  flex items-center sm:bg-transparent bg-background">
       <Card className="sm:max-w-md sm:h-auto w-full border-none shadow-none sm:border  rounded-none sm:rounded-3xl">
         <CardHeader>
           <CardTitle className="text-2xl">Create an account</CardTitle>

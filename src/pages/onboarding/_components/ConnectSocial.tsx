@@ -9,14 +9,13 @@ export default function ConnectSocial() {
 
   const [loading, setLoading] = useState(false);
   const handleSubmit = () => {
-    // navigate("/signup/onboard-success");
-
     setLoading(true);
 
     httpClient()
       .post(`/linkedin/management`)
       .then((res) => {
         console.log(res.data);
+        navigate("?step=brand");
       })
       .catch((err) => {
         console.error(err);
@@ -26,7 +25,7 @@ export default function ConnectSocial() {
       });
   };
   return (
-    <div className="flex h-[80dvh] sm:h-auto sm:pt-6  max-w-md  justify-center flex-col items-center gap-4">
+    <div className="flex w-full justify-center flex-col items-center gap-4">
       <Image
         src="/onboarding/social-linkedin.svg"
         alt=""
