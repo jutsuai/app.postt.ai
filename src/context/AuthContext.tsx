@@ -105,11 +105,11 @@ export const AuthProvider = ({ children }: { children: any }) => {
       });
   };
 
-  const loginWithLinkedin = async (code: any) => {
+  const loginWithLinkedin = async () => {
     setLoading(true);
 
     httpClient()
-      .post("/auth/linkedin", { code })
+      .post("/auth/linkedin")
       .then((res) => {
         const authUrl = res.data?.data;
 

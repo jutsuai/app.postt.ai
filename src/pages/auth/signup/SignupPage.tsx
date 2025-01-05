@@ -13,7 +13,7 @@ import LocalSignup from "./_components/LocalSignup";
 import AccountType from "../../onboarding/_components/AccountType";
 import ChooseAudience from "../../onboarding/_components/ChooseAudience";
 import OnboardPreview from "../../onboarding/_components/OnboardPreview";
-import ConnectSocial from "../../onboarding/_components/ConnectSocial";
+import ConnectSocial from "../../linkedin/ConnectLinkedinPage";
 
 export type SignupFormValues = {
   firstName: string;

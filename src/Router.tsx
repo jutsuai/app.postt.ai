@@ -20,10 +20,11 @@ import EditCarouselPage from "./pages/linkedin/carousel/editCarouselPage/EditCar
 import { useAuth } from "./context/AuthContext";
 // import ConnectLinkedinPage from "./pages/auth/linkedin/ConnectLinkedinPage";
 import OnboardingPage from "./pages/onboarding/OnboardingPage";
+import ConnectLinkedinPage from "./pages/linkedin/ConnectLinkedinPage";
 
 export default function Router() {
-  // const { isAuthenticated } = useAuth();
-  const isAuthenticated = true;
+  const { isAuthenticated } = useAuth();
+  // const isAuthenticated = true;
 
   console.log("isAuthenticated", isAuthenticated);
 
@@ -81,7 +82,7 @@ const AppRouter = () => {
 
         <Route path="linkedin">
           <Route index element={<LinkedinPage />} />
-          {/* <Route path="connect" element={<ConnectLinkedinPage />} /> */}
+          <Route path="connect" element={<ConnectLinkedinPage />} />
         </Route>
 
         <Route index element={<HomePage />} />

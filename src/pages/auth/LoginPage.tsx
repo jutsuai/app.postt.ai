@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import Image from "@/components/Image";
 import CustomInput from "@/components/custom/CustomInput";
 import { useForm } from "react-hook-form";
+import { useAuth } from "@/context/AuthContext";
 
 type FormValue = {
   email: string;
@@ -31,6 +32,8 @@ export default function LoginPage() {
     },
   });
 
+  const { loginWithLinkedin } = useAuth();
+
   const onSubmit = (data: any) => {
     console.log(data);
   };
@@ -46,7 +49,7 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent className="gap-8 flex flex-col">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid gap-4">
+            {/* <div className="grid gap-4">
               <CustomInput
                 {...register("email", {
                   required: "Email is required",
@@ -78,9 +81,12 @@ export default function LoginPage() {
                 label="Password"
                 errors={errors}
               />
-            </div>
-            <Button type="submit" className="w-full rounded-full  mt-6">
-              Login
+            </div> */}
+            <Button
+              onClick={() => loginWithLinkedin("code")}
+              className="w-full rounded-full  mt-6"
+            >
+              continue with Linkedin
             </Button>
           </form>
 

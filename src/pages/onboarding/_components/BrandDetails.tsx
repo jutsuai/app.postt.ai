@@ -1,28 +1,51 @@
 import { useEffect, useRef, useState } from "react";
-import ImageUploading from "react-images-uploading";
-import { FcAddImage } from "react-icons/fc";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { RxCross2 } from "react-icons/rx";
 import { LuPlus } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
+import httpClient from "@/lib/httpClient";
+import { useAuth } from "@/context/AuthContext";
+import { toast } from "sonner";
 
 export default function BrandDetails() {
-  const [images, setImages] = useState([]);
-  const [primaryColor, setPrimaryColor] = useState("#ffffff");
-  const [secondaryColor, setSecondaryColor] = useState("#ffffff");
-  const [accentColor, setAccentColor] = useState("#ffffff");
-  const [lightColor, setLightColor] = useState("#ffffff");
-  const [darkColor, setDarkColor] = useState("#ffffff");
+  const { user } = useAuth();
+  // const [images, setImages] = useState([]);
+  const [primaryColor, setPrimaryColor] = useState();
+  const [accentColor, setAccentColor] = useState();
+  // const [secondaryColor, setSecondaryColor] = useState("#ffffff");
+  // const [lightColor, setLightColor] = useState("#ffffff");
+  // const [darkColor, setDarkColor] = useState("#ffffff");
 
-  const onChange = (imageList: any) => {
-    setImages(imageList);
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = () => {
+    if (!primaryColor || !accentColor) {
+      toast.warning("Please select primary and accent colors");
+
+      return;
+    }
+    // setImages(imageList);
+    setLoading(true);
+
+    httpClient()
+      .put(`/users/${user?._id}/profile`, {
+        brandingColors: [primaryColor, accentColor],
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/linkedin/connect");
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const navigate = useNavigate();
   return (
     <div className="w-full flex flex-col items-center gap-10 pt-4">
-      <div className="w-full flex flex-col items-center gap-2">
+      {/* <div className="w-full flex flex-col items-center gap-2">
         <h3 className="text-lg font-semibold text-center">
           Upload your brand logo
         </h3>
@@ -87,7 +110,8 @@ export default function BrandDetails() {
             </div>
           )}
         </ImageUploading>
-      </div>
+      </div> */}
+
       <div className="w-full flex flex-col items-center gap-4">
         <h3 className="text-lg font-semibold text-center">
           Enter Your Brand Color
@@ -99,19 +123,19 @@ export default function BrandDetails() {
             setColor={setPrimaryColor}
             className="col-span-2 row-span-2"
           />
-          <BrandColor
+          {/* <BrandColor
             title="Secondary"
             color={secondaryColor}
             setColor={setSecondaryColor}
             className="col-span-1 row-span-2"
-          />
+          /> */}
           <BrandColor
             title="Accent"
             color={accentColor}
             setColor={setAccentColor}
             className="col-span-1 row-span-2"
           />
-          <BrandColor
+          {/* <BrandColor
             title="Light"
             color={lightColor}
             setColor={setLightColor}
@@ -122,14 +146,11 @@ export default function BrandDetails() {
             color={darkColor}
             setColor={setDarkColor}
             className="col-span-1 row-span-2"
-          />
+          /> */}
         </div>
       </div>
-      <Button
-        onClick={() => navigate("success")}
-        className="rounded-full w-full"
-      >
-        Submit
+      <Button onClick={() => handleSubmit()} className="rounded-full w-full">
+        Continue {loading && "loading..."}
       </Button>
     </div>
   );
@@ -137,7 +158,7 @@ export default function BrandDetails() {
 
 function BrandColor({
   title,
-  color,
+  color = "#ffffff",
   setColor,
   className,
 }: {

@@ -5,7 +5,7 @@ import httpClient from "@/lib/httpClient";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function AccountType({ setValue }: { setValue: any }) {
+export default function AccountType() {
   const navigate = useNavigate();
 
   const { user } = useAuth();
@@ -19,7 +19,6 @@ export default function AccountType({ setValue }: { setValue: any }) {
       .put(`/users/${user?._id}/profile`, { type })
       .then((res) => {
         console.log(res.data);
-        setValue("type", type);
         navigate(redirect);
       })
       .catch((err) => {

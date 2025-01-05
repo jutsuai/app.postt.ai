@@ -1,8 +1,7 @@
 import Image from "@/components/Image";
 import { Button } from "@/components/ui/button";
-import { SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { SignupFormValues } from "../../auth/signup/SignupPage";
 import { cn } from "@/lib/utils";
 import httpClient from "@/lib/httpClient";
 import { useState } from "react";
@@ -26,36 +25,37 @@ const linkedInAudience = [
     dataName: "brandPersonality",
     question: "What tone and style do you prefer?",
   },
-];
+] as const;
 
-export default function ChooseAudience({
-  handleSubmit,
-  register,
-  watch,
-  errors,
-}: {
-  handleSubmit: any;
-  register: any;
-  watch: any;
-  errors: any;
-}) {
+type ChooseAudienceValues = {
+  targetAudience: string;
+  industry: string;
+  valueProposition: string;
+  brandPersonality: string;
+};
+
+export default function ChooseAudience() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<ChooseAudienceValues>({});
+
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
-  const onSubmit: SubmitHandler<SignupFormValues> = (data) => {
+  const onSubmit: SubmitHandler<ChooseAudienceValues> = (data) => {
     setLoading(true);
 
     httpClient()
       .put(`/users/${user?._id}/profile`, data)
       .then((res) => {
         console.log(res.data);
-        if (data?.type === "organization") {
-          navigate("?step=brand");
-        } else {
-          navigate("?step=connect");
-        }
+        navigate("?step=brand");
+        // navigate("?step=connect");
       })
       .catch((err) => {
         console.error(err);
@@ -73,7 +73,7 @@ export default function ChooseAudience({
         className="size-[140px]"
       />
       <h3 className="text-xl text-center font-semibold">
-        Hi {watch("firstName") || "there"}, let's give you full experience
+        Hi {user?.firstName || "there"}, let's give you full experience
       </h3>
       <p className="text-muted-foreground text-sm -mt-2 text-center">
         Answer to get a Linkedin Post

@@ -4,7 +4,7 @@ import httpClient from "@/lib/httpClient";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function ConnectSocial() {
+export default function ConnectLinkedinPage() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
