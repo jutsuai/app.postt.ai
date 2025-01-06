@@ -42,8 +42,10 @@ export default function ScheduleCalendar({
 
   const days = useMemo(() => {
     if (startDay === "Sun") {
+      localStorage?.setItem("weekStartDay", "Sun");
       return initialDays;
     } else {
+      localStorage?.setItem("weekStartDay", startDay);
       return changeDays(initialDays, startDay);
     }
   }, [startDay]);
