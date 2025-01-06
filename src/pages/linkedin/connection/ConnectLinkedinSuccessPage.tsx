@@ -1,8 +1,7 @@
 import BoringAvatar from "@/components/BoringAvatar";
 import { Button } from "@/components/ui/button";
 import httpClient from "@/lib/httpClient";
-import { useEffect, useState } from "react";
-import { set } from "react-hook-form";
+import { useState } from "react";
 import { VscDebugRestart } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
