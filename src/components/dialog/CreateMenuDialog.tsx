@@ -14,17 +14,17 @@ const menus = [
   {
     name: "Text Post",
     url: "/create/text",
-    icon: <MdOutlineTextFields />,
-  },
-  {
-    name: "Carousel Post",
-    url: "/create/carousel/testId",
-    icon: <BiCarousel />,
+    icon: "/dialog-menu/text-post-image.svg",
   },
   {
     name: "Image Post",
     url: "/create/carousel/testId",
-    icon: <FaRegImage />,
+    icon: "/dialog-menu/single-post-image.svg",
+  },
+  {
+    name: "Carousel Post",
+    url: "/create/carousel/testId",
+    icon: "/dialog-menu/carousel-post-image.svg",
   },
 ];
 
@@ -70,20 +70,20 @@ function MenuCard({
     <Link to={url}>
       <div
         className="flex hover:shadow-lg group/createCard transition-all duration-200
-       flex-col items-center gap-2 w-full border  rounded-2xl p-2 "
+       flex-col items-center gap-2 w-full border h-full rounded-2xl p-2 "
       >
-        <div className="flex bg-primary-accent/60 w-full  flex-col items-center justify-center gap-4 border p-6 rounded-[8px]">
-          <motion.div
+        <div className="flex bg-primary-accent/60 overflow-y-hidden w-full h-full flex-col items-center justify-center gap-4 border  rounded-[8px]">
+          <motion.img
             initial={{ scale: 0.5, rotate: 15 }}
             animate={{
               scale: 1,
               rotate: 0,
             }}
             transition={{ duration: 0.2 }}
-            className="text-5xl text-primary group-hover/createCard:!scale-110 transition-all duration-200"
-          >
-            {icon}
-          </motion.div>
+            src={icon}
+            alt={name}
+            className="w-full h-full transition-all duration-200 group-hover/createCard:!translate-y-0 !translate-y-2"
+          />
         </div>
         <h6 className="text-sm text-center font-medium py-1">{name}</h6>
       </div>

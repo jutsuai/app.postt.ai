@@ -3,6 +3,7 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
+  SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
@@ -79,19 +80,21 @@ export default function AppSidebarHeader() {
         <SidebarMenu
           className={cn(
             "transition-all duration-150",
-            sidebarMode ? "px-2 " : "px-4"
+            sidebarMode ? "px-2 " : "px-1.5 "
           )}
         >
-          <SidebarMenuButton
+          <SidebarMenuItem
             onClick={() => setOpenMenuDialog(true)}
             className={cn(
-              buttonVariants({ variant: "default", size: "default" }),
-              "w-full h-12 rounded-full hover:text-background active:text-background active:bg-primary/90"
+              "bg-primary hover:bg-primary/90 duration-0 active:bg-primary rounded-full",
+              sidebarMode ? "py-1.5  px-4" : "px-2 py-[7px]"
             )}
           >
-            <TbClick />
-            Create new
-          </SidebarMenuButton>
+            <SidebarMenuButton className="hover:!bg-transparent h-full active:!text-background text-background hover:!text-background">
+              <TbClick />
+              <span>Create new</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         </SidebarMenu>
         <Button
           onClick={toggleSidebar}
