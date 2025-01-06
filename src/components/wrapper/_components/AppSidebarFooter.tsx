@@ -1,3 +1,4 @@
+import BoringAvatar from "@/components/BoringAvatar";
 import {
   SidebarFooter,
   SidebarMenu,
@@ -26,11 +27,19 @@ export default function AppSidebarFooter() {
           )}
         >
           <SidebarMenuButton className="hover:!bg-transparent">
-            <div className="">
+            {/* <div className="">
               {`${user?.firstName?.charAt(0).toUpperCase()}${user?.lastName
                 ?.charAt(0)
                 .toUpperCase()}`}
-            </div>
+            </div> */}
+
+            <BoringAvatar
+              name={user?.firstName}
+              size={40}
+              src={user?.avatar}
+              alt={user?.firstName}
+            />
+
             <div
               className={cn(
                 "z-10 font-semibold text-sm transition-colors overflow-hidden duration-200 flex flex-col items-start"

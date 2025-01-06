@@ -20,8 +20,11 @@ export default function BoringAvatar(props: any) {
       alt={alt || "Avatar"}
       onError={() => setImageError(true)}
       style={{
-        width: "100%",
-        height: "100%",
+        // width: "100%",
+        // height: "100%",
+        width: rest.size,
+        height: rest.size,
+
         objectFit: "cover",
         borderRadius: "50%",
       }}
