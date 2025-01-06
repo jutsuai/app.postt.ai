@@ -61,6 +61,32 @@ export const AuthProvider = ({ children }: { children: any }) => {
     }
   };
 
+  // Validate toke
+  const validateToken = async (userId: string) => {
+    if (!user?._id) {
+      console.log("No user id found.");
+
+      toast.warning("User id not found. Please login again.");
+      return;
+    }
+
+    console.log("Validating token...");
+
+    httpClient()
+      .get(`/users/${user?._id}`)
+      .then((res) => {
+        const data = res.data.data;
+
+        setUser(data);
+
+        localStorage.setItem("_auth_user", JSON.stringify(data));
+      })
+      .catch((err) => {
+        console.log("Token is invalid.", err);
+        logout();
+      });
+  };
+
   const signupWithEmail = async (data: any) => {
     setLoading(true);
 
@@ -217,6 +243,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
     user,
 
     //
+    validateToken,
     saveUserData,
     logout,
 

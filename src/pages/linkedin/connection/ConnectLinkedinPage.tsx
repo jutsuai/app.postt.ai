@@ -1,11 +1,23 @@
 import Image from "@/components/Image";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthContext";
 import httpClient from "@/lib/httpClient";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function ConnectLinkedinPage() {
+  const navigate = useNavigate();
+
+  const { validateToken, user } = useAuth();
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (user?.tokens?.management?.access_token) {
+      navigate("/linkedin/connect/success");
+    }
+  }, [user]);
+
   const handleSubmit = () => {
     setLoading(true);
 
@@ -28,6 +40,11 @@ export default function ConnectLinkedinPage() {
         setLoading(false);
       });
   };
+
+  useEffect(() => {
+    validateToken();
+  }, []);
+
   return (
     <div className="container mx-auto my-10 flex w-full justify-center flex-col items-center gap-4">
       <Image
