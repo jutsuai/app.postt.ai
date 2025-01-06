@@ -102,9 +102,9 @@ export default function EditCarouselPage() {
 
   return (
     <Wrapper>
-      <WrapperContent className="items-center my-10">
+      <WrapperContent className="py-8">
         {/* Top bar */}
-        <div className="bg-muted p-1 w-full relative  rounded-xl focus-within:max-w-xl max-w-lg transition-all duration-300">
+        {/* <div className="bg-muted p-1 w-full relative  rounded-xl focus-within:max-w-xl max-w-lg transition-all duration-300">
           <div className="flex items-center justify-between border-primary-foreground transition-colors border-2  duration-200 bg-background rounded-lg">
             <div className="px-3 ">
               <RiAiGenerate />
@@ -123,23 +123,15 @@ export default function EditCarouselPage() {
               Generate Carousel
             </Button>
           </div>
-        </div>
+        </div> */}
 
-        <div className="bg-background relative py-14 px-10 w-full h-full max-w-6xl rounded-t-2xl">
+        <div className="bg-background relative w-full h-full  rounded-t-2xl">
           {/* Main Content Area */}
 
           <div className="space-y-8 container">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full h-full">
+            <div className="grid grid-cols-9 gap-6 w-full h-full">
               {/* Left Preview Area */}
-              <PreviewSection
-                {...slides[selectedSlide]}
-                pageIndex={selectedSlide}
-                createdBy={createdBy}
-                customizations={customizations}
-              />
-
-              {/* Right Sidebar */}
-              <div className="flex flex-col gap-4 h-full w-full">
+              <div className="flex flex-col col-span-5 gap-4 h-full w-full">
                 <Tabs
                   value={activeTab}
                   onValueChange={setActiveTab}
@@ -190,6 +182,16 @@ export default function EditCarouselPage() {
                   </div>
                 )}
               </div>
+
+              {/* Right Sidebar */}
+
+              <PreviewSection
+                {...slides[selectedSlide]}
+                className="col-span-4"
+                pageIndex={selectedSlide}
+                createdBy={createdBy}
+                customizations={customizations}
+              />
             </div>
 
             {/* Bottom Carousel Thumbnails */}

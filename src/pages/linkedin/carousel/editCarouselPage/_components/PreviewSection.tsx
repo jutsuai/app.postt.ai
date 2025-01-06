@@ -32,7 +32,7 @@ export default function PreviewSection({
   return (
     <div
       className={cn(
-        "p-3 bg-muted relative shadow-md border w-full h-full rounded-xl",
+        "p-3 bg-muted relative shadow-md  border w-full h-full rounded-xl",
         className
       )}
     >

@@ -5,7 +5,15 @@ import { useMemo, useState } from "react";
 import RenderDateSection from "./_components/RenderDateSection";
 import { PiCalendarXDuotone } from "react-icons/pi";
 
-export type DaysTypes = "Sun" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat";
+export type DaysTypes =
+  | "Sun"
+  | "Mon"
+  | "Tue"
+  | "Wed"
+  | "Thu"
+  | "Fri"
+  | "Sat"
+  | string;
 
 const data = [
   {
@@ -179,7 +187,9 @@ const data = [
 
 export default function SocialMediaSchedule() {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [startDay, setStartDay] = useState<DaysTypes>("Sun");
+  const [startDay, setStartDay] = useState<DaysTypes>(
+    localStorage?.getItem("weekStartDay") || "Sun"
+  );
 
   const scheduleData = useMemo(() => {
     return data.filter(
