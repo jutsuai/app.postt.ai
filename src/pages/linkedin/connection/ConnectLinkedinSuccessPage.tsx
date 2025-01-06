@@ -1,63 +1,62 @@
 import BoringAvatar from "@/components/BoringAvatar";
 import { Button } from "@/components/ui/button";
 import httpClient from "@/lib/httpClient";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { VscDebugRestart } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
+// {
+//   createdBy: "63c4f98e4f1c2e01e5a3f890", // Example MongoDB ObjectId
+//   type: "organization",
+//   linkedinId: "123456789",
+//   name: "Tech Innovators Inc.",
+//   slug: "tech-innovators-inc",
+//   logo: "https://example.com/logo.png",
+//   cover: "https://example.com/cover.jpg",
+//   description:
+//     "A leading technology company specializing in AI and cloud solutions.",
+//   websiteUrl: "https://www.techinnovators.com",
+//   linkedinUrl: "https://www.linkedin.com/company/tech-innovators",
+//   tags: ["Technology", "Innovation", "AI"],
+//   industries: ["Technology", "Software Development"],
+// },
+// {
+//   createdBy: "63c4f98e4f1c2e01e5a3f891", // Another Example MongoDB ObjectId
+//   type: "person",
+//   linkedinId: "987654321",
+//   name: "Jane Doe",
+//   slug: "jane-doe",
+//   logo: "https://example.com/jane-profile.jpg",
+//   cover: "https://example.com/jane-cover.jpg",
+//   description:
+//     "Experienced software engineer with expertise in backend systems and databases.",
+//   websiteUrl: null, // No personal website
+//   linkedinUrl: "https://www.linkedin.com/in/jane-doe",
+//   tags: ["Backend", "Databases", "Software Engineering"],
+//   industries: ["Information Technology", "Consulting"],
+// },
+// {
+//   createdBy: "63c4f98e4f1c2e01e5a3f892",
+//   type: "organization",
+//   linkedinId: "456789123",
+//   name: "Green Solutions Ltd.",
+//   slug: "green-solutions-ltd",
+//   logo: "https://example.com/green-logo.png",
+//   cover: null, // No cover photo
+//   description: "Sustainable energy solutions for a greener future.",
+//   websiteUrl: "https://www.greensolutions.com",
+//   linkedinUrl: "https://www.linkedin.com/company/green-solutions",
+//   tags: ["Sustainability", "Energy", "Environment"],
+//   industries: ["Renewable Energy", "Environmental Services"],
+// },
 export default function ConnectLinkedinSuccessPage() {
   const [loading, setLoading] = useState(false);
-  const [organizationList, setOrganizationList] = useState([
-    {
-      createdBy: "63c4f98e4f1c2e01e5a3f890", // Example MongoDB ObjectId
-      type: "organization",
-      linkedinId: "123456789",
-      name: "Tech Innovators Inc.",
-      slug: "tech-innovators-inc",
-      logo: "https://example.com/logo.png",
-      cover: "https://example.com/cover.jpg",
-      description:
-        "A leading technology company specializing in AI and cloud solutions.",
-      websiteUrl: "https://www.techinnovators.com",
-      linkedinUrl: "https://www.linkedin.com/company/tech-innovators",
-      tags: ["Technology", "Innovation", "AI"],
-      industries: ["Technology", "Software Development"],
-    },
-    {
-      createdBy: "63c4f98e4f1c2e01e5a3f891", // Another Example MongoDB ObjectId
-      type: "person",
-      linkedinId: "987654321",
-      name: "Jane Doe",
-      slug: "jane-doe",
-      logo: "https://example.com/jane-profile.jpg",
-      cover: "https://example.com/jane-cover.jpg",
-      description:
-        "Experienced software engineer with expertise in backend systems and databases.",
-      websiteUrl: null, // No personal website
-      linkedinUrl: "https://www.linkedin.com/in/jane-doe",
-      tags: ["Backend", "Databases", "Software Engineering"],
-      industries: ["Information Technology", "Consulting"],
-    },
-    {
-      createdBy: "63c4f98e4f1c2e01e5a3f892",
-      type: "organization",
-      linkedinId: "456789123",
-      name: "Green Solutions Ltd.",
-      slug: "green-solutions-ltd",
-      logo: "https://example.com/green-logo.png",
-      cover: null, // No cover photo
-      description: "Sustainable energy solutions for a greener future.",
-      websiteUrl: "https://www.greensolutions.com",
-      linkedinUrl: "https://www.linkedin.com/company/green-solutions",
-      tags: ["Sustainability", "Energy", "Environment"],
-      industries: ["Renewable Energy", "Environmental Services"],
-    },
-  ]);
+  const [organizationList, setOrganizationList] = useState([]);
 
-  // useEffect(() => {
-  //   handleGetOrganizationListFromDB();
-  // }, []);
+  useEffect(() => {
+    handleGetOrganizationListFromDB();
+  }, []);
 
   const handleGetOrganizationListFromDB = () => {
     setLoading(true);
@@ -71,8 +70,6 @@ export default function ConnectLinkedinSuccessPage() {
       .catch((err) => {
         console.error(err);
         toast.error(err?.response?.data?.message || "An error occurred");
-
-        handleGetOrganizationListFromLinkedin();
       })
       .finally(() => {
         setLoading(false);
@@ -98,6 +95,25 @@ export default function ConnectLinkedinSuccessPage() {
       });
   };
 
+  const [userDetails, setUserDetails] = useState();
+  const getUserDetails = () => {
+    setLoading(true);
+
+    httpClient()
+      .get(`/linkedin/management/user`)
+      .then((res) => {
+        console.log(res.data);
+        setUserDetails(res.data.data);
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error(err?.response?.data?.message || "An error occurred");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <div className="container mx-auto my-10 flex w-full justify-center flex-col items-center gap-4">
       <h3 className="text-lg font-semibold text-center ">LinkedIn Connected</h3>
@@ -112,19 +128,29 @@ export default function ConnectLinkedinSuccessPage() {
           alt=""
           className="size-[140px]"
         />
-
         <Button
           variant="ghost"
           className=" rounded-full absolute  left-36"
-          onClick={() => handleGetOrganizationListFromDB()}
+          onClick={() => {
+            handleGetOrganizationListFromLinkedin();
+          }}
+        >
+          <VscDebugRestart />
+        </Button>{" "}
+        <Button
+          variant="ghost"
+          className=" rounded-full text-red-600 absolute  right-36"
+          onClick={() => {
+            getUserDetails();
+          }}
         >
           <VscDebugRestart />
         </Button>
       </div>
 
       <div className="flex flex-col gap-2">
-        {organizationList.map((org) => (
-          <div className="flex gap-2 bg-gray-100 p-4 rounded-full">
+        {organizationList.map((org: any, index: any) => (
+          <div key={index} className="flex gap-2 bg-gray-100 p-4 rounded-full">
             <BoringAvatar name={org.name} size={100} />
 
             <div className="flex flex-col gap-2">
@@ -143,9 +169,15 @@ export default function ConnectLinkedinSuccessPage() {
         ))}
       </div>
 
-      <Link to="/" className="w-full">
+      {/* <Link to="/" className="w-full">
         <Button className="w-full rounded-full mt-4">Let's Go!</Button>
       </Link>
+      <Button
+        onClick={() => getUserDetails()}
+        className="w-full rounded-full mt-4"
+      >
+        User Details
+      </Button> */}
     </div>
   );
 }
