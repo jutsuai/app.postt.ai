@@ -45,7 +45,7 @@ export default function PreviewSection({
 }) {
   return (
     <div className="w-full max-w-3xl mx-auto">
-      <div className="mx-auto border rounded-xl relative flex flex-col w-min gap-2">
+      <div className="mx-auto border rounded-xl relative flex flex-col w-min gap-2 select-none">
         <div className="flex items-start px-4 pt-4 justify-between gap-3">
           <Image
             src={createdBy?.avatar}
