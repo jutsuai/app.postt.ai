@@ -17,7 +17,7 @@ export default function CreatePage() {
     setLoading(true);
 
     httpClient()
-      .get(`/linkedin/management/91137041/post`)
+      .get(`/linkedin/91137041/post`)
       .then((res) => {
         console.log(res.data);
         setPosts(res.data.data);
