@@ -136,7 +136,7 @@ export default function ConnectLinkedinSuccessPage() {
           }}
         >
           <VscDebugRestart />
-        </Button>{" "}
+        </Button>
         <Button
           variant="ghost"
           className=" rounded-full text-red-600 absolute  right-36"
