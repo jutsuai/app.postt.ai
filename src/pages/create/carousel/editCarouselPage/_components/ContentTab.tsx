@@ -4,8 +4,6 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import UploadTool from "@/components/UploadTool";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { FaAlignCenter, FaAlignLeft, FaAlignRight } from "react-icons/fa";
 import {
   MdFormatAlignCenter,
   MdFormatAlignLeft,
@@ -32,9 +30,6 @@ export default function ContentTab({
   customizations: any;
   setCustomizations: any;
 }) {
-  const [titleEnabled, setTitleEnabled] = useState(true);
-  // const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
-
   return (
     <div className="space-y-6 bg-muted shadow-md p-4 border rounded-lg h-full">
       <h3 className="text-base font-semibold">Content Edit</h3>

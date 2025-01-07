@@ -1,5 +1,5 @@
 import React from "react";
-import PreviewSection from "../linkedin/carousel/editCarouselPage/_components/PreviewSection";
+import PreviewSection from "../create/carousel/editCarouselPage/_components/PreviewSection";
 import { useSearchParams } from "react-router-dom";
 
 const data = {

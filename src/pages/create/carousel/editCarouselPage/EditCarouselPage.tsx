@@ -17,6 +17,7 @@ import { useAuth } from "@/context/AuthContext";
 export default function EditCarouselPage() {
   const { user } = useAuth();
   // const [data, setData] = useState({
+  const [commentary, setCommentary] = useState("This is a commentary");
   const [slides, setSlides] = useState([
     {
       pageType: "start",
@@ -102,82 +103,87 @@ export default function EditCarouselPage() {
 
   return (
     <Wrapper>
-      <WrapperContent className="py-8">
-        <div className="bg-background relative w-full h-full  rounded-t-2xl">
-          {/* Main Content Area */}
+      <WrapperContent className="py-8 grid gap-8 grid-cols-2 h-full">
+        {/* <div className=" relative w-full bg-orange-200 h-full  rounded-t-2xl"> */}
+        {/* Main Content Area */}
 
-          <div className="space-y-8 container">
-            <div className="flex gap-6 w-full h-full">
-              <div className="flex flex-col  gap-4 h-full w-full">
-                <Tabs
-                  value={activeTab}
-                  onValueChange={setActiveTab}
-                  className="w-full"
+        {/* <div className="flex flex-1  bg-indigo-600"> */}
+        {/* <div className="flex flex-1 bg-red-200"> */}
+        {/*  */}
+
+        <div className="flex flex-col  gap-4 h-full w-full">
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full"
+          >
+            <TabsList className="w-full">
+              {tabs?.map((tab: any) => (
+                <TabsTrigger
+                  key={tab?.name}
+                  value={tab?.name}
+                  className="data-[state=active]:bg-primary-foreground gap-1 px-0 w-full"
                 >
-                  <TabsList className="w-full">
-                    {tabs?.map((tab: any) => (
-                      <TabsTrigger
-                        key={tab?.name}
-                        value={tab?.name}
-                        className="data-[state=active]:bg-primary-foreground gap-1 px-0 w-full"
-                      >
-                        {tab?.icon} {tab?.name}
-                      </TabsTrigger>
-                    ))}
-                  </TabsList>
-                </Tabs>
+                  {tab?.icon} {tab?.name}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
 
-                {activeTab === "Content" && (
-                  <ContentTab
-                    slides={slides}
-                    setSlides={setSlides}
-                    selectedSlide={selectedSlide}
-                    //
-                    customizations={customizations}
-                    setCustomizations={setCustomizations}
-                  />
-                )}
+          {activeTab === "Content" && (
+            <ContentTab
+              slides={slides}
+              setSlides={setSlides}
+              selectedSlide={selectedSlide}
+              //
+              customizations={customizations}
+              setCustomizations={setCustomizations}
+            />
+          )}
 
-                {activeTab === "Settings" && (
-                  <SettingsTab
-                    createdBy={createdBy}
-                    setCreatedBy={setCreatedBy}
-                  />
-                )}
-                {activeTab === "Download" && (
-                  <DownloadTab
-                    slides={slides}
-                    customizations={customizations}
-                    createdBy={createdBy}
-                  />
-                )}
+          {activeTab === "Settings" && (
+            <SettingsTab
+              createdBy={createdBy}
+              setCreatedBy={setCreatedBy}
+              commentary={commentary}
+              setCommentary={setCommentary}
+            />
+          )}
+          {activeTab === "Download" && (
+            <DownloadTab
+              slides={slides}
+              customizations={customizations}
+              createdBy={createdBy}
+            />
+          )}
 
-                <BottomSection
-                  customizations={customizations}
-                  slides={slides}
-                  setSlides={setSlides}
-                  selectedSlide={selectedSlide}
-                  setSelectedSlide={setSelectedSlide}
-                />
-              </div>
-
-              {/* Right Sidebar */}
-
-              <PreviewSection
-                {...slides[selectedSlide]}
-                // className="col-span-4 items-center justify-center place-content-center pac"
-                pageIndex={selectedSlide}
-                createdBy={createdBy}
-                slides={slides}
-                customizations={customizations}
-                selectedSlide={selectedSlide}
-                setSelectedSlide={setSelectedSlide}
-              />
-            </div>
-
-            {/* Bottom Carousel Thumbnails */}
-          </div>
+          <BottomSection
+            customizations={customizations}
+            slides={slides}
+            setSlides={setSlides}
+            selectedSlide={selectedSlide}
+            setSelectedSlide={setSelectedSlide}
+          />
         </div>
+
+        {/* Right Sidebar */}
+
+        <PreviewSection
+          {...slides[selectedSlide]}
+          // className="col-span-4 items-center justify-center place-content-center pac"
+          pageIndex={selectedSlide}
+          createdBy={createdBy}
+          commentary={commentary}
+          slides={slides}
+          customizations={customizations}
+          selectedSlide={selectedSlide}
+          setSelectedSlide={setSelectedSlide}
+        />
+        {/* </div> */}
+
+        {/* Bottom Carousel Thumbnails */}
+        {/* </div>
+        </div> */}
       </WrapperContent>
     </Wrapper>
   );

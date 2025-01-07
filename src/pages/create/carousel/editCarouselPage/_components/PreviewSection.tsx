@@ -24,6 +24,7 @@ export default function PreviewSection({
   selectedSlide,
   setSelectedSlide,
 
+  commentary,
   customizations,
 }: {
   className?: string;
@@ -41,11 +42,12 @@ export default function PreviewSection({
   selectedSlide: any;
   setSelectedSlide: any;
 
+  commentary: any;
   customizations: any;
 }) {
   return (
-    <div className="w-full max-w-lg mx-auto">
-      <div className="mx-auto border rounded-xl relative flex flex-col w-min gap-2 select-none">
+    <div className="w-full h-full flex justify-center items-center mx-auto  bg-[#f3f4f6] rounded-lg flex-1">
+      <div className="mx-auto bg-background border rounded-xl relative flex flex-col w-min gap-2 select-none">
         <div className="flex items-start px-4 pt-4 justify-between gap-3">
           <Image
             src={createdBy?.avatar}
@@ -73,9 +75,9 @@ export default function PreviewSection({
             <LuPlus /> Follow
           </Button>
         </div>
-        <p className="whitespace-pre-wrap px-4 text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis
-          atque placeat ex, optio tempora impedit.
+
+        <p className="whitespace-pre-wrap px-4 line-clamp-5 text-sm">
+          {commentary}
         </p>
 
         <div className="absolute top-[50%] z-20 right-0 left-0 flex justify-between px-4">
