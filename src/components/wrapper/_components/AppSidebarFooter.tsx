@@ -10,6 +10,7 @@ import { useAuth } from "@/context/AuthContext";
 import { cn } from "@/lib/utils";
 
 import { FiLogOut } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 export default function AppSidebarFooter() {
   const { logout, user } = useAuth();
@@ -21,31 +22,39 @@ export default function AppSidebarFooter() {
         <SidebarMenuItem
           className={cn(
             "transition-all duration-200 cursor-pointer  hover:!bg-transparent !rounded-full",
-            sidebarMode ? "mx-0 px-0 py-1.5 " : "mx-1.5 py-[7px] pl-[5px]"
-            // sidebarMode ? "mx-2 px-2 py-1.5 " : "mx-1.5 py-[7px] pl-[5px]"
+            sidebarMode ? "mx-0 px-0 py-1.5 " : "mx-1.5 py-[7px] !p-0 w-full"
+            // sidebarMode ? "mx-2 px-2 py-1.5 " : "mx-1.5 py-[7px] pl-[5px] pl-[5px]"
           )}
         >
-          <SidebarMenuButton className="hover:!bg-transparent h-10">
-            <BoringAvatar
-              name={user?.firstName}
-              size={40}
-              src={user?.avatar}
-              alt={user?.firstName}
-            />
-
-            <div
-              className={cn(
-                "z-10 font-semibold text-sm transition-colors overflow-hidden duration-200 flex flex-col items-start"
-              )}
+          <Link to="/settings">
+            <SidebarMenuButton
+              className="hover:!bg-transparent h-10  min-w-12 min-h-12 w-full "
+              style={{
+                padding: "0px !important",
+              }}
             >
-              <p className="text-sm font-semibold text-center">
-                {`${user?.firstName} ${user?.lastName}`}
-              </p>
-              <h3 className="text-xs text-center font-medium text-muted-foreground">
-                {user?.email}
-              </h3>
-            </div>
-          </SidebarMenuButton>
+              <BoringAvatar
+                name={user?.firstName}
+                size={40}
+                src={user?.avatar}
+                alt={user?.firstName}
+                className={cn("min-w-10", sidebarMode ? "" : "-ml-2")}
+              />
+
+              <div
+                className={cn(
+                  "z-10 font-semibold text-sm transition-colors overflow-hidden duration-200 flex flex-col items-start"
+                )}
+              >
+                <p className="text-sm font-semibold text-center">
+                  {`${user?.firstName} ${user?.lastName}`}
+                </p>
+                <h3 className="text-xs text-center font-medium text-muted-foreground">
+                  {user?.email}
+                </h3>
+              </div>
+            </SidebarMenuButton>
+          </Link>
         </SidebarMenuItem>
 
         <SidebarMenuItem

@@ -6,9 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import { FiPlus } from "react-icons/fi";
-import Header from "@/components/header/Header";
-import { useState } from "react";
-import { IoIosFlash } from "react-icons/io";
 import TopBar from "@/components/header/TopBar";
 
 const writers = [
@@ -43,9 +40,6 @@ const writers = [
 ];
 
 export default function AddWriter() {
-  const [generateText, setGenerateText] = useState("");
-
-  const handleSubmit = () => {};
   return (
     <Wrapper>
       <WrapperContent className="gap-8">

@@ -24,6 +24,7 @@ import ConnectLinkedinPage from "./pages/linkedin/connection/ConnectLinkedinPage
 import ConnectLinkedinCallbackPage from "./pages/linkedin/connection/ConnectLinkedinCallbackPage";
 import ConnectLinkedinSuccessPage from "./pages/linkedin/connection/ConnectLinkedinSuccessPage";
 import CreateTextPage from "./pages/create/text/CreateTextPage";
+import SettingsPage from "./pages/settings/SettingsPage";
 
 export default function Router() {
   const { isAuthenticated } = useAuth();
@@ -110,6 +111,10 @@ const AppRouter = () => {
             <Route index element={<CarouselsPage />} />
             <Route path=":id" element={<EditCarouselPage />} />
           </Route>
+        </Route>
+
+        <Route path="settings">
+          <Route index element={<SettingsPage />} />
         </Route>
 
         <Route path="*" element={<div>404 Page Not Found</div>} />
