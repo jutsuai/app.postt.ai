@@ -14,7 +14,7 @@ export default function BottomPreviewCard({
   setSlides,
 }: any) {
   return (
-    <div className="w-full relative h-full bg-muted p-0.5 rounded-xl">
+    <div className="w-full relative h-full aspect-[4/5] bg-muted p-0.5 rounded-xl">
       <Button
         onClick={() => {
           setSelectedSlide(pageIndex);
@@ -51,6 +51,7 @@ export default function BottomPreviewCard({
       </Button>
 
       <Button
+        variant="ghost"
         onClick={() => {
           setSlides((prev: any) => {
             return prev.map((item: any, index: any) => {
@@ -64,19 +65,20 @@ export default function BottomPreviewCard({
             });
           });
         }}
-        className="absolute top-2 left-2 p-1 bg-background rounded-md h-6 w-6 flex items-center justify-center"
+        className="absolute top-2 left-2 p-1 text-muted-foreground bg-background rounded-md h-6 w-6 flex items-center justify-center"
       >
         {slide?.visible ? <FaEye /> : <FaEyeSlash />}
       </Button>
 
       <Button
+        variant="ghost"
         disabled={slide?.pageType === "start" || slide?.pageType === "end"}
         onClick={() => {
           setSlides((prev: any) => {
             return prev.filter((_, index: any) => index !== pageIndex);
           });
         }}
-        className="absolute top-2 right-2 p-1 bg-background rounded-md h-6 w-6 flex items-center justify-center"
+        className="absolute top-2 right-2 text-muted-foreground hover:text-red-600 p-1 bg-background rounded-md h-6 w-6 flex items-center justify-center"
       >
         <MdDelete />
       </Button>

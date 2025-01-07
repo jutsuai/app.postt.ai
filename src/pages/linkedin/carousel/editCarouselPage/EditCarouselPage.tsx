@@ -103,35 +103,12 @@ export default function EditCarouselPage() {
   return (
     <Wrapper>
       <WrapperContent className="py-8">
-        {/* Top bar */}
-        {/* <div className="bg-muted p-1 w-full relative  rounded-xl focus-within:max-w-xl max-w-lg transition-all duration-300">
-          <div className="flex items-center justify-between border-primary-foreground transition-colors border-2  duration-200 bg-background rounded-lg">
-            <div className="px-3 ">
-              <RiAiGenerate />
-            </div>
-
-            <input
-              type="text"
-              value={topic}
-              onChange={(e) => setTopic(e.target.value)}
-              placeholder="Enter a topic for your carousel..."
-              className="outline-none border-none w-full py-3 pr-3"
-            />
-
-            <Button className=" mr-2 h-9 text-sm">
-              <LuWandSparkles />
-              Generate Carousel
-            </Button>
-          </div>
-        </div> */}
-
         <div className="bg-background relative w-full h-full  rounded-t-2xl">
           {/* Main Content Area */}
 
           <div className="space-y-8 container">
-            <div className="grid grid-cols-9 gap-6 w-full h-full">
-              {/* Left Preview Area */}
-              <div className="flex flex-col col-span-5 gap-4 h-full w-full">
+            <div className="flex gap-6 w-full h-full">
+              <div className="flex flex-col  gap-4 h-full w-full">
                 <Tabs
                   value={activeTab}
                   onValueChange={setActiveTab}
@@ -150,7 +127,6 @@ export default function EditCarouselPage() {
                   </TabsList>
                 </Tabs>
 
-                {/* Content for Active Tab */}
                 {activeTab === "Content" && (
                   <ContentTab
                     slides={slides}
@@ -176,32 +152,30 @@ export default function EditCarouselPage() {
                   />
                 )}
 
-                {activeTab !== "Content" && activeTab !== "Settings" && (
-                  <div className="text-gray-500">
-                    <p className="text-sm">No content for this tab yet.</p>
-                  </div>
-                )}
+                <BottomSection
+                  customizations={customizations}
+                  slides={slides}
+                  setSlides={setSlides}
+                  selectedSlide={selectedSlide}
+                  setSelectedSlide={setSelectedSlide}
+                />
               </div>
 
               {/* Right Sidebar */}
 
               <PreviewSection
                 {...slides[selectedSlide]}
-                className="col-span-4"
+                // className="col-span-4 items-center justify-center place-content-center pac"
                 pageIndex={selectedSlide}
                 createdBy={createdBy}
+                slides={slides}
                 customizations={customizations}
+                selectedSlide={selectedSlide}
+                setSelectedSlide={setSelectedSlide}
               />
             </div>
 
             {/* Bottom Carousel Thumbnails */}
-            <BottomSection
-              customizations={customizations}
-              slides={slides}
-              setSlides={setSlides}
-              selectedSlide={selectedSlide}
-              setSelectedSlide={setSelectedSlide}
-            />
           </div>
         </div>
       </WrapperContent>

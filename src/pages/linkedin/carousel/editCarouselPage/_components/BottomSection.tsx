@@ -21,11 +21,9 @@ export default function BottomSection({
           key={index}
           totalSlides={slides?.length}
           setSlides={setSlides}
-          //
           pageIndex={index}
           slide={slide}
           customizations={customizations}
-          //
           selectedSlide={selectedSlide}
           setSelectedSlide={setSelectedSlide}
         />
