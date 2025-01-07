@@ -4,26 +4,23 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { BiCarousel } from "react-icons/bi";
-import { FaRegImage } from "react-icons/fa";
-import { MdOutlineTextFields } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const menus = [
   {
     name: "Text Post",
-    url: "/create/text",
+    url: "/create?type=text",
     icon: "/dialog-menu/text-post-image.svg",
   },
   {
     name: "Image Post",
-    url: "/create/carousel/testId",
+    url: "/create?type=image",
     icon: "/dialog-menu/single-post-image.svg",
   },
   {
     name: "Carousel Post",
-    url: "/create/carousel/testId",
+    url: "/create?type=carousel/1",
     icon: "/dialog-menu/carousel-post-image.svg",
   },
 ];

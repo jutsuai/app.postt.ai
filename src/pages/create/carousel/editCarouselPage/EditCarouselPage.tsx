@@ -1,6 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { RiAiGenerate } from "react-icons/ri";
-import { LuWandSparkles } from "react-icons/lu";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ContentTab from "./_components/ContentTab";
 import SettingsTab from "./_components/SettingsTab";
@@ -13,6 +10,7 @@ import BottomSection from "./_components/BottomSection";
 import DownloadTab from "./_components/DownloadTab";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { Button } from "@/components/ui/button";
 
 export default function EditCarouselPage() {
   const { user } = useAuth();
@@ -164,6 +162,13 @@ export default function EditCarouselPage() {
             selectedSlide={selectedSlide}
             setSelectedSlide={setSelectedSlide}
           />
+
+          <div className="w-full gap-4 flex">
+            <Button variant="secondary" className="w-full text-foreground">
+              Schedule Post
+            </Button>
+            <Button className="w-full ">Post Now</Button>
+          </div>
         </div>
 
         {/* Right Sidebar */}

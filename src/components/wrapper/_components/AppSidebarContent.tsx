@@ -96,6 +96,7 @@ export default function AppSidebarContent() {
       {content.map((group, contentIndex) => (
         <SidebarGroup key={group.label || contentIndex}>
           {group?.label && <SidebarGroupLabel>{group.label}</SidebarGroupLabel>}
+
           <SidebarMenu>
             {group.items.map((item) => {
               if (item?.hidden) return null;

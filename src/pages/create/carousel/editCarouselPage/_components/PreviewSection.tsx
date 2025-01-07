@@ -47,144 +47,95 @@ export default function PreviewSection({
 }) {
   return (
     <div className="w-full h-full flex justify-center items-center mx-auto  bg-[#f3f4f6] rounded-lg flex-1">
-      <div className="mx-auto bg-background border rounded-xl relative flex flex-col w-min gap-2 select-none">
-        <div className="flex items-start px-4 pt-4 justify-between gap-3">
-          <Image
-            src={createdBy?.avatar}
-            alt={createdBy?.username}
-            className="w-12 h-12 rounded-full object-cover object-center"
-          />
-          <div className="flex mr-auto flex-col leading-tight">
-            <div className="flex w-full gap-2 items-center">
-              <span className="font-semibold text-sm"> {createdBy?.name}</span>
-              <span className="text-xs text-muted-foreground">●</span>
-              <span className="text-muted-foreground text-sm">3rd+</span>
-            </div>
-            <div className="text-muted-foreground text-xs">Founder & CEO</div>
-            <div className="flex items-center gap-1 text-muted-foreground text-xs">
-              <span>3d</span>
-              <span className="text-xs text-muted-foreground scale-75">●</span>
-              <FaGlobeAmericas />
-            </div>
-          </div>
-          <Button
-            className="w-fit ml-auto text-[#0072b1] hover:text-[#0072b1]"
-            size="sm"
-            variant="ghost"
-          >
-            <LuPlus /> Follow
-          </Button>
-        </div>
+      <div
+        className="mx-auto bg-background border   rounded-xl relative flex flex-col w-min gap-2 select-none"
+        style={{
+          width: customizations?.width,
+        }}
+      >
+        <HeaderSection createdBy={createdBy} />
 
-        <p className="whitespace-pre-wrap px-4 line-clamp-5 text-sm">
+        <p
+          className={cn(
+            "whitespace-pre-wrap px-4  text-sm",
+
+            slides && "col-span-6"
+          )}
+        >
           {commentary}
         </p>
 
-        <div className="absolute top-[50%] z-20 right-0 left-0 flex justify-between px-4">
-          <Button
-            size="icon"
-            className={cn(
-              "rounded-full bg-foreground/60 hover:bg-foreground hover:text-background",
-              selectedSlide === 0 && "opacity-0 pointer-events-none"
-            )}
-            onClick={() =>
-              setSelectedSlide((prev: any) => {
-                if (prev === 0) {
-                  return prev;
-                } else {
-                  return prev - 1;
+        {slides && (
+          <>
+            <div className="absolute top-[50%] z-20 right-0 left-0 flex justify-between px-4">
+              <Button
+                size="icon"
+                className={cn(
+                  "rounded-full bg-foreground/60 hover:bg-foreground hover:text-background",
+                  selectedSlide === 0 && "opacity-0 pointer-events-none"
+                )}
+                onClick={() =>
+                  setSelectedSlide((prev: any) => {
+                    if (prev === 0) {
+                      return prev;
+                    } else {
+                      return prev - 1;
+                    }
+                  })
                 }
-              })
-            }
-          >
-            <MdKeyboardArrowLeft />
-          </Button>
-          <Button
-            className={cn(
-              "rounded-full  bg-foreground/60 hover:bg-foreground hover:text-background",
-              selectedSlide === slides?.length - 1 &&
-                "opacity-0 pointer-events-none"
+              >
+                <MdKeyboardArrowLeft />
+              </Button>
+              <Button
+                className={cn(
+                  "rounded-full  bg-foreground/60 hover:bg-foreground hover:text-background",
+                  selectedSlide === slides?.length - 1 &&
+                    "opacity-0 pointer-events-none"
+                )}
+                size="icon"
+                onClick={() => {
+                  setSelectedSlide((prev: any) => {
+                    if (prev === slides.length - 1) {
+                      return prev;
+                    } else {
+                      return prev + 1;
+                    }
+                  });
+                }}
+              >
+                <MdKeyboardArrowRight />
+              </Button>
+            </div>
+
+            {pageType == "start" ? (
+              <StartPage
+                title={title}
+                image={image}
+                createdBy={createdBy}
+                customizations={customizations}
+                pageType={pageType}
+              />
+            ) : pageType == "end" ? (
+              <EndPage
+                image={image}
+                createdBy={createdBy}
+                customizations={customizations}
+              />
+            ) : (
+              <SlidePage
+                pageIndex={pageIndex}
+                title={title}
+                description={description}
+                image={image}
+                createdBy={createdBy}
+                customizations={customizations}
+                pageType={pageType}
+              />
             )}
-            size="icon"
-            onClick={() => {
-              setSelectedSlide((prev: any) => {
-                if (prev === slides.length - 1) {
-                  return prev;
-                } else {
-                  return prev + 1;
-                }
-              });
-            }}
-          >
-            <MdKeyboardArrowRight />
-          </Button>
-        </div>
-        {pageType == "start" ? (
-          <StartPage
-            title={title}
-            image={image}
-            createdBy={createdBy}
-            customizations={customizations}
-            pageType={pageType}
-          />
-        ) : pageType == "end" ? (
-          <EndPage
-            image={image}
-            createdBy={createdBy}
-            customizations={customizations}
-          />
-        ) : (
-          <SlidePage
-            pageIndex={pageIndex}
-            title={title}
-            description={description}
-            image={image}
-            createdBy={createdBy}
-            customizations={customizations}
-            pageType={pageType}
-          />
+          </>
         )}
 
-        <div className="px-4 pb-4 flex flex-col gap-3">
-          <div className="flex items-center gap-2">
-            <div className="flex -space-x-1">
-              <div className="p-0.5 text-xs flex items-center border justify-center rounded-full bg-blue-600/70 w-fit">
-                <AiTwotoneLike className="-scale-x-[1]" />
-              </div>
-              <div className="p-0.5 text-xs rounded-full flex border items-center justify-center bg-red-600/70 w-fit">
-                <AiTwotoneHeart />
-              </div>
-            </div>
-            <p className="text-muted-foreground text-xs">
-              Alex Colen and 230 others
-            </p>
-            <p className="text-muted-foreground ml-auto text-xs">15 comments</p>
-          </div>
-          <Separator />
-          <div className="flex items-center justify-around">
-            <Image
-              src={createdBy?.avatar}
-              alt={createdBy?.username}
-              className="w-6 h-6 rounded-full object-cover object-center"
-            />
-            <div className="flex items-center gap-2 font-medium text-sm">
-              <SlLike className="-scale-x-[1] text-base" />
-              Like
-            </div>
-            <div className="flex items-center gap-2 font-medium text-sm">
-              <TfiCommentAlt className="-scale-x-[1] text-base" />
-              Comment
-            </div>
-            <div className="flex items-center gap-2 font-medium text-sm">
-              <LiaShareSolid className=" text-base" />
-              Share
-            </div>
-            <div className="flex items-center gap-2 font-medium text-sm">
-              <IoBookmarkOutline className=" text-base" />
-              Save
-            </div>
-          </div>
-        </div>
+        <FooterSection createdBy={createdBy} />
       </div>
     </div>
   );
@@ -470,3 +421,84 @@ const SlidePage = ({
     </div>
   );
 };
+
+// Sections
+
+const HeaderSection = ({ createdBy }: { createdBy: any }) => {
+  return (
+    <div className="flex items-start px-4 pt-4 justify-between gap-3">
+      <Image
+        src={createdBy?.avatar}
+        alt={createdBy?.username}
+        className="w-12 h-12 rounded-full object-cover object-center"
+      />
+      <div className="flex mr-auto flex-col leading-tight">
+        <div className="flex w-full gap-2 items-center">
+          <span className="font-semibold text-sm"> {createdBy?.name}</span>
+          <span className="text-xs text-muted-foreground">●</span>
+          <span className="text-muted-foreground text-sm">3rd+</span>
+        </div>
+        <div className="text-muted-foreground text-xs">Founder & CEO</div>
+        <div className="flex items-center gap-1 text-muted-foreground text-xs">
+          <span>3d</span>
+          <span className="text-xs text-muted-foreground scale-75">●</span>
+          <FaGlobeAmericas />
+        </div>
+      </div>
+      <Button
+        className="w-fit ml-auto text-[#0072b1] hover:text-[#0072b1]"
+        size="sm"
+        variant="ghost"
+      >
+        <LuPlus /> Follow
+      </Button>
+    </div>
+  );
+};
+
+const FooterSection = ({ createdBy }: { createdBy: any }) => {
+  return (
+    <div className="px-4 pb-4 flex flex-col gap-3">
+      <div className="flex items-center gap-2">
+        <div className="flex -space-x-1">
+          <div className="p-0.5 text-xs flex items-center border justify-center rounded-full bg-blue-600/70 w-fit">
+            <AiTwotoneLike className="-scale-x-[1]" />
+          </div>
+          <div className="p-0.5 text-xs rounded-full flex border items-center justify-center bg-red-600/70 w-fit">
+            <AiTwotoneHeart />
+          </div>
+        </div>
+        <p className="text-muted-foreground text-xs">
+          Alex Colen and 230 others
+        </p>
+        <p className="text-muted-foreground ml-auto text-xs">15 comments</p>
+      </div>
+      <Separator />
+      <div className="flex items-center justify-around">
+        <Image
+          src={createdBy?.avatar}
+          alt={createdBy?.username}
+          className="w-6 h-6 rounded-full object-cover object-center"
+        />
+        <div className="flex items-center gap-2 font-medium text-sm">
+          <SlLike className="-scale-x-[1] text-base" />
+          Like
+        </div>
+        <div className="flex items-center gap-2 font-medium text-sm">
+          <TfiCommentAlt className="-scale-x-[1] text-base" />
+          Comment
+        </div>
+        <div className="flex items-center gap-2 font-medium text-sm">
+          <LiaShareSolid className=" text-base" />
+          Share
+        </div>
+        <div className="flex items-center gap-2 font-medium text-sm">
+          <IoBookmarkOutline className=" text-base" />
+          Save
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// End of Sections

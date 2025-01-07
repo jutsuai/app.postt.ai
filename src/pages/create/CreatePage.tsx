@@ -10,6 +10,7 @@ import { AiOutlineSend } from "react-icons/ai";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { FaFire } from "react-icons/fa";
+import { Link, useSearchParams } from "react-router-dom";
 
 const topics = [
   {
@@ -36,6 +37,11 @@ const topics = [
 
 export default function CreateTextPage() {
   const [inputType, setInputType] = useState<"text" | "link">("text");
+
+  // get type ffrom  url  params
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get("type");
+
   return (
     <Wrapper>
       <div className=" h-20 pt-6 px-4 z-10 bg-background">
@@ -75,9 +81,12 @@ export default function CreateTextPage() {
                 placeholder="Enter your text here..."
                 className="bg-transparent z-10 py-2 w-full px-3 pr-1 outline-none"
               />
-              <Button className="" size="icon" variant="ghost">
-                <AiOutlineSend />
-              </Button>
+
+              <Link to={`/create/${type}`}>
+                <Button className="" size="icon" variant="ghost">
+                  <AiOutlineSend />
+                </Button>
+              </Link>
             </div>
           </div>
 
