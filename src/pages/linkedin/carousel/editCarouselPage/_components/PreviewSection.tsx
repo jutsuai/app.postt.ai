@@ -44,22 +44,22 @@ export default function PreviewSection({
   customizations: any;
 }) {
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="w-full max-w-lg mx-auto">
       <div className="mx-auto border rounded-xl relative flex flex-col w-min gap-2 select-none">
         <div className="flex items-start px-4 pt-4 justify-between gap-3">
           <Image
             src={createdBy?.avatar}
             alt={createdBy?.username}
-            className="w-16 h-16 rounded-full object-cover object-center"
+            className="w-12 h-12 rounded-full object-cover object-center"
           />
           <div className="flex mr-auto flex-col leading-tight">
             <div className="flex w-full gap-2 items-center">
-              <span className="font-semibold"> {createdBy?.name}</span>
+              <span className="font-semibold text-sm"> {createdBy?.name}</span>
               <span className="text-xs text-muted-foreground">●</span>
-              <span className="text-muted-foreground">3rd+</span>
+              <span className="text-muted-foreground text-sm">3rd+</span>
             </div>
-            <div className="text-muted-foreground text-sm">Founder & CEO</div>
-            <div className="flex items-center gap-1 text-muted-foreground text-sm">
+            <div className="text-muted-foreground text-xs">Founder & CEO</div>
+            <div className="flex items-center gap-1 text-muted-foreground text-xs">
               <span>3d</span>
               <span className="text-xs text-muted-foreground scale-75">●</span>
               <FaGlobeAmericas />
@@ -73,7 +73,7 @@ export default function PreviewSection({
             <LuPlus /> Follow
           </Button>
         </div>
-        <p className="whitespace-pre-wrap px-4">
+        <p className="whitespace-pre-wrap px-4 text-sm">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis
           atque placeat ex, optio tempora impedit.
         </p>
@@ -146,39 +146,39 @@ export default function PreviewSection({
         <div className="px-4 pb-4 flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <div className="flex -space-x-1">
-              <div className="p-0.5 flex items-center border justify-center rounded-full bg-blue-600/70 w-fit">
+              <div className="p-0.5 text-xs flex items-center border justify-center rounded-full bg-blue-600/70 w-fit">
                 <AiTwotoneLike className="-scale-x-[1]" />
               </div>
-              <div className="p-0.5 rounded-full flex border items-center justify-center bg-red-600/70 w-fit">
+              <div className="p-0.5 text-xs rounded-full flex border items-center justify-center bg-red-600/70 w-fit">
                 <AiTwotoneHeart />
               </div>
             </div>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-foreground text-xs">
               Alex Colen and 230 others
             </p>
-            <p className="text-muted-foreground ml-auto text-sm">15 comments</p>
+            <p className="text-muted-foreground ml-auto text-xs">15 comments</p>
           </div>
           <Separator />
           <div className="flex items-center justify-around">
             <Image
               src={createdBy?.avatar}
               alt={createdBy?.username}
-              className="w-8 h-8 rounded-full object-cover object-center"
+              className="w-6 h-6 rounded-full object-cover object-center"
             />
-            <div className="flex items-center gap-2 font-medium ">
-              <SlLike className="-scale-x-[1] text-xl" />
+            <div className="flex items-center gap-2 font-medium text-sm">
+              <SlLike className="-scale-x-[1] text-base" />
               Like
             </div>
-            <div className="flex items-center gap-2 font-medium ">
-              <TfiCommentAlt className="-scale-x-[1] text-xl" />
+            <div className="flex items-center gap-2 font-medium text-sm">
+              <TfiCommentAlt className="-scale-x-[1] text-base" />
               Comment
             </div>
-            <div className="flex items-center gap-2 font-medium ">
-              <LiaShareSolid className=" text-xl" />
+            <div className="flex items-center gap-2 font-medium text-sm">
+              <LiaShareSolid className=" text-base" />
               Share
             </div>
-            <div className="flex items-center gap-2 font-medium ">
-              <IoBookmarkOutline className=" text-xl" />
+            <div className="flex items-center gap-2 font-medium text-sm">
+              <IoBookmarkOutline className=" text-base" />
               Save
             </div>
           </div>
@@ -235,7 +235,7 @@ const StartPage = ({
       >
         {customizations?.title?.visible && (
           <h1
-            className="text-6xl text-gray-800 font-semibold leading-normal"
+            className="text-4xl text-gray-800 font-semibold leading-normal"
             style={{
               textAlign:
                 customizations?.content?.horizontal === "left"
@@ -271,11 +271,11 @@ const StartPage = ({
           <Image
             src={createdBy?.avatar}
             alt={createdBy?.username}
-            className="w-12 h-12 rounded-full object-cover"
+            className="w-9 h-9 rounded-full object-cover"
           />
 
           <div>
-            <div className="text-base font-bold">{createdBy?.name}</div>
+            <div className="text-sm font-bold">{createdBy?.name}</div>
             <div className="text-xs">@{createdBy?.username}</div>
           </div>
         </div>
@@ -338,12 +338,12 @@ const EndPage = ({
           <Image
             src={createdBy?.avatar}
             alt={createdBy?.username}
-            className="h-40 w-40 min-h-40 min-w-40 rounded-full"
+            className="h-24 w-24 min-h-24 min-w-24 rounded-full"
           />
         </div>
 
         <div
-          className="text-6xl h-44 items-center flex   font-semibold"
+          className="text-4xl h-44 items-center flex   font-semibold"
           style={{
             color: customizations?.fontColor,
             textAlign:
@@ -410,7 +410,7 @@ const SlidePage = ({
         )}
       >
         {customizations?.pageIndex?.visible && (
-          <p className="outlined-text opacity-10  -translate-x-24 -translate-y-[10%] top-0 left-0 absolute text-[400px] font-extrabold">
+          <p className="outlined-text opacity-10  -translate-x-24 -translate-y-[10%] top-0 left-0 absolute text-[350px] font-extrabold">
             {pageIndex}
           </p>
         )}
@@ -444,17 +444,17 @@ const SlidePage = ({
             <Image
               src={createdBy?.avatar}
               alt={createdBy?.username}
-              className="w-12 h-12 rounded-full object-cover"
+              className="w-9 h-9 rounded-full object-cover"
             />
 
             <div className="">
-              <div className="text-base font-bold">{createdBy?.name}</div>
+              <div className="text-sm font-bold">{createdBy?.name}</div>
               <div className="text-xs">@{createdBy?.username}</div>
             </div>
           </div>
 
           <div
-            className="h-10 w-10 min-w-10 rounded-full flex items-center justify-center"
+            className="h-9 w-9 min-w-9 rounded-full flex items-center justify-center"
             style={{
               backgroundColor: customizations?.fontColor,
 

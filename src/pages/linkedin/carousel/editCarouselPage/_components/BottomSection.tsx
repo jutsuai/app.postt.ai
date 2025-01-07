@@ -15,7 +15,7 @@ export default function BottomSection({
   setSelectedSlide: any;
 }) {
   return (
-    <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(100px,1fr))]  ">
+    <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(90px,1fr))]  ">
       {slides?.map((slide: any, index: any) => (
         <BottomPreviewCard
           key={index}

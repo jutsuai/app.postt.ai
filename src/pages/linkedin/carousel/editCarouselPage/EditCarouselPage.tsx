@@ -82,8 +82,8 @@ export default function EditCarouselPage() {
     },
 
     // aspectRatio: "4/5",
-    height: 660,
-    width: 512,
+    height: 535,
+    width: 415,
   });
 
   //
