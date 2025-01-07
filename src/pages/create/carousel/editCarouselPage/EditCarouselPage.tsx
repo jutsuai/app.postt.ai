@@ -11,8 +11,13 @@ import DownloadTab from "./_components/DownloadTab";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
+import httpClient from "@/lib/httpClient";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import SelectProfileDialog from "@/components/dialog/SelectProfileDialog";
 
 export default function EditCarouselPage() {
+  const navigate = useNavigate();
   const { user } = useAuth();
   // const [data, setData] = useState({
   const [commentary, setCommentary] = useState("This is a commentary");
@@ -51,12 +56,13 @@ export default function EditCarouselPage() {
     },
   ]);
 
-  const [createdBy, setCreatedBy] = useState({
-    name: `${user?.firstName} ${user?.lastName}`,
-    username: user?.username || user?.email,
-    avatar:
-      user?.avatar || "https://avatars.githubusercontent.com/u/8743993?v=4",
-  });
+  const createdBy = user;
+  // const [createdBy, setCreatedBy] = useState({
+  //   name: `${user?.firstName} ${user?.lastName}`,
+  //   username: user?.username || user?.email,
+  //   avatar:
+  //     user?.avatar || "https://avatars.githubusercontent.com/u/8743993?v=4",
+  // });
 
   const [customizations, setCustomizations] = useState({
     backgroundColor: "#ffffff",
@@ -81,8 +87,10 @@ export default function EditCarouselPage() {
     },
 
     // aspectRatio: "4/5",
-    height: 535,
-    width: 415,
+    size: {
+      height: 535,
+      width: 415,
+    },
   });
 
   //
@@ -99,97 +107,136 @@ export default function EditCarouselPage() {
     "How to create a carousel post on LinkedIn"
   );
 
+  const [showSelectProfileDialog, setShowSelectProfileDialog] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const handlePost = (linkedinId: string) => {
+    setShowSelectProfileDialog(false);
+    setLoading(true);
+
+    httpClient()
+      .post(`/linkedin/${linkedinId}/post/carousel`, {
+        commentary,
+        slides,
+        customizations,
+      })
+      .then((res) => {
+        console.log("Post Success", res);
+        toast.success("Post Successful");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.error("Post Error", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
-    <Wrapper>
-      <WrapperContent className="py-8 grid gap-8 grid-cols-2 h-full">
-        {/* <div className=" relative w-full bg-orange-200 h-full  rounded-t-2xl"> */}
-        {/* Main Content Area */}
+    <>
+      <Wrapper>
+        <WrapperContent className="py-8 grid gap-8 grid-cols-2 h-full">
+          {/* <div className=" relative w-full bg-orange-200 h-full  rounded-t-2xl"> */}
+          {/* Main Content Area */}
 
-        {/* <div className="flex flex-1  bg-indigo-600"> */}
-        {/* <div className="flex flex-1 bg-red-200"> */}
-        {/*  */}
+          {/* <div className="flex flex-1  bg-indigo-600"> */}
+          {/* <div className="flex flex-1 bg-red-200"> */}
+          {/*  */}
 
-        <div className="flex flex-col  gap-4 h-full w-full">
-          <Tabs
-            value={activeTab}
-            onValueChange={setActiveTab}
-            className="w-full"
-          >
-            <TabsList className="w-full">
-              {tabs?.map((tab: any) => (
-                <TabsTrigger
-                  key={tab?.name}
-                  value={tab?.name}
-                  className="data-[state=active]:bg-primary-foreground gap-1 px-0 w-full"
-                >
-                  {tab?.icon} {tab?.name}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
+          <div className="flex flex-col  gap-4 h-full w-full">
+            <Tabs
+              value={activeTab}
+              onValueChange={setActiveTab}
+              className="w-full"
+            >
+              <TabsList className="w-full">
+                {tabs?.map((tab: any) => (
+                  <TabsTrigger
+                    key={tab?.name}
+                    value={tab?.name}
+                    className="data-[state=active]:bg-primary-foreground gap-1 px-0 w-full"
+                  >
+                    {tab?.icon} {tab?.name}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
 
-          {activeTab === "Content" && (
-            <ContentTab
+            {activeTab === "Content" && (
+              <ContentTab
+                slides={slides}
+                setSlides={setSlides}
+                selectedSlide={selectedSlide}
+                //
+                customizations={customizations}
+                setCustomizations={setCustomizations}
+              />
+            )}
+
+            {activeTab === "Settings" && (
+              <SettingsTab
+                createdBy={createdBy}
+                setCreatedBy={setCreatedBy}
+                commentary={commentary}
+                setCommentary={setCommentary}
+              />
+            )}
+            {activeTab === "Download" && (
+              <DownloadTab
+                slides={slides}
+                customizations={customizations}
+                createdBy={createdBy}
+              />
+            )}
+
+            <BottomSection
+              customizations={customizations}
               slides={slides}
               setSlides={setSlides}
               selectedSlide={selectedSlide}
-              //
-              customizations={customizations}
-              setCustomizations={setCustomizations}
+              setSelectedSlide={setSelectedSlide}
             />
-          )}
 
-          {activeTab === "Settings" && (
-            <SettingsTab
-              createdBy={createdBy}
-              setCreatedBy={setCreatedBy}
-              commentary={commentary}
-              setCommentary={setCommentary}
-            />
-          )}
-          {activeTab === "Download" && (
-            <DownloadTab
-              slides={slides}
-              customizations={customizations}
-              createdBy={createdBy}
-            />
-          )}
+            <div className="w-full gap-4 flex">
+              <Button variant="secondary" className="w-full text-foreground">
+                Schedule Post
+              </Button>
+              <Button
+                className="w-full "
+                onClick={() => setShowSelectProfileDialog(true)}
+              >
+                Post Now
+              </Button>
+            </div>
+          </div>
 
-          <BottomSection
-            customizations={customizations}
+          {/* Right Sidebar */}
+
+          <PreviewSection
+            {...slides[selectedSlide]}
+            // className="col-span-4 items-center justify-center place-content-center pac"
+            pageIndex={selectedSlide}
+            createdBy={createdBy}
+            commentary={commentary}
             slides={slides}
-            setSlides={setSlides}
+            customizations={customizations}
             selectedSlide={selectedSlide}
             setSelectedSlide={setSelectedSlide}
           />
+          {/* </div> */}
 
-          <div className="w-full gap-4 flex">
-            <Button variant="secondary" className="w-full text-foreground">
-              Schedule Post
-            </Button>
-            <Button className="w-full ">Post Now</Button>
-          </div>
-        </div>
-
-        {/* Right Sidebar */}
-
-        <PreviewSection
-          {...slides[selectedSlide]}
-          // className="col-span-4 items-center justify-center place-content-center pac"
-          pageIndex={selectedSlide}
-          createdBy={createdBy}
-          commentary={commentary}
-          slides={slides}
-          customizations={customizations}
-          selectedSlide={selectedSlide}
-          setSelectedSlide={setSelectedSlide}
-        />
-        {/* </div> */}
-
-        {/* Bottom Carousel Thumbnails */}
-        {/* </div>
+          {/* Bottom Carousel Thumbnails */}
+          {/* </div>
         </div> */}
-      </WrapperContent>
-    </Wrapper>
+        </WrapperContent>
+      </Wrapper>
+
+      <SelectProfileDialog
+        open={showSelectProfileDialog}
+        setOpen={setShowSelectProfileDialog}
+        onSubmit={handlePost}
+      />
+    </>
   );
 }

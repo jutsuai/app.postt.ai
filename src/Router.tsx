@@ -46,7 +46,10 @@ const RootRouter = () => {
     <Routes>
       {/* Carousel */}
       <Route path="restricted">
-        <Route path="linkedin/carousel" element={<LinkedinCarouselPage />} />
+        <Route
+          path="linkedin/carousel/:carouselId/slide/:slideId"
+          element={<LinkedinCarouselPage />}
+        />
       </Route>
 
       <Route path="/" element={<AuthLayout />}>

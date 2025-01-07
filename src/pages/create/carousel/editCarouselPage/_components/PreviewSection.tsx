@@ -12,6 +12,10 @@ import { LiaShareSolid } from "react-icons/lia";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 export default function PreviewSection({
+  hideHeader,
+  hideFooter,
+  hideArrows,
+
   pageType,
   slides,
   createdBy,
@@ -27,33 +31,39 @@ export default function PreviewSection({
   commentary,
   customizations,
 }: {
+  hideHeader?: boolean;
+  hideFooter?: boolean;
+  hideArrows?: boolean;
+
   className?: string;
 
-  pageType: any;
+  pageType?: any;
 
-  slides: any;
+  slides?: any;
 
-  createdBy: any;
+  createdBy?: any;
 
-  pageIndex: any;
-  title: string;
-  description: string;
-  image: string;
-  selectedSlide: any;
-  setSelectedSlide: any;
+  pageIndex?: any;
+  title?: string;
+  description?: string;
+  image?: string;
+  selectedSlide?: any;
+  setSelectedSlide?: any;
 
-  commentary: any;
-  customizations: any;
+  commentary?: any;
+  customizations?: any;
 }) {
+  console.log(customizations);
   return (
     <div className="w-full h-full flex justify-center items-center mx-auto  bg-[#f3f4f6] rounded-lg flex-1">
       <div
         className="mx-auto bg-background border   rounded-xl relative flex flex-col w-min gap-2 select-none"
         style={{
-          width: customizations?.width,
+          width: customizations?.size?.width,
+          // height: customizations?.size?.height,
         }}
       >
-        <HeaderSection createdBy={createdBy} />
+        {!hideHeader && <HeaderSection createdBy={createdBy} />}
 
         <p
           className={cn(
@@ -67,45 +77,47 @@ export default function PreviewSection({
 
         {slides && (
           <>
-            <div className="absolute top-[50%] z-20 right-0 left-0 flex justify-between px-4">
-              <Button
-                size="icon"
-                className={cn(
-                  "rounded-full bg-foreground/60 hover:bg-foreground hover:text-background",
-                  selectedSlide === 0 && "opacity-0 pointer-events-none"
-                )}
-                onClick={() =>
-                  setSelectedSlide((prev: any) => {
-                    if (prev === 0) {
-                      return prev;
-                    } else {
-                      return prev - 1;
-                    }
-                  })
-                }
-              >
-                <MdKeyboardArrowLeft />
-              </Button>
-              <Button
-                className={cn(
-                  "rounded-full  bg-foreground/60 hover:bg-foreground hover:text-background",
-                  selectedSlide === slides?.length - 1 &&
-                    "opacity-0 pointer-events-none"
-                )}
-                size="icon"
-                onClick={() => {
-                  setSelectedSlide((prev: any) => {
-                    if (prev === slides.length - 1) {
-                      return prev;
-                    } else {
-                      return prev + 1;
-                    }
-                  });
-                }}
-              >
-                <MdKeyboardArrowRight />
-              </Button>
-            </div>
+            {!hideArrows && (
+              <div className="absolute top-[50%] z-20 right-0 left-0 flex justify-between px-4">
+                <Button
+                  size="icon"
+                  className={cn(
+                    "rounded-full bg-foreground/60 hover:bg-foreground hover:text-background",
+                    selectedSlide === 0 && "opacity-0 pointer-events-none"
+                  )}
+                  onClick={() =>
+                    setSelectedSlide((prev: any) => {
+                      if (prev === 0) {
+                        return prev;
+                      } else {
+                        return prev - 1;
+                      }
+                    })
+                  }
+                >
+                  <MdKeyboardArrowLeft />
+                </Button>
+                <Button
+                  className={cn(
+                    "rounded-full  bg-foreground/60 hover:bg-foreground hover:text-background",
+                    selectedSlide === slides?.length - 1 &&
+                      "opacity-0 pointer-events-none"
+                  )}
+                  size="icon"
+                  onClick={() => {
+                    setSelectedSlide((prev: any) => {
+                      if (prev === slides.length - 1) {
+                        return prev;
+                      } else {
+                        return prev + 1;
+                      }
+                    });
+                  }}
+                >
+                  <MdKeyboardArrowRight />
+                </Button>
+              </div>
+            )}
 
             {pageType == "start" ? (
               <StartPage
@@ -135,7 +147,7 @@ export default function PreviewSection({
           </>
         )}
 
-        <FooterSection createdBy={createdBy} />
+        {!hideFooter && <FooterSection createdBy={createdBy} />}
       </div>
     </div>
   );
@@ -158,15 +170,18 @@ const StartPage = ({
     <div
       className=" flex overflow-hidden bg-background justify-center flex-col p-6 w-fit relative"
       style={{
-        aspectRatio: customizations?.width / customizations?.height,
-        minHeight: customizations?.height,
-        maxHeight: customizations?.height,
+        aspectRatio: customizations?.size?.width / customizations?.size?.height,
+        minHeight: customizations?.size?.height,
+        maxHeight: customizations?.size?.height,
       }}
     >
       <img
         src={image || "/carousel/bg-light.webp"}
         className="absolute z-0 inset-0 w-full h-full pointer-events-none object-cover"
-        style={{ aspectRatio: customizations?.height / customizations?.width }}
+        style={{
+          aspectRatio:
+            customizations?.size?.height / customizations?.size?.width,
+        }}
       />
 
       <div
@@ -228,8 +243,12 @@ const StartPage = ({
           />
 
           <div>
-            <div className="text-sm font-bold">{createdBy?.name}</div>
-            <div className="text-xs">@{createdBy?.username}</div>
+            <div className="text-sm font-bold">{`${createdBy.firstName} ${createdBy.lastName}`}</div>
+            <div className="text-xs">
+              {createdBy?.username
+                ? `@${createdBy?.username}`
+                : createdBy?.email}
+            </div>
           </div>
         </div>
       )}
@@ -250,15 +269,18 @@ const EndPage = ({
     <div
       className="h-full w-fit flex overflow-hidden bg-background justify-center items-center p-6 relative"
       style={{
-        aspectRatio: customizations?.width / customizations?.height,
-        minHeight: customizations?.height,
-        maxHeight: customizations?.height,
+        aspectRatio: customizations?.size?.width / customizations?.size?.height,
+        minHeight: customizations?.size?.height,
+        maxHeight: customizations?.size?.height,
       }}
     >
       <img
         src={image || "/carousel/bg-light.webp"}
         className="absolute z-0 inset-0 w-full h-full pointer-events-none object-cover"
-        style={{ aspectRatio: customizations?.height / customizations?.width }}
+        style={{
+          aspectRatio:
+            customizations?.size?.height / customizations?.size?.width,
+        }}
       />
 
       <p
@@ -307,7 +329,7 @@ const EndPage = ({
                 : "end",
           }}
         >
-          {createdBy?.name}
+          {`${createdBy.firstName} ${createdBy.lastName}`}
         </div>
       </div>
     </div>
@@ -335,15 +357,18 @@ const SlidePage = ({
     <div
       className="h-full w-fit flex overflow-hidden bg-background justify-center flex-col  p-6  relative"
       style={{
-        aspectRatio: customizations?.width / customizations?.height,
-        minHeight: customizations?.height,
-        maxHeight: customizations?.height,
+        aspectRatio: customizations?.size?.width / customizations?.size?.height,
+        minHeight: customizations?.size?.height,
+        maxHeight: customizations?.size?.height,
       }}
     >
       <img
         src={image || "/carousel/bg-light.webp"}
         className="absolute z-0 inset-0 w-full h-full pointer-events-none object-cover"
-        style={{ aspectRatio: customizations?.height / customizations?.width }}
+        style={{
+          aspectRatio:
+            customizations?.size?.height / customizations?.size?.width,
+        }}
       />
 
       <div
@@ -401,8 +426,13 @@ const SlidePage = ({
             />
 
             <div className="">
-              <div className="text-sm font-bold">{createdBy?.name}</div>
-              <div className="text-xs">@{createdBy?.username}</div>
+              <div className="text-sm font-bold">{`${createdBy?.firstName} ${createdBy?.lastName}`}</div>
+              <div className="text-xs">
+                {" "}
+                {createdBy?.username
+                  ? `@${createdBy?.username}`
+                  : createdBy?.email}
+              </div>
             </div>
           </div>
 
@@ -423,7 +453,6 @@ const SlidePage = ({
 };
 
 // Sections
-
 const HeaderSection = ({ createdBy }: { createdBy: any }) => {
   return (
     <div className="flex items-start px-4 pt-4 justify-between gap-3">
@@ -500,5 +529,4 @@ const FooterSection = ({ createdBy }: { createdBy: any }) => {
     </div>
   );
 };
-
 // End of Sections

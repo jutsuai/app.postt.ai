@@ -12,6 +12,7 @@ export default function BoringAvatar(props: any) {
     <Avatar
       colors={["#1bd9fe", "#574ce3", "#ffffff", "#020817", "#C20D90"]}
       variant="beam"
+      size={rest.size}
       {...rest}
       className={className}
     />
