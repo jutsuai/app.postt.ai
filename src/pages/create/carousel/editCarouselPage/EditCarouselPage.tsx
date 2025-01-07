@@ -176,8 +176,6 @@ export default function EditCarouselPage() {
 
             {activeTab === "Settings" && (
               <SettingsTab
-                createdBy={createdBy}
-                setCreatedBy={setCreatedBy}
                 commentary={commentary}
                 setCommentary={setCommentary}
               />

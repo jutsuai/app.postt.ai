@@ -463,7 +463,10 @@ const HeaderSection = ({ createdBy }: { createdBy: any }) => {
       />
       <div className="flex mr-auto flex-col leading-tight">
         <div className="flex w-full gap-2 items-center">
-          <span className="font-semibold text-sm"> {createdBy?.name}</span>
+          <span className="font-semibold text-sm">
+            {" "}
+            {`${createdBy.firstName} ${createdBy.lastName}`}
+          </span>
           <span className="text-xs text-muted-foreground">●</span>
           <span className="text-muted-foreground text-sm">3rd+</span>
         </div>
