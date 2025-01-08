@@ -20,13 +20,6 @@ export default function CreateTextPage() {
   // const [data, setData] = useState({
   const [commentary, setCommentary] = useState("This is a commentary");
 
-  const [createdBy, setCreatedBy] = useState({
-    name: `${user?.firstName} ${user?.lastName}`,
-    username: user?.username || user?.email,
-    avatar:
-      user?.avatar || "https://avatars.githubusercontent.com/u/8743993?v=4",
-  });
-
   const [customizations, setCustomizations] = useState({
     backgroundColor: "#ffffff",
     fontColor: "#000000",
@@ -49,9 +42,10 @@ export default function CreateTextPage() {
       vertical: "center", // top | center | bottom
     },
 
-    // aspectRatio: "4/5",
-    height: 535,
-    width: 415,
+    size: {
+      height: 535,
+      width: 415,
+    },
   });
 
   const [showSelectProfileDialog, setShowSelectProfileDialog] = useState(false);
@@ -116,21 +110,10 @@ export default function CreateTextPage() {
           {/* Right Sidebar */}
 
           <PreviewSection
-            // {...slides[selectedSlide]}
-            // className="col-span-4 items-center justify-center place-content-center pac"
-            // pageIndex={selectedSlide}
-            createdBy={createdBy}
+            createdBy={user}
             commentary={commentary}
-            // slides={slides}
             customizations={customizations}
-            // selectedSlide={selectedSlide}
-            // setSelectedSlide={setSelectedSlide}
           />
-          {/* </div> */}
-
-          {/* Bottom Carousel Thumbnails */}
-          {/* </div>
-        </div> */}
         </WrapperContent>
       </Wrapper>
 
