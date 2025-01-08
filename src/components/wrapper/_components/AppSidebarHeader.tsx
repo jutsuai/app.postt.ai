@@ -86,7 +86,7 @@ export default function AppSidebarHeader() {
           <SidebarMenuItem
             onClick={() => setOpenMenuDialog(true)}
             className={cn(
-              "bg-primary hover:bg-primary/90 duration-0 active:bg-primary rounded-xl",
+              "bg-primary hover:bg-primary/90 duration-0 active:bg-primary rounded-3xl",
               sidebarMode ? "py-1.5  px-4" : "px-2 py-[7px]"
             )}
           >
