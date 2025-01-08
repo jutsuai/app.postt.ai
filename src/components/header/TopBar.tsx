@@ -3,8 +3,11 @@ import { GoBell } from "react-icons/go";
 import { Button } from "../ui/button";
 import HeaderSearch from "./HeaderSearch";
 import useBreakpoint from "@/lib/useBreakpoint";
+import { useAuth } from "@/context/AuthContext"
+
 
 export default function TopBar() {
+  const { user } = useAuth();
   const { sm } = useBreakpoint();
   return (
     <div className="flex h-full items-center -m-4 sm:-my-4 -my-8 px-4 sm:px-8 py-8 gap-4 justify-between sm:bg-background">
@@ -15,7 +18,7 @@ export default function TopBar() {
         </Avatar>
       ) : (
         <h2 className=" text-muted-foreground">
-          Let's start creating Johnathan
+          Let's start creating {user.firstName} 
         </h2>
       )}
       {!sm && (
