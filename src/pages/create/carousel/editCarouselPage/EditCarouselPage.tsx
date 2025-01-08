@@ -161,7 +161,7 @@ export default function EditCarouselPage() {
               />
             )}
 
-            {activeTab === "Settings" && (
+            {activeTab === "Customization" && (
               <SettingsTab
                 commentary={commentary}
                 setCommentary={setCommentary}
