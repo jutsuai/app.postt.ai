@@ -18,11 +18,11 @@ export default function BrandDetails() {
 
   const [loading, setLoading] = useState(false);
   const handleSubmit = () => {
-    if (!primaryColor || !accentColor) {
-      toast.warning("Please select primary and accent colors");
+    // if (!primaryColor || !accentColor) {
+    //   toast.warning("Please select primary and accent colors");
 
-      return;
-    }
+    //   return;
+    // }
     // setImages(imageList);
     setLoading(true);
 

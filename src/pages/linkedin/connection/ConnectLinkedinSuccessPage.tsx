@@ -5,7 +5,7 @@ import WrapperContent from "@/components/wrapper/WrapperContent";
 import httpClient from "@/lib/httpClient";
 import { useEffect, useState } from "react";
 import { RiExternalLinkLine } from "react-icons/ri";
-import { VscDebugRestart } from "react-icons/vsc";
+import { VscDebugRestart, VscLoading } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -55,7 +55,7 @@ import { toast } from "sonner";
 // },
 export default function ConnectLinkedinSuccessPage() {
   const [loading, setLoading] = useState(false);
-  const [organizationList, setOrganizationList] = useState([]);
+  const [organizationList, setOrganizationList] = useState<any>([]);
 
   useEffect(() => {
     handleGetOrganizationListFromDB();
@@ -69,6 +69,12 @@ export default function ConnectLinkedinSuccessPage() {
       .then((res) => {
         console.log(res.data);
         setOrganizationList(res.data.data);
+
+        if (res.data.data.length === 0) {
+          handleGetOrganizationListFromLinkedin();
+
+          getUserDetails();
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -98,7 +104,6 @@ export default function ConnectLinkedinSuccessPage() {
       });
   };
 
-  const [userDetails, setUserDetails] = useState();
   const getUserDetails = () => {
     setLoading(true);
 
@@ -106,7 +111,8 @@ export default function ConnectLinkedinSuccessPage() {
       .get(`/linkedin/management/user`)
       .then((res) => {
         console.log(res.data);
-        setUserDetails(res.data.data);
+        // setUserDetails(res.data.data);
+        setOrganizationList((curArray: any) => [...curArray, res.data.data]);
       })
       .catch((err) => {
         console.error(err);
@@ -156,7 +162,7 @@ export default function ConnectLinkedinSuccessPage() {
           </div>
 
           <div className="flex flex-col gap-2">
-            {organizationList.map((org: any, index: any) => (
+            {organizationList?.map((org: any, index: any) => (
               <div
                 key={index}
                 className="flex gap-3 bg-primary/10 p-4 rounded-full items-center max-w-[400px]"
@@ -183,7 +189,9 @@ export default function ConnectLinkedinSuccessPage() {
           </div>
 
           <Link className="w-full" to="/settings">
-            <Button className="w-full rounded-full mt-4">Let's Go!</Button>
+            <Button className="w-full rounded-full mt-4">
+              {loading ? <VscLoading className="animate-spin" /> : "Let's Go!"}
+            </Button>
           </Link>
           {/* <Link to="/" className="w-full">
         <Button className="w-full rounded-full mt-4">Let's Go!</Button>
