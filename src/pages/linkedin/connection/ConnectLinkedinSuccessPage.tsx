@@ -124,76 +124,72 @@ export default function ConnectLinkedinSuccessPage() {
   };
 
   return (
-    <Wrapper>
-      <WrapperContent className="gap-8 flex-1 bg-[#f3f4f6] p-[26px]">
-        <div className="container mx-auto my-10 flex w-full justify-center flex-col items-center gap-4">
-          <h3 className="text-lg font-semibold text-center ">
-            LinkedIn Connected
-          </h3>
+    <div className="container mx-auto my-10 flex w-full justify-center flex-col items-center gap-4">
+      <h3 className="text-lg font-semibold text-center ">LinkedIn Connected</h3>
 
-          <p className="text-muted-foreground text-sm -mt-2 text-center">
-            Your LinkedIn profile has been successfully connected
-          </p>
+      <p className="text-muted-foreground text-sm -mt-2 text-center">
+        Your LinkedIn profile has been successfully connected
+      </p>
 
-          <div className="flex items-center justify-center  relative">
-            <img
-              src="/onboarding/social-linkedin.svg"
-              alt=""
-              className="size-[140px]"
-            />
-            <Button
-              variant="ghost"
-              className=" rounded-full absolute  left-36"
-              onClick={() => {
-                handleGetOrganizationListFromLinkedin();
-              }}
+      <div className="flex items-center justify-center  relative">
+        <img
+          src="/onboarding/social-linkedin.svg"
+          alt=""
+          className="size-[140px]"
+        />
+        <Button
+          variant="ghost"
+          className=" rounded-full absolute  left-36"
+          onClick={() => {
+            handleGetOrganizationListFromLinkedin();
+          }}
+        >
+          <VscDebugRestart />
+        </Button>
+        <Button
+          variant="ghost"
+          className=" rounded-full text-red-600 absolute  right-36"
+          onClick={() => {
+            getUserDetails();
+          }}
+        >
+          <VscDebugRestart />
+        </Button>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        {organizationList?.map((org: any, index: any) => (
+          <div
+            key={index}
+            className="flex gap-3 bg-primary/10 p-4 rounded-full items-center max-w-[400px]"
+          >
+            <BoringAvatar name={org.name} size={48} className="min-w-12" />
+
+            <div className="flex flex-col">
+              <h3 className="text-sm font-semibold">{org.name}</h3>
+              <p className="text-muted-foreground text-xs  line-clamp-2">
+                {org.description}
+              </p>
+            </div>
+
+            <a
+              href={org.linkedinUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-500 underline"
             >
-              <VscDebugRestart />
-            </Button>
-            <Button
-              variant="ghost"
-              className=" rounded-full text-red-600 absolute  right-36"
-              onClick={() => {
-                getUserDetails();
-              }}
-            >
-              <VscDebugRestart />
-            </Button>
+              <RiExternalLinkLine />
+            </a>
           </div>
+        ))}
+      </div>
 
-          <div className="flex flex-col gap-2">
-            {organizationList?.map((org: any, index: any) => (
-              <div
-                key={index}
-                className="flex gap-3 bg-primary/10 p-4 rounded-full items-center max-w-[400px]"
-              >
-                <BoringAvatar name={org.name} size={48} className="min-w-12" />
-
-                <div className="flex flex-col">
-                  <h3 className="text-sm font-semibold">{org.name}</h3>
-                  <p className="text-muted-foreground text-xs  line-clamp-2">
-                    {org.description}
-                  </p>
-                </div>
-
-                <a
-                  href={org.linkedinUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-blue-500 underline"
-                >
-                  <RiExternalLinkLine />
-                </a>
-              </div>
-            ))}
-          </div>
-
-          <Link className="w-full" to="/settings">
-            <Button className="w-full rounded-full mt-4">
-              {loading ? <VscLoading className="animate-spin" /> : "Let's Go!"}
-            </Button>
-          </Link>
-          {/* <Link to="/" className="w-full">
+      <Link className="w-full" to="/settings">
+        <Button className="w-full rounded-full mt-4">
+          {loading ? <VscLoading className="animate-spin" /> : "Let's Go!"}
+        </Button>
+      </Link>
+      {/* <Link to="/" className="w-full">
         <Button className="w-full rounded-full mt-4">Let's Go!</Button>
       </Link>
       <Button
@@ -202,8 +198,6 @@ export default function ConnectLinkedinSuccessPage() {
       >
         User Details
       </Button> */}
-        </div>
-      </WrapperContent>
-    </Wrapper>
+    </div>
   );
 }

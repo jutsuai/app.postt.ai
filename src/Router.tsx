@@ -25,6 +25,7 @@ import ConnectLinkedinCallbackPage from "./pages/linkedin/connection/ConnectLink
 import ConnectLinkedinSuccessPage from "./pages/linkedin/connection/ConnectLinkedinSuccessPage";
 import CreateTextPage from "./pages/create/text/CreateTextPage";
 import SettingsPage from "./pages/settings/SettingsPage";
+import OnboardingLayout from "./layout/OnboardingLayout";
 
 export default function Router() {
   const { isAuthenticated } = useAuth();
@@ -75,11 +76,11 @@ const AppRouter = () => {
         {/* <Route path="auth/linkedin" element={<LinkedinCallbackPage />} /> */}
 
         <Route path="onboarding">
-          <Route element={<AuthLayout />}>
+          <Route element={<OnboardingLayout />}>
             <Route index element={<OnboardingPage />} />
-          </Route>
 
-          <Route path="success" element={<OnboardSuccess />} />
+            <Route path="success" element={<OnboardSuccess />} />
+          </Route>
         </Route>
 
         {/* Carousel */}
@@ -90,7 +91,7 @@ const AppRouter = () => {
         <Route path="linkedin">
           <Route index element={<LinkedinPage />} />
 
-          <Route path="connect">
+          <Route path="connect" element={<OnboardingLayout />}>
             <Route index element={<ConnectLinkedinPage />} />
             <Route path="callback" element={<ConnectLinkedinCallbackPage />} />
             <Route path="success" element={<ConnectLinkedinSuccessPage />} />

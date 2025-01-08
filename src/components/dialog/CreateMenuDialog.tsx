@@ -46,6 +46,7 @@ export default function CreateMenuDialog({
               name={menu.name}
               url={menu.url}
               icon={menu.icon}
+              setOpen={setOpen}
             />
           ))}
         </div>
@@ -58,13 +59,15 @@ function MenuCard({
   name,
   url,
   icon,
+  setOpen,
 }: {
   name: string;
   url: string;
   icon: any;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
-    <Link to={url}>
+    <Link to={url} onClick={() => setOpen(false)}>
       <div
         className="flex hover:shadow-lg group/createCard transition-all duration-200
        flex-col items-center gap-2 w-full border h-full rounded-2xl p-2 "
