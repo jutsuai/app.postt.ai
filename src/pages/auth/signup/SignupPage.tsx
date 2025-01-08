@@ -62,14 +62,9 @@ export default function SignupPage() {
         <IoIosArrowBack /> Back
       </Button>
       {onboarding === "accounttype" ? (
-        <AccountType setValue={setValue} />
+        <AccountType />
       ) : onboarding === "audience" ? (
-        <ChooseAudience
-          handleSubmit={handleSubmit}
-          register={register}
-          watch={watch}
-          errors={errors}
-        />
+        <ChooseAudience />
       ) : onboarding === "connect" ? (
         <ConnectSocial />
       ) : null}
@@ -105,14 +100,9 @@ export default function SignupPage() {
             <DrawerTitle hidden />
           </DrawerHeader>
           {onboarding === "accounttype" ? (
-            <AccountType setValue={setValue} />
+            <AccountType />
           ) : onboarding === "audience" ? (
-            <ChooseAudience
-              handleSubmit={handleSubmit}
-              register={register}
-              watch={watch}
-              errors={errors}
-            />
+            <ChooseAudience />
           ) : onboarding === "connect" ? (
             <ConnectSocial />
           ) : null}

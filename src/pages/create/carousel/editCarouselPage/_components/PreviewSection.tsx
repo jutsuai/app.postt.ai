@@ -171,11 +171,11 @@ const StartPage = ({
   customizations,
   pageType,
 }: {
-  title: string;
-  image: string;
+  title: any;
+  image: any;
   createdBy: any;
   customizations: any;
-  pageType: string;
+  pageType: any;
 }) => {
   return (
     <div
@@ -272,7 +272,7 @@ const EndPage = ({
   createdBy,
   customizations,
 }: {
-  image: string;
+  image: any;
   createdBy: any;
   customizations: any;
 }) => {
@@ -356,13 +356,13 @@ const SlidePage = ({
   customizations,
   pageType,
 }: {
-  pageIndex: number;
-  title: string;
-  description: string;
-  image: string;
+  pageIndex: any;
+  title: any;
+  description: any;
+  image?: any;
   createdBy: any;
   customizations: any;
-  pageType: string;
+  pageType: any;
 }) => {
   return (
     <div

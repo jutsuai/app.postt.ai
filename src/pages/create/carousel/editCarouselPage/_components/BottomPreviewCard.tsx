@@ -75,7 +75,7 @@ export default function BottomPreviewCard({
         disabled={slide?.pageType === "start" || slide?.pageType === "end"}
         onClick={() => {
           setSlides((prev: any) => {
-            return prev.filter((_, index: any) => index !== pageIndex);
+            return prev.filter((_: any, index: any) => index !== pageIndex);
           });
 
           if (selectedSlide > 1 && selectedSlide >= pageIndex - 1) {

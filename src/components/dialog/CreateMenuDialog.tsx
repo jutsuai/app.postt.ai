@@ -61,7 +61,7 @@ function MenuCard({
 }: {
   name: string;
   url: string;
-  icon: React.ReactNode;
+  icon: any;
 }) {
   return (
     <Link to={url}>
