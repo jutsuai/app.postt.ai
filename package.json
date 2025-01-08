@@ -7,7 +7,10 @@
     "dev": "vite --port 3000 --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview --host"
+    "preview": "vite preview --host",
+    "deploy": "git status --porcelain && git rev-parse --verify main && git rev-parse --verify staging && git checkout main && git pull origin main && git checkout staging && git merge main && git push origin staging && git checkout main",
+    "deploy:prod": "git status --porcelain && git rev-parse --verify main && git rev-parse --verify production && git checkout main && git pull origin main && git checkout production && git merge main && git push origin production && git checkout main",
+    "fix:notepad": "git config --global core.editor \"notepad\""
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.2",
