@@ -10,6 +10,7 @@ import { SlLike } from "react-icons/sl";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { LiaShareSolid } from "react-icons/lia";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { useState } from "react";
 
 export default function PreviewSection({
   hideHeader,
@@ -53,7 +54,9 @@ export default function PreviewSection({
   commentary?: any;
   customizations?: any;
 }) {
-  console.log(customizations);
+  // console.log(customizations);
+
+  const [onHover, setOnHover] = useState(false);
   return (
     <div className="w-full h-full flex justify-center items-center mx-auto  bg-[#f3f4f6] rounded-lg flex-1">
       <div
@@ -62,6 +65,8 @@ export default function PreviewSection({
           width: customizations?.size?.width,
           // height: customizations?.size?.height,
         }}
+        onMouseEnter={() => setOnHover(true)}
+        onMouseLeave={() => setOnHover(false)}
       >
         {!hideHeader && <HeaderSection createdBy={createdBy} />}
 
@@ -78,7 +83,13 @@ export default function PreviewSection({
         {slides && (
           <>
             {!hideArrows && (
-              <div className="absolute top-[50%] z-20 right-0 left-0 flex justify-between px-4">
+              <div
+                className={cn(
+                  "absolute top-[50%] z-20 right-0 left-0 transition flex justify-between px-4",
+
+                  onHover ? "opacity-100" : "opacity-0"
+                )}
+              >
                 <Button
                   size="icon"
                   className={cn(

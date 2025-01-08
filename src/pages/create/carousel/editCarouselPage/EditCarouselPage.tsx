@@ -97,7 +97,7 @@ export default function EditCarouselPage() {
   const [activeTab, setActiveTab] = useState("Content");
   const [tabs, setTabs] = useState([
     { name: "Content", icon: "📝" },
-    { name: "Settings", icon: "⚙️" },
+    { name: "Customization", icon: "⚙️" },
     { name: "Download", icon: "📥" },
   ]);
 
@@ -131,13 +131,6 @@ export default function EditCarouselPage() {
     <>
       <Wrapper>
         <WrapperContent className="py-8 grid gap-8 grid-cols-2 h-full">
-          {/* <div className=" relative w-full bg-orange-200 h-full  rounded-t-2xl"> */}
-          {/* Main Content Area */}
-
-          {/* <div className="flex flex-1  bg-indigo-600"> */}
-          {/* <div className="flex flex-1 bg-red-200"> */}
-          {/*  */}
-
           <div className="flex flex-col  gap-4 h-full w-full">
             <Tabs
               value={activeTab}

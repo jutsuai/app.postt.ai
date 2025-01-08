@@ -39,46 +39,48 @@ export default function ContentTab({
 
       {/* Title Section */}
 
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-medium">Title</span>
-          <Switch
-            checked={customizations?.title?.visible}
-            onCheckedChange={
-              customizations?.title?.visible
-                ? () =>
-                    setCustomizations({
-                      ...customizations,
-                      title: { ...customizations.title, visible: false },
-                    })
-                : () =>
-                    setCustomizations({
-                      ...customizations,
-                      title: { ...customizations.title, visible: true },
-                    })
-            }
+      {slides[selectedSlide]?.pageType !== "end" && (
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-medium">Title</span>
+            <Switch
+              checked={customizations?.title?.visible}
+              onCheckedChange={
+                customizations?.title?.visible
+                  ? () =>
+                      setCustomizations({
+                        ...customizations,
+                        title: { ...customizations.title, visible: false },
+                      })
+                  : () =>
+                      setCustomizations({
+                        ...customizations,
+                        title: { ...customizations.title, visible: true },
+                      })
+              }
+            />
+          </div>
+
+          <Input
+            disabled={!customizations?.title?.visible}
+            type="text"
+            value={slides[selectedSlide].title}
+            onChange={(e) => {
+              const newSlides = [...slides];
+              newSlides[selectedSlide] = {
+                ...newSlides[selectedSlide],
+                title: e.target.value,
+              };
+              setSlides(newSlides);
+            }}
+            className="bg-background"
           />
         </div>
-
-        <Input
-          disabled={!customizations?.title?.visible}
-          type="text"
-          value={slides[selectedSlide].title}
-          onChange={(e) => {
-            const newSlides = [...slides];
-            newSlides[selectedSlide] = {
-              ...newSlides[selectedSlide],
-              title: e.target.value,
-            };
-            setSlides(newSlides);
-          }}
-          className="bg-background"
-        />
-      </div>
+      )}
 
       {/* Description Section */}
 
-      {slides[selectedSlide]?.pageType !== "start" && (
+      {slides[selectedSlide]?.pageType === "slide" && (
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium">Description</span>

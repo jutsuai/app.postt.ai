@@ -78,7 +78,7 @@ export default function BottomPreviewCard({
             return prev.filter((_, index: any) => index !== pageIndex);
           });
 
-          if (selectedSlide >= pageIndex - 1) {
+          if (selectedSlide > 1 && selectedSlide >= pageIndex - 1) {
             setSelectedSlide((prev: any) => prev - 1);
           }
 
