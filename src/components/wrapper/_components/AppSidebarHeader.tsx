@@ -86,16 +86,16 @@ export default function AppSidebarHeader() {
           <SidebarMenuItem
             onClick={() => setOpenMenuDialog(true)}
             className={cn(
-              "bg-primary hover:bg-primary/90 duration-0 active:bg-primary rounded-full",
+              "bg-primary hover:bg-primary/90 duration-0 active:bg-primary rounded-xl",
               sidebarMode ? "py-1.5  px-4" : "px-2 py-[7px]"
             )}
           >
-            <SidebarMenuButton className="hover:!bg-transparent h-full active:!text-background text-background hover:!text-background">
+            <SidebarMenuButton className="hover:!bg-transparent h-full active:!text-background text-background hover:!text-background flex items-center justify-center text-sm">
               <TbClick />
               <span>Create new</span>
-            </SidebarMenuButton>
+            </SidebarMenuButton>          
           </SidebarMenuItem>
-        </SidebarMenu>
+          <div className="h-[1px] w-full bg-[#dedbde] mt-2"></div>                  </SidebarMenu>
         <Button
           onClick={toggleSidebar}
           size="icon"
