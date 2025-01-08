@@ -1,9 +1,7 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ContentTab from "./_components/ContentTab";
 import SettingsTab from "./_components/SettingsTab";
-
 import PreviewSection from "./_components/PreviewSection";
-
 import Wrapper from "@/components/wrapper/Wrapper";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import BottomSection from "./_components/BottomSection";
@@ -102,10 +100,6 @@ export default function EditCarouselPage() {
     { name: "Settings", icon: "⚙️" },
     { name: "Download", icon: "📥" },
   ]);
-
-  const [topic, setTopic] = useState(
-    "How to create a carousel post on LinkedIn"
-  );
 
   const [showSelectProfileDialog, setShowSelectProfileDialog] = useState(false);
 

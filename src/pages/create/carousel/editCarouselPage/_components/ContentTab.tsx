@@ -30,6 +30,9 @@ export default function ContentTab({
   customizations: any;
   setCustomizations: any;
 }) {
+  console.log("slides", slides);
+  console.log("selectedSlide", selectedSlide);
+
   return (
     <div className="space-y-6 bg-muted shadow-md p-4 border rounded-lg h-full">
       <h3 className="text-base font-semibold">Content Edit</h3>

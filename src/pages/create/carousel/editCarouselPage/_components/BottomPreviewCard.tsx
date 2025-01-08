@@ -77,6 +77,19 @@ export default function BottomPreviewCard({
           setSlides((prev: any) => {
             return prev.filter((_, index: any) => index !== pageIndex);
           });
+
+          if (selectedSlide >= pageIndex - 1) {
+            setSelectedSlide((prev: any) => prev - 1);
+          }
+
+          // setSelectedSlide(0);
+          // setSelectedSlide((curIndex: any) => {
+          //   if (totalSlides.length - 1 === curIndex) {
+          //     return curIndex - 2;
+          //   }
+
+          //   return curIndex;
+          // });
         }}
         className="absolute top-2 right-2 text-muted-foreground hover:text-red-600 p-1 bg-background rounded-md h-6 w-6 flex items-center justify-center"
       >

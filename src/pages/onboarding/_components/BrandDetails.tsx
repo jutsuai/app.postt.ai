@@ -163,7 +163,7 @@ function BrandColor({
   className,
 }: {
   title: string;
-  color: string;
+  color: any;
   setColor: any;
   className?: string;
 }) {
