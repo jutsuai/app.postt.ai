@@ -16,6 +16,7 @@ import CustomInput from "@/components/custom/CustomInput";
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/context/AuthContext";
 import { FaLinkedin } from "react-icons/fa";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 type FormValue = {
   email: string;
@@ -47,8 +48,8 @@ export default function LoginPage() {
             Connect your account
           </CardTitle>
           <CardDescription>
-          You’re so close to transforming your LinkedIn experience. Let Postt make it effortless while you focus on growing! 
-
+            You’re so close to transforming your LinkedIn experience. Let Postt
+            make it effortless while you focus on growing!
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -87,6 +88,9 @@ export default function LoginPage() {
               />
             </div>
           </form> */}
+
+          <DotLottieReact src="/auth/loginPageAnimation.lottie" loop autoplay />
+
           <Button
             onClick={() => loginWithLinkedin("code")}
             className="w-full text-sm rounded-full hover:bg-[#0a66c2ed] bg-[#0A66C2]"

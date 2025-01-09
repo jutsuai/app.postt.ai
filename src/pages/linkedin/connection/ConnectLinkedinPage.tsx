@@ -15,11 +15,11 @@ export default function ConnectLinkedinPage() {
   const { validateToken, user } = useAuth();
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (user?.tokens?.management?.access_token) {
-      navigate("/linkedin/connect/success");
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user?.tokens?.management?.access_token) {
+  //     navigate("/linkedin/connect/success");
+  //   }
+  // }, [user]);
 
   const handleSubmit = () => {
     setLoading(true);
@@ -49,12 +49,8 @@ export default function ConnectLinkedinPage() {
   }, []);
 
   return (
-    <div className="lg:max-w-md w-full h-full flex flex-col gap-2 px-4 items-start pt-[7dvh]">
-      <Button onClick={() => navigate(-1)} variant="ghost" size="sm">
-        <IoChevronBack />
-        Back
-      </Button>
-      <div className="flex w-full h-full  justify-center flex-col items-center gap-4 pt-10">
+    <div className="lg:max-w-md w-full h-full flex flex-col gap-2 px-4 items-start ">
+      <div className="flex w-full h-full  justify-center flex-col items-center gap-4 ">
         <Image
           src="/onboarding/social-linkedin.svg"
           alt=""

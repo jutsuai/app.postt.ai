@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -6,17 +7,21 @@ export default function MenuCard({
   url,
   icon,
   setOpen,
+  className,
 }: {
   name: string;
   url: string;
   icon: any;
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  className?: string;
 }) {
   return (
     <Link to={url} onClick={() => setOpen && setOpen(false)}>
       <div
-        className="flex hover:shadow-lg group/createCard transition-all duration-200
-       flex-col items-center gap-2 w-full border h-full rounded-2xl p-2 "
+        className={cn(
+          "flex hover:shadow-lg group/createCard transition-all duration-200 flex-col items-center gap-2 w-full border h-full rounded-2xl p-2",
+          className
+        )}
       >
         <div className="flex bg-primary-accent/60 overflow-y-hidden w-full h-full flex-col items-center justify-center gap-4 border  rounded-[8px]">
           <motion.img
