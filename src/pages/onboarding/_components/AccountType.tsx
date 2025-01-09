@@ -2,7 +2,9 @@ import Image from "@/components/Image";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import httpClient from "@/lib/httpClient";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { VscLoading } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
 
 export default function AccountType() {
@@ -10,10 +12,12 @@ export default function AccountType() {
 
   const { user } = useAuth();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<"personal" | "organization" | null>(
+    null
+  );
 
-  const handleSubmit = (type: string, redirect: string) => {
-    setLoading(true);
+  const handleSubmit = (type: any, redirect: string) => {
+    setLoading(type);
 
     httpClient()
       .put(`/users/${user?._id}/profile`, { type })
@@ -25,12 +29,12 @@ export default function AccountType() {
         console.error(err);
       })
       .finally(() => {
-        setLoading(false);
+        setLoading(null);
       });
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full">
+    <div className="flex flex-col items-center gap-4 w-full -mt-[2px]">
       <Image
         src="/onboarding/account-type.svg"
         alt=""
@@ -45,19 +49,33 @@ export default function AccountType() {
         onClick={() => {
           handleSubmit("personal", "?step=audience");
         }}
-        className="w-full mt-4 h-[52px] justify-start active:border-primary hover:border-primary rounded-lg hover:text-foreground hover:bg-primary/20"
+        className={cn(
+          "w-full mt-4 h-[52px] justify-start active:border-primary hover:border-primary rounded-lg hover:text-foreground hover:bg-primary/20",
+          loading !== null && "pointer-events-none",
+          loading === "personal" && "bg-primary/20 border-primary"
+        )}
         variant="outline"
       >
-        Personal {loading && "loading..."}
+        Personal
+        {loading === "personal" && (
+          <VscLoading className="animate-spin ml-auto" />
+        )}
       </Button>
       <Button
         onClick={() => {
           handleSubmit("organization", "?step=audience");
         }}
-        className="w-full h-[52px] justify-start active:border-primary hover:border-primary rounded-lg hover:text-foreground hover:bg-primary/20"
+        className={cn(
+          "w-full h-[52px] justify-start active:border-primary hover:border-primary rounded-lg hover:text-foreground hover:bg-primary/20",
+          loading !== null && "pointer-events-none",
+          loading === "organization" && "bg-primary/20 border-primary"
+        )}
         variant="outline"
       >
-        Organization {loading && "loading..."}
+        Organization
+        {loading === "organization" && (
+          <VscLoading className="animate-spin ml-auto" />
+        )}
       </Button>
     </div>
   );

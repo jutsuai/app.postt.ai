@@ -38,7 +38,7 @@ export default function ChooseAudience() {
   const {
     register,
     handleSubmit,
-    watch,
+
     formState: { errors },
   } = useForm<ChooseAudienceValues>({});
 
@@ -66,7 +66,7 @@ export default function ChooseAudience() {
   };
 
   return (
-    <div className="flex w-full flex-col items-center gap-4 ">
+    <div className="flex w-full flex-col  h-full items-center gap-4 ">
       <Image
         src="/onboarding/choose-audience.svg"
         alt=""
@@ -81,7 +81,7 @@ export default function ChooseAudience() {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full flex flex-col gap-4 mt-3"
+        className="w-full flex flex-col h-full justify-between  gap-4 mt-3"
       >
         {linkedInAudience.map((data, index) => (
           <div
@@ -110,13 +110,28 @@ export default function ChooseAudience() {
           </div>
         ))}
 
-        <Button className="rounded-full mt-2" type="submit" disabled={loading}>
-          {loading ? (
-            <AiOutlineLoading className="animate-spin !size-4" />
-          ) : (
-            "Next"
-          )}
-        </Button>
+        <div className="flex items-center gap-2 mt-auto">
+          <Button
+            className="rounded-full mt-2 w-full hover:text-foreground/80 text-foreground"
+            type="button"
+            onClick={() => navigate("?step=brand")}
+            variant="secondary"
+            disabled={loading}
+          >
+            Skip
+          </Button>
+          <Button
+            className="rounded-full mt-2 w-full"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? (
+              <AiOutlineLoading className="animate-spin !size-4" />
+            ) : (
+              "Next"
+            )}
+          </Button>
+        </div>
       </form>
     </div>
   );

@@ -15,6 +15,7 @@ import Image from "@/components/Image";
 import CustomInput from "@/components/custom/CustomInput";
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/context/AuthContext";
+import { FaLinkedin } from "react-icons/fa";
 
 type FormValue = {
   email: string;
@@ -42,14 +43,13 @@ export default function LoginPage() {
     <div className="h-[calc(100dvh-4rem)] min-h-[500px] w-full sm:max-w-md flex items-center sm:bg-transparent bg-background">
       <Card className=" sm:h-auto w-full border-none shadow-none  rounded-none sm:rounded-3xl">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
+          <CardTitle className="text-2xl text-center">
+            Connect your account
+          </CardTitle>
         </CardHeader>
-        <CardContent className="gap-8 flex flex-col">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            {/* <div className="grid gap-4">
+        <CardContent>
+          {/* <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="grid gap-4">
               <CustomInput
                 {...register("email", {
                   required: "Email is required",
@@ -81,16 +81,16 @@ export default function LoginPage() {
                 label="Password"
                 errors={errors}
               />
-            </div> */}
-            <Button
-              onClick={() => loginWithLinkedin("code")}
-              className="w-full rounded-full  mt-6"
-            >
-              continue with Linkedin
-            </Button>
-          </form>
+            </div>
+          </form> */}
+          <Button
+            onClick={() => loginWithLinkedin("code")}
+            className="w-full text-sm rounded-full hover:bg-[#0a66c2ed] bg-[#0A66C2]"
+          >
+            <FaLinkedin className="h-12 size-12 w-12" /> LinkedIn
+          </Button>
 
-          <div className="flex items-center gap-4 w-full max-w-sm mx-auto">
+          {/* <div className="flex items-center gap-4 w-full max-w-sm mx-auto">
             <Separator className="flex-1" />
             <span className="text-sm text-muted-foreground">
               Or continue with
@@ -120,14 +120,14 @@ export default function LoginPage() {
               </Link>
             ))}
           </div>
-          <p className="text-xs text-center"></p>
+          <p className="text-xs text-center"></p> */}
         </CardContent>
-        <CardFooter className="text-center flex items-center justify-center text-xs -mt-6 gap-1 ">
+        {/* <CardFooter className="text-center flex items-center justify-center text-xs -mt-6 gap-1 ">
           Don't have an account?{" "}
           <Link className="text-primary" to={"/signup"}>
             Sign up
           </Link>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   );

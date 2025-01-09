@@ -26,6 +26,7 @@ import ConnectLinkedinSuccessPage from "./pages/linkedin/connection/ConnectLinke
 import CreateTextPage from "./pages/create/text/CreateTextPage";
 import SettingsPage from "./pages/settings/SettingsPage";
 import OnboardingLayout from "./layout/OnboardingLayout";
+import { VscLoading } from "react-icons/vsc";
 
 export default function Router() {
   const { isAuthenticated } = useAuth();
@@ -34,7 +35,9 @@ export default function Router() {
   console.log("isAuthenticated", isAuthenticated);
 
   return isAuthenticated === null ? (
-    <div>...Loading...</div>
+    <div className="w-dvw h-dvh grid place-items-center">
+      <VscLoading className="animate-spin text-5xl text-foreground" />
+    </div>
   ) : isAuthenticated ? (
     <AppRouter />
   ) : (

@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { MdArrowOutward, MdOutlineAvTimer } from "react-icons/md";
 import { IoStopwatchOutline } from "react-icons/io5";
 import { cn } from "@/lib/utils";
+import { menus } from "@/components/dialog/CreateMenuDialog";
+import MenuCard from "@/components/MenuCard";
 
 export default function HomePage() {
   return (
@@ -14,8 +16,53 @@ export default function HomePage() {
       <WrapperContent className="gap-6 sm:bg-muted/80 h-dvh overflow-y-auto">
         <Header />
 
-        <div className="flex items-start lg:flex-row flex-col gap-12 sm:gap-8 sm:px-4 w-full">
-          <div className="flex flex-col gap-8 flex-grow w-full">
+        <div className="flex items-start  flex-col gap-12 sm:gap-8 sm:px-4 w-full">
+          <div className="flex items-center p-8 bg-background rounded-2xl gap-8 w-full shadow-2xl shadow-blue-500/15">
+            <h2 className="text-2xl font-semibold w-max whitespace-nowrap">
+              Quick Access
+            </h2>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] w-full gap-6">
+              {menus?.map((menu) => (
+                <MenuCard
+                  key={menu.name}
+                  name={menu.name}
+                  url={menu.url}
+                  icon={menu.icon}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="w-full ">
+            <div className="sm:bg-background  h-full flex flex-col gap-6 w-full  sm:p-8 rounded-2xl">
+              <h3 className="font-semibold text-xl ">Upcoming posts</h3>
+              <div className="flex flex-col gap-4">
+                {[...Array(4)].map((_, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-2 sm:p-3 h-28 border rounded-2xl"
+                  >
+                    <div className="flex flex-col h-full p-2">
+                      <p className="text-xs font-medium opacity-90">
+                        04:03 via LinkedIn
+                      </p>
+                      <h6 className="text-lg font-semibold">Matrial</h6>
+                      <p className="text-muted-foreground text-xs mt-auto">
+                        6 photos 1 video
+                      </p>
+                    </div>
+                    <Image
+                      src="https://marketplace.canva.com/EAFoiVBMcvo/1/0/1600w/canva-blue-modern-quote-linkedin-post-VFBmLg0YoZg.jpg"
+                      alt=""
+                      className="h-full aspect-square object-cover rounded-xl "
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>Helpfull insite</div>
+          </div>
+          {/* <div className="flex flex-col gap-8 flex-grow w-full">
             <div className="grid grid-cols-2 w-full sm:bg-background sm:p-8 rounded-3xl gap-4 sm:gap-6">
               <div className="flex flex-col gap-4 bg-primary-accent/40 p-4 rounded-2xl">
                 <div className="flex items-center justify-between">
@@ -111,33 +158,7 @@ export default function HomePage() {
                 ))}
               </div>
             </div>
-          </div>
-          <div className="sm:bg-background flex-shrink h-full flex flex-col gap-6 w-full  sm:p-8 rounded-2xl">
-            <h3 className="font-semibold text-xl ">Upcoming posts</h3>
-            <div className="flex flex-col gap-4">
-              {[...Array(4)].map((_, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-2 sm:p-3 h-28 border rounded-2xl"
-                >
-                  <div className="flex flex-col h-full p-2">
-                    <p className="text-xs font-medium opacity-90">
-                      04:03 via LinkedIn
-                    </p>
-                    <h6 className="text-lg font-semibold">Matrial</h6>
-                    <p className="text-muted-foreground text-xs mt-auto">
-                      6 photos 1 video
-                    </p>
-                  </div>
-                  <Image
-                    src="https://marketplace.canva.com/EAFoiVBMcvo/1/0/1600w/canva-blue-modern-quote-linkedin-post-VFBmLg0YoZg.jpg"
-                    alt=""
-                    className="h-full aspect-square object-cover rounded-xl "
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+          </div> */}
         </div>
       </WrapperContent>
     </Wrapper>

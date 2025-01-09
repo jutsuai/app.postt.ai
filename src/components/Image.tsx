@@ -6,5 +6,5 @@ interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 }
 
 export default function Image(props: ImageProps) {
-  return <img {...props} loading="lazy" />;
+  return <img {...props} />;
 }
