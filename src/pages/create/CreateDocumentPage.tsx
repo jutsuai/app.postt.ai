@@ -4,21 +4,21 @@ import Wrapper from "@/components/wrapper/Wrapper";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import PreviewSection from "../carousel/editCarouselPage/_components/PreviewSection";
 import { Textarea } from "@/components/ui/textarea";
-import CreateMenuDialog from "@/components/dialog/CreateMenuDialog";
 import SelectProfileDialog from "@/components/dialog/SelectProfileDialog";
-import { set } from "react-hook-form";
 import httpClient from "@/lib/httpClient";
 import { VscLoading } from "react-icons/vsc";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import PreviewSection from "./carousel/editCarouselPage/_components/PreviewSection";
+import { set } from "react-hook-form";
 
-export default function CreateTextPage() {
+export default function CreateDocumentPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   // const [data, setData] = useState({
   const [commentary, setCommentary] = useState("This is a commentary");
+  const [image, setImage] = useState<any>(null);
 
   const [showSelectProfileDialog, setShowSelectProfileDialog] = useState(false);
 
@@ -27,14 +27,19 @@ export default function CreateTextPage() {
     setShowSelectProfileDialog(false);
     setLoading(true);
 
+    console.log("Posting Image", image);
+    const formData = new FormData();
+    formData.append("content", image);
+    formData.append("commentary", commentary);
+
     httpClient()
-      .post(`/linkedin/${linkedinId}/post/text`, { commentary })
+      .post(`/linkedin/${linkedinId}/post/image`, formData)
       .then((res) => {
         console.log("Post Success", res);
 
-        toast.success("Post Successful");
+        // toast.success("Post Successful");
 
-        navigate("/");
+        // navigate("/");
       })
       .catch((err) => {
         console.error("Post Error", err);
@@ -63,6 +68,32 @@ export default function CreateTextPage() {
                   className="bg-background"
                 />
               </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">Upload Image</span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <input
+                    type="file"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+
+                      setImage(file);
+                      // if (file) {
+                      //   const reader = new FileReader();
+
+                      //   reader.onload = () => {
+                      //     setImage(reader.result as string);
+                      //   };
+
+                      //   reader.readAsDataURL(file);
+                      // }
+                    }}
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="w-full gap-4 flex">
@@ -70,7 +101,6 @@ export default function CreateTextPage() {
                 Schedule Post
               </Button>
               <Button
-                disabled={loading}
                 className="w-full "
                 onClick={() => setShowSelectProfileDialog(true)}
               >
