@@ -130,7 +130,7 @@ export default function EditCarouselPage() {
   return (
     <>
       <Wrapper>
-        <WrapperContent className="py-8 flex-row gap-8  h-full">
+        <WrapperContent className=" flex-row gap-8  h-full">
           <PreviewSection
             {...slides[selectedSlide]}
             // className="col-span-4 items-center justify-center place-content-center pac"
