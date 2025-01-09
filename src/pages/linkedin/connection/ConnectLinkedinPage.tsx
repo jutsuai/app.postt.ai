@@ -15,11 +15,11 @@ export default function ConnectLinkedinPage() {
   const { validateToken, user } = useAuth();
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   if (user?.tokens?.management?.access_token) {
-  //     navigate("/linkedin/connect/success");
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (user?.tokens?.management?.access_token) {
+      navigate("/linkedin/connect/success");
+    }
+  }, [user]);
 
   const handleSubmit = () => {
     setLoading(true);

@@ -50,7 +50,6 @@ function ConnectLinkedinCallbackPage() {
   return (
     <div className="flex h-screen w-full items-center justify-center">
       <VscLoading size={24} className="size-20 animate-spin" />
-      {loading && <div className="absolute inset-0 bg-black/60 z-50" />}
     </div>
   );
 }
