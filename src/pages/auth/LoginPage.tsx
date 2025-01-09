@@ -48,8 +48,7 @@ export default function LoginPage() {
             Connect your account
           </CardTitle>
           <CardDescription>
-            You’re so close to transforming your LinkedIn experience. Let Postt
-            make it effortless while you focus on growing!
+            You’re so close to transforming your LinkedIn experience.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -89,11 +88,15 @@ export default function LoginPage() {
             </div>
           </form> */}
 
-          <DotLottieReact src="/auth/loginPageAnimation.lottie" loop autoplay />
-
+          <DotLottieReact 
+  src="/auth/loginPageAnimation.lottie" 
+  loop 
+  autoplay
+  style={{ width: '600px', height: '300px', margin: '2px auto 8px', display: 'block', position: 'relative', left: '50%', transform: 'translateX(-50%)' }}
+/>
           <Button
             onClick={() => loginWithLinkedin("code")}
-            className="w-full text-sm rounded-full hover:bg-[#0a66c2ed] bg-[#0A66C2]"
+            className="w-full text-sm rounded-full bg-primary"
           >
             <FaLinkedin className="h-12 size-12 w-12" /> LinkedIn
           </Button>
