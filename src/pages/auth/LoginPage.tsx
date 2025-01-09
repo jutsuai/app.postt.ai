@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "@/context/AuthContext";
 import { FaLinkedin } from "react-icons/fa";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import useBreakpoint from "@/lib/useBreakpoint";
 
 type FormValue = {
   email: string;
@@ -40,6 +41,8 @@ export default function LoginPage() {
     console.log(data);
   };
 
+  const { sm } = useBreakpoint();
+
   return (
     <div className="h-[calc(100dvh-4rem)] min-h-[500px] w-full sm:max-w-md flex items-center sm:bg-transparent bg-background">
       <Card className=" sm:h-auto w-full border-none shadow-none  rounded-none sm:rounded-3xl">
@@ -47,11 +50,11 @@ export default function LoginPage() {
           <CardTitle className="text-2xl text-center">
             Connect your account
           </CardTitle>
-          <CardDescription>
-            You’re so close to transforming your LinkedIn experience.
+          <CardDescription className="text-center">
+            You're so close to transforming your LinkedIn experience.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex flex-col  items-center justify-center">
           {/* <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-4">
               <CustomInput
@@ -88,12 +91,31 @@ export default function LoginPage() {
             </div>
           </form> */}
 
-          <DotLottieReact 
-  src="/auth/loginPageAnimation.lottie" 
-  loop 
-  autoplay
-  style={{ width: '600px', height: '300px', margin: '2px auto 8px', display: 'block', position: 'relative', left: '50%', transform: 'translateX(-50%)' }}
-/>
+          <DotLottieReact
+            src="/auth/loginPageAnimation.lottie"
+            loop
+            autoplay
+            style={
+              sm
+                ? {
+                    width: "300px",
+                    height: "150px",
+                    margin: "0 auto",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }
+                : {
+                    width: "600px",
+                    height: "300px",
+                    margin: "0 auto",
+                    display: "block",
+                    position: "relative",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                  }
+            }
+          />
           <Button
             onClick={() => loginWithLinkedin("code")}
             className="w-full text-sm rounded-full bg-primary"
