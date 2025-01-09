@@ -62,8 +62,13 @@ export default function HomePage() {
                 </div>
               </div>
             ) : (
-              <div className="sm:bg-background h-fit sm:p-8 rounded-2xl w-full">
-                <h3 className="font-semibold text-xl mb-4">Ideas</h3>
+              <div className="sm:bg-background h-fit sm:p-4 rounded-2xl w-full">
+                <div className="flex flex-col mb-4">
+                  <h3 className="font-semibold text-xl">Getting Started</h3>
+                  <p className="text-muted-foreground text-sm">
+                    Four simple steps to get everything up and running
+                  </p>
+                </div>
                 <div className="flex flex-col gap-4 ">
                   {ideasData.map((item, index) => (
                     <div
@@ -88,7 +93,7 @@ export default function HomePage() {
             )}
 
             <div className="w-full max-w-xs h-fit bg-background pt-4 px-4 rounded-2xl flex flex-col gap-2">
-              <h4 className="text-xl font-semibold px-2">Helpful Insights</h4>
+              <h4 className="text-xl font-semibold ">Helpful Insights</h4>
               <div className="flex  transition-all duration-200 flex-col items-center gap-2 w-full h-full rounded-[3rem] p-3 rounded-b-none border-b-0">
                 <div className="flex bg-primary-accent/60 overflow-y-hidden w-full h-full flex-col items-center justify-center gap-4 border  rounded-[2.5rem] rounded-b-none">
                   <Image

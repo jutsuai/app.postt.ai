@@ -130,8 +130,20 @@ export default function EditCarouselPage() {
   return (
     <>
       <Wrapper>
-        <WrapperContent className="py-8 grid gap-8 grid-cols-2 h-full">
-          <div className="flex flex-col  gap-4 h-full w-full">
+        <WrapperContent className="py-8 flex-row gap-8  h-full">
+          <PreviewSection
+            {...slides[selectedSlide]}
+            // className="col-span-4 items-center justify-center place-content-center pac"
+            pageIndex={selectedSlide}
+            createdBy={createdBy}
+            commentary={commentary}
+            slides={slides}
+            customizations={customizations}
+            selectedSlide={selectedSlide}
+            setSelectedSlide={setSelectedSlide}
+          />
+
+          <div className="flex flex-col max-w-lg gap-4 h-full w-full">
             <Tabs
               value={activeTab}
               onValueChange={setActiveTab}
@@ -182,7 +194,6 @@ export default function EditCarouselPage() {
               selectedSlide={selectedSlide}
               setSelectedSlide={setSelectedSlide}
             />
-
             <div className="w-full gap-4 flex">
               <Button variant="secondary" className="w-full text-foreground">
                 Schedule Post
@@ -198,17 +209,6 @@ export default function EditCarouselPage() {
 
           {/* Right Sidebar */}
 
-          <PreviewSection
-            {...slides[selectedSlide]}
-            // className="col-span-4 items-center justify-center place-content-center pac"
-            pageIndex={selectedSlide}
-            createdBy={createdBy}
-            commentary={commentary}
-            slides={slides}
-            customizations={customizations}
-            selectedSlide={selectedSlide}
-            setSelectedSlide={setSelectedSlide}
-          />
           {/* </div> */}
 
           {/* Bottom Carousel Thumbnails */}

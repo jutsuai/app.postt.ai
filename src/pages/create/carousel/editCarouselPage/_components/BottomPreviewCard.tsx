@@ -14,7 +14,7 @@ export default function BottomPreviewCard({
   setSlides,
 }: any) {
   return (
-    <div className="w-full relative h-full aspect-[4/5] bg-muted p-0.5 rounded-xl">
+    <div className="w-full relative h-full min-h-2  aspect-[4/5] bg-muted p-0.5 rounded-xl">
       <Button
         onClick={() => {
           setSelectedSlide(pageIndex);

@@ -15,7 +15,7 @@ export default function BottomSection({
   setSelectedSlide: any;
 }) {
   return (
-    <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(90px,1fr))]  ">
+    <div className="grid gap-4 grid-flow-col auto-cols-[100px] py-2 px-2 min-h-max  overflow-x-auto">
       {slides?.map((slide: any, index: any) => (
         <BottomPreviewCard
           key={index}
@@ -47,7 +47,7 @@ export default function BottomSection({
             ];
           });
         }}
-        className="aspect-[4/5] relative bg-primary-foreground/60 overflow-hidden flex flex-col justify-center transition-all opacity-80 hover:opacity-100 duration-200 px-3 rounded-md  shadow-md cursor-pointer"
+        className="aspect-[4/5] relative bg-primary-foreground/60  h-full overflow-hidden flex flex-col justify-center transition-all opacity-80 hover:opacity-100 duration-200 px-3 rounded-md  shadow-md cursor-pointer"
       >
         <div className="flex items-center justify-center">
           <FaPlus />

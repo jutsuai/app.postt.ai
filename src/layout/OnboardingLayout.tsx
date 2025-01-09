@@ -7,7 +7,7 @@ export default function OnboardingLayout() {
   const { user } = useAuth();
   return (
     <div className="w-full max-h-[100dvh] h-full relative flex overflow-y-auto">
-      <div className="z-10 flex-1 h-full relative flex-col flex items-center ">
+      <div className="z-10 flex-1 min-h-[768px] h-full relative flex-col flex items-center ">
         <Outlet />
         <p className="py-10 mt-auto text-xs text-muted-foreground uppercase ">
           &copy;{new Date().getFullYear()} All Right Reserved
