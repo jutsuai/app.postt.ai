@@ -31,7 +31,7 @@ export default function CreateDocumentPage() {
     formData.append("file", image);
 
     const name = generateRandomWord(10) + image?.name.split(".").pop();
-    formData.append("fileName", image?.name);
+    formData.append("fileName", name);
     formData.append("commentary", commentary);
 
     httpClient()
