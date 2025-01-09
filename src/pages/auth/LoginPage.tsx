@@ -46,6 +46,10 @@ export default function LoginPage() {
           <CardTitle className="text-2xl text-center">
             Connect your account
           </CardTitle>
+          <CardDescription>
+          You’re so close to transforming your LinkedIn experience. Let Postt make it effortless while you focus on growing! 
+
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {/* <form onSubmit={handleSubmit(onSubmit)}>
