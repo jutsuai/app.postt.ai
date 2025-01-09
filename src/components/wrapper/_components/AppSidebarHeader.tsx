@@ -81,42 +81,38 @@ export default function AppSidebarHeader() {
         <SidebarMenu
           className={cn(
             "transition-all duration-150",
-            sidebarMode ? "px-2 " : "px-1.5 "
+            sidebarMode ? "px-2 " : "px-[6px]"
           )}
         >
           <SidebarMenuItem
-  onClick={() => setOpenMenuDialog(true)}
-  className={cn(
-    // Base styles
-    "flex items-center justify-center gap-2",
-    "rounded-3xl h-full",
-    "text-md text-background",
-    
-    // Background styles
-    "bg-primary",
-    "hover:bg-primary/90",
-    "active:bg-primary",
-    
-    // Text styles
-    "hover:!text-background",
-    "active:!text-background",
-    
-    // Transition
-    "duration-0",
-    
-    // Conditional padding based on sidebar mode
-    sidebarMode 
-      ? "py-1.5 px-4" 
-      : "px-2 py-[7px]"
-  )}
-          
+            onClick={() => setOpenMenuDialog(true)}
+            className={cn(
+              "bg-primary hover:bg-primary/90 duration-0 active:bg-primary rounded-full",
+              sidebarMode ? "py-1.5 px-4" : "px-[6px] py-[7px]"
+            )}
           >
-            {/* <SidebarMenuButton className="hover:!bg-transparent h-full active:!text-background text-background hover:!text-background flex items-center justify-center text-lg"> */}
-            <LuMousePointerClick className="!text-lg"/>
-              <span>Create new</span>
-            {/* </SidebarMenuButton>           */}
+            <SidebarMenuButton className="hover:!bg-transparent h-full active:!text-background text-background hover:!text-background">
+              <svg
+                className="!size-[18px] "
+                stroke="currentColor"
+                fill="none"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M14 4.1 12 6"></path>
+                <path d="m5.1 8-2.9-.8"></path>
+                <path d="m6 12-1.9 2"></path>
+                <path d="M7.2 2.2 8 5.1"></path>
+                <path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z"></path>
+              </svg>
+              <span className="font-medium">Create new</span>
+            </SidebarMenuButton>
           </SidebarMenuItem>
-          <div className="h-[1px] w-full bg-[#dedbde] mt-2"></div>                  </SidebarMenu>
+          <div className="h-[1px] w-full bg-[#dedbde] mt-2"></div>
+        </SidebarMenu>
         <Button
           onClick={toggleSidebar}
           size="icon"
