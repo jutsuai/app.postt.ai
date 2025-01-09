@@ -14,6 +14,7 @@ import {
 } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { TbClick } from "react-icons/tb";
+import { LuMousePointerClick } from "react-icons/lu";
 import { useState } from "react";
 import CreateMenuDialog from "@/components/dialog/CreateMenuDialog";
 
@@ -84,16 +85,36 @@ export default function AppSidebarHeader() {
           )}
         >
           <SidebarMenuItem
-            onClick={() => setOpenMenuDialog(true)}
-            className={cn(
-              "bg-primary hover:bg-primary/90 duration-0 active:bg-primary rounded-3xl",
-              sidebarMode ? "py-1.5  px-4" : "px-2 py-[7px]"
-            )}
+  onClick={() => setOpenMenuDialog(true)}
+  className={cn(
+    // Base styles
+    "flex items-center justify-center gap-2",
+    "rounded-3xl h-full",
+    "text-md text-background",
+    
+    // Background styles
+    "bg-primary",
+    "hover:bg-primary/90",
+    "active:bg-primary",
+    
+    // Text styles
+    "hover:!text-background",
+    "active:!text-background",
+    
+    // Transition
+    "duration-0",
+    
+    // Conditional padding based on sidebar mode
+    sidebarMode 
+      ? "py-1.5 px-4" 
+      : "px-2 py-[7px]"
+  )}
+          
           >
-            <SidebarMenuButton className="hover:!bg-transparent h-full active:!text-background text-background hover:!text-background flex items-center justify-center text-sm">
-              <TbClick />
+            {/* <SidebarMenuButton className="hover:!bg-transparent h-full active:!text-background text-background hover:!text-background flex items-center justify-center text-lg"> */}
+            <LuMousePointerClick className="!text-lg"/>
               <span>Create new</span>
-            </SidebarMenuButton>          
+            {/* </SidebarMenuButton>           */}
           </SidebarMenuItem>
           <div className="h-[1px] w-full bg-[#dedbde] mt-2"></div>                  </SidebarMenu>
         <Button
