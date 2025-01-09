@@ -24,15 +24,7 @@ export default function OnboardingPage() {
         <IoChevronBack />
         Back
       </Button>
-      {step === "audience" ? (
-        <ChooseAudience />
-      ) : step === "connect" ? (
-        <ConnectSocial />
-      ) : step === "brand" ? (
-        <BrandDetails />
-      ) : (
-        <AccountType />
-      )}
+      {step === "connect" ? <ConnectSocial /> : <ChooseAudience />}
     </div>
   );
 }

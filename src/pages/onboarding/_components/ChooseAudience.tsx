@@ -54,8 +54,8 @@ export default function ChooseAudience() {
       .put(`/users/${user?._id}/profile`, data)
       .then((res) => {
         console.log(res.data);
-        navigate("?step=brand");
-        // navigate("?step=connect");
+        // navigate("?step=brand");
+        navigate("?step=connect");
       })
       .catch((err) => {
         console.error(err);
@@ -114,7 +114,7 @@ export default function ChooseAudience() {
           <Button
             className="rounded-full mt-2 w-full hover:text-foreground/80 text-foreground"
             type="button"
-            onClick={() => navigate("?step=brand")}
+            onClick={() => navigate("?step=connect")}
             variant="secondary"
             disabled={loading}
           >

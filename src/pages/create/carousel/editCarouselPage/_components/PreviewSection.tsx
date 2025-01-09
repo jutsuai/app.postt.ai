@@ -481,7 +481,9 @@ const HeaderSection = ({ createdBy }: { createdBy: any }) => {
           <span className="text-xs text-muted-foreground">●</span>
           <span className="text-muted-foreground text-sm">3rd+</span>
         </div>
-        <div className="text-muted-foreground text-xs">Founder & CEO</div>
+        <div className="text-muted-foreground text-xs">
+          postt.ai | LinkedIn Automation
+        </div>
         <div className="flex items-center gap-1 text-muted-foreground text-xs">
           <span>3d</span>
           <span className="text-xs text-muted-foreground scale-75">●</span>
