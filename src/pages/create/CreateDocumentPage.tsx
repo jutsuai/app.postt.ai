@@ -8,10 +8,10 @@ import { Textarea } from "@/components/ui/textarea";
 import SelectProfileDialog from "@/components/dialog/SelectProfileDialog";
 import httpClient from "@/lib/httpClient";
 import { VscLoading } from "react-icons/vsc";
-import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import PreviewSection from "./carousel/editCarouselPage/_components/PreviewSection";
-import { set } from "react-hook-form";
+import { toast } from "sonner";
+import generateRandomWord from "@/lib/randomWordGenerator";
 
 export default function CreateDocumentPage() {
   const navigate = useNavigate();
@@ -27,9 +27,11 @@ export default function CreateDocumentPage() {
     setShowSelectProfileDialog(false);
     setLoading(true);
 
-    console.log("Posting Image", image);
     const formData = new FormData();
-    formData.append("content", image);
+    formData.append("file", image);
+
+    const name = generateRandomWord(10) + image?.name.split(".").pop();
+    formData.append("fileName", image?.name);
     formData.append("commentary", commentary);
 
     httpClient()
@@ -37,9 +39,7 @@ export default function CreateDocumentPage() {
       .then((res) => {
         console.log("Post Success", res);
 
-        // toast.success("Post Successful");
-
-        // navigate("/");
+        toast.success("Post Created Successfully");
       })
       .catch((err) => {
         console.error("Post Error", err);
