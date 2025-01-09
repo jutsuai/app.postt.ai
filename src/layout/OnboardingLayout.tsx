@@ -9,7 +9,7 @@ export default function OnboardingLayout() {
     <div className="w-full max-h-[100dvh] h-full relative flex overflow-y-auto">
       <div className="z-10 flex-1 h-full relative flex-col flex items-center ">
         <Outlet />
-        <p className="py-6 mt-auto text-xs text-muted-foreground uppercase ">
+        <p className="py-10 mt-auto text-xs text-muted-foreground uppercase ">
           &copy;{new Date().getFullYear()} All Right Reserved
         </p>
       </div>
@@ -24,12 +24,12 @@ export default function OnboardingLayout() {
             <Image src="/linkedinCard.svg" alt="" className="w-full" />
             <div className="flex items-center gap-3 z-30 absolute top-14 left-10">
               <BoringAvatar
-                src={user.avatar}
-                alt={user.username}
+                src={user?.avatar}
+                alt={user?.username}
                 className="h-12 w-12"
               />
               <p className="text-lg font-medium">
-                {user.firstName} {user.lastName}
+                {user?.firstName} {user?.lastName}
               </p>
             </div>
           </div>

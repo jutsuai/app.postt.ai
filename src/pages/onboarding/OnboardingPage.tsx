@@ -14,7 +14,7 @@ export default function OnboardingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="lg:max-w-md w-full flex flex-col gap-2 px-4 items-start  pt-[7dvh]">
+    <div className="lg:max-w-md w-full h-full flex flex-col gap-2 px-4 items-start  pt-[7dvh]">
       <Button
         onClick={() => navigate(-1)}
         variant="ghost"
@@ -24,15 +24,7 @@ export default function OnboardingPage() {
         <IoChevronBack />
         Back
       </Button>
-      {step === "audience" ? (
-        <ChooseAudience />
-      ) : step === "connect" ? (
-        <ConnectSocial />
-      ) : step === "brand" ? (
-        <BrandDetails />
-      ) : (
-        <AccountType />
-      )}
+      {step === "connect" ? <ConnectSocial /> : <ChooseAudience />}
     </div>
   );
 }

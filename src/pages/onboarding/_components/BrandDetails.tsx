@@ -5,25 +5,15 @@ import { LuPlus } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import httpClient from "@/lib/httpClient";
 import { useAuth } from "@/context/AuthContext";
-import { toast } from "sonner";
+import { VscLoading } from "react-icons/vsc";
 
 export default function BrandDetails() {
   const { user } = useAuth();
-  // const [images, setImages] = useState([]);
   const [primaryColor, setPrimaryColor] = useState();
   const [accentColor, setAccentColor] = useState();
-  // const [secondaryColor, setSecondaryColor] = useState("#ffffff");
-  // const [lightColor, setLightColor] = useState("#ffffff");
-  // const [darkColor, setDarkColor] = useState("#ffffff");
 
   const [loading, setLoading] = useState(false);
   const handleSubmit = () => {
-    // if (!primaryColor || !accentColor) {
-    //   toast.warning("Please select primary and accent colors");
-
-    //   return;
-    // }
-    // setImages(imageList);
     setLoading(true);
 
     httpClient()
@@ -44,7 +34,7 @@ export default function BrandDetails() {
 
   const navigate = useNavigate();
   return (
-    <div className="w-full flex flex-col items-center gap-10 pt-4">
+    <div className="w-full flex flex-col items-center gap-4 h-full  pt-4">
       {/* <div className="w-full flex flex-col items-center gap-2">
         <h3 className="text-lg font-semibold text-center">
           Upload your brand logo
@@ -112,45 +102,31 @@ export default function BrandDetails() {
         </ImageUploading>
       </div> */}
 
-      <div className="w-full flex flex-col items-center gap-4">
+      <div className="w-full flex flex-col items-center  gap-4">
         <h3 className="text-lg font-semibold text-center">
           Enter Your Brand Color
         </h3>
-        <div className="w-full grid grid-cols-3 grid-rows-2 gap-4">
+        <div className="w-full flex flex-col gap-4">
           <BrandColor
             title="Primary"
             color={primaryColor}
             setColor={setPrimaryColor}
-            className="col-span-2 row-span-2"
+            className="h-40"
           />
-          {/* <BrandColor
-            title="Secondary"
-            color={secondaryColor}
-            setColor={setSecondaryColor}
-            className="col-span-1 row-span-2"
-          /> */}
+
           <BrandColor
             title="Accent"
             color={accentColor}
             setColor={setAccentColor}
-            className="col-span-1 row-span-2"
+            className="h-24"
           />
-          {/* <BrandColor
-            title="Light"
-            color={lightColor}
-            setColor={setLightColor}
-            className="col-span-1 row-span-2"
-          />
-          <BrandColor
-            title="Dark"
-            color={darkColor}
-            setColor={setDarkColor}
-            className="col-span-1 row-span-2"
-          /> */}
         </div>
       </div>
-      <Button onClick={() => handleSubmit()} className="rounded-full w-full">
-        Continue {loading && "loading..."}
+      <Button
+        onClick={() => handleSubmit()}
+        className="rounded-full w-full mt-auto"
+      >
+        {loading ? <VscLoading className="animate-spin" /> : "Continue"}
       </Button>
     </div>
   );
