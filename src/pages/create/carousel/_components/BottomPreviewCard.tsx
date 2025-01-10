@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
@@ -8,27 +9,33 @@ export default function BottomPreviewCard({
   customizations,
   selectedSlide,
   setSelectedSlide,
-  totalSlides,
   pageIndex,
 
   setSlides,
 }: any) {
+  const [hovered, setHovered] = useState(false);
+
+  console.log("Slide", slide);
   return (
-    <div className="w-full relative h-full min-h-2  aspect-[4/5] bg-muted p-0.5 rounded-xl">
+    <div
+      className="relative aspect-[4/5] h-full min-h-2 w-full rounded-xl bg-muted p-0.5"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <Button
         onClick={() => {
           setSelectedSlide(pageIndex);
         }}
         className={cn(
-          "w-full h-full rounded-md overflow-hidden flex items-center justify-center",
+          "flex h-full w-full items-center justify-center overflow-hidden rounded-md",
 
           selectedSlide === pageIndex ? "ring-4" : "",
-          slide?.visible ? "opacity-100" : "opacity-25"
+          // slide?.visible ? "opacity-100" : "opacity-25",
         )}
       >
         <img
           src={slide?.image}
-          className="absolute z-0 inset-0 rounded-lg pointer-events-none"
+          className="pointer-events-none absolute inset-0 z-0 rounded-lg"
           style={{
             objectFit: "cover",
             width: "100%",
@@ -37,7 +44,7 @@ export default function BottomPreviewCard({
         />
 
         <p
-          className="text-lg z-20 font-semibold"
+          className="z-20 text-lg font-semibold"
           style={{
             color: customizations?.fontColor,
           }}
@@ -45,12 +52,12 @@ export default function BottomPreviewCard({
           {slide?.pageType === "start"
             ? "Start"
             : slide?.pageType === "end"
-            ? "End"
-            : pageIndex}
+              ? "End"
+              : pageIndex}
         </p>
       </Button>
 
-      <Button
+      {/* <Button
         variant="ghost"
         onClick={() => {
           setSlides((prev: any) => {
@@ -65,10 +72,10 @@ export default function BottomPreviewCard({
             });
           });
         }}
-        className="absolute top-2 left-2 p-1 text-muted-foreground bg-background rounded-md h-6 w-6 flex items-center justify-center"
+        className="absolute left-2 top-2 flex h-6 w-6 items-center justify-center rounded-md bg-background p-1 text-muted-foreground"
       >
         {slide?.visible ? <FaEye /> : <FaEyeSlash />}
-      </Button>
+      </Button> */}
 
       <Button
         variant="ghost"
@@ -81,17 +88,11 @@ export default function BottomPreviewCard({
           if (selectedSlide > 1 && selectedSlide >= pageIndex - 1) {
             setSelectedSlide((prev: any) => prev - 1);
           }
-
-          // setSelectedSlide(0);
-          // setSelectedSlide((curIndex: any) => {
-          //   if (totalSlides.length - 1 === curIndex) {
-          //     return curIndex - 2;
-          //   }
-
-          //   return curIndex;
-          // });
         }}
-        className="absolute top-2 right-2 text-muted-foreground hover:text-red-600 p-1 bg-background rounded-md h-6 w-6 flex items-center justify-center"
+        className={cn(
+          "absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-md bg-background p-1 text-muted-foreground hover:text-red-600",
+          hovered ? "opacity-100" : "opacity-0",
+        )}
       >
         <MdDelete />
       </Button>

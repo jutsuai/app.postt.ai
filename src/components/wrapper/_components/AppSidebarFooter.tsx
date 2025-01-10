@@ -13,13 +13,9 @@ import {
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/context/AuthContext";
-import httpClient from "@/lib/httpClient";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
 
 import { FiLogOut } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import { toast } from "sonner";
 
 export default function AppSidebarFooter() {
   const {
@@ -146,6 +142,7 @@ export default function AppSidebarFooter() {
             <PopoverContent className="rounded-2xl">
               {linkedinProfiles?.map((profile: any, index: number) => (
                 <SidebarMenuButton
+                  key={profile?._id}
                   className={cn(
                     "h-13 m-0 rounded-full transition",
 

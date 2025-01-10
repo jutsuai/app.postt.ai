@@ -15,8 +15,8 @@ import OnboardSuccess from "./pages/onboarding/_components/OnboardSuccess";
 import ReportsPage from "./pages/reports/ReportsPage";
 import CreatePage from "./pages/create/CreatePage";
 import LinkedinCarouselPage from "./pages/restricted/RestrictedLinkedinCarouselPage";
-import CarouselsPage from "./pages/create/carousel/CarouselsPage";
-import EditCarouselPage from "./pages/create/carousel/editCarouselPage/EditCarouselPage";
+import CreateCarouselPage from "./pages/create/carousel/CreateCarouselPage";
+import EditCarouselPage from "./pages/create/carousel/CreateCarouselPage";
 import { useAuth } from "./context/AuthContext";
 // import ConnectLinkedinPage from "./pages/auth/linkedin/ConnectLinkedinPage";
 import OnboardingPage from "./pages/onboarding/OnboardingPage";
@@ -29,6 +29,7 @@ import OnboardingLayout from "./layout/OnboardingLayout";
 import CreateDocumentPage from "./pages/create/CreateDocumentPage";
 import { VscLoading } from "react-icons/vsc";
 import PostsPage from "./pages/posts/PostsPage";
+import InitializeCarouselPage from "./pages/create/carousel/InitializeCarouselPage";
 
 export default function Router() {
   const { isAuthenticated } = useAuth();
@@ -37,7 +38,7 @@ export default function Router() {
   console.log("isAuthenticated", isAuthenticated);
 
   return isAuthenticated === null ? (
-    <div className="w-dvw h-dvh grid place-items-center">
+    <div className="grid h-dvh w-dvw place-items-center">
       <VscLoading className="animate-spin text-5xl text-foreground" />
     </div>
   ) : isAuthenticated ? (
@@ -118,8 +119,8 @@ const AppRouter = () => {
           <Route path="image" element={<CreateDocumentPage />} />
 
           <Route path="carousel">
-            <Route index element={<CarouselsPage />} />
-            <Route path=":id" element={<EditCarouselPage />} />
+            <Route index element={<InitializeCarouselPage />} />
+            <Route path=":carouselId" element={<CreateCarouselPage />} />
           </Route>
         </Route>
 

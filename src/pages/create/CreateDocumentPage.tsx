@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import SelectProfileDialog from "@/components/dialog/SelectProfileDialog";
 import httpClient from "@/lib/httpClient";
 import { VscLoading } from "react-icons/vsc";
-import PreviewSection from "./carousel/editCarouselPage/_components/PreviewSection";
+import PreviewSection from "../../components/preview";
 import { toast } from "sonner";
 import generateRandomWord from "@/lib/randomWordGenerator";
 

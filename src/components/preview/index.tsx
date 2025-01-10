@@ -1,206 +1,140 @@
-import Image from "@/components/Image";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { AiTwotoneHeart, AiTwotoneLike } from "react-icons/ai";
-import { FaGlobeAmericas } from "react-icons/fa";
-import { IoBookmarkOutline, IoChevronForward } from "react-icons/io5";
-import { LuPlus } from "react-icons/lu";
-import { SlLike } from "react-icons/sl";
-import { TfiCommentAlt } from "react-icons/tfi";
-import { LiaShareSolid } from "react-icons/lia";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { IoChevronForward } from "react-icons/io5";
 import { useRef, useState } from "react";
 import BoringAvatar from "@/components/BoringAvatar";
+import Header from "./_components/Header";
+import Footer from "./_components/Footer";
+import Arrows from "./_components/Arrows";
 
 export default function PreviewSection({
   hideHeader,
   hideFooter,
   hideArrows,
 
-  pageType,
   slides,
-
   setSlides,
-  createdBy,
-
-  pageIndex,
-  title,
-  description,
-  image,
-
   selectedSlide,
   setSelectedSlide,
 
-  commentary,
   customizations,
+  createdBy,
+
+  type,
+  commentary,
   setCommentary,
 }: {
   hideHeader?: boolean;
   hideFooter?: boolean;
   hideArrows?: boolean;
 
-  className?: string;
-
-  pageType?: any;
-
   slides?: any;
   setSlides?: any;
+  customizations?: any;
 
-  createdBy?: any;
-
-  pageIndex?: any;
-  title?: string;
-  description?: string;
-  image?: string;
   selectedSlide?: any;
   setSelectedSlide?: any;
 
+  createdBy?: any;
+
+  type?: "text" | "image" | "carousel" | "document";
   commentary?: any;
-  customizations?: any;
   setCommentary?: any;
 }) {
+  const initialCommentary = useRef(commentary);
   const [onHover, setOnHover] = useState(false);
 
-  const initialCommentary = useRef(commentary);
+  const slide = slides[selectedSlide];
+
   return (
     <div className="mx-auto flex h-full w-full flex-1 items-center justify-center rounded-lg bg-[#f3f4f6]">
       <div
         className="relative mx-auto flex w-min select-none flex-col gap-2 rounded-xl border bg-background"
-        style={{
-          width: customizations?.size?.width,
-          // height: customizations?.size?.height,
-        }}
+        style={{ width: customizations?.size?.width }}
         onMouseEnter={() => setOnHover(true)}
         onMouseLeave={() => setOnHover(false)}
       >
-        {!hideHeader && <HeaderSection createdBy={createdBy} />}
+        {!hideHeader && <Header createdBy={createdBy} />}
 
         <p
           contentEditable
           suppressContentEditableWarning
-          onInput={(e) => {
-            setCommentary(e.currentTarget.textContent);
-          }}
+          onInput={(e) => setCommentary(e.currentTarget.textContent)}
           className={cn(
             "whitespace-pre-wrap px-4 text-sm",
-
             slides && "col-span-6",
           )}
         >
           {initialCommentary.current}
         </p>
 
-        {slides && (
+        {type === "carousel" ? (
           <>
-            {!hideArrows && (
-              <>
-                <Button
-                  size="icon"
-                  className={cn(
-                    "ml-2 rounded-full bg-foreground/60 pl-2.5 hover:bg-foreground hover:text-background",
-                    // selectedSlide === 0 && "pointer-events-none opacity-0",
-                    "absolute left-0 top-[50%] z-40 flex justify-between transition",
+            <Arrows
+              setSelectedSlide={setSelectedSlide}
+              slides={slides}
+              hideArrows={hideArrows}
+              onHover={onHover}
+            />
 
-                    onHover ? "opacity-100" : "opacity-0",
-                  )}
-                  onClick={() =>
-                    setSelectedSlide((prev: any) => {
-                      if (prev === 0) {
-                        return prev;
-                      } else {
-                        return prev - 1;
-                      }
-                    })
-                  }
-                >
-                  <MdKeyboardArrowLeft />
-                </Button>
-                <Button
-                  className={cn(
-                    "mr-2 rounded-full bg-foreground/60 pl-2.5 hover:bg-foreground hover:text-background",
-                    // selectedSlide === 0 && "pointer-events-none opacity-0",
-                    "absolute right-0 top-[50%] z-40 flex justify-between transition",
-
-                    onHover ? "opacity-100" : "opacity-0",
-                  )}
-                  size="icon"
-                  onClick={() => {
-                    setSelectedSlide((prev: any) => {
-                      if (prev === slides.length - 1) {
-                        return prev;
-                      } else {
-                        return prev + 1;
-                      }
-                    });
-                  }}
-                >
-                  <MdKeyboardArrowRight />
-                </Button>
-              </>
-            )}
-
-            {pageType == "start" ? (
+            {slide?.pageType == "start" ? (
               <StartPage
-                title={title}
-                image={image}
+                slide={slide}
                 createdBy={createdBy}
                 customizations={customizations}
-                pageType={pageType}
                 slides={slides}
                 setSlides={setSlides}
                 selectedSlide={selectedSlide}
               />
-            ) : pageType == "end" ? (
+            ) : slide?.pageType == "end" ? (
               <EndPage
-                image={image}
+                slide={slide}
                 createdBy={createdBy}
                 customizations={customizations}
               />
             ) : (
               <SlidePage
-                pageIndex={pageIndex}
-                title={title}
-                description={description}
-                image={image}
+                key={slide?._id}
+                slide={slide}
+                selectedSlide={selectedSlide}
                 createdBy={createdBy}
                 customizations={customizations}
-                pageType={pageType}
                 slides={slides}
                 setSlides={setSlides}
-                selectedSlide={selectedSlide}
               />
             )}
           </>
+        ) : (
+          type === "image" && (
+            <img className="w-full" src={slide.image} alt={slide._id} />
+          )
         )}
 
-        {/* <img className="w-full" src={image} alt="" /> */}
-
-        {!hideFooter && <FooterSection createdBy={createdBy} />}
+        {!hideFooter && <Footer createdBy={createdBy} />}
       </div>
     </div>
   );
 }
 
 const StartPage = ({
-  title,
-  image,
+  slide,
+
   createdBy,
   customizations,
-  pageType,
+
   slides,
   setSlides,
   selectedSlide,
 }: {
-  title: any;
-  image: any;
+  slide: any;
+
   createdBy: any;
   customizations: any;
-  pageType: any;
+
   slides: any;
   setSlides: any;
   selectedSlide: any;
 }) => {
+  const { title, image, pageType } = slide;
   const initialTitle = useRef(title);
 
   return (
@@ -300,14 +234,16 @@ const StartPage = ({
 };
 
 const EndPage = ({
-  image,
+  slide,
   createdBy,
   customizations,
 }: {
-  image: any;
+  slide: any;
   createdBy: any;
   customizations: any;
 }) => {
+  const { image } = slide;
+
   return (
     <div
       className="relative flex h-full w-fit items-center justify-center overflow-hidden bg-background p-6"
@@ -380,30 +316,25 @@ const EndPage = ({
 };
 
 const SlidePage = ({
-  pageIndex,
-  title,
-  description,
-  image,
+  slide,
+  selectedSlide,
   createdBy,
   customizations,
-  pageType,
   slides,
   setSlides,
-  selectedSlide,
 }: {
-  pageIndex: any;
-  title: any;
-  description: any;
-  image?: any;
+  slide: any;
+  selectedSlide: any;
   createdBy: any;
   customizations: any;
-  pageType: any;
   slides: any;
   setSlides: any;
-  selectedSlide: any;
 }) => {
+  const { title, description, image } = slide;
+
   const initialTitle = useRef(title);
   const initialDescription = useRef(description);
+
   return (
     <div
       className="relative flex h-full w-fit flex-col justify-center overflow-hidden bg-background p-6"
@@ -414,7 +345,7 @@ const SlidePage = ({
       }}
     >
       <img
-        src={image || "/carousel/bg-light.webp"}
+        src={image}
         className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
         style={{
           aspectRatio:
@@ -440,7 +371,7 @@ const SlidePage = ({
       >
         {customizations?.pageIndex?.visible && (
           <p className="outlined-text absolute left-0 top-0 -translate-x-24 -translate-y-[10%] text-[350px] font-extrabold opacity-10">
-            {pageIndex}
+            {selectedSlide}
           </p>
         )}
 
@@ -477,135 +408,50 @@ const SlidePage = ({
         </p>
       </div>
 
-      {pageType !== "end" && customizations?.createdBy?.visible && (
-        <div
-          className={cn("z-10 mt-auto flex h-11 items-center justify-between")}
-        >
-          <div
-            className={cn(
-              "flex w-full items-center space-x-2 pr-4",
-
-              customizations?.createdBy?.horizontal === "left"
-                ? "justify-start"
-                : customizations?.createdBy?.horizontal === "center"
-                  ? "justify-center"
-                  : "justify-end",
-
-              customizations?.createdBy?.vertical === "top"
-                ? "items-start"
-                : customizations?.createdBy?.vertical === "center"
-                  ? "items-center"
-                  : "items-end",
-            )}
-          >
-            <BoringAvatar
-              src={createdBy?.avatar}
-              alt={createdBy?.name}
-              name={createdBy?.name}
-              className="h-9 w-9 rounded-full object-cover"
-            />
-
-            <div className="">
-              <div className="text-sm font-bold">{createdBy?.name}</div>
-              <div className="text-xs">{`@${createdBy?.slug}`}</div>
-            </div>
-          </div>
-
-          <div
-            className="flex h-9 w-9 min-w-9 items-center justify-center rounded-full"
-            style={{
-              backgroundColor: customizations?.fontColor,
-
-              color: customizations?.backgroundColor,
-            }}
-          >
-            <IoChevronForward />
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-// Sections
-const HeaderSection = ({ createdBy }: { createdBy: any }) => {
-  return (
-    <div className="flex items-start justify-between gap-3 px-4 pt-4">
-      <BoringAvatar
-        src={createdBy?.logo}
-        alt={createdBy?.name}
-        name={createdBy?.name}
-        className="h-12 w-12 rounded-full object-cover object-center"
-      />
-      <div className="mr-auto flex flex-col leading-tight">
-        <div className="flex w-full items-center gap-2">
-          <span className="text-sm font-semibold">{createdBy?.name}</span>
-          <span className="text-xs text-muted-foreground">●</span>
-          <span className="text-sm text-muted-foreground">3rd+</span>
-        </div>
-        <div className="text-xs text-muted-foreground">
-          postt.ai | LinkedIn Automation
-        </div>
-        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-          <span>3d</span>
-          <span className="scale-75 text-xs text-muted-foreground">●</span>
-          <FaGlobeAmericas />
-        </div>
-      </div>
-      <Button
-        className="ml-auto w-fit text-[#0072b1] hover:text-[#0072b1]"
-        size="sm"
-        variant="ghost"
+      <div
+        className={cn("z-10 mt-auto flex h-11 items-center justify-between")}
       >
-        <LuPlus /> Follow
-      </Button>
-    </div>
-  );
-};
+        <div
+          className={cn(
+            "flex w-full items-center space-x-2 pr-4",
 
-const FooterSection = ({ createdBy }: { createdBy: any }) => {
-  return (
-    <div className="flex flex-col gap-3 px-4 pb-4">
-      <div className="flex items-center gap-2">
-        <div className="flex -space-x-1">
-          <div className="flex w-fit items-center justify-center rounded-full border bg-blue-600/70 p-0.5 text-xs">
-            <AiTwotoneLike className="-scale-x-[1]" />
+            customizations?.createdBy?.horizontal === "left"
+              ? "justify-start"
+              : customizations?.createdBy?.horizontal === "center"
+                ? "justify-center"
+                : "justify-end",
+
+            customizations?.createdBy?.vertical === "top"
+              ? "items-start"
+              : customizations?.createdBy?.vertical === "center"
+                ? "items-center"
+                : "items-end",
+          )}
+        >
+          <BoringAvatar
+            src={createdBy?.avatar}
+            alt={createdBy?.name}
+            name={createdBy?.name}
+            className="h-9 w-9 rounded-full object-cover"
+          />
+
+          <div className="">
+            <div className="text-sm font-bold">{createdBy?.name}</div>
+            <div className="text-xs">{`@${createdBy?.slug}`}</div>
           </div>
-          <div className="flex w-fit items-center justify-center rounded-full border bg-red-600/70 p-0.5 text-xs">
-            <AiTwotoneHeart />
-          </div>
         </div>
-        <p className="text-xs text-muted-foreground">
-          Alex Colen and 230 others
-        </p>
-        <p className="ml-auto text-xs text-muted-foreground">15 comments</p>
-      </div>
-      <Separator />
-      <div className="flex items-center justify-around">
-        <BoringAvatar
-          src={createdBy?.logo}
-          alt={createdBy?.name}
-          name={createdBy?.name}
-          className="h-6 w-6 rounded-full object-cover object-center"
-        />
-        <div className="flex items-center gap-2 text-sm font-medium">
-          <SlLike className="-scale-x-[1] text-base" />
-          Like
-        </div>
-        <div className="flex items-center gap-2 text-sm font-medium">
-          <TfiCommentAlt className="-scale-x-[1] text-base" />
-          Comment
-        </div>
-        <div className="flex items-center gap-2 text-sm font-medium">
-          <LiaShareSolid className="text-base" />
-          Share
-        </div>
-        <div className="flex items-center gap-2 text-sm font-medium">
-          <IoBookmarkOutline className="text-base" />
-          Save
+
+        <div
+          className="flex h-9 w-9 min-w-9 items-center justify-center rounded-full"
+          style={{
+            backgroundColor: customizations?.fontColor,
+
+            color: customizations?.backgroundColor,
+          }}
+        >
+          <IoChevronForward />
         </div>
       </div>
     </div>
   );
 };
-// End of Sections

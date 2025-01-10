@@ -19,7 +19,7 @@ export const menus = [
   },
   {
     name: "Carousel",
-    url: "/create?type=carousel/1",
+    url: "/create/carousel",
     icon: "/dialog-menu/carousel-post-image.svg",
   },
   {

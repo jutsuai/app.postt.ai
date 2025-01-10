@@ -4,7 +4,7 @@ import Wrapper from "@/components/wrapper/Wrapper";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import PreviewSection from "../carousel/editCarouselPage/_components/PreviewSection";
+import PreviewSection from "../../../components/preview";
 import { Textarea } from "@/components/ui/textarea";
 import CreateMenuDialog from "@/components/dialog/CreateMenuDialog";
 import SelectProfileDialog from "@/components/dialog/SelectProfileDialog";
@@ -46,9 +46,9 @@ export default function CreateTextPage() {
   return (
     <>
       <Wrapper>
-        <WrapperContent className="py-8 grid gap-8 grid-cols-2 h-full">
-          <div className="flex flex-col  gap-4 h-full w-full">
-            <div className="space-y-6 bg-muted shadow-md p-4 border rounded-lg h-full">
+        <WrapperContent className="grid h-full grid-cols-2 gap-8 py-8">
+          <div className="flex h-full w-full flex-col gap-4">
+            <div className="h-full space-y-6 rounded-lg border bg-muted p-4 shadow-md">
               <h3 className="text-base font-semibold">Content Edit</h3>
 
               <div className="space-y-2">
@@ -65,13 +65,13 @@ export default function CreateTextPage() {
               </div>
             </div>
 
-            <div className="w-full gap-4 flex">
+            <div className="flex w-full gap-4">
               <Button variant="secondary" className="w-full text-foreground">
                 Schedule Post
               </Button>
               <Button
                 disabled={loading}
-                className="w-full "
+                className="w-full"
                 onClick={() => setShowSelectProfileDialog(true)}
               >
                 {loading ? <VscLoading className="animate-spin" /> : "Post Now"}
