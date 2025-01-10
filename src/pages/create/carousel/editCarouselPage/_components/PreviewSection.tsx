@@ -11,6 +11,7 @@ import { TfiCommentAlt } from "react-icons/tfi";
 import { LiaShareSolid } from "react-icons/lia";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useRef, useState } from "react";
+import BoringAvatar from "@/components/BoringAvatar";
 
 export default function PreviewSection({
   hideHeader,
@@ -478,19 +479,16 @@ const SlidePage = ({
                   : "items-end",
             )}
           >
-            <Image
+            <BoringAvatar
               src={createdBy?.avatar}
-              alt={createdBy?.username}
+              alt={createdBy?.name}
+              name={createdBy?.name}
               className="h-9 w-9 rounded-full object-cover"
             />
 
             <div className="">
-              <div className="text-sm font-bold">{`${createdBy?.firstName} ${createdBy?.lastName}`}</div>
-              <div className="text-xs">
-                {createdBy?.username
-                  ? `@${createdBy?.username}`
-                  : createdBy?.email}
-              </div>
+              <div className="text-sm font-bold">{createdBy?.name}</div>
+              <div className="text-xs">{`@${createdBy?.slug}`}</div>
             </div>
           </div>
 
@@ -514,17 +512,15 @@ const SlidePage = ({
 const HeaderSection = ({ createdBy }: { createdBy: any }) => {
   return (
     <div className="flex items-start justify-between gap-3 px-4 pt-4">
-      <Image
-        src={createdBy?.avatar}
-        alt={createdBy?.username}
+      <BoringAvatar
+        src={createdBy?.logo}
+        alt={createdBy?.name}
+        name={createdBy?.name}
         className="h-12 w-12 rounded-full object-cover object-center"
       />
       <div className="mr-auto flex flex-col leading-tight">
         <div className="flex w-full items-center gap-2">
-          <span className="text-sm font-semibold">
-            {" "}
-            {`${createdBy.firstName} ${createdBy.lastName}`}
-          </span>
+          <span className="text-sm font-semibold">{createdBy.name}</span>
           <span className="text-xs text-muted-foreground">●</span>
           <span className="text-sm text-muted-foreground">3rd+</span>
         </div>
@@ -568,8 +564,9 @@ const FooterSection = ({ createdBy }: { createdBy: any }) => {
       <Separator />
       <div className="flex items-center justify-around">
         <Image
-          src={createdBy?.avatar}
-          alt={createdBy?.username}
+          src={createdBy?.logo}
+          alt={createdBy?.name}
+          name={createdBy?.name}
           className="h-6 w-6 rounded-full object-cover object-center"
         />
         <div className="flex items-center gap-2 text-sm font-medium">
