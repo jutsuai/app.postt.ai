@@ -1,12 +1,10 @@
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ContentTab from "./_components/ContentTab";
 import SettingsTab from "./_components/SettingsTab";
 import PreviewSection from "./_components/PreviewSection";
 import Wrapper from "@/components/wrapper/Wrapper";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import BottomSection from "./_components/BottomSection";
-import DownloadTab from "./_components/DownloadTab";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import httpClient from "@/lib/httpClient";
@@ -15,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import SelectProfileDialog from "@/components/dialog/SelectProfileDialog";
 import { RxText } from "react-icons/rx";
 import { IoIosSettings } from "react-icons/io";
+import { VscLoading } from "react-icons/vsc";
 
 export default function EditCarouselPage() {
   const navigate = useNavigate();
@@ -98,7 +97,9 @@ export default function EditCarouselPage() {
   const [showSelectProfileDialog, setShowSelectProfileDialog] = useState(false);
 
   const [loading, setLoading] = useState(false);
-  const handlePost = (linkedinId: string) => {
+  const handlePost = () => {
+    const linkedinId = selectedProfile?.linkedinId;
+
     setShowSelectProfileDialog(false);
     setLoading(true);
 
@@ -206,11 +207,12 @@ export default function EditCarouselPage() {
               <Button variant="secondary" className="w-full text-foreground">
                 Schedule Post
               </Button>
-              <Button
-                className="w-full"
-                onClick={() => setShowSelectProfileDialog(true)}
-              >
-                Post Now
+              <Button className="w-full" onClick={() => handlePost()}>
+                {loading ? (
+                  <VscLoading className="animate-spin" />
+                ) : (
+                  "Post Now!"
+                )}
               </Button>
             </div>
           </div>
@@ -225,11 +227,11 @@ export default function EditCarouselPage() {
         </WrapperContent>
       </Wrapper>
 
-      <SelectProfileDialog
+      {/* <SelectProfileDialog
         open={showSelectProfileDialog}
         setOpen={setShowSelectProfileDialog}
         onSubmit={handlePost}
-      />
+      /> */}
     </>
   );
 }

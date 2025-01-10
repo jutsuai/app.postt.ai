@@ -148,9 +148,6 @@ export default function PreviewSection({
                 createdBy={createdBy}
                 customizations={customizations}
                 pageType={pageType}
-                slides={slides}
-                setSlides={setSlides}
-                selectedSlide={selectedSlide}
               />
             ) : pageType == "end" ? (
               <EndPage
