@@ -9,71 +9,72 @@ import Header from "@/components/header/Header";
 export default function ReportsPage() {
   return (
     <Wrapper>
-      <WrapperContent className="gap-2 sm:bg-muted/80 h-dvh overflow-y-auto">
+      <WrapperContent className="h-dvh gap-2 overflow-y-auto sm:bg-muted/80">
         <Header />
 
-        <div className="grid grid-cols-2 w-full sm:bg-background sm:p-6 rounded-3xl gap-4 sm:gap-6">
-          <div className="flex flex-col gap-4 bg-primary-accent/40 p-4 rounded-2xl">
+        <div className="grid w-full grid-cols-2 gap-4 rounded-3xl sm:gap-6 sm:bg-background sm:p-6">
+          <div className="flex flex-col gap-4 rounded-2xl bg-primary-accent/40 p-4">
             <div className="flex items-center justify-between">
               <Button
                 size="icon"
-                className="rounded-full  text-foreground bg-primary-accent"
+                className="rounded-full bg-primary-accent text-foreground"
                 variant="secondary"
               >
                 <FaRegBell className="" />
               </Button>
-              <Button size="icon" className="rounded-full " variant="ghost">
+              <Button size="icon" className="rounded-full" variant="ghost">
                 <MdArrowOutward />
               </Button>
             </div>
-            <div className="flex flex-col gap-4 mt-auto">
-              <p className="sm:text-6xl text-5xl font-bold">19</p>
-              <p className="text-muted-foreground font-medium text-base sm:text-lg">
+            <div className="mt-auto flex flex-col gap-4">
+              <p className="text-5xl font-bold sm:text-6xl">19</p>
+              <p className="text-base font-medium text-muted-foreground sm:text-lg">
                 Today's
                 <br />
                 scheduled posts
               </p>
             </div>
           </div>
-          <div className="flex flex-col sm:gap-6 gap-4">
-            <div className="flex flex-col gap-4 bg-foreground/90 p-4 rounded-2xl">
+
+          <div className="flex flex-col gap-4 sm:gap-6">
+            <div className="flex flex-col gap-4 rounded-2xl bg-foreground/90 p-4">
               <div className="flex items-center justify-between">
                 <Button
                   size="icon"
-                  className="rounded-full text-background bg-muted-foreground"
+                  className="rounded-full bg-muted-foreground text-background"
                   variant="secondary"
                 >
                   <IoStopwatchOutline />
                 </Button>
                 <Button
                   size="icon"
-                  className="rounded-full text-muted "
+                  className="rounded-full text-muted"
                   variant="ghost"
                 >
                   <MdArrowOutward />
                 </Button>
               </div>
-              <div className="flex flex-col gap-2 mt-4 sm:mt-8">
-                <p className="text-base sm:text-xl font-medium text-background">
+              <div className="mt-4 flex flex-col gap-2 sm:mt-8">
+                <p className="text-base font-medium text-background sm:text-xl">
                   Video Content
                 </p>
               </div>
             </div>
-            <div className="flex flex-col gap-4 bg-secondary-accent/40 p-4 rounded-2xl">
+            <div className="flex flex-col gap-4 rounded-2xl bg-secondary-accent/40 p-4">
               <div className="flex items-center justify-between">
                 <Button
                   size="icon"
-                  className="rounded-full text-foreground bg-secondary-accent"
+                  className="rounded-full bg-secondary-accent text-foreground"
                   variant="secondary"
                 >
                   <MdOutlineAvTimer />
                 </Button>
-                <Button size="icon" className="rounded-full " variant="ghost">
+                <Button size="icon" className="rounded-full" variant="ghost">
                   <MdArrowOutward />
                 </Button>
               </div>
-              <div className="flex flex-col gap-2 mt-4 sm:mt-8">
-                <p className="text-base sm:text-xl font-medium">
+              <div className="mt-4 flex flex-col gap-2 sm:mt-8">
+                <p className="text-base font-medium sm:text-xl">
                   Image Content
                 </p>
               </div>

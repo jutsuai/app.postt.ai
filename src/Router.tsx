@@ -28,6 +28,7 @@ import SettingsPage from "./pages/settings/SettingsPage";
 import OnboardingLayout from "./layout/OnboardingLayout";
 import CreateDocumentPage from "./pages/create/CreateDocumentPage";
 import { VscLoading } from "react-icons/vsc";
+import PostsPage from "./pages/posts/PostsPage";
 
 export default function Router() {
   const { isAuthenticated } = useAuth();
@@ -120,6 +121,10 @@ const AppRouter = () => {
             <Route index element={<CarouselsPage />} />
             <Route path=":id" element={<EditCarouselPage />} />
           </Route>
+        </Route>
+
+        <Route path="posts">
+          <Route index element={<PostsPage />} />
         </Route>
 
         <Route path="settings">

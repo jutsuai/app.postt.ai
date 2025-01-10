@@ -158,6 +158,8 @@ export default function PreviewSection({
           </>
         )}
 
+        <img className="w-full" src={image} alt="" />
+
         {!hideFooter && <FooterSection createdBy={createdBy} />}
       </div>
     </div>

@@ -19,8 +19,23 @@ export default function CreateDocumentPage() {
   // const [data, setData] = useState({
   const [commentary, setCommentary] = useState("This is a commentary");
   const [image, setImage] = useState<any>(null);
+  const [imagePreview, setImagePreview] = useState<any>(null);
 
   const [showSelectProfileDialog, setShowSelectProfileDialog] = useState(false);
+
+  const handleFileChange = (event: any) => {
+    const file = event.target.files[0];
+
+    setImage(file);
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const [loading, setLoading] = useState(false);
   const handlePost = (linkedinId: string) => {
@@ -75,23 +90,7 @@ export default function CreateDocumentPage() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <input
-                    type="file"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-
-                      setImage(file);
-                      // if (file) {
-                      //   const reader = new FileReader();
-
-                      //   reader.onload = () => {
-                      //     setImage(reader.result as string);
-                      //   };
-
-                      //   reader.readAsDataURL(file);
-                      // }
-                    }}
-                  />
+                  <input type="file" onChange={handleFileChange} />
                 </div>
               </div>
             </div>
@@ -115,6 +114,7 @@ export default function CreateDocumentPage() {
             createdBy={user}
             commentary={commentary}
             customizations={customizations}
+            image={imagePreview}
           />
         </WrapperContent>
       </Wrapper>

@@ -10,6 +10,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { BsFilePost } from "react-icons/bs";
 
 export default function AppSidebarContent() {
   const { pathname } = useLocation();
@@ -85,6 +86,12 @@ export default function AppSidebarContent() {
             </svg>
           ),
           url: "/reports",
+          items: [],
+        },
+        {
+          label: "Posts",
+          icon: <BsFilePost size={20} className="stroke-current" />,
+          url: "/posts",
           items: [],
         },
       ],
