@@ -93,19 +93,16 @@ export default function PreviewSection({
 
         {slides && (
           <>
-            {/* // div
-              // className={cn(
-              //   "absolute top-[50%] z-20 right-0 left-0 transition flex justify-between px-4",
-
-              //   onHover ? "opacity-100" : "opacity-0"
-              // )} */}
             {!hideArrows && (
               <>
                 <Button
                   size="icon"
                   className={cn(
-                    "rounded-full bg-foreground/60 hover:bg-foreground hover:text-background",
-                    selectedSlide === 0 && "pointer-events-none opacity-0",
+                    "ml-2 rounded-full bg-foreground/60 pl-2.5 hover:bg-foreground hover:text-background",
+                    // selectedSlide === 0 && "pointer-events-none opacity-0",
+                    "absolute left-0 top-[50%] z-40 flex justify-between transition",
+
+                    onHover ? "opacity-100" : "opacity-0",
                   )}
                   onClick={() =>
                     setSelectedSlide((prev: any) => {
@@ -121,9 +118,11 @@ export default function PreviewSection({
                 </Button>
                 <Button
                   className={cn(
-                    "rounded-full bg-foreground/60 hover:bg-foreground hover:text-background",
-                    selectedSlide === slides?.length - 1 &&
-                      "pointer-events-none opacity-0",
+                    "mr-2 rounded-full bg-foreground/60 pl-2.5 hover:bg-foreground hover:text-background",
+                    // selectedSlide === 0 && "pointer-events-none opacity-0",
+                    "absolute right-0 top-[50%] z-40 flex justify-between transition",
+
+                    onHover ? "opacity-100" : "opacity-0",
                   )}
                   size="icon"
                   onClick={() => {
@@ -148,6 +147,9 @@ export default function PreviewSection({
                 createdBy={createdBy}
                 customizations={customizations}
                 pageType={pageType}
+                slides={slides}
+                setSlides={setSlides}
+                selectedSlide={selectedSlide}
               />
             ) : pageType == "end" ? (
               <EndPage
@@ -186,18 +188,24 @@ const StartPage = ({
   createdBy,
   customizations,
   pageType,
+  slides,
+  setSlides,
+  selectedSlide,
 }: {
   title: any;
   image: any;
   createdBy: any;
   customizations: any;
   pageType: any;
+  slides: any;
+  setSlides: any;
+  selectedSlide: any;
 }) => {
   const initialTitle = useRef(title);
 
   return (
     <div
-      className="relative flex w-fit flex-col justify-center overflow-hidden bg-background p-6"
+      className="relative z-0 flex w-fit flex-col justify-center overflow-hidden bg-background p-6"
       style={{
         aspectRatio: customizations?.size?.width / customizations?.size?.height,
         minHeight: customizations?.size?.height,
@@ -232,6 +240,16 @@ const StartPage = ({
       >
         {customizations?.title?.visible && (
           <h1
+            contentEditable
+            suppressContentEditableWarning
+            onInput={(e) => {
+              const newSlides = [...slides];
+              newSlides[selectedSlide] = {
+                ...newSlides[selectedSlide],
+                title: e.currentTarget.textContent,
+              };
+              setSlides(newSlides);
+            }}
             className="text-4xl font-semibold leading-normal text-gray-800"
             style={{
               textAlign:
@@ -426,7 +444,21 @@ const SlidePage = ({
           </p>
         )}
 
-        <h6 className="text-xl font-semibold">{title}</h6>
+        <h6
+          contentEditable
+          suppressContentEditableWarning
+          onInput={(e) => {
+            const newSlides = [...slides];
+            newSlides[selectedSlide] = {
+              ...newSlides[selectedSlide],
+              title: e.currentTarget.textContent,
+            };
+            setSlides(newSlides);
+          }}
+          className="z-10 w-full text-xl font-semibold"
+        >
+          {initialTitle.current}
+        </h6>
 
         <p
           contentEditable
