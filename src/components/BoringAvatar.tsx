@@ -18,7 +18,7 @@ export default function BoringAvatar(props: any) {
     <div>
       {shouldShowAvatar ? (
         <img
-          src={`https://placehold.co/512x512@2x/6842ff/ffffff?text=${rest.name?.charAt(0)}`}
+          src={`https://placehold.co/512x512@2x/6842ff/ffffff?text=${(rest.name || alt)?.charAt(0)}`}
           alt={alt || "Avatar"}
           onError={() => setImageError(true)}
           style={{

@@ -189,18 +189,12 @@ const StartPage = ({
   createdBy,
   customizations,
   pageType,
-  slides,
-  setSlides,
-  selectedSlide,
 }: {
   title: any;
   image: any;
   createdBy: any;
   customizations: any;
   pageType: any;
-  slides: any;
-  setSlides: any;
-  selectedSlide: any;
 }) => {
   const initialTitle = useRef(title);
 
@@ -274,19 +268,15 @@ const StartPage = ({
                 : "items-end",
           )}
         >
-          <Image
-            src={createdBy?.avatar}
-            alt={createdBy?.username}
+          <BoringAvatar
+            src={createdBy?.logo}
+            alt={createdBy?.name}
             className="h-9 w-9 rounded-full object-cover"
           />
 
           <div>
-            <div className="text-sm font-bold">{`${createdBy.firstName} ${createdBy.lastName}`}</div>
-            <div className="text-xs">
-              {createdBy?.username
-                ? `@${createdBy?.username}`
-                : createdBy?.email}
-            </div>
+            <div className="text-sm font-bold">{createdBy?.name}</div>
+            <div className="text-xs">{`@${createdBy?.slug}`}</div>
           </div>
         </div>
       )}
@@ -348,9 +338,9 @@ const EndPage = ({
         )}
       >
         <div className="rounded-full p-2 ring-[2px] ring-black/25">
-          <Image
-            src={createdBy?.avatar}
-            alt={createdBy?.username}
+          <BoringAvatar
+            src={createdBy?.logo}
+            alt={createdBy?.name}
             className="h-24 min-h-24 w-24 min-w-24 rounded-full"
           />
         </div>
@@ -367,7 +357,7 @@ const EndPage = ({
                   : "end",
           }}
         >
-          {`${createdBy.firstName} ${createdBy.lastName}`}
+          {createdBy.name}
         </div>
       </div>
     </div>
@@ -520,7 +510,7 @@ const HeaderSection = ({ createdBy }: { createdBy: any }) => {
       />
       <div className="mr-auto flex flex-col leading-tight">
         <div className="flex w-full items-center gap-2">
-          <span className="text-sm font-semibold">{createdBy.name}</span>
+          <span className="text-sm font-semibold">{createdBy?.name}</span>
           <span className="text-xs text-muted-foreground">●</span>
           <span className="text-sm text-muted-foreground">3rd+</span>
         </div>
