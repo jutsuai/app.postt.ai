@@ -98,6 +98,31 @@ export default function EditCarouselPage() {
   const [showSelectProfileDialog, setShowSelectProfileDialog] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  const handleSaveCarouselPost = () => {
+    const linkedinId = selectedProfile?.linkedinId;
+
+    setShowSelectProfileDialog(false);
+    setLoading(true);
+
+    httpClient()
+      .post(`/assets/carousels`, {
+        commentary,
+        slides,
+        customizations,
+      })
+      .then((res) => {
+        console.log("Post Success", res.data);
+        toast.success("Post Successful");
+        // navigate("/");
+      })
+      .catch((err) => {
+        console.error("Post Error", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const handlePost = () => {
     const linkedinId = selectedProfile?.linkedinId;
 
@@ -105,15 +130,18 @@ export default function EditCarouselPage() {
     setLoading(true);
 
     httpClient()
-      .post(`/linkedin/${linkedinId}/post/carousel`, {
-        commentary,
-        slides,
-        customizations,
-      })
+      .post(
+        `/linkedin/profiles/${selectedProfile?.linkedinProfileId}/post/carousel`,
+        {
+          commentary,
+          slides,
+          customizations,
+        },
+      )
       .then((res) => {
-        console.log("Post Success", res);
+        console.log("Post Success", res.data);
         toast.success("Post Successful");
-        navigate("/");
+        // navigate("/");
       })
       .catch((err) => {
         console.error("Post Error", err);
