@@ -563,7 +563,7 @@ const FooterSection = ({ createdBy }: { createdBy: any }) => {
       </div>
       <Separator />
       <div className="flex items-center justify-around">
-        <Image
+        <BoringAvatar
           src={createdBy?.logo}
           alt={createdBy?.name}
           name={createdBy?.name}
