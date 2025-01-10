@@ -8,22 +8,22 @@ import MenuCard from "../MenuCard";
 
 export const menus = [
   {
-    name: "Text Post",
+    name: "Text",
     url: "/create?type=text",
     icon: "/dialog-menu/text-post-image.svg",
   },
   {
-    name: "Image Post",
+    name: "Image",
     url: "/create?type=image",
     icon: "/dialog-menu/single-post-image.svg",
   },
   {
-    name: "Carousel Post",
+    name: "Carousel",
     url: "/create?type=carousel/1",
     icon: "/dialog-menu/carousel-post-image.svg",
   },
   {
-    name: "Document Post",
+    name: "Document",
     url: "/create?type=document",
     icon: "/dialog-menu/single-post-image.svg",
   },
@@ -40,7 +40,7 @@ export default function CreateMenuDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Create</DialogTitle>
+          <DialogTitle>Create a post</DialogTitle>
         </DialogHeader>
 
         <div className="grid grid-cols-4 gap-4">

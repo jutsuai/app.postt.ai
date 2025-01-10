@@ -1,11 +1,17 @@
 import BoringAvatar from "@/components/BoringAvatar";
 import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
   SidebarFooter,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/context/AuthContext";
 import httpClient from "@/lib/httpClient";
 import { cn } from "@/lib/utils";
@@ -51,47 +57,41 @@ export default function AppSidebarFooter() {
     <SidebarFooter>
       <SidebarMenu>
         {/* <button onClick={loadImage}>Load Image</button> */}
-        <SidebarMenuItem
-          // "transition-all duration-200 cursor-pointer  hover:!bg-transparent !rounded-full",
-          // sidebarMode ? "mx-0 px-0 py-1.5 " : "mx-1.5 py-[7px] !p-0 w-full"
-          className="flex flex-col gap-0"
-        >
-          {linkedinProfiles?.map((profile: any, index: number) => (
-            <SidebarMenuButton
+        {/* {linkedinProfiles?.map((profile: any, index: number) => (
+          <SidebarMenuButton
+            className={cn(
+              "h-13 m-0 rounded-full transition",
+
+              // index === selectedProfile ? "bg-[#ecebff]" : "ring-transparent")
+              profile?._id === selectedProfile?._id
+                ? "!bg-primary/25"
+                : "ring-transparent",
+
+              "hover:bg-primary/5 active:bg-primary/10",
+            )}
+            onClick={() => setSelectedProfile(profile)}
+          >
+            <BoringAvatar
+              name={profile?.name}
+              src={profile?.avatar}
+              alt={profile?.name}
+              className="w-10"
+            />
+
+            <div
               className={cn(
-                "h-13 m-0 rounded-full transition",
-
-                // index === selectedProfile ? "bg-[#ecebff]" : "ring-transparent")
-                profile?._id === selectedProfile?._id
-                  ? "!bg-primary/25"
-                  : "ring-transparent",
-
-                "hover:bg-primary/5 active:bg-primary/10",
+                "z-10 flex flex-col items-start overflow-hidden text-sm font-semibold transition-colors duration-200",
               )}
-              onClick={() => setSelectedProfile(profile)}
             >
-              <BoringAvatar
-                name={profile?.name}
-                src={profile?.avatar}
-                alt={profile?.name}
-                className="w-10"
-              />
-
-              <div
-                className={cn(
-                  "z-10 flex flex-col items-start overflow-hidden text-sm font-semibold transition-colors duration-200",
-                )}
-              >
-                <p className="text-center text-sm font-semibold">
-                  {`${profile?.name}`}
-                </p>
-                <h3 className="text-center text-xs font-medium text-muted-foreground">
-                  {profile?.slug}
-                </h3>
-              </div>
-            </SidebarMenuButton>
-          ))}
-        </SidebarMenuItem>
+              <p className="text-center text-sm font-semibold">
+                {`${profile?.name}`}
+              </p>
+              <h3 className="text-center text-xs font-medium text-muted-foreground">
+                {profile?.slug}
+              </h3>
+            </div>
+          </SidebarMenuButton>
+        ))} */}
 
         <SidebarMenuItem
           className={cn(
@@ -100,35 +100,87 @@ export default function AppSidebarFooter() {
             // sidebarMode ? "mx-2 px-2 py-1.5 " : "mx-1.5 py-[7px] pl-[5px] pl-[5px]"
           )}
         >
-          <Link to="/settings">
-            <SidebarMenuButton
-              className="h-10 min-h-12 w-full min-w-12 hover:!bg-transparent"
-              style={{
-                padding: "0px !important",
-              }}
-            >
-              <BoringAvatar
-                name={user?.firstName}
-                size={40}
-                src={user?.avatar}
-                alt={user?.firstName}
-                className={cn("min-w-10", sidebarMode ? "" : "-ml-2")}
-              />
-
-              <div
-                className={cn(
-                  "z-10 flex flex-col items-start overflow-hidden text-sm font-semibold transition-colors duration-200",
-                )}
+          {/* <Link to="/settings"> */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <SidebarMenuButton
+                className="h-10 min-h-12 w-full min-w-12 hover:!bg-transparent"
+                style={{
+                  padding: "0px !important",
+                }}
               >
-                <p className="text-center text-sm font-semibold">
-                  {`${user?.firstName} ${user?.lastName}`}
-                </p>
-                <h3 className="text-center text-xs font-medium text-muted-foreground">
-                  {user?.email}
-                </h3>
-              </div>
-            </SidebarMenuButton>
-          </Link>
+                {selectedProfile ? (
+                  <>
+                    <BoringAvatar
+                      name={selectedProfile?.name}
+                      size={40}
+                      src={selectedProfile?.logo}
+                      alt={selectedProfile?.name}
+                      className={cn("min-w-10", sidebarMode ? "" : "-ml-2")}
+                    />
+
+                    <div
+                      className={cn(
+                        "z-10 flex flex-col items-start overflow-hidden text-sm font-semibold transition-colors duration-200",
+                      )}
+                    >
+                      <p className="text-center text-sm font-semibold">
+                        {`${selectedProfile?.name}`}
+                      </p>
+                      <h3 className="text-center text-xs font-medium text-muted-foreground">
+                        {selectedProfile?.slug}
+                      </h3>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex h-12 w-full items-center gap-1 rounded-full">
+                    <Skeleton className="h-10 w-10 rounded-full" />
+                    <div className="flex flex-col gap-1">
+                      <Skeleton className="h-4 w-28 rounded-full" />
+                      <Skeleton className="h-2 w-14 rounded-full" />
+                    </div>
+                  </div>
+                )}
+              </SidebarMenuButton>
+            </PopoverTrigger>
+            <PopoverContent className="rounded-2xl">
+              {linkedinProfiles?.map((profile: any, index: number) => (
+                <SidebarMenuButton
+                  className={cn(
+                    "h-13 m-0 rounded-full transition",
+
+                    // index === selectedProfile ? "bg-[#ecebff]" : "ring-transparent")
+                    profile?._id === selectedProfile?._id
+                      ? "!bg-primary/25"
+                      : "ring-transparent",
+
+                    "hover:bg-primary/5 active:bg-primary/10",
+                  )}
+                  onClick={() => setSelectedProfile(profile)}
+                >
+                  <BoringAvatar
+                    name={profile?.name}
+                    src={profile?.logo}
+                    alt={profile?.name}
+                    className="w-10"
+                  />
+
+                  <div
+                    className={cn(
+                      "z-10 flex flex-col items-start overflow-hidden text-sm font-semibold transition-colors duration-200",
+                    )}
+                  >
+                    <p className="text-center text-sm font-semibold">
+                      {`${profile?.name}`}
+                    </p>
+                    <h3 className="text-center text-xs font-medium text-muted-foreground">
+                      {profile?.slug}
+                    </h3>
+                  </div>
+                </SidebarMenuButton>
+              ))}
+            </PopoverContent>
+          </Popover>
         </SidebarMenuItem>
 
         <SidebarMenuItem

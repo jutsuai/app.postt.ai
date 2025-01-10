@@ -81,7 +81,7 @@ export default function ContentTab({
         </div>
       )} */}
       <div className="flex flex-col gap-2">
-        <Label htmlFor="caption-field">Caption</Label>
+        <Label htmlFor="caption-field">Prompt</Label>
         <div
           id="caption-field"
           className="flex w-full flex-col rounded-lg border bg-muted"
@@ -164,9 +164,9 @@ export default function ContentTab({
       <div className="flex flex-col gap-2">
         <Label>Adjust Design</Label>
         <div className="flex items-center gap-3 rounded-lg bg-muted p-3">
-          {[...Array(4)].map((item, index) => (
-            <DesignColor key={index} />
-          ))}
+          {customizations?.backgroundColor && (
+            <DesignColor color={customizations?.backgroundColor} />
+          )}
         </div>
       </div>
 
@@ -387,18 +387,14 @@ const PositionButtons = ({
 };
 
 function DesignColor({
-  // color = "#00d5f6",
-  // setColor,
+  color = "#00d5f6",
+  setColor,
   className,
 }: {
-  // color: any;
-  // setColor: any;
+  color: any;
+  setColor: any;
   className?: string;
 }) {
-  const [color, setColor] = useState(
-    `#${Math.floor(Math.random() * 16777215).toString(16)}`,
-  );
-
   const colorInputRef = useRef<HTMLInputElement>(null);
 
   const handleCardClick = () => {

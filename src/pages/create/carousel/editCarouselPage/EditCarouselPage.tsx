@@ -191,7 +191,7 @@ export default function EditCarouselPage() {
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold">
                 {activeTab === "Content"
-                  ? "Content Edit"
+                  ? "Generate Carousel"
                   : activeTab === "Customization" && "Customization"}
               </h3>
               <div className="flex items-center rounded-3xl bg-muted p-1">
