@@ -72,6 +72,7 @@ export default function PreviewSection({
             <Arrows
               setSelectedSlide={setSelectedSlide}
               slides={slides}
+              selectedSlide={selectedSlide}
               hideArrows={hideArrows}
               onHover={onHover}
             />
