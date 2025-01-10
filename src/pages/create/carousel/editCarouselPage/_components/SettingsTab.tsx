@@ -1,3 +1,4 @@
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 export default function SettingsTab({
@@ -8,13 +9,11 @@ export default function SettingsTab({
   setCommentary: any;
 }) {
   return (
-    <div className="space-y-6 bg-muted border shadow-md p-4 rounded-lg h-full">
-      <h3 className="text-base font-semibold">Settings</h3>
+    <div className="h-full w-full">
+      {/* <h3 className="text-base font-semibold">Settings</h3> */}
 
       <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-medium">Commentary</span>
-        </div>
+        <Label>Commentary</Label>
         <Textarea
           // disabled={!customizations?.description?.visible}
           // value={slides[selectedSlide].description}
@@ -28,8 +27,8 @@ export default function SettingsTab({
           // }}
           value={commentary}
           onChange={(e) => setCommentary(e.target.value)}
-          rows={4}
-          className="bg-background"
+          rows={6}
+          className="resize-none rounded-lg bg-background"
         />
       </div>
     </div>

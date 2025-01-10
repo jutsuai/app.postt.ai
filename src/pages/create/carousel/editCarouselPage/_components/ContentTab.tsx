@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import UploadTool from "@/components/UploadTool";
 import { cn } from "@/lib/utils";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GrFormEdit } from "react-icons/gr";
 import { HiSparkles } from "react-icons/hi2";
 import { LuCopy, LuImage } from "react-icons/lu";
@@ -40,7 +41,7 @@ export default function ContentTab({
   console.log("selectedSlide", selectedSlide);
 
   return (
-    <div className="w-full space-y-6 rounded-lg">
+    <div className="h-full w-full space-y-6 rounded-lg">
       {/* {slides[selectedSlide]?.pageType !== "end" && (
         <div className="space-y-2">
           <div className="flex items-center justify-between">
@@ -176,32 +177,72 @@ export default function ContentTab({
           <LuImage />
           <span className="text-sm font-medium">Image</span>
         </div>
-        <Button variant="outline" className="rounded-full" size="sm">
-          <GrFormEdit /> Edit
-        </Button>
-      </div>
-
-      {slides[selectedSlide]?.pageType === "start" && (
-        <p
-          // variant="link"
-          className="w-fit cursor-pointer text-xs text-primary hover:underline"
-          onClick={() => {
-            const newSlides = [...slides];
-            newSlides.forEach((slide, index) => {
-              newSlides[index] = {
-                ...newSlides[index],
-                image: slides[selectedSlide].image,
-              };
-            });
-            setSlides(newSlides);
-          }}
+        <ImageUploadDialog
+          slides={slides}
+          setSlides={setSlides}
+          selectedSlide={selectedSlide}
         >
-          Use Same Image for All Slides
-        </p>
-      )}
+          <Button variant="outline" className="rounded-full" size="sm">
+            <GrFormEdit /> Edit
+          </Button>
+        </ImageUploadDialog>
+      </div>
     </div>
   );
 }
+
+const ImageUploadDialog = ({
+  children,
+  slides,
+  setSlides,
+  selectedSlide,
+}: {
+  children: any;
+  slides: any;
+  setSlides: any;
+  selectedSlide: any;
+}) => {
+  const handleUpload = (url: any) => {
+    const newSlides = [...slides];
+    newSlides[selectedSlide] = {
+      ...newSlides[selectedSlide],
+      image: url,
+    };
+    setSlides(newSlides);
+  };
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent>
+        <div className="flex flex-col gap-4">
+          <UploadTool
+            label="Background Image"
+            // value={backgroundImageUrl}
+            onChange={handleUpload}
+          />
+        </div>
+        {slides[selectedSlide]?.pageType === "start" && (
+          <p
+            className="w-fit cursor-pointer text-xs text-primary hover:underline"
+            onClick={() => {
+              const newSlides = [...slides];
+              newSlides.forEach((slide, index) => {
+                newSlides[index] = {
+                  ...newSlides[index],
+                  image: slides[selectedSlide].image,
+                };
+              });
+              setSlides(newSlides);
+            }}
+          >
+            Use Same Image for All Slides
+          </p>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 const PositionButtons = ({
   customizations,

@@ -14,6 +14,7 @@ import SelectProfileDialog from "@/components/dialog/SelectProfileDialog";
 import { RxText } from "react-icons/rx";
 import { IoIosSettings } from "react-icons/io";
 import { VscLoading } from "react-icons/vsc";
+import { cn } from "@/lib/utils";
 
 export default function EditCarouselPage() {
   const navigate = useNavigate();
@@ -160,13 +161,33 @@ export default function EditCarouselPage() {
             </Tabs> */}
 
             <div className="flex items-center justify-between">
-              <h3 className="text-base font-semibold">Content Edit</h3>
-              <div className="flex items-center">
-                <button className="bg-muted p-2">
-                  <RxText />
+              <h3 className="text-lg font-semibold">
+                {activeTab === "Content"
+                  ? "Content Edit"
+                  : activeTab === "Customization" && "Customization"}
+              </h3>
+              <div className="flex items-center rounded-3xl bg-muted p-1">
+                <button
+                  className={cn(
+                    "flex w-12 items-center justify-center rounded-3xl p-2 px-4",
+                    activeTab === "Content"
+                      ? "border bg-background"
+                      : "bg-muted",
+                  )}
+                  onClick={() => setActiveTab("Content")}
+                >
+                  <RxText className="text-sm" />
                 </button>
-                <button>
-                  <IoIosSettings />
+                <button
+                  className={cn(
+                    "flex w-12 items-center justify-center rounded-3xl p-2 px-4",
+                    activeTab === "Customization"
+                      ? "border bg-background"
+                      : "bg-muted",
+                  )}
+                  onClick={() => setActiveTab("Customization")}
+                >
+                  <IoIosSettings className="text-sm" />
                 </button>
               </div>
             </div>
