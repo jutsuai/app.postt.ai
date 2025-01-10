@@ -10,7 +10,7 @@ import { SlLike } from "react-icons/sl";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { LiaShareSolid } from "react-icons/lia";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 export default function PreviewSection({
   hideHeader,
@@ -19,6 +19,8 @@ export default function PreviewSection({
 
   pageType,
   slides,
+
+  setSlides,
   createdBy,
 
   pageIndex,
@@ -31,6 +33,7 @@ export default function PreviewSection({
 
   commentary,
   customizations,
+  setCommentary,
 }: {
   hideHeader?: boolean;
   hideFooter?: boolean;
@@ -41,6 +44,7 @@ export default function PreviewSection({
   pageType?: any;
 
   slides?: any;
+  setSlides?: any;
 
   createdBy?: any;
 
@@ -53,14 +57,15 @@ export default function PreviewSection({
 
   commentary?: any;
   customizations?: any;
+  setCommentary?: any;
 }) {
-  // console.log(customizations);
-
   const [onHover, setOnHover] = useState(false);
+
+  const initialCommentary = useRef(commentary);
   return (
-    <div className="w-full h-full flex justify-center items-center mx-auto  bg-[#f3f4f6] rounded-lg flex-1">
+    <div className="mx-auto flex h-full w-full flex-1 items-center justify-center rounded-lg bg-[#f3f4f6]">
       <div
-        className="mx-auto bg-background border   rounded-xl relative flex flex-col w-min gap-2 select-none"
+        className="relative mx-auto flex w-min select-none flex-col gap-2 rounded-xl border bg-background"
         style={{
           width: customizations?.size?.width,
           // height: customizations?.size?.height,
@@ -71,30 +76,32 @@ export default function PreviewSection({
         {!hideHeader && <HeaderSection createdBy={createdBy} />}
 
         <p
+          contentEditable
+          suppressContentEditableWarning
+          onInput={(e) => {
+            setCommentary(e.currentTarget.textContent);
+          }}
           className={cn(
-            "whitespace-pre-wrap px-4  text-sm",
+            "whitespace-pre-wrap px-4 text-sm",
 
-            slides && "col-span-6"
+            slides && "col-span-6",
           )}
         >
-          {commentary}
+          {initialCommentary.current}
         </p>
 
         {slides && (
           <>
             {!hideArrows && (
-              <div
-                className={cn(
-                  "absolute top-[50%] z-20 right-0 left-0 transition flex justify-between px-4",
-
-                  onHover ? "opacity-100" : "opacity-0"
-                )}
-              >
+              <>
                 <Button
                   size="icon"
                   className={cn(
-                    "rounded-full bg-foreground/60 hover:bg-foreground hover:text-background",
-                    selectedSlide === 0 && "opacity-0 pointer-events-none"
+                    "ml-2 rounded-full bg-foreground/60 pl-2.5 hover:bg-foreground hover:text-background",
+                    selectedSlide === 0 && "pointer-events-none opacity-0",
+                    "absolute left-0 top-[50%] z-20 flex justify-between transition",
+
+                    onHover ? "opacity-100" : "opacity-0",
                   )}
                   onClick={() =>
                     setSelectedSlide((prev: any) => {
@@ -110,9 +117,12 @@ export default function PreviewSection({
                 </Button>
                 <Button
                   className={cn(
-                    "rounded-full  bg-foreground/60 hover:bg-foreground hover:text-background",
+                    "mr-2 rounded-full bg-foreground/60 pl-2.5 hover:bg-foreground hover:text-background",
                     selectedSlide === slides?.length - 1 &&
-                      "opacity-0 pointer-events-none"
+                      "pointer-events-none opacity-0",
+                    "absolute right-0 top-[50%] z-20 flex justify-between transition",
+
+                    onHover ? "opacity-100" : "opacity-0",
                   )}
                   size="icon"
                   onClick={() => {
@@ -127,7 +137,7 @@ export default function PreviewSection({
                 >
                   <MdKeyboardArrowRight />
                 </Button>
-              </div>
+              </>
             )}
 
             {pageType == "start" ? (
@@ -137,6 +147,9 @@ export default function PreviewSection({
                 createdBy={createdBy}
                 customizations={customizations}
                 pageType={pageType}
+                slides={slides}
+                setSlides={setSlides}
+                selectedSlide={selectedSlide}
               />
             ) : pageType == "end" ? (
               <EndPage
@@ -153,12 +166,15 @@ export default function PreviewSection({
                 createdBy={createdBy}
                 customizations={customizations}
                 pageType={pageType}
+                slides={slides}
+                setSlides={setSlides}
+                selectedSlide={selectedSlide}
               />
             )}
           </>
         )}
 
-        <img className="w-full" src={image} alt="" />
+        {/* <img className="w-full" src={image} alt="" /> */}
 
         {!hideFooter && <FooterSection createdBy={createdBy} />}
       </div>
@@ -172,16 +188,24 @@ const StartPage = ({
   createdBy,
   customizations,
   pageType,
+  slides,
+  setSlides,
+  selectedSlide,
 }: {
   title: any;
   image: any;
   createdBy: any;
   customizations: any;
   pageType: any;
+  slides: any;
+  setSlides: any;
+  selectedSlide: any;
 }) => {
+  const initialTitle = useRef(title);
+
   return (
     <div
-      className=" flex overflow-hidden bg-background justify-center flex-col p-6 w-fit relative"
+      className="relative flex w-fit flex-col justify-center overflow-hidden bg-background p-6"
       style={{
         aspectRatio: customizations?.size?.width / customizations?.size?.height,
         minHeight: customizations?.size?.height,
@@ -190,7 +214,7 @@ const StartPage = ({
     >
       <img
         src={image || "/carousel/bg-light.webp"}
-        className="absolute z-0 inset-0 w-full h-full pointer-events-none object-cover"
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
         style={{
           aspectRatio:
             customizations?.size?.height / customizations?.size?.width,
@@ -199,34 +223,44 @@ const StartPage = ({
 
       <div
         className={cn(
-          "z-10  w-full space-y-2 my-auto  h-full flex",
+          "z-10 my-auto flex h-full w-full space-y-2",
 
           customizations?.content?.horizontal === "left"
             ? "justify-start"
             : customizations?.content?.horizontal === "center"
-            ? "justify-center"
-            : "justify-end",
+              ? "justify-center"
+              : "justify-end",
 
           customizations?.content?.vertical === "top"
             ? "items-start"
             : customizations?.content?.vertical === "center"
-            ? "items-center"
-            : "items-end"
+              ? "items-center"
+              : "items-end",
         )}
       >
         {customizations?.title?.visible && (
           <h1
-            className="text-4xl text-gray-800 font-semibold leading-normal"
+            contentEditable
+            suppressContentEditableWarning
+            onInput={(e) => {
+              const newSlides = [...slides];
+              newSlides[selectedSlide] = {
+                ...newSlides[selectedSlide],
+                title: e.currentTarget.textContent,
+              };
+              setSlides(newSlides);
+            }}
+            className="z-40 w-full text-4xl font-semibold leading-normal text-gray-800"
             style={{
               textAlign:
                 customizations?.content?.horizontal === "left"
                   ? "start"
                   : customizations?.content?.horizontal === "center"
-                  ? "center"
-                  : "end",
+                    ? "center"
+                    : "end",
             }}
           >
-            {title}
+            {initialTitle.current}
           </h1>
         )}
       </div>
@@ -234,25 +268,25 @@ const StartPage = ({
       {pageType !== "end" && customizations?.createdBy?.visible && (
         <div
           className={cn(
-            "flex items-center z-10 space-x-2 mt-auto h-11",
+            "z-10 mt-auto flex h-11 items-center space-x-2",
 
             customizations?.createdBy?.horizontal === "left"
               ? "justify-start"
               : customizations?.createdBy?.horizontal === "center"
-              ? "justify-center"
-              : "justify-end",
+                ? "justify-center"
+                : "justify-end",
 
             customizations?.createdBy?.vertical === "top"
               ? "items-start"
               : customizations?.createdBy?.vertical === "center"
-              ? "items-center"
-              : "items-end"
+                ? "items-center"
+                : "items-end",
           )}
         >
           <Image
             src={createdBy?.avatar}
             alt={createdBy?.username}
-            className="w-9 h-9 rounded-full object-cover"
+            className="h-9 w-9 rounded-full object-cover"
           />
 
           <div>
@@ -280,7 +314,7 @@ const EndPage = ({
 }) => {
   return (
     <div
-      className="h-full w-fit flex overflow-hidden bg-background justify-center items-center p-6 relative"
+      className="relative flex h-full w-fit items-center justify-center overflow-hidden bg-background p-6"
       style={{
         aspectRatio: customizations?.size?.width / customizations?.size?.height,
         minHeight: customizations?.size?.height,
@@ -289,7 +323,7 @@ const EndPage = ({
     >
       <img
         src={image || "/carousel/bg-light.webp"}
-        className="absolute z-0 inset-0 w-full h-full pointer-events-none object-cover"
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
         style={{
           aspectRatio:
             customizations?.size?.height / customizations?.size?.width,
@@ -307,39 +341,39 @@ const EndPage = ({
 
       <div
         className={cn(
-          "flex w-full h-full z-10 gap-4",
+          "z-10 flex h-full w-full gap-4",
 
           customizations?.content?.horizontal === "left"
             ? "justify-start"
             : customizations?.content?.horizontal === "center"
-            ? "justify-center"
-            : "justify-end",
+              ? "justify-center"
+              : "justify-end",
 
           customizations?.content?.vertical === "top"
             ? "items-start"
             : customizations?.content?.vertical === "center"
-            ? "items-center"
-            : "items-end"
+              ? "items-center"
+              : "items-end",
         )}
       >
-        <div className="p-2 rounded-full ring-[2px] ring-black/25">
+        <div className="rounded-full p-2 ring-[2px] ring-black/25">
           <Image
             src={createdBy?.avatar}
             alt={createdBy?.username}
-            className="h-24 w-24 min-h-24 min-w-24 rounded-full"
+            className="h-24 min-h-24 w-24 min-w-24 rounded-full"
           />
         </div>
 
         <div
-          className="text-4xl h-44 items-center flex   font-semibold"
+          className="flex h-44 items-center text-4xl font-semibold"
           style={{
             color: customizations?.fontColor,
             textAlign:
               customizations?.content?.horizontal === "left"
                 ? "start"
                 : customizations?.content?.horizontal === "center"
-                ? "center"
-                : "end",
+                  ? "center"
+                  : "end",
           }}
         >
           {`${createdBy.firstName} ${createdBy.lastName}`}
@@ -357,6 +391,9 @@ const SlidePage = ({
   createdBy,
   customizations,
   pageType,
+  slides,
+  setSlides,
+  selectedSlide,
 }: {
   pageIndex: any;
   title: any;
@@ -365,10 +402,15 @@ const SlidePage = ({
   createdBy: any;
   customizations: any;
   pageType: any;
+  slides: any;
+  setSlides: any;
+  selectedSlide: any;
 }) => {
+  const initialTitle = useRef(title);
+  const initialDescription = useRef(description);
   return (
     <div
-      className="h-full w-fit flex overflow-hidden bg-background justify-center flex-col  p-6  relative"
+      className="relative flex h-full w-fit flex-col justify-center overflow-hidden bg-background p-6"
       style={{
         aspectRatio: customizations?.size?.width / customizations?.size?.height,
         minHeight: customizations?.size?.height,
@@ -377,7 +419,7 @@ const SlidePage = ({
     >
       <img
         src={image || "/carousel/bg-light.webp"}
-        className="absolute z-0 inset-0 w-full h-full pointer-events-none object-cover"
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
         style={{
           aspectRatio:
             customizations?.size?.height / customizations?.size?.width,
@@ -386,56 +428,84 @@ const SlidePage = ({
 
       <div
         className={cn(
-          "z-10 ml-20 gap-0 my-auto flex flex-col  relative h-full",
+          "relative z-10 my-auto ml-20 flex h-full flex-col gap-0",
           customizations?.content?.horizontal === "left"
             ? "items-start"
             : customizations?.content?.horizontal === "center"
-            ? "items-center"
-            : "items-end",
+              ? "items-center"
+              : "items-end",
 
           customizations?.content?.vertical === "top"
             ? "justify-start"
             : customizations?.content?.vertical === "center"
-            ? "justify-center"
-            : "justify-end"
+              ? "justify-center"
+              : "justify-end",
         )}
       >
         {customizations?.pageIndex?.visible && (
-          <p className="outlined-text opacity-10  -translate-x-24 -translate-y-[10%] top-0 left-0 absolute text-[350px] font-extrabold">
+          <p className="outlined-text absolute left-0 top-0 -translate-x-24 -translate-y-[10%] text-[350px] font-extrabold opacity-10">
             {pageIndex}
           </p>
         )}
 
-        <h6 className="text-xl font-semibold ">{title}</h6>
+        <h6
+          contentEditable
+          suppressContentEditableWarning
+          onInput={(e) => {
+            const newSlides = [...slides];
+            newSlides[selectedSlide] = {
+              ...newSlides[selectedSlide],
+              title: e.currentTarget.textContent,
+            };
+            setSlides(newSlides);
+          }}
+          className="z-10 w-full text-xl font-semibold"
+        >
+          {initialTitle.current}
+        </h6>
 
-        <p className="text-base">{description}</p>
+        <p
+          contentEditable
+          suppressContentEditableWarning
+          onInput={(e) => {
+            const newSlides = [...slides];
+            newSlides[selectedSlide] = {
+              ...newSlides[selectedSlide],
+              description: e.currentTarget.textContent,
+            };
+            setSlides(newSlides);
+          }}
+          className="z-10 w-full text-base"
+        >
+          {initialDescription.current}
+        </p>
       </div>
 
       {pageType !== "end" && customizations?.createdBy?.visible && (
         <div
-          className={cn("mt-auto flex justify-between items-center z-10 h-11")}
+          className={cn("z-10 mt-auto flex h-11 items-center justify-between")}
         >
           <div
             className={cn(
-              "flex items-center pr-4 space-x-2 w-full",
+              "flex w-full items-center space-x-2 pr-4",
 
               customizations?.createdBy?.horizontal === "left"
                 ? "justify-start"
                 : customizations?.createdBy?.horizontal === "center"
-                ? "justify-center"
-                : "justify-end",
+                  ? "justify-center"
+                  : "justify-end",
 
               customizations?.createdBy?.vertical === "top"
                 ? "items-start"
                 : customizations?.createdBy?.vertical === "center"
-                ? "items-center"
-                : "items-end"
+                  ? "items-center"
+                  : "items-end",
             )}
           >
             <Image
               src={createdBy?.avatar}
               alt={createdBy?.username}
-              className="w-9 h-9 rounded-full object-cover"
+              className="h-9 w-9 rounded-full object-cover"
             />
 
             <div className="">
@@ -450,7 +520,7 @@ const SlidePage = ({
           </div>
 
           <div
-            className="h-9 w-9 min-w-9 rounded-full flex items-center justify-center"
+            className="flex h-9 w-9 min-w-9 items-center justify-center rounded-full"
             style={{
               backgroundColor: customizations?.fontColor,
 
@@ -468,32 +538,32 @@ const SlidePage = ({
 // Sections
 const HeaderSection = ({ createdBy }: { createdBy: any }) => {
   return (
-    <div className="flex items-start px-4 pt-4 justify-between gap-3">
+    <div className="flex items-start justify-between gap-3 px-4 pt-4">
       <Image
         src={createdBy?.avatar}
         alt={createdBy?.username}
-        className="w-12 h-12 rounded-full object-cover object-center"
+        className="h-12 w-12 rounded-full object-cover object-center"
       />
-      <div className="flex mr-auto flex-col leading-tight">
-        <div className="flex w-full gap-2 items-center">
-          <span className="font-semibold text-sm">
+      <div className="mr-auto flex flex-col leading-tight">
+        <div className="flex w-full items-center gap-2">
+          <span className="text-sm font-semibold">
             {" "}
             {`${createdBy.firstName} ${createdBy.lastName}`}
           </span>
           <span className="text-xs text-muted-foreground">●</span>
-          <span className="text-muted-foreground text-sm">3rd+</span>
+          <span className="text-sm text-muted-foreground">3rd+</span>
         </div>
-        <div className="text-muted-foreground text-xs">
+        <div className="text-xs text-muted-foreground">
           postt.ai | LinkedIn Automation
         </div>
-        <div className="flex items-center gap-1 text-muted-foreground text-xs">
+        <div className="flex items-center gap-1 text-xs text-muted-foreground">
           <span>3d</span>
-          <span className="text-xs text-muted-foreground scale-75">●</span>
+          <span className="scale-75 text-xs text-muted-foreground">●</span>
           <FaGlobeAmericas />
         </div>
       </div>
       <Button
-        className="w-fit ml-auto text-[#0072b1] hover:text-[#0072b1]"
+        className="ml-auto w-fit text-[#0072b1] hover:text-[#0072b1]"
         size="sm"
         variant="ghost"
       >
@@ -505,42 +575,42 @@ const HeaderSection = ({ createdBy }: { createdBy: any }) => {
 
 const FooterSection = ({ createdBy }: { createdBy: any }) => {
   return (
-    <div className="px-4 pb-4 flex flex-col gap-3">
+    <div className="flex flex-col gap-3 px-4 pb-4">
       <div className="flex items-center gap-2">
         <div className="flex -space-x-1">
-          <div className="p-0.5 text-xs flex items-center border justify-center rounded-full bg-blue-600/70 w-fit">
+          <div className="flex w-fit items-center justify-center rounded-full border bg-blue-600/70 p-0.5 text-xs">
             <AiTwotoneLike className="-scale-x-[1]" />
           </div>
-          <div className="p-0.5 text-xs rounded-full flex border items-center justify-center bg-red-600/70 w-fit">
+          <div className="flex w-fit items-center justify-center rounded-full border bg-red-600/70 p-0.5 text-xs">
             <AiTwotoneHeart />
           </div>
         </div>
-        <p className="text-muted-foreground text-xs">
+        <p className="text-xs text-muted-foreground">
           Alex Colen and 230 others
         </p>
-        <p className="text-muted-foreground ml-auto text-xs">15 comments</p>
+        <p className="ml-auto text-xs text-muted-foreground">15 comments</p>
       </div>
       <Separator />
       <div className="flex items-center justify-around">
         <Image
           src={createdBy?.avatar}
           alt={createdBy?.username}
-          className="w-6 h-6 rounded-full object-cover object-center"
+          className="h-6 w-6 rounded-full object-cover object-center"
         />
-        <div className="flex items-center gap-2 font-medium text-sm">
+        <div className="flex items-center gap-2 text-sm font-medium">
           <SlLike className="-scale-x-[1] text-base" />
           Like
         </div>
-        <div className="flex items-center gap-2 font-medium text-sm">
+        <div className="flex items-center gap-2 text-sm font-medium">
           <TfiCommentAlt className="-scale-x-[1] text-base" />
           Comment
         </div>
-        <div className="flex items-center gap-2 font-medium text-sm">
-          <LiaShareSolid className=" text-base" />
+        <div className="flex items-center gap-2 text-sm font-medium">
+          <LiaShareSolid className="text-base" />
           Share
         </div>
-        <div className="flex items-center gap-2 font-medium text-sm">
-          <IoBookmarkOutline className=" text-base" />
+        <div className="flex items-center gap-2 text-sm font-medium">
+          <IoBookmarkOutline className="text-base" />
           Save
         </div>
       </div>

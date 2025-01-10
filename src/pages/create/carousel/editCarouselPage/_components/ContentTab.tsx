@@ -1,13 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import UploadTool from "@/components/UploadTool";
 import { cn } from "@/lib/utils";
+import { useRef, useState } from "react";
+import { GrFormEdit } from "react-icons/gr";
+import { HiSparkles } from "react-icons/hi2";
+import { LuCopy, LuImage } from "react-icons/lu";
 import {
   MdFormatAlignCenter,
   MdFormatAlignLeft,
   MdFormatAlignRight,
+  MdOutlineModeEdit,
   MdVerticalAlignBottom,
   MdVerticalAlignCenter,
   MdVerticalAlignTop,
@@ -34,12 +40,8 @@ export default function ContentTab({
   console.log("selectedSlide", selectedSlide);
 
   return (
-    <div className="space-y-6 bg-muted shadow-md p-4 border rounded-lg h-full">
-      <h3 className="text-base font-semibold">Content Edit</h3>
-
-      {/* Title Section */}
-
-      {slides[selectedSlide]?.pageType !== "end" && (
+    <div className="w-full space-y-6 rounded-lg">
+      {/* {slides[selectedSlide]?.pageType !== "end" && (
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium">Title</span>
@@ -76,11 +78,39 @@ export default function ContentTab({
             className="bg-background"
           />
         </div>
-      )}
-
+      )} */}
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="caption-field">Caption</Label>
+        <div
+          id="caption-field"
+          className="flex w-full flex-col rounded-lg border bg-muted"
+        >
+          <Textarea
+            rows={5}
+            placeholder="Type your caption here...."
+            className="resize-none rounded-lg rounded-b-none border-0 bg-background shadow-none !ring-0"
+          />
+          <div className="ml-auto flex items-center gap-1 px-1 py-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full text-foreground hover:bg-muted-foreground/10"
+            >
+              <LuCopy />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="rounded-full bg-muted-foreground/15 text-foreground hover:bg-muted-foreground/10"
+            >
+              <HiSparkles /> Generate
+            </Button>
+          </div>
+        </div>
+      </div>
       {/* Description Section */}
 
-      {slides[selectedSlide]?.pageType === "slide" && (
+      {/* {slides[selectedSlide]?.pageType === "slide" && (
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium">Description</span>
@@ -123,51 +153,52 @@ export default function ContentTab({
             className="bg-background"
           />
         </div>
-      )}
+      )} */}
 
       <PositionButtons
         item="content"
         {...{ customizations, setCustomizations }}
       />
 
-      {/* Background Image URL */}
-      <div>
-        <UploadTool
-          label="Background Image"
-          // value={backgroundImageUrl}
-          // onChange={setBackgroundImageUrl}
+      <div className="flex flex-col gap-2">
+        <Label>Adjust Design</Label>
+        <div className="flex items-center gap-3 rounded-lg bg-muted p-3">
+          {[...Array(4)].map((item, index) => (
+            <DesignColor key={index} />
+          ))}
+        </div>
+      </div>
 
-          value={slides[selectedSlide].image}
-          onChange={(image: string) => {
+      {/* Background Image URL */}
+      <div className="flex items-center justify-between gap-2 rounded-lg bg-muted p-2 pl-3">
+        {/* <Label htmlFor="background-image-url">Image</Label> */}
+        <div className="flex items-center gap-2">
+          <LuImage />
+          <span className="text-sm font-medium">Image</span>
+        </div>
+        <Button variant="outline" className="rounded-full" size="sm">
+          <GrFormEdit /> Edit
+        </Button>
+      </div>
+
+      {slides[selectedSlide]?.pageType === "start" && (
+        <p
+          // variant="link"
+          className="w-fit cursor-pointer text-xs text-primary hover:underline"
+          onClick={() => {
             const newSlides = [...slides];
-            newSlides[selectedSlide] = {
-              ...newSlides[selectedSlide],
-              image,
-            };
+            newSlides.forEach((slide, index) => {
+              newSlides[index] = {
+                ...newSlides[index],
+                image: slides[selectedSlide].image,
+              };
+            });
             setSlides(newSlides);
           }}
-          placeholder="https://example.com/image.jpg"
-        />
-
-        {slides[selectedSlide]?.pageType === "start" && (
-          <Button
-            variant="link"
-            className="text-xs"
-            onClick={() => {
-              const newSlides = [...slides];
-              newSlides.forEach((slide, index) => {
-                newSlides[index] = {
-                  ...newSlides[index],
-                  image: slides[selectedSlide].image,
-                };
-              });
-              setSlides(newSlides);
-            }}
-          >
-            Use Same Image for All Slides
-          </Button>
-        )}
-      </div>
+        >
+          Use Same Image for All Slides
+        </p>
+      )}
     </div>
   );
 }
@@ -184,17 +215,17 @@ const PositionButtons = ({
   item: any;
 }) => {
   return (
-    <div className="flex flex-col ">
-      <p className="text-sm font-medium mt-0 mb-1">Position</p>
+    <div className="flex flex-col">
+      <p className="mb-1 mt-0 text-sm font-medium">Position</p>
 
-      <div className="flex justify-start gap-4">
+      <div className="flex justify-start gap-4 rounded-lg bg-muted p-1 px-3">
         <div className="flex items-center gap-2">
           <Button
             className={cn(
-              "w-8 h-8 text-xs font-medium hover:bg-primary/75",
+              "h-8 w-8 text-xs font-medium hover:bg-primary/75",
               customizations?.[item]?.vertical === "top"
                 ? "bg-primary text-white"
-                : "bg-primary/15 text-slate-700 hover:text-white"
+                : "bg-primary/15 text-slate-700 hover:text-white",
             )}
             onClick={() => {
               setCustomizations({
@@ -210,10 +241,10 @@ const PositionButtons = ({
           </Button>
           <Button
             className={cn(
-              "w-8 h-8 text-xs hover:bg-primary/75 font-medium",
+              "h-8 w-8 text-xs font-medium hover:bg-primary/75",
               customizations?.[item]?.vertical === "center"
                 ? "bg-primary text-white"
-                : "bg-primary/15 text-slate-700 hover:text-white"
+                : "bg-primary/15 text-slate-700 hover:text-white",
             )}
             onClick={() => {
               setCustomizations({
@@ -229,10 +260,10 @@ const PositionButtons = ({
           </Button>
           <Button
             className={cn(
-              "w-8 h-8 text-xs hover:bg-primary/75 font-medium",
+              "h-8 w-8 text-xs font-medium hover:bg-primary/75",
               customizations?.[item]?.vertical === "bottom"
                 ? "bg-primary text-white"
-                : "bg-primary/15 text-slate-700 hover:text-white"
+                : "bg-primary/15 text-slate-700 hover:text-white",
             )}
             onClick={() => {
               setCustomizations({
@@ -248,15 +279,15 @@ const PositionButtons = ({
           </Button>
         </div>
 
-        <div className="h-8 w-[1px] bg-primary/15 my-2" />
+        <div className="my-2 h-8 w-[1px] bg-primary/15" />
 
-        <div className="flex items-center gap-2 w-full  ">
+        <div className="flex w-full items-center gap-2">
           <Button
             className={cn(
-              "w-8 h-8 text-xs hover:bg-primary/75 font-medium",
+              "h-8 w-8 text-xs font-medium hover:bg-primary/75",
               customizations?.[item]?.horizontal === "left"
                 ? "bg-primary text-white"
-                : "bg-primary/15 text-slate-700 hover:text-white"
+                : "bg-primary/15 text-slate-700 hover:text-white",
             )}
             onClick={() => {
               setCustomizations({
@@ -272,10 +303,10 @@ const PositionButtons = ({
           </Button>
           <Button
             className={cn(
-              "w-8 h-8 text-xs hover:bg-primary/75 font-medium",
+              "h-8 w-8 text-xs font-medium hover:bg-primary/75",
               customizations?.[item]?.horizontal === "center"
                 ? "bg-primary text-white"
-                : "bg-primary/15 text-slate-700 hover:text-white"
+                : "bg-primary/15 text-slate-700 hover:text-white",
             )}
             onClick={() => {
               setCustomizations({
@@ -291,10 +322,10 @@ const PositionButtons = ({
           </Button>
           <Button
             className={cn(
-              "w-8 h-8 text-xs hover:bg-primary/75 font-medium",
+              "h-8 w-8 text-xs font-medium hover:bg-primary/75",
               customizations?.[item]?.horizontal === "right"
                 ? "bg-primary text-white"
-                : "bg-primary/15 text-slate-700 hover:text-white"
+                : "bg-primary/15 text-slate-700 hover:text-white",
             )}
             onClick={() => {
               setCustomizations({
@@ -313,3 +344,50 @@ const PositionButtons = ({
     </div>
   );
 };
+
+function DesignColor({
+  // color = "#00d5f6",
+  // setColor,
+  className,
+}: {
+  // color: any;
+  // setColor: any;
+  className?: string;
+}) {
+  const [color, setColor] = useState(
+    `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+  );
+
+  const colorInputRef = useRef<HTMLInputElement>(null);
+
+  const handleCardClick = () => {
+    if (colorInputRef?.current) {
+      colorInputRef?.current?.click();
+    }
+  };
+
+  const handleColorChange = (event: any) => {
+    const selectedColor = event?.target?.value;
+    setColor(selectedColor);
+  };
+
+  return (
+    <div
+      onClick={handleCardClick}
+      className={cn(
+        "relative cursor-pointer rounded-full border p-4",
+        className,
+      )}
+      style={{
+        backgroundColor: color,
+      }}
+    >
+      <input
+        type="color"
+        ref={colorInputRef}
+        onChange={handleColorChange}
+        className="pointer-events-none absolute top-0 opacity-0"
+      />
+    </div>
+  );
+}

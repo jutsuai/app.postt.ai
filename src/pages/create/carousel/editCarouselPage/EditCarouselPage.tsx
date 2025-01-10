@@ -6,13 +6,15 @@ import Wrapper from "@/components/wrapper/Wrapper";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import BottomSection from "./_components/BottomSection";
 import DownloadTab from "./_components/DownloadTab";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import httpClient from "@/lib/httpClient";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import SelectProfileDialog from "@/components/dialog/SelectProfileDialog";
+import { RxText } from "react-icons/rx";
+import { IoIosSettings } from "react-icons/io";
 
 export default function EditCarouselPage() {
   const navigate = useNavigate();
@@ -53,6 +55,8 @@ export default function EditCarouselPage() {
       image: "https://i.ibb.co.com/1K7VDBQ/bg-light.webp",
     },
   ]);
+
+  // const slides = useMemo(() => slidess, [slidess]);
 
   const createdBy = user;
   // const [createdBy, setCreatedBy] = useState({
@@ -130,7 +134,7 @@ export default function EditCarouselPage() {
   return (
     <>
       <Wrapper>
-        <WrapperContent className=" flex-row gap-8  h-full">
+        <WrapperContent className="h-full flex-row gap-8">
           <PreviewSection
             {...slides[selectedSlide]}
             // className="col-span-4 items-center justify-center place-content-center pac"
@@ -138,13 +142,15 @@ export default function EditCarouselPage() {
             createdBy={createdBy}
             commentary={commentary}
             slides={slides}
+            setSlides={setSlides}
             customizations={customizations}
             selectedSlide={selectedSlide}
             setSelectedSlide={setSelectedSlide}
+            setCommentary={setCommentary}
           />
 
-          <div className="flex flex-col max-w-lg gap-4 h-full w-full">
-            <Tabs
+          <div className="flex h-full w-full max-w-md flex-col gap-4 px-4">
+            {/* <Tabs
               value={activeTab}
               onValueChange={setActiveTab}
               className="w-full"
@@ -154,13 +160,25 @@ export default function EditCarouselPage() {
                   <TabsTrigger
                     key={tab?.name}
                     value={tab?.name}
-                    className="data-[state=active]:bg-primary-foreground gap-1 px-0 w-full"
+                    className="w-full gap-1 px-0 data-[state=active]:bg-primary-foreground"
                   >
                     {tab?.icon} {tab?.name}
                   </TabsTrigger>
                 ))}
               </TabsList>
-            </Tabs>
+            </Tabs> */}
+
+            <div className="flex items-center justify-between">
+              <h3 className="text-base font-semibold">Content Edit</h3>
+              <div className="flex items-center">
+                <button className="bg-muted p-2">
+                  <RxText />
+                </button>
+                <button>
+                  <IoIosSettings />
+                </button>
+              </div>
+            </div>
 
             {activeTab === "Content" && (
               <ContentTab
@@ -179,13 +197,13 @@ export default function EditCarouselPage() {
                 setCommentary={setCommentary}
               />
             )}
-            {activeTab === "Download" && (
+            {/* {activeTab === "Download" && (
               <DownloadTab
                 slides={slides}
                 customizations={customizations}
                 createdBy={createdBy}
               />
-            )}
+            )} */}
 
             <BottomSection
               customizations={customizations}
@@ -194,12 +212,12 @@ export default function EditCarouselPage() {
               selectedSlide={selectedSlide}
               setSelectedSlide={setSelectedSlide}
             />
-            <div className="w-full gap-4 flex">
+            <div className="flex w-full gap-4">
               <Button variant="secondary" className="w-full text-foreground">
                 Schedule Post
               </Button>
               <Button
-                className="w-full "
+                className="w-full"
                 onClick={() => setShowSelectProfileDialog(true)}
               >
                 Post Now
