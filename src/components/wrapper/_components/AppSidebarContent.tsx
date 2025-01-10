@@ -117,8 +117,8 @@ export default function AppSidebarContent() {
                   onClick={() => navigate(item.url)}
                   key={item?.label}
                   className={cn(
-                    "transition-all duration-200 cursor-pointer hover:!bg-primary-accent/60 !rounded-full",
-                    sidebarMode ? "mx-2 px-2 py-1.5" : "mx-1.5 py-1.5 pl-1"
+                    "cursor-pointer !rounded-full transition-all duration-200 hover:!bg-primary-accent/60",
+                    sidebarMode ? "mx-2 px-2 py-1.5" : "mx-1.5 py-1.5 pl-1",
                   )}
                 >
                   <SidebarMenuButton className="hover:!bg-transparent">
@@ -133,15 +133,15 @@ export default function AppSidebarContent() {
                     <span
                       className={cn(
                         "z-10 transition-colors duration-200",
-                        checkMatch ? "text-primary" : "text-muted-foreground"
+                        checkMatch ? "text-primary" : "text-muted-foreground",
                       )}
                     >
                       {item.icon}
                     </span>
                     <span
                       className={cn(
-                        "z-10 font-semibold text-sm transition-colors duration-200",
-                        checkMatch ? "text-primary" : "text-muted-foreground"
+                        "z-10 text-sm font-semibold transition-colors duration-200",
+                        checkMatch ? "text-primary" : "text-muted-foreground",
                       )}
                     >
                       {item.label}

@@ -4,8 +4,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import MenuCard from "../MenuCard";
 
 export const menus = [
@@ -24,6 +22,11 @@ export const menus = [
     url: "/create?type=carousel/1",
     icon: "/dialog-menu/carousel-post-image.svg",
   },
+  {
+    name: "Document Post",
+    url: "/create?type=document",
+    icon: "/dialog-menu/single-post-image.svg",
+  },
 ];
 
 export default function CreateMenuDialog({
@@ -35,12 +38,12 @@ export default function CreateMenuDialog({
 }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-xl">
+      <DialogContent className="max-w-3xl">
         <DialogHeader>
           <DialogTitle>Create</DialogTitle>
         </DialogHeader>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           {menus.map((menu) => (
             <MenuCard
               key={menu.name}

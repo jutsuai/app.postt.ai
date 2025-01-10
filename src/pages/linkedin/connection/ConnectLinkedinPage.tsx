@@ -25,7 +25,7 @@ export default function ConnectLinkedinPage() {
     setLoading(true);
 
     httpClient()
-      .get(`/linkedin/management`)
+      .get(`/linkedin/api`)
       .then((res) => {
         console.log(res.data);
 

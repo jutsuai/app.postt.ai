@@ -10,7 +10,7 @@ import { SlLike } from "react-icons/sl";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { LiaShareSolid } from "react-icons/lia";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { useMemo, useRef, useState } from "react";
+import { useState } from "react";
 
 export default function PreviewSection({
   hideHeader,
@@ -93,15 +93,18 @@ export default function PreviewSection({
         {slides && (
           <>
             {!hideArrows && (
-              <>
+              <div
+                className={cn(
+                  "absolute top-[50%] z-20 right-0 left-0 transition flex justify-between px-4",
+
+                  onHover ? "opacity-100" : "opacity-0"
+                )}
+              >
                 <Button
                   size="icon"
                   className={cn(
-                    "ml-2 rounded-full bg-foreground/60 pl-2.5 hover:bg-foreground hover:text-background",
-                    selectedSlide === 0 && "pointer-events-none opacity-0",
-                    "absolute left-0 top-[50%] z-20 flex justify-between transition",
-
-                    onHover ? "opacity-100" : "opacity-0",
+                    "rounded-full bg-foreground/60 hover:bg-foreground hover:text-background",
+                    selectedSlide === 0 && "opacity-0 pointer-events-none"
                   )}
                   onClick={() =>
                     setSelectedSlide((prev: any) => {
@@ -117,12 +120,9 @@ export default function PreviewSection({
                 </Button>
                 <Button
                   className={cn(
-                    "mr-2 rounded-full bg-foreground/60 pl-2.5 hover:bg-foreground hover:text-background",
+                    "rounded-full  bg-foreground/60 hover:bg-foreground hover:text-background",
                     selectedSlide === slides?.length - 1 &&
-                      "pointer-events-none opacity-0",
-                    "absolute right-0 top-[50%] z-20 flex justify-between transition",
-
-                    onHover ? "opacity-100" : "opacity-0",
+                      "opacity-0 pointer-events-none"
                   )}
                   size="icon"
                   onClick={() => {
@@ -240,17 +240,7 @@ const StartPage = ({
       >
         {customizations?.title?.visible && (
           <h1
-            contentEditable
-            suppressContentEditableWarning
-            onInput={(e) => {
-              const newSlides = [...slides];
-              newSlides[selectedSlide] = {
-                ...newSlides[selectedSlide],
-                title: e.currentTarget.textContent,
-              };
-              setSlides(newSlides);
-            }}
-            className="z-40 w-full text-4xl font-semibold leading-normal text-gray-800"
+            className="text-4xl text-gray-800 font-semibold leading-normal"
             style={{
               textAlign:
                 customizations?.content?.horizontal === "left"
@@ -448,21 +438,7 @@ const SlidePage = ({
           </p>
         )}
 
-        <h6
-          contentEditable
-          suppressContentEditableWarning
-          onInput={(e) => {
-            const newSlides = [...slides];
-            newSlides[selectedSlide] = {
-              ...newSlides[selectedSlide],
-              title: e.currentTarget.textContent,
-            };
-            setSlides(newSlides);
-          }}
-          className="z-10 w-full text-xl font-semibold"
-        >
-          {initialTitle.current}
-        </h6>
+        <h6 className="text-xl font-semibold ">{title}</h6>
 
         <p
           contentEditable
@@ -538,22 +514,22 @@ const SlidePage = ({
 // Sections
 const HeaderSection = ({ createdBy }: { createdBy: any }) => {
   return (
-    <div className="flex items-start justify-between gap-3 px-4 pt-4">
+    <div className="flex items-start px-4 pt-4 justify-between gap-3">
       <Image
         src={createdBy?.avatar}
         alt={createdBy?.username}
-        className="h-12 w-12 rounded-full object-cover object-center"
+        className="w-12 h-12 rounded-full object-cover object-center"
       />
-      <div className="mr-auto flex flex-col leading-tight">
-        <div className="flex w-full items-center gap-2">
-          <span className="text-sm font-semibold">
+      <div className="flex mr-auto flex-col leading-tight">
+        <div className="flex w-full gap-2 items-center">
+          <span className="font-semibold text-sm">
             {" "}
             {`${createdBy.firstName} ${createdBy.lastName}`}
           </span>
           <span className="text-xs text-muted-foreground">●</span>
           <span className="text-sm text-muted-foreground">3rd+</span>
         </div>
-        <div className="text-xs text-muted-foreground">
+        <div className="text-muted-foreground text-xs">
           postt.ai | LinkedIn Automation
         </div>
         <div className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -595,7 +571,7 @@ const FooterSection = ({ createdBy }: { createdBy: any }) => {
         <Image
           src={createdBy?.avatar}
           alt={createdBy?.username}
-          className="h-6 w-6 rounded-full object-cover object-center"
+          className="w-6 h-6 rounded-full object-cover object-center"
         />
         <div className="flex items-center gap-2 text-sm font-medium">
           <SlLike className="-scale-x-[1] text-base" />

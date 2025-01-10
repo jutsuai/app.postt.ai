@@ -8,14 +8,12 @@ import { Textarea } from "@/components/ui/textarea";
 import SelectProfileDialog from "@/components/dialog/SelectProfileDialog";
 import httpClient from "@/lib/httpClient";
 import { VscLoading } from "react-icons/vsc";
-import { useNavigate } from "react-router-dom";
 import PreviewSection from "./carousel/editCarouselPage/_components/PreviewSection";
 import { toast } from "sonner";
 import generateRandomWord from "@/lib/randomWordGenerator";
 
 export default function CreateDocumentPage() {
-  const navigate = useNavigate();
-  const { user } = useAuth();
+  const { selectedProfile } = useAuth();
   // const [data, setData] = useState({
   const [commentary, setCommentary] = useState("This is a commentary");
   const [image, setImage] = useState<any>(null);
@@ -66,9 +64,9 @@ export default function CreateDocumentPage() {
   return (
     <>
       <Wrapper>
-        <WrapperContent className="py-8 grid gap-8 grid-cols-2 h-full">
-          <div className="flex flex-col  gap-4 h-full w-full">
-            <div className="space-y-6 bg-muted shadow-md p-4 border rounded-lg h-full">
+        <WrapperContent className="grid h-full grid-cols-2 gap-8 py-8">
+          <div className="flex h-full w-full flex-col gap-4">
+            <div className="h-full space-y-6 rounded-lg border bg-muted p-4 shadow-md">
               <h3 className="text-base font-semibold">Content Edit</h3>
 
               <div className="space-y-2">
@@ -95,12 +93,12 @@ export default function CreateDocumentPage() {
               </div>
             </div>
 
-            <div className="w-full gap-4 flex">
+            <div className="flex w-full gap-4">
               <Button variant="secondary" className="w-full text-foreground">
                 Schedule Post
               </Button>
               <Button
-                className="w-full "
+                className="w-full"
                 onClick={() => setShowSelectProfileDialog(true)}
               >
                 {loading ? <VscLoading className="animate-spin" /> : "Post Now"}
@@ -111,7 +109,7 @@ export default function CreateDocumentPage() {
           {/* Right Sidebar */}
 
           <PreviewSection
-            createdBy={user}
+            createdBy={selectedProfile}
             commentary={commentary}
             customizations={customizations}
             image={imagePreview}

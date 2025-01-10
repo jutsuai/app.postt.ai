@@ -7,6 +7,7 @@ import httpClient from "@/lib/httpClient";
 import { useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useAuth } from "@/context/AuthContext";
+import useAccountUpdater from "@/lib/useAccountUpdater";
 
 const linkedInAudience = [
   {
@@ -35,6 +36,8 @@ type ChooseAudienceValues = {
 };
 
 export default function ChooseAudience() {
+  const accountUpdate = useAccountUpdater();
+
   const {
     register,
     handleSubmit,
@@ -50,12 +53,12 @@ export default function ChooseAudience() {
   const onSubmit: SubmitHandler<ChooseAudienceValues> = (data) => {
     setLoading(true);
 
+
     httpClient()
       .put(`/users/${user?._id}/profile`, data)
       .then((res) => {
         console.log(res.data);
-        // navigate("?step=brand");
-        navigate("?step=connect");
+        goToNextStep();
       })
       .catch((err) => {
         console.error(err);
@@ -64,6 +67,17 @@ export default function ChooseAudience() {
         setLoading(false);
       });
   };
+
+
+  const goToNextStep = () => {
+    accountUpdate({
+      path: "onboarding.step1",
+      value: true,
+    }).finally(() =>
+      navigate("?step=connect")
+    );
+
+  }
 
   return (
     <div className="flex w-full flex-col  h-full items-center gap-4 ">
@@ -114,7 +128,7 @@ export default function ChooseAudience() {
           <Button
             className="rounded-full mt-2 w-full hover:text-foreground/80 text-foreground"
             type="button"
-            onClick={() => navigate("?step=connect")}
+            onClick={() => goToNextStep()}
             variant="secondary"
             disabled={loading}
           >

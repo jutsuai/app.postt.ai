@@ -13,7 +13,7 @@ export default function Wrapper({
   return (
     <div className="flex h-full w-full items-start justify-start">
       <AppSidebar />
-      <SidebarInset className={cn("w-full h-full", className)}>
+      <SidebarInset className={cn("h-full w-full", className)}>
         {children}
       </SidebarInset>
       <MobileNavbar />

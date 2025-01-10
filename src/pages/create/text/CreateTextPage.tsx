@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function CreateTextPage() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { selectedProfile } = useAuth();
   // const [data, setData] = useState({
   const [commentary, setCommentary] = useState("This is a commentary");
 
@@ -82,7 +82,7 @@ export default function CreateTextPage() {
           {/* Right Sidebar */}
 
           <PreviewSection
-            createdBy={user}
+            createdBy={selectedProfile}
             commentary={commentary}
             customizations={customizations}
           />

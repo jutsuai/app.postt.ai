@@ -15,7 +15,7 @@ function ConnectLinkedinCallbackPage() {
     setLoading(true);
 
     httpClient()
-      .post("/linkedin/management/callback", { code })
+      .post("/linkedin/api/callback", { code })
       .then((res) => {
         navigate("/linkedin/connect/success");
       })

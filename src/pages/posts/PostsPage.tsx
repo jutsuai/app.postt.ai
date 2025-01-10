@@ -1,35 +1,19 @@
+import Link from "@/components/custom/Link";
 import Header from "@/components/header/Header";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import { Button } from "@/components/ui/button";
 import Wrapper from "@/components/wrapper/Wrapper";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import httpClient from "@/lib/httpClient";
-import { useEffect, useState } from "react";
+import { fetchPosts } from "@/services/fetchPosts";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function PostsPage() {
-  const [loading, setLoading] = useState(true);
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    getPosts();
-  }, []);
-
-  const getPosts = async () => {
-    setLoading(true);
-
-    httpClient()
-      .get("/posts")
-      .then((res) => {
-        const data = res.data.data;
-        console.log(data);
-        setPosts(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+  const { data: posts, isLoading: loading } = useQuery<any>({
+    queryKey: ["posts"],
+    queryFn: () => fetchPosts(),
+  });
 
   return (
     <Wrapper>
@@ -37,9 +21,19 @@ export default function PostsPage() {
         <Header />
 
         <div>
-          {posts.map((post: any) => (
-            <PostItem key={post._id} post={post} />
-          ))}
+          {loading ? (
+            <LoadingOverlay />
+          ) : posts?.length > 0 ? (
+            posts.map((post: any) => <PostItem key={post._id} post={post} />)
+          ) : (
+            <div className="flex h-96 flex-col items-center justify-center gap-4">
+              <p className="text-lg text-gray-500">No posts found</p>
+
+              <Link to="/create?type=text">
+                <Button>Create Post</Button>
+              </Link>
+            </div>
+          )}
         </div>
       </WrapperContent>
     </Wrapper>

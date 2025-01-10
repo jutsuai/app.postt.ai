@@ -14,7 +14,8 @@ export const AuthProvider = ({ children }: { children: any }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   const [user, setUser] = useState<any>(null);
-  const [profile, setProfile] = useState<any>(null);
+  const [selectedProfile, setSelectedProfile] = useState<any>(null);
+  const [linkedinProfiles, setLinkedinProfiles] = useState<any>(null);
   const [accessToken, setAccessToken] = useState<any>(null);
 
   // const [linkedin, setLinkedin] = useState<any>(null);
@@ -51,6 +52,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
         return;
       }
 
+      getLinkedinProfiles();
       setUser(userCookie);
       setIsAuthenticated(true);
     } catch (error) {
@@ -179,7 +181,6 @@ export const AuthProvider = ({ children }: { children: any }) => {
 
     try {
       setUser(responce?.data);
-      setProfile(responce?.data?.profile);
       setAccessToken(responce?.token);
 
       if (!responce?.token) {
@@ -200,7 +201,6 @@ export const AuthProvider = ({ children }: { children: any }) => {
       localStorage.setItem("_auth_accessToken", responce?.token);
 
       setIsAuthenticated(true);
-
       console.log("User data saved");
     } catch (error) {
       console.error("Error saving user data:", error);
@@ -211,6 +211,28 @@ export const AuthProvider = ({ children }: { children: any }) => {
     }
   };
 
+  const getLinkedinProfiles = async () => {
+    setLoading(true);
+
+    httpClient()
+      .get("/linkedin/profiles")
+      .then((res) => {
+        const data = res.data.data;
+
+        setLinkedinProfiles(data);
+
+        if (selectedProfile === null && data.length > 0) {
+          setSelectedProfile(data[0]);
+        }
+      })
+      .catch((err) => {
+        console.log("====== getLinkedinProfiles error: ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const logout = async () => {
     setLoading(true);
 
@@ -219,7 +241,6 @@ export const AuthProvider = ({ children }: { children: any }) => {
       localStorage.removeItem("_auth_accessToken");
 
       setUser(null);
-      setProfile(null);
       setAccessToken(null);
 
       setIsAuthenticated(false);
@@ -242,6 +263,10 @@ export const AuthProvider = ({ children }: { children: any }) => {
     accessToken,
     user,
 
+    selectedProfile,
+    setSelectedProfile,
+    linkedinProfiles,
+
     //
     validateToken,
     saveUserData,
@@ -252,6 +277,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
     signupWithEmail,
     loginWithLinkedin,
     linkedinCallback,
+    getLinkedinProfiles,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

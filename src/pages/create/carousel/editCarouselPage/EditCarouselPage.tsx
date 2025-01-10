@@ -18,7 +18,7 @@ import { IoIosSettings } from "react-icons/io";
 
 export default function EditCarouselPage() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { selectedProfile } = useAuth();
   // const [data, setData] = useState({
   const [commentary, setCommentary] = useState("This is a commentary");
   const [slides, setSlides] = useState([
@@ -55,16 +55,6 @@ export default function EditCarouselPage() {
       image: "https://i.ibb.co.com/1K7VDBQ/bg-light.webp",
     },
   ]);
-
-  // const slides = useMemo(() => slidess, [slidess]);
-
-  const createdBy = user;
-  // const [createdBy, setCreatedBy] = useState({
-  //   name: `${user?.firstName} ${user?.lastName}`,
-  //   username: user?.username || user?.email,
-  //   avatar:
-  //     user?.avatar || "https://avatars.githubusercontent.com/u/8743993?v=4",
-  // });
 
   const [customizations, setCustomizations] = useState({
     backgroundColor: "#ffffff",
@@ -139,7 +129,7 @@ export default function EditCarouselPage() {
             {...slides[selectedSlide]}
             // className="col-span-4 items-center justify-center place-content-center pac"
             pageIndex={selectedSlide}
-            createdBy={createdBy}
+            createdBy={selectedProfile}
             commentary={commentary}
             slides={slides}
             setSlides={setSlides}

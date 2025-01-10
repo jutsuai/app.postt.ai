@@ -1,59 +1,13 @@
 import BoringAvatar from "@/components/BoringAvatar";
 import { Button } from "@/components/ui/button";
-import Wrapper from "@/components/wrapper/Wrapper";
-import WrapperContent from "@/components/wrapper/WrapperContent";
 import httpClient from "@/lib/httpClient";
 import { useEffect, useState } from "react";
-import { IoChevronBack } from "react-icons/io5";
 import { RiExternalLinkLine } from "react-icons/ri";
-import { VscDebugRestart, VscLoading } from "react-icons/vsc";
+import { VscLoading } from "react-icons/vsc";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-// {
-//   createdBy: "63c4f98e4f1c2e01e5a3f890", // Example MongoDB ObjectId
-//   type: "organization",
-//   linkedinId: "123456789",
-//   name: "Tech Innovators Inc.",
-//   slug: "tech-innovators-inc",
-//   logo: "https://example.com/logo.png",
-//   cover: "https://example.com/cover.jpg",
-//   description:
-//     "A leading technology company specializing in AI and cloud solutions.",
-//   websiteUrl: "https://www.techinnovators.com",
-//   linkedinUrl: "https://www.linkedin.com/company/tech-innovators",
-//   tags: ["Technology", "Innovation", "AI"],
-//   industries: ["Technology", "Software Development"],
-// },
-// {
-//   createdBy: "63c4f98e4f1c2e01e5a3f891", // Another Example MongoDB ObjectId
-//   type: "person",
-//   linkedinId: "987654321",
-//   name: "Jane Doe",
-//   slug: "jane-doe",
-//   logo: "https://example.com/jane-profile.jpg",
-//   cover: "https://example.com/jane-cover.jpg",
-//   description:
-//     "Experienced software engineer with expertise in backend systems and databases.",
-//   websiteUrl: null, // No personal website
-//   linkedinUrl: "https://www.linkedin.com/in/jane-doe",
-//   tags: ["Backend", "Databases", "Software Engineering"],
-//   industries: ["Information Technology", "Consulting"],
-// },
-// {
-//   createdBy: "63c4f98e4f1c2e01e5a3f892",
-//   type: "organization",
-//   linkedinId: "456789123",
-//   name: "Green Solutions Ltd.",
-//   slug: "green-solutions-ltd",
-//   logo: "https://example.com/green-logo.png",
-//   cover: null, // No cover photo
-//   description: "Sustainable energy solutions for a greener future.",
-//   websiteUrl: "https://www.greensolutions.com",
-//   linkedinUrl: "https://www.linkedin.com/company/green-solutions",
-//   tags: ["Sustainability", "Energy", "Environment"],
-//   industries: ["Renewable Energy", "Environmental Services"],
-// },
+
 export default function ConnectLinkedinSuccessPage() {
   const [loading, setLoading] = useState(false);
   const [organizationList, setOrganizationList] = useState<any>([]);
@@ -67,10 +21,11 @@ export default function ConnectLinkedinSuccessPage() {
     setLoading(true);
 
     httpClient()
-      .get(`/linkedin/management/organizationList`)
+      .get(`/linkedin/api/organizations`)
       .then((res) => {
         console.log(res.data);
-        setOrganizationList(res.data.data);
+        // setOrganizationList(res.data.data);
+        setOrganizationList( (curArray:any) =>  [...curArray, res.data.data]);
 
         if (res.data.data.length === 0) {
           handleGetOrganizationListFromLinkedin();
@@ -91,11 +46,11 @@ export default function ConnectLinkedinSuccessPage() {
     setLoading(true);
 
     httpClient()
-      .post(`/linkedin/management/organizationList`)
+      .get(`/linkedin/api/organizations/sync`)
       .then((res) => {
         console.log(res.data);
 
-        setOrganizationList(res.data.data);
+        setOrganizationList( (curArray:any) =>  [...curArray, res.data.data]);
       })
       .catch((err) => {
         console.error(err);
@@ -110,7 +65,7 @@ export default function ConnectLinkedinSuccessPage() {
     setLoading(true);
 
     httpClient()
-      .get(`/linkedin/management/user`)
+      .get(`/linkedin/api/me`)
       .then((res) => {
         console.log(res.data);
         // setUserDetails(res.data.data);

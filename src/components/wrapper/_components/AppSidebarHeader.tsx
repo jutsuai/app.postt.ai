@@ -27,15 +27,15 @@ export default function AppSidebarHeader() {
       <SidebarHeader>
         <SidebarMenu
           className={cn(
-            "transition-all duration-150 py-4",
-            sidebarMode ? "px-4 " : "px-1 "
+            "py-4 transition-all duration-150",
+            sidebarMode ? "px-4" : "px-1",
           )}
         >
           <Link to="/" className="flex items-end">
             <svg
               className={cn(
-                " h-7 w-fit min-w-fit overflow-hidden fill-current duration-150 transition-[margin-left]",
-                sidebarMode ? "ml-2" : "ml-3"
+                "h-7 w-fit min-w-fit overflow-hidden fill-current transition-[margin-left] duration-150",
+                sidebarMode ? "ml-2" : "ml-3",
               )}
               width="285"
               height="87"
@@ -81,19 +81,19 @@ export default function AppSidebarHeader() {
         <SidebarMenu
           className={cn(
             "transition-all duration-150",
-            sidebarMode ? "px-2 " : "px-[6px]"
+            sidebarMode ? "px-2" : "px-[6px]",
           )}
         >
           <SidebarMenuItem
             onClick={() => setOpenMenuDialog(true)}
             className={cn(
-              "bg-primary hover:bg-primary/90 duration-0 active:bg-primary rounded-full",
-              sidebarMode ? "py-1.5 px-4" : "px-[6px] py-[7px]"
+              "rounded-full bg-primary duration-0 hover:bg-primary/90 active:bg-primary",
+              sidebarMode ? "px-4 py-1.5" : "px-[6px] py-[7px]",
             )}
           >
-            <SidebarMenuButton className="hover:!bg-transparent h-full active:!text-background text-background hover:!text-background">
+            <SidebarMenuButton className="h-full text-background hover:!bg-transparent hover:!text-background active:!text-background">
               <svg
-                className="!size-[18px] "
+                className="!size-[18px]"
                 stroke="currentColor"
                 fill="none"
                 stroke-width="2"
@@ -111,13 +111,13 @@ export default function AppSidebarHeader() {
               <span className="font-medium">Create new</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
-          <div className="h-[1px] w-full bg-[#dedbde] mt-2"></div>
+          <div className="mt-2 h-[1px] w-full bg-[#dedbde]"></div>
         </SidebarMenu>
         <Button
           onClick={toggleSidebar}
           size="icon"
           variant="outline"
-          className="absolute hover:bg-backgrond z-50 size-7 rounded-full -right-3.5 top-7"
+          className="hover:bg-backgrond absolute -right-3.5 top-7 z-50 size-7 rounded-full"
         >
           {sidebarMode ? (
             <MdOutlineKeyboardArrowLeft className="scale-105" />

@@ -6,20 +6,20 @@ import { menus } from "@/components/dialog/CreateMenuDialog";
 import { Link } from "react-router-dom";
 
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 
 export default function HomePage() {
-  const [hasSchedulePost, setHasSchedulePost] = useState(false);
+  const hasSchedulePost = false;
+
   return (
     <Wrapper>
-      <WrapperContent className="gap-4 sm:bg-muted/80 h-dvh overflow-y-auto">
+      <WrapperContent className="h-dvh gap-4 overflow-y-auto sm:bg-muted/80">
         <Header />
-        <div className="flex items-start  flex-col gap-4 sm:gap-8 sm:px-4 w-full">
-          <div className="flex  flex-col p-8 pb-0  bg-background rounded-2xl overflow-hidden gap-8 w-full shadow-2xl shadow-blue-500/10">
-            <h2 className="text-2xl  font-semibold w-max whitespace-nowrap">
+        <div className="flex w-full flex-col items-start gap-4 sm:gap-8 sm:px-4">
+          <div className="flex w-full flex-col gap-8 overflow-hidden rounded-2xl bg-background p-8 pb-0 shadow-2xl shadow-blue-500/10">
+            <h2 className="w-max whitespace-nowrap text-2xl font-semibold">
               Quick Access
             </h2>
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] w-full   gap-6">
+            <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6">
               {menus?.map((menu) => (
                 <MenuCard
                   key={menu.name}
@@ -30,56 +30,57 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-          <div className="w-full flex gap-8 sm:flex-row flex-col">
+
+          <div className="flex w-full flex-col gap-8 sm:flex-row">
             {hasSchedulePost ? (
-              <div className="sm:bg-background h-fit flex flex-col gap-6 w-full  sm:p-8 rounded-2xl">
-                <h3 className="font-semibold text-xl ">Upcoming posts</h3>
+              <div className="flex h-fit w-full flex-col gap-6 rounded-2xl sm:bg-background sm:p-8">
+                <h3 className="text-xl font-semibold">Upcoming posts</h3>
                 <div className="flex flex-col gap-4">
                   {[...Array(5)].map((_, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-2 sm:p-3 h-28 border rounded-2xl"
+                      className="flex h-28 items-center justify-between rounded-2xl border p-2 sm:p-3"
                     >
-                      <div className="flex flex-col h-full p-2">
+                      <div className="flex h-full flex-col p-2">
                         <p className="text-xs font-medium opacity-90">
                           04:03 via LinkedIn
                         </p>
                         <h6 className="text-lg font-semibold">Matrial</h6>
-                        <p className="text-muted-foreground text-xs mt-auto">
+                        <p className="mt-auto text-xs text-muted-foreground">
                           6 photos 1 video
                         </p>
                       </div>
                       <Image
                         src="https://marketplace.canva.com/EAFoiVBMcvo/1/0/1600w/canva-blue-modern-quote-linkedin-post-VFBmLg0YoZg.jpg"
                         alt=""
-                        className="h-full aspect-square object-cover rounded-xl "
+                        className="aspect-square h-full rounded-xl object-cover"
                       />
                     </div>
                   ))}
                 </div>
               </div>
             ) : (
-              <div className="sm:bg-background h-fit sm:p-4 rounded-2xl w-full">
-                <div className="flex flex-col mb-4">
-                  <h3 className="font-semibold text-xl">Getting Started</h3>
-                  <p className="text-muted-foreground text-sm">
+              <div className="h-fit w-full rounded-2xl sm:bg-background sm:p-4">
+                <div className="mb-4 flex flex-col">
+                  <h3 className="text-xl font-semibold">Getting Started</h3>
+                  <p className="text-sm text-muted-foreground">
                     Four simple steps to get everything up and running
                   </p>
                 </div>
-                <div className="flex flex-col gap-4 ">
+                <div className="flex flex-col gap-4">
                   {ideasData.map((item, index) => (
                     <div
                       key={index}
-                      className="border p-2 sm:p-3 px-2 text-sm sm:text-base sm:px-4 rounded-2xl flex gap-3 items-center text-muted-foreground"
+                      className="flex items-center gap-3 rounded-2xl border p-2 px-2 text-sm text-muted-foreground sm:p-3 sm:px-4 sm:text-base"
                     >
                       <div
                         className={cn(
-                          "size-10 bg-primary-foreground rounded-full",
+                          "size-10 rounded-full bg-primary-foreground",
                           index === 0
                             ? "bg-primary-foreground"
                             : index === 1
-                            ? "bg-foreground/80"
-                            : "bg-secondary-accent"
+                              ? "bg-foreground/80"
+                              : "bg-secondary-accent",
                         )}
                       />
                       {item}
@@ -89,19 +90,19 @@ export default function HomePage() {
               </div>
             )}
 
-            <div className="w-full max-w-xs h-fit bg-background pt-4 px-4 rounded-2xl flex flex-col gap-2">
-              <h4 className="text-xl font-semibold ">Helpful Insights</h4>
-              <div className="flex  transition-all duration-200 flex-col items-center gap-2 w-full h-full rounded-[3rem] p-3 rounded-b-none border-b-0">
-                <div className="flex bg-primary-accent/60 overflow-y-hidden w-full h-full flex-col items-center justify-center gap-4 border  rounded-[2.5rem] rounded-b-none">
+            <div className="flex h-fit w-full max-w-xs flex-col gap-2 rounded-2xl bg-background px-4 pt-4">
+              <h4 className="text-xl font-semibold">Helpful Insights</h4>
+              <div className="flex h-full w-full flex-col items-center gap-2 rounded-[3rem] rounded-b-none border-b-0 p-3 transition-all duration-200">
+                <div className="flex h-full w-full flex-col items-center justify-center gap-4 overflow-y-hidden rounded-[2.5rem] rounded-b-none border bg-primary-accent/60">
                   <Image
                     src="/dialog-menu/single-post-image.svg"
                     alt=""
-                    className="w-full h-full transition-all duration-200 "
+                    className="h-full w-full transition-all duration-200"
                     height={130}
                     width={160}
                   />
                 </div>
-                <h6 className="text-sm text-center font-medium py-1">
+                <h6 className="py-1 text-center text-sm font-medium">
                   Accessibility in Social Media: 10 Tips for Inclusive Content
                 </h6>
               </div>
@@ -126,21 +127,21 @@ function MenuCard({
   return (
     <Link to={url}>
       <div
-        className="flex  group/createCard transition-all duration-200 flex-col items-center gap-2 w-full h-full rounded-[3rem] p-3 rounded-b-none border-b-0"
+        className="group/createCard flex h-full w-full flex-col items-center gap-2 rounded-[3rem] rounded-b-none border-b-0 p-3 transition-all duration-200"
         style={{
           boxShadow: "2px 40px 50px 10px rgba(74, 58, 255, 0.09)",
         }}
       >
-        <div className="flex bg-primary-accent/60 overflow-y-hidden w-full h-full flex-col items-center justify-center gap-4 border  rounded-[2.5rem] rounded-b-none">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-4 overflow-y-hidden rounded-[2.5rem] rounded-b-none border bg-primary-accent/60">
           <Image
             src={icon}
             alt={name}
-            className="w-full h-full transition-all duration-200 group-hover/createCard:!translate-y-0 !translate-y-2"
+            className="h-full w-full !translate-y-2 transition-all duration-200 group-hover/createCard:!translate-y-0"
             height={130}
             width={160}
           />
         </div>
-        <h6 className="text-sm text-center font-medium py-1">{name}</h6>
+        <h6 className="py-1 text-center text-sm font-medium">{name}</h6>
       </div>
     </Link>
   );
