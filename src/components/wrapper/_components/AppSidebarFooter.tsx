@@ -150,8 +150,8 @@ export default function AppSidebarFooter() {
               </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-64 rounded-2xl">
-              <DropdownMenuLabel>Accounts</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+              <DropdownMenuLabel>Profiles</DropdownMenuLabel>
+              {/* <DropdownMenuSeparator /> */}
               <DropdownMenuGroup>
                 {linkedinProfiles?.map((profile: any, index: number) => (
                   <DropdownMenuItem
