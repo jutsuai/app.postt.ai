@@ -23,6 +23,7 @@ export default function InitializeCarouselPage() {
       .post(`/posts/carousel`, {
         author: selectedProfile?.linkedinId,
         authorType: selectedProfile?.type,
+        commentary: "This is a commentary",
       })
       .then((res) => {
         console.log("Carousel Initialized", res.data);
