@@ -44,22 +44,22 @@ export default function CreateTextPage() {
 
   return (
     <Wrapper>
-      <div className=" h-20 pt-6 px-4 z-10 bg-background">
+      <div className="z-10 h-20 bg-background px-4 pt-6">
         <TopBar />
       </div>
-      <WrapperContent className="items-center justify-center bg-background h-full pb-8 p-8 pt-0 gap-8 ">
-        <div className="flex-1 min-h-fit z-10 bg-background relative overflow-hidden flex items-center flex-col justify-between w-full rounded-3xl shadow-2xl shadow-[#60a5fa45]">
+      <WrapperContent className="h-full items-center justify-center gap-8 bg-background p-8 pb-8 pt-0">
+        <div className="relative z-10 flex min-h-fit w-full flex-1 flex-col items-center justify-between overflow-hidden rounded-3xl bg-background shadow-2xl shadow-[#60a5fa45]">
           <div className="flex flex-col items-center gap-8 py-20">
             <HiSparkles className="text-4xl" />
-            <h1 className="text-3xl font-semibold text-center">
+            <h1 className="text-center text-3xl font-semibold">
               What do you want to post about today?
             </h1>
-            <div className="flex items-center bg-muted p-1 rounded-full border">
+            <div className="flex items-center rounded-full border bg-muted p-1">
               <button
                 onClick={() => setInputType("text")}
                 className={cn(
-                  "p-1 flex items-center gap-1 text-sm rounded-full px-3",
-                  inputType === "text" && "bg-primary-accent "
+                  "flex items-center gap-1 rounded-full p-1 px-3 text-sm",
+                  inputType === "text" && "bg-primary-accent",
                 )}
               >
                 <RxText className="text-base" />
@@ -68,18 +68,18 @@ export default function CreateTextPage() {
               <button
                 onClick={() => setInputType("link")}
                 className={cn(
-                  "p-1 flex items-center gap-1 text-sm rounded-full px-3",
-                  inputType === "link" && "bg-primary-accent "
+                  "flex items-center gap-1 rounded-full p-1 px-3 text-sm",
+                  inputType === "link" && "bg-primary-accent",
                 )}
               >
                 <RxLink2 className="text-base" /> Link
               </button>
             </div>
-            <div className="bg-background z-10 flex items-center p-1 rounded-2xl w-full max-w-md focus-within:max-w-lg transition-all duration-200 border">
+            <div className="z-10 flex w-full max-w-md items-center rounded-2xl border bg-background p-1 transition-all duration-200 focus-within:max-w-lg">
               <input
                 type="text"
                 placeholder="Enter your text here..."
-                className="bg-transparent z-10 py-2 w-full px-3 pr-1 outline-none"
+                className="z-10 w-full bg-transparent px-3 py-2 pr-1 outline-none"
               />
 
               <Link to={`/create/${type}`}>
@@ -90,13 +90,13 @@ export default function CreateTextPage() {
             </div>
           </div>
 
-          <div className="floating-background-blur-2 z-0 bottom-0 opacity-50 right-[25%]" />
-          <div className="floating-background-blur-1 z-0 opacity-50 bottom-0 left-[25%]" />
+          <div className="floating-background-blur-2 bottom-0 right-[25%] z-0 opacity-50" />
+          <div className="floating-background-blur-1 bottom-0 left-[25%] z-0 opacity-50" />
         </div>
 
-        <div className="flex items-center flex-col gap-4 py-6 w-full justify-center">
+        <div className="flex w-full flex-col items-center justify-center gap-4 py-6">
           <h3 className="text-lg font-semibold">Suggested topics for you</h3>
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] w-full  max-w-7xl gap-4">
+          <div className="grid w-full max-w-7xl grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4">
             {topics.map((topic, index) => (
               <SuggestedTopic
                 key={index}
@@ -124,12 +124,12 @@ function SuggestedTopic({
   badge: string;
 }) {
   return (
-    <div className="bg-background p-4 transition-all duration-200 rounded-2xl group/suggestedCard hover:shadow-md border cursor-pointer">
-      <div className="flex items-center text-xs w-fit gap-2 bg-muted-foreground/20  p-2 py-1.5 rounded-lg">
+    <div className="group/suggestedCard cursor-pointer rounded-2xl border bg-background p-4 transition-all duration-200 hover:shadow-md">
+      <div className="flex w-fit items-center gap-2 rounded-lg bg-muted-foreground/20 p-2 py-1.5 text-xs">
         {icon}
         <p>{badge}</p>
       </div>
-      <p className="text-sm text-muted-foreground group-hover/suggestedCard:text-foreground mt-4">
+      <p className="mt-4 text-sm text-muted-foreground group-hover/suggestedCard:text-foreground">
         {content}
       </p>
     </div>

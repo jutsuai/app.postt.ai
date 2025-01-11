@@ -9,7 +9,7 @@ import MenuCard from "../MenuCard";
 export const menus = [
   {
     name: "Text",
-    url: "/create?type=text",
+    url: "/create/text",
     icon: "/dialog-menu/text-post-image.svg",
   },
   {

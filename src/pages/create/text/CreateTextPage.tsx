@@ -12,18 +12,26 @@ import httpClient from "@/lib/httpClient";
 import { VscLoading } from "react-icons/vsc";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { IoIosSettings } from "react-icons/io";
+import { RxText } from "react-icons/rx";
+import { cn } from "@/lib/utils";
+import { LuCopy, LuImage } from "react-icons/lu";
+import { HiSparkles } from "react-icons/hi2";
+import { ImageUploadDialog } from "../carousel/_components/ContentTab";
+import { GrFormEdit } from "react-icons/gr";
+import { Label } from "@/components/ui/label";
 
 export default function CreateTextPage() {
   const navigate = useNavigate();
   const { selectedProfile } = useAuth();
-  // const [data, setData] = useState({
-  const [commentary, setCommentary] = useState("This is a commentary");
+  const [showDateTimeSelectorDialog, setShowDateTimeSelectorDialog] =
+    useState(false);
 
-  const [showSelectProfileDialog, setShowSelectProfileDialog] = useState(false);
+  const [commentary, setCommentary] = useState("This is a commentary");
+  const [activeTab, setActiveTab] = useState("Content");
 
   const [loading, setLoading] = useState(false);
-  const handlePost = (linkedinId: string) => {
-    setShowSelectProfileDialog(false);
+  const handleSubmit = ({ linkedinId }: { linkedinId: string }) => {
     setLoading(true);
 
     httpClient()
@@ -45,9 +53,64 @@ export default function CreateTextPage() {
   return (
     <>
       <Wrapper>
-        <WrapperContent className="grid h-full grid-cols-2 gap-8 py-8">
-          <div className="flex h-full w-full flex-col gap-4">
-            <div className="h-full space-y-6 rounded-lg border bg-muted p-4 shadow-md">
+        <WrapperContent className="h-full flex-row gap-8">
+          <PreviewSection
+            createdBy={selectedProfile}
+            commentary={commentary}
+            customizations={customizations}
+          />
+
+          {/* Right Sidebar */}
+
+          <div className="flex h-full w-full max-w-md flex-col gap-4 px-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold">
+                {activeTab === "Content"
+                  ? "Generate Carousel"
+                  : activeTab === "Customization" && "Customization"}
+              </h3>
+              <div className="flex items-center rounded-3xl bg-muted p-1">
+                <button
+                  className={cn(
+                    "flex w-12 items-center justify-center rounded-3xl p-2 px-4",
+                    activeTab === "Content"
+                      ? "border bg-background"
+                      : "bg-muted",
+                  )}
+                  onClick={() => setActiveTab("Content")}
+                >
+                  <RxText className="text-sm" />
+                </button>
+                <button
+                  className={cn(
+                    "flex w-12 items-center justify-center rounded-3xl p-2 px-4",
+                    activeTab === "Customization"
+                      ? "border bg-background"
+                      : "bg-muted",
+                  )}
+                  onClick={() => setActiveTab("Customization")}
+                >
+                  <IoIosSettings className="text-sm" />
+                </button>
+              </div>
+            </div>
+
+            {activeTab === "Content" && <ContentTab />}
+
+            <div className="flex w-full gap-4">
+              <Button
+                variant="secondary"
+                className="w-full text-foreground"
+                onClick={() => setShowDateTimeSelectorDialog(true)}
+              >
+                Schedule Post
+              </Button>
+              <Button className="w-full" onClick={() => handleSubmit({})}>
+                {loading ? <VscLoading className="animate-spin" /> : "Post Now"}
+              </Button>
+            </div>
+
+            {/* <div className="h-full space-y-6 rounded-lg border bg-muted p-4 shadow-md">
               <h3 className="text-base font-semibold">Content Edit</h3>
 
               <div className="space-y-2">
@@ -62,34 +125,49 @@ export default function CreateTextPage() {
                   className="bg-background"
                 />
               </div>
-            </div>
-
-            <div className="flex w-full gap-4">
-              <Button variant="secondary" className="w-full text-foreground">
-                Schedule Post
-              </Button>
-              <Button
-                disabled={loading}
-                className="w-full"
-                onClick={() => setShowSelectProfileDialog(true)}
-              >
-                {loading ? <VscLoading className="animate-spin" /> : "Post Now"}
-              </Button>
-            </div>
+            </div> */}
           </div>
-
-          {/* Right Sidebar */}
-
-          <PreviewSection
-            createdBy={selectedProfile}
-            commentary={commentary}
-            customizations={customizations}
-          />
         </WrapperContent>
       </Wrapper>
     </>
   );
 }
+
+const ContentTab = () => {
+  return (
+    <div className="flex h-full w-full flex-col gap-4">
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="caption-field">Prompt</Label>
+        <div
+          id="caption-field"
+          className="flex w-full flex-col rounded-lg border bg-muted"
+        >
+          <Textarea
+            rows={5}
+            placeholder="Type your caption here...."
+            className="resize-none rounded-lg rounded-b-none border-0 bg-background shadow-none !ring-0"
+          />
+          <div className="ml-auto flex items-center gap-1 px-1 py-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full text-foreground hover:bg-muted-foreground/10"
+            >
+              <LuCopy />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="rounded-full bg-muted-foreground/15 text-foreground hover:bg-muted-foreground/10"
+            >
+              <HiSparkles /> Generate
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const customizations = {
   backgroundColor: "#ffffff",

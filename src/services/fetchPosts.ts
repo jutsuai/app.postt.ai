@@ -7,6 +7,8 @@ export const fetchPosts = async () => {
     .get(url)
     .then((res) => {
       const data = res.data.data as any[];
+
+      console.log("Posts fetched: ", data);
       return data;
     })
     .catch((err) => {

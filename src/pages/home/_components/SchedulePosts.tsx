@@ -16,10 +16,11 @@ export default function SchedulePosts({ posts }: { posts: any[] }) {
           </Button>
         </Link>
       </div>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-6">
-        {posts.map((post, index) => (
-          <PostItem key={index} post={post} />
-        ))}
+
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(275px,1fr))] gap-6">
+        {posts
+          ?.filter((i) => i.status !== "published")
+          ?.map((post, index) => <PostItem key={index} post={post} />)}
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import httpClient from "@/lib/httpClient";
 import { cn } from "@/lib/utils";
 import moment from "moment";
-import React, { useState } from "react";
+import { useState } from "react";
 import { LiaShareSolid } from "react-icons/lia";
 import { MdArrowOutward } from "react-icons/md";
 import { SlLike } from "react-icons/sl";
@@ -33,15 +33,16 @@ export default function PostItem({ post }: { post: any }) {
         setLoading(false);
       });
   };
+
   return (
     <div
-      className="flex items-end justify-between gap-2 overflow-hidden rounded-2xl p-6"
+      className="flex items-end justify-between gap-2 overflow-hidden rounded-2xl p-6 pb-3"
       style={{
         boxShadow: "2px 10px 40px 10px rgba(74, 58, 255, 0.09)",
       }}
     >
       <div className="flex h-full w-full flex-col gap-2">
-        <div className="mb-8 flex h-full flex-col gap-2">
+        <div className="mb-2 flex h-full flex-col gap-2">
           <div className="flex items-center gap-1">
             {/* <div className="h-8 w-8 rounded-full border bg-background p-1.5"> */}
             <Image src={iconLogos[post?.platform]} alt="" className="h-4 w-4" />
@@ -59,13 +60,43 @@ export default function PostItem({ post }: { post: any }) {
           </h6>
         </div>
 
-        <Badge className="w-fit rounded-full" variant="outline">
-          4 Attachments
-        </Badge>
+        {post?.media && (
+          <div className="flex gap-2">
+            {post?.media?.fileType?.includes("image") ? (
+              <Image
+                src={post?.media?.url}
+                alt=""
+                className="h-16 w-16 rounded-lg object-cover"
+              />
+            ) : (
+              <Badge
+                className="w-fit rounded-full capitalize"
+                variant="outline"
+              >
+                1 Attachment
+              </Badge>
+            )}
+          </div>
+        )}
 
         <Separator className="my-1" />
+
         <div className="flex items-center justify-between">
-          {post?.status === "success" ? (
+          <Badge
+            variant="outline"
+            className={cn(
+              "rounded-full border-none capitalize text-background",
+
+              post?.status === "failed" && "bg-error",
+              post?.status === "draft" && "bg-yellow-500/15 text-yellow-500",
+              post?.status === "scheduled" &&
+                "bg-yellow-500/15 text-yellow-500",
+              post?.status === "published" && "bg-primary/15 text-primary",
+            )}
+          >
+            {post?.status}
+          </Badge>
+          {/* {post?.status === "published" ? (
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1 text-xs font-medium">
                 <SlLike className="-scale-x-[1] text-sm" />
@@ -91,7 +122,8 @@ export default function PostItem({ post }: { post: any }) {
             >
               {post?.status}
             </Badge>
-          )}
+          )} */}
+
           <Link to={`/create/carousel/${post?.contentReference}`}>
             <Button variant="link" size="sm">
               View <MdArrowOutward />
