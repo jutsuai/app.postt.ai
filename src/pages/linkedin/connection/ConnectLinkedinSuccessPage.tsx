@@ -1,5 +1,6 @@
 import BoringAvatar from "@/components/BoringAvatar";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthContext";
 import httpClient from "@/lib/httpClient";
 import { useEffect, useState } from "react";
 import { RiExternalLinkLine } from "react-icons/ri";
@@ -8,6 +9,7 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function ConnectLinkedinSuccessPage() {
+  const { getLinkedinProfiles } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const [loadingFetch, setLoadingFetch] = useState(false);
@@ -172,7 +174,7 @@ export default function ConnectLinkedinSuccessPage() {
         </div>
 
         <Button className="mt-auto min-h-[56px] w-full rounded-full" asChild>
-          <Link className="w-full" to="/">
+          <Link className="w-full" to="/" onClick={() => getLinkedinProfiles()}>
             {loading ? <VscLoading className="animate-spin" /> : "Let's Go!"}
           </Link>
         </Button>
