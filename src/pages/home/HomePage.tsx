@@ -6,9 +6,19 @@ import { menus } from "@/components/dialog/CreateMenuDialog";
 import { Link } from "react-router-dom";
 
 import { cn } from "@/lib/utils";
+import SchedulePosts from "./_components/SchedulePosts";
+import { useQuery } from "@tanstack/react-query";
+import { fetchPosts } from "@/services/fetchPosts";
 
 export default function HomePage() {
-  const hasSchedulePost = false;
+  const { data: posts, isLoading } = useQuery<any>({
+    queryKey: ["posts"],
+    queryFn: () => fetchPosts(),
+  });
+
+  console.log("posts", posts);
+
+  const hasSchedulePost = posts?.length > 0 ? true : false;
 
   return (
     <Wrapper>
@@ -33,32 +43,7 @@ export default function HomePage() {
 
           <div className="flex w-full flex-col gap-8 sm:flex-row">
             {hasSchedulePost ? (
-              <div className="flex h-fit w-full flex-col gap-6 rounded-2xl sm:bg-background sm:p-8">
-                <h3 className="text-xl font-semibold">Upcoming posts</h3>
-                <div className="flex flex-col gap-4">
-                  {[...Array(5)].map((_, index) => (
-                    <div
-                      key={index}
-                      className="flex h-28 items-center justify-between rounded-2xl border p-2 sm:p-3"
-                    >
-                      <div className="flex h-full flex-col p-2">
-                        <p className="text-xs font-medium opacity-90">
-                          04:03 via LinkedIn
-                        </p>
-                        <h6 className="text-lg font-semibold">Matrial</h6>
-                        <p className="mt-auto text-xs text-muted-foreground">
-                          6 photos 1 video
-                        </p>
-                      </div>
-                      <Image
-                        src="https://marketplace.canva.com/EAFoiVBMcvo/1/0/1600w/canva-blue-modern-quote-linkedin-post-VFBmLg0YoZg.jpg"
-                        alt=""
-                        className="aspect-square h-full rounded-xl object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <SchedulePosts posts={posts} />
             ) : (
               <div className="h-fit w-full rounded-2xl sm:bg-background sm:p-4">
                 <div className="mb-4 flex flex-col">
