@@ -6,8 +6,6 @@ import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import PreviewSection from "../../../components/preview";
 import { Textarea } from "@/components/ui/textarea";
-import CreateMenuDialog from "@/components/dialog/CreateMenuDialog";
-import { set } from "react-hook-form";
 import httpClient from "@/lib/httpClient";
 import { VscLoading } from "react-icons/vsc";
 import { toast } from "sonner";
@@ -15,10 +13,8 @@ import { useNavigate } from "react-router-dom";
 import { IoIosSettings } from "react-icons/io";
 import { RxText } from "react-icons/rx";
 import { cn } from "@/lib/utils";
-import { LuCopy, LuImage } from "react-icons/lu";
+import { LuCopy } from "react-icons/lu";
 import { HiSparkles } from "react-icons/hi2";
-import { ImageUploadDialog } from "../carousel/_components/ContentTab";
-import { GrFormEdit } from "react-icons/gr";
 import { Label } from "@/components/ui/label";
 
 export default function CreateTextPage() {
@@ -31,7 +27,7 @@ export default function CreateTextPage() {
   const [activeTab, setActiveTab] = useState("Content");
 
   const [loading, setLoading] = useState(false);
-  const handleSubmit = ({ linkedinId }: { linkedinId: string }) => {
+  const handleSubmit = ({ linkedinId }: { linkedinId?: string }) => {
     setLoading(true);
 
     httpClient()
