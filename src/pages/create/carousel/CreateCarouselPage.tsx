@@ -16,17 +16,23 @@ import { cn } from "@/lib/utils";
 import { useParams } from "react-router-dom";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import CarouselUpdater from "./_components/CarouselUpdater";
+import DateTimeSelectorDialog from "@/dialog/DateTimeSelectorDialog";
+import { FaDownload } from "react-icons/fa";
+import { Tooltip } from "@/components/ui/tooltip";
 
 export default function CreateCarouselPage() {
   const { selectedProfile } = useAuth();
   const { carouselId } = useParams();
 
   const [fetchLoading, setFetchLoading] = useState(true);
+  const [post, setPost] = useState<any>(null);
   const [carousel, setCarousel] = useState<any>(null);
   const [commentary, setCommentary] = useState("This is a commentary");
 
   const [slides, setSlides] = useState([]);
   const [customizations, setCustomizations] = useState({});
+  const [showDateTimeSelectorDialog, setShowDateTimeSelectorDialog] =
+    useState(false);
 
   useEffect(() => {
     fetchCarouselById();
@@ -39,10 +45,14 @@ export default function CreateCarouselPage() {
       .get(url)
       .then((res) => {
         const data = res.data.data as any;
+        console.log("Carousel Data: ", data);
+        const { post, carousel } = data;
 
-        setCarousel(data);
-        setSlides(data.slides);
-        setCustomizations(data.customizations);
+        setPost(post);
+        setCarousel(carousel);
+
+        setSlides(carousel.slides);
+        setCustomizations(carousel.customizations);
       })
       .catch((err) => {
         console.error("Error fetching posts: ", err);
@@ -59,16 +69,17 @@ export default function CreateCarouselPage() {
   const [activeTab, setActiveTab] = useState("Content");
 
   const [submitLoading, setSubmitLoading] = useState(false);
-  const handleSubmit = () => {
-    const linkedinId = selectedProfile?.linkedinId;
-
+  const handleSubmit = ({ scheduledAt }: { scheduledAt?: Date }) => {
     setSubmitLoading(true);
 
+    // .post(`/linkedin/profiles/${linkedinId}/post/carousel`, {
     httpClient()
-      .post(`/linkedin/profiles/${linkedinId}/post/carousel`, {
+      .post(`/posts/${post?._id}/carousel/publish`, {
         commentary,
-        slides,
-        customizations,
+        scheduledAt,
+
+        author: selectedProfile?.linkedinId,
+        authorType: selectedProfile?.type,
       })
       .then((res) => {
         console.log("Post Success", res.data);
@@ -83,40 +94,23 @@ export default function CreateCarouselPage() {
       });
   };
 
-  useEffect(() => {
-    if (!slides || !customizations || !commentary || !carousel) {
-      return;
-    }
-
-    if (
-      slides === carousel?.slides &&
-      customizations === carousel?.customizations
-    ) {
-      return;
-    }
-
-    handleUpdateCarousel();
-  }, [slides, customizations, commentary]);
-
-  const [loadingUpdate, setLoadingUpdate] = useState(false);
-  const handleUpdateCarousel = () => {
-    setLoadingUpdate(true);
-
+  const [downloadLoading, setDownloadLoading] = useState(false);
+  const downloadCarousel = () => {
+    setDownloadLoading(true);
     httpClient()
-      .put(`/assets/carousels/${carouselId}`, {
-        commentary,
-        slides,
-        customizations,
-      })
+      .get(`/assets/carousels/${carouselId}/download`)
       .then((res) => {
-        console.log("Post Success", res.data);
-        // navigate("/");
+        const data = res.data.data;
+        console.log("Download Success", data);
+
+        const url = data.url;
+        window.open(url, "_blank");
       })
       .catch((err) => {
-        console.error("Post Error", err);
+        console.error("Download Error", err);
       })
       .finally(() => {
-        setLoadingUpdate(false);
+        setDownloadLoading(false);
       });
   };
 
@@ -204,13 +198,6 @@ export default function CreateCarouselPage() {
                 setCommentary={setCommentary}
               />
             )}
-            {/* {activeTab === "Download" && (
-              <DownloadTab
-                slides={slides}
-                customizations={customizations}
-                createdBy={createdBy}
-              />
-            )} */}
 
             <BottomSection
               customizations={customizations}
@@ -220,45 +207,40 @@ export default function CreateCarouselPage() {
               setSelectedSlide={setSelectedSlide}
             />
             <div className="flex w-full gap-4">
-              <Button variant="secondary" className="w-full text-foreground">
+              <Button
+                variant="secondary"
+                className="w-full text-foreground"
+                onClick={() => setShowDateTimeSelectorDialog(true)}
+              >
                 Schedule Post
               </Button>
-              <Button className="w-full" onClick={() => handleSubmit()}>
+              <Button className="w-full" onClick={() => handleSubmit({})}>
                 {submitLoading ? (
                   <VscLoading className="animate-spin" />
                 ) : (
                   "Post Now!"
                 )}
               </Button>
+
+              <Button variant="secondary" onClick={() => downloadCarousel()}>
+                {downloadLoading ? (
+                  <VscLoading className="animate-spin" />
+                ) : (
+                  <FaDownload className="text-primary" />
+                )}
+              </Button>
             </div>
           </div>
         </WrapperContent>
       </Wrapper>
+
+      <DateTimeSelectorDialog
+        open={showDateTimeSelectorDialog}
+        setOpen={() => setShowDateTimeSelectorDialog(false)}
+        onClick={(date: any) => {
+          handleSubmit({ scheduledAt: date });
+        }}
+      />
     </>
   );
 }
-
-// const handleSaveCarouselPost = () => {
-//   const linkedinId = selectedProfile?.linkedinId;
-
-//   setShowSelectProfileDialog(false);
-//   setLoading(true);
-
-//   httpClient()
-//     .post(`/assets/carousels`, {
-//       commentary,
-//       slides,
-//       customizations,
-//     })
-//     .then((res) => {
-//       console.log("Post Success", res.data);
-//       toast.success("Post Successful");
-//       // navigate("/");
-//     })
-//     .catch((err) => {
-//       console.error("Post Error", err);
-//     })
-//     .finally(() => {
-//       setLoading(false);
-//     });
-// };

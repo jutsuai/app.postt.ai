@@ -16,8 +16,6 @@ export default function HomePage() {
     queryFn: () => fetchPosts(),
   });
 
-  console.log("posts", posts);
-
   const hasSchedulePost = posts?.length > 0 ? true : false;
 
   return (

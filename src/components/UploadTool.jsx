@@ -57,7 +57,11 @@ export default function UploadTool(props) {
       })
       .then((res) => {
         toast.success("Image uploaded successfully");
-        others.onChange(`https://ipfs.near.social/ipfs/${res.data.cid}`);
+        others.onChange({
+          url: `https://ipfs.near.social/ipfs/${res.data.cid}`,
+          name: file.name,
+          fileType: file.type,
+        });
 
         setFiles([]);
         setLoading(false);
@@ -72,11 +76,11 @@ export default function UploadTool(props) {
   return (
     <div>
       <div className="mt-2 flex flex-col items-start justify-between">
-        <div className="flex items-center mb-1 justify-between w-full">
+        <div className="mb-1 flex w-full items-center justify-between">
           <label className="text-sm font-medium">{label}</label>
 
           <label
-            className="text-xs text-foreground/75 font-semibold cursor-pointer hover:text-foreground"
+            className="cursor-pointer text-xs font-semibold text-foreground/75 hover:text-foreground"
             onClick={() => setUploadView((e) => !e)}
           >
             {uploadView ? "URL" : "Upload"}
@@ -89,11 +93,11 @@ export default function UploadTool(props) {
               value={files}
               onValueChange={setFiles}
               dropzoneOptions={dzConfig}
-              className="mt-1 group"
+              className="group mt-1"
             >
               {!dzConfig?.multiple && files.length > 0 ? null : (
-                <FileInput className="bg-background rounded-lg border">
-                  <div className="flex items-center justify-center flex-col pt-3 pb-4 w-full">
+                <FileInput className="rounded-lg border bg-background">
+                  <div className="flex w-full flex-col items-center justify-center pb-4 pt-3">
                     <FileSvgDraw />
                   </div>
                 </FileInput>
@@ -123,7 +127,7 @@ export default function UploadTool(props) {
             {files.length > 0 && (
               <Button
                 disabled={loading}
-                className="w-full mt-2 gap-2 text-foreground"
+                className="mt-6 h-10 w-full gap-2 text-background"
                 onClick={handleUpload}
               >
                 {loading ? (
@@ -142,7 +146,7 @@ export default function UploadTool(props) {
         ) : (
           <Input
             type="text"
-            className="w-full mt-1 bg-background"
+            className="mt-1 w-full bg-background"
             placeholder={others?.placeholder}
             value={others?.value}
             onChange={(e) => others?.onChange(e.target.value)}

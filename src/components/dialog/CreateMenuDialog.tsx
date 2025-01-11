@@ -14,7 +14,8 @@ export const menus = [
   },
   {
     name: "Image",
-    url: "/create?type=image",
+    // url: "/create?type=image",
+    url: "/create/document",
     icon: "/dialog-menu/single-post-image.svg",
   },
   {

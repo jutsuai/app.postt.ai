@@ -1,3 +1,4 @@
+import Link from "@/components/custom/Link";
 import Image from "@/components/Image";
 import { Badge } from "@/components/ui/badge";
 import capitalizeFirstLetter from "@/lib/capitalizeFirstLetter";
@@ -25,7 +26,8 @@ const PostItem = ({ post }: { post: any }) => {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div
+    <Link
+      to={`/create/${post?.type}/${post?.contentReference}`}
       className="flex h-40 items-end justify-between gap-2 overflow-hidden rounded-2xl border bg-slate-100 p-2 sm:p-3"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -73,6 +75,6 @@ const PostItem = ({ post }: { post: any }) => {
         alt=""
         className="aspect-square h-full rounded-xl object-cover"
       />
-    </div>
+    </Link>
   );
 };

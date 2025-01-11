@@ -7,7 +7,6 @@ import { useAuth } from "@/context/AuthContext";
 import PreviewSection from "../../../components/preview";
 import { Textarea } from "@/components/ui/textarea";
 import CreateMenuDialog from "@/components/dialog/CreateMenuDialog";
-import SelectProfileDialog from "@/components/dialog/SelectProfileDialog";
 import { set } from "react-hook-form";
 import httpClient from "@/lib/httpClient";
 import { VscLoading } from "react-icons/vsc";
@@ -88,12 +87,6 @@ export default function CreateTextPage() {
           />
         </WrapperContent>
       </Wrapper>
-
-      <SelectProfileDialog
-        open={showSelectProfileDialog}
-        setOpen={setShowSelectProfileDialog}
-        onSubmit={handlePost}
-      />
     </>
   );
 }

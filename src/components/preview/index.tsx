@@ -22,6 +22,9 @@ export default function PreviewSection({
   type,
   commentary,
   setCommentary,
+
+  // type = image
+  image,
 }: {
   hideHeader?: boolean;
   hideFooter?: boolean;
@@ -39,11 +42,14 @@ export default function PreviewSection({
   type?: "text" | "image" | "carousel" | "document";
   commentary?: any;
   setCommentary?: any;
+
+  // type = image
+  image?: any;
 }) {
   const initialCommentary = useRef(commentary);
   const [onHover, setOnHover] = useState(false);
 
-  const slide = slides[selectedSlide];
+  const slide = type === "carousel" ? slides[selectedSlide] : {};
 
   return (
     <div className="mx-auto flex h-full w-full flex-1 items-center justify-center rounded-lg bg-[#f3f4f6]">
@@ -68,45 +74,20 @@ export default function PreviewSection({
         </p>
 
         {type === "carousel" ? (
-          <>
-            <Arrows
-              setSelectedSlide={setSelectedSlide}
-              slides={slides}
-              selectedSlide={selectedSlide}
-              hideArrows={hideArrows}
-              onHover={onHover}
-            />
-
-            {slide?.pageType == "start" ? (
-              <StartPage
-                slide={slide}
-                createdBy={createdBy}
-                customizations={customizations}
-                slides={slides}
-                setSlides={setSlides}
-                selectedSlide={selectedSlide}
-              />
-            ) : slide?.pageType == "end" ? (
-              <EndPage
-                slide={slide}
-                createdBy={createdBy}
-                customizations={customizations}
-              />
-            ) : (
-              <SlidePage
-                key={slide?._id}
-                slide={slide}
-                selectedSlide={selectedSlide}
-                createdBy={createdBy}
-                customizations={customizations}
-                slides={slides}
-                setSlides={setSlides}
-              />
-            )}
-          </>
+          <CarouselPreview
+            slides={slides}
+            setSlides={setSlides}
+            selectedSlide={selectedSlide}
+            setSelectedSlide={setSelectedSlide}
+            createdBy={createdBy}
+            customizations={customizations}
+            hideArrows={hideArrows}
+            slide={slide}
+            onHover={onHover}
+          />
         ) : (
           type === "image" && (
-            <img className="w-full" src={slide.image} alt={slide._id} />
+            <img className="w-full" src={image} alt={slide._id} />
           )
         )}
 
@@ -115,6 +96,66 @@ export default function PreviewSection({
     </div>
   );
 }
+export const CarouselPreview = ({
+  slides,
+  setSlides,
+  selectedSlide,
+  setSelectedSlide,
+  createdBy,
+  customizations,
+  hideArrows,
+  slide,
+  onHover,
+}: {
+  slides: any;
+  setSlides?: any;
+  selectedSlide: any;
+  setSelectedSlide?: any;
+  createdBy: any;
+  customizations: any;
+  hideArrows?: any;
+  slide: any;
+  onHover?: any;
+}) => {
+  return (
+    <>
+      <Arrows
+        setSelectedSlide={setSelectedSlide}
+        slides={slides}
+        selectedSlide={selectedSlide}
+        hideArrows={hideArrows}
+        onHover={onHover}
+      />
+
+      {slide?.pageType == "start" ? (
+        <StartPage
+          slide={slide}
+          createdBy={createdBy}
+          customizations={customizations}
+          slides={slides}
+          setSlides={setSlides}
+          selectedSlide={selectedSlide}
+        />
+      ) : slide?.pageType == "end" ? (
+        <EndPage
+          slide={slide}
+          createdBy={createdBy}
+          customizations={customizations}
+        />
+      ) : (
+        <SlidePage
+          key={slide?._id}
+          slide={slide}
+          selectedSlide={selectedSlide}
+          createdBy={createdBy}
+          customizations={customizations}
+          slides={slides}
+          setSlides={setSlides}
+        />
+      )}
+    </>
+  );
+};
 
 const StartPage = ({
   slide,
@@ -331,7 +372,7 @@ const SlidePage = ({
   slides: any;
   setSlides: any;
 }) => {
-  const { title, description, image } = slide;
+  const { title, description, image } = slide || {};
 
   const initialTitle = useRef(title);
   const initialDescription = useRef(description);
@@ -430,7 +471,7 @@ const SlidePage = ({
           )}
         >
           <BoringAvatar
-            src={createdBy?.avatar}
+            src={createdBy?.logo}
             alt={createdBy?.name}
             name={createdBy?.name}
             className="h-9 w-9 rounded-full object-cover"

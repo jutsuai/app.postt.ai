@@ -1,7 +1,8 @@
-import PreviewSection from "../../components/preview";
+import { CarouselPreview } from "../../components/preview";
 import { useParams } from "react-router-dom";
 import httpClient from "@/lib/httpClient";
 import { useQuery } from "@tanstack/react-query";
+import LoadingOverlay from "@/components/LoadingOverlay";
 
 const getCaroselData = ({
   carouselId,
@@ -15,29 +16,27 @@ const getCaroselData = ({
   if (!carouselId) {
     return;
   }
-
+  const url = `/assets/carousels/${carouselId}`;
+  console.log("Carousel URL", url);
   return httpClient()
-    .get(`/linkedin/carousel/${carouselId}`)
+    .get(url)
     .then((res) => {
       const data = res.data.data;
-      console.log("Carousel Data", data);
+      const { carousel } = data;
 
-      const slide = data.slides[parseInt((slideId as any) || 0)] as any;
+      const slide = carousel.slides[parseInt((slideId as any) || 0)] as any;
 
       if (!slide) {
         return;
       }
 
-      const output = {
-        pageType: slide.pageType,
+      console.log("slideslideslideslide Data", slide);
 
-        createdBy: data.createdBy,
-        customizations: data.customizations,
-        pageIndex: slideId,
-        title: slide.title,
-        description: slide.description,
-        image: slide.image,
-        slides: data.slides,
+      const output = {
+        slide: slide,
+        createdBy: carousel?.createdBy,
+        customizations: carousel?.customizations,
+        slides: carousel?.slides,
       } as any;
 
       console.log("Carousel Output", output);
@@ -52,17 +51,6 @@ const getCaroselData = ({
 };
 
 export default function RestrictedLinkedinCarouselPage() {
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const query = searchParams.get("query") || "";
-  //  console.log(query);
-
-  // pageType
-  // createdBy
-  // customizations
-  // pageIndex
-  // title
-  // description
-  // image
   const { carouselId, slideId } = useParams();
 
   const {
@@ -75,26 +63,27 @@ export default function RestrictedLinkedinCarouselPage() {
     queryFn: () => getCaroselData({ carouselId, slideId }),
   });
 
-  console.log(
-    "CarouselCarouselCarouselCarouselCarouselCarouselCarousel",
-    carousel,
-  );
+  // Show loading spinner while data is being fetched
+  if (isLoading) {
+    return <LoadingOverlay />; // You can replace this with a spinner or other loading indicator
+  }
 
-  // useEffect(() => {
-  //   getCaroselData();
-  // }, []);
-
-  // const [loading, setLoading] = useState(false);
-  // const [carousel, setCarousel] = useState(null);
-
+  // Handle error if the API call fails
+  if (error) {
+    return <div>Error loading carousel data.</div>; // Show error message
+  }
   return (
-    <PreviewSection
-      hideHeader={true}
-      hideFooter={true}
+    <CarouselPreview
+      slide={carousel?.slide}
+      slides={carousel?.slides}
+      selectedSlide={slideId}
+      createdBy={{
+        name: `${carousel?.createdBy?.firstName} ${carousel?.createdBy?.lastName}`,
+        logo: carousel?.createdBy?.avatar,
+        slug: carousel?.createdBy?.email,
+      }}
+      customizations={carousel?.customizations}
       hideArrows={true}
-      className="rounded-none p-0"
-      // slides={data.slides}
-      {...carousel}
     />
   );
 }
