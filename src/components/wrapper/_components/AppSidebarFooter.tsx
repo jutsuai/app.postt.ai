@@ -1,4 +1,14 @@
 import BoringAvatar from "@/components/BoringAvatar";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Popover,
   PopoverContent,
@@ -97,8 +107,8 @@ export default function AppSidebarFooter() {
           )}
         >
           {/* <Link to="/settings"> */}
-          <Popover>
-            <PopoverTrigger asChild>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
               <SidebarMenuButton
                 className="h-10 min-h-12 w-full min-w-12 hover:!bg-transparent"
                 style={{
@@ -138,49 +148,71 @@ export default function AppSidebarFooter() {
                   </div>
                 )}
               </SidebarMenuButton>
-            </PopoverTrigger>
-            <PopoverContent className="rounded-2xl">
-              {linkedinProfiles?.map((profile: any, index: number) => (
-                <SidebarMenuButton
-                  key={profile?._id}
-                  className={cn(
-                    "h-13 m-0 rounded-full transition",
-
-                    // index === selectedProfile ? "bg-[#ecebff]" : "ring-transparent")
-                    profile?._id === selectedProfile?._id
-                      ? "!bg-primary/25"
-                      : "ring-transparent",
-
-                    "hover:bg-primary/5 active:bg-primary/10",
-                  )}
-                  onClick={() => setSelectedProfile(profile)}
-                >
-                  <BoringAvatar
-                    name={profile?.name}
-                    src={profile?.logo}
-                    alt={profile?.name}
-                    className="w-10"
-                  />
-
-                  <div
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-64 rounded-2xl">
+              <DropdownMenuLabel>Accounts</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                {linkedinProfiles?.map((profile: any, index: number) => (
+                  <DropdownMenuItem
+                    key={profile?._id}
+                    onClick={() => setSelectedProfile(profile)}
                     className={cn(
-                      "z-10 flex flex-col items-start overflow-hidden text-sm font-semibold transition-colors duration-200",
+                      "m-0 h-12 rounded-xl transition",
+
+                      // index === selectedProfile ? "bg-[#ecebff]" : "ring-transparent")
+                      profile?._id === selectedProfile?._id
+                        ? "!bg-primary/25"
+                        : "ring-transparent",
+
+                      "hover:!bg-primary/15 active:bg-primary/10",
                     )}
                   >
-                    <p className="text-center text-sm font-semibold">
-                      {`${profile?.name}`}
-                    </p>
-                    <h3 className="text-center text-xs font-medium text-muted-foreground">
-                      {profile?.slug}
-                    </h3>
-                  </div>
-                </SidebarMenuButton>
-              ))}
-            </PopoverContent>
-          </Popover>
+                    <BoringAvatar
+                      name={profile?.name}
+                      src={profile?.logo}
+                      alt={profile?.name}
+                      className="w-9"
+                    />
+
+                    <div
+                      className={cn(
+                        "z-10 flex flex-col items-start overflow-hidden text-sm font-semibold transition-colors duration-200",
+                      )}
+                    >
+                      <p className="text-center text-sm font-semibold text-foreground">
+                        {`${profile?.name}`}
+                      </p>
+                      <h3 className="text-center text-xs font-medium text-muted-foreground">
+                        {profile?.slug}
+                      </h3>
+                    </div>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                asChild
+                onClick={logout}
+                className={cn("rounded-xl !ring-0 hover:!bg-primary/15")}
+              >
+                <Button
+                  variant="ghost"
+                  className="h-12 w-full cursor-pointer justify-start px-4 !text-foreground !ring-0 hover:!bg-primary/15"
+                >
+                  <span className="z-10 transition-colors duration-200">
+                    <FiLogOut className="size-5" />
+                  </span>
+                  <span className="z-10 text-sm font-semibold transition-colors duration-200">
+                    Logout
+                  </span>
+                </Button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </SidebarMenuItem>
 
-        <SidebarMenuItem
+        {/* <SidebarMenuItem
           onClick={logout}
           className={cn(
             "cursor-pointer !rounded-full transition-all duration-200 hover:!bg-primary-accent/60",
@@ -195,7 +227,7 @@ export default function AppSidebarFooter() {
               Logout
             </span>
           </SidebarMenuButton>
-        </SidebarMenuItem>
+        </SidebarMenuItem> */}
       </SidebarMenu>
     </SidebarFooter>
   );
