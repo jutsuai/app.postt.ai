@@ -15,6 +15,7 @@ import { VscLoading } from "react-icons/vsc";
 import { cn } from "@/lib/utils";
 import { useParams } from "react-router-dom";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import CarouselUpdater from "./_components/CarouselUpdater";
 
 export default function CreateCarouselPage() {
   const { selectedProfile } = useAuth();
@@ -55,25 +56,20 @@ export default function CreateCarouselPage() {
 
   //
   const [selectedSlide, setSelectedSlide] = useState(0);
-
   const [activeTab, setActiveTab] = useState("Content");
 
-  const [loading, setLoading] = useState(false);
-
-  const handlePost = () => {
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const handleSubmit = () => {
     const linkedinId = selectedProfile?.linkedinId;
 
-    setLoading(true);
+    setSubmitLoading(true);
 
     httpClient()
-      .post(
-        `/linkedin/profiles/${selectedProfile?.linkedinProfileId}/post/carousel`,
-        {
-          commentary,
-          slides,
-          customizations,
-        },
-      )
+      .post(`/linkedin/profiles/${linkedinId}/post/carousel`, {
+        commentary,
+        slides,
+        customizations,
+      })
       .then((res) => {
         console.log("Post Success", res.data);
         toast.success("Post Successful");
@@ -83,7 +79,44 @@ export default function CreateCarouselPage() {
         console.error("Post Error", err);
       })
       .finally(() => {
-        setLoading(false);
+        setSubmitLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    if (!slides || !customizations || !commentary || !carousel) {
+      return;
+    }
+
+    if (
+      slides === carousel?.slides &&
+      customizations === carousel?.customizations
+    ) {
+      return;
+    }
+
+    handleUpdateCarousel();
+  }, [slides, customizations, commentary]);
+
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
+  const handleUpdateCarousel = () => {
+    setLoadingUpdate(true);
+
+    httpClient()
+      .put(`/assets/carousels/${carouselId}`, {
+        commentary,
+        slides,
+        customizations,
+      })
+      .then((res) => {
+        console.log("Post Success", res.data);
+        // navigate("/");
+      })
+      .catch((err) => {
+        console.error("Post Error", err);
+      })
+      .finally(() => {
+        setLoadingUpdate(false);
       });
   };
 
@@ -109,6 +142,17 @@ export default function CreateCarouselPage() {
             //
             type={"carousel"}
           />
+
+          <CarouselUpdater
+            slides={slides}
+            customizations={customizations}
+            commentary={commentary}
+            carousel={carousel}
+            carouselId={carouselId}
+          />
+          {/* {loadingUpdate && (
+            <VscLoading className="absolute left-10 top-10 size-10 animate-spin" />
+          )} */}
 
           <div className="flex h-full w-full max-w-md flex-col gap-4 px-4">
             <div className="flex items-center justify-between">
@@ -179,8 +223,8 @@ export default function CreateCarouselPage() {
               <Button variant="secondary" className="w-full text-foreground">
                 Schedule Post
               </Button>
-              <Button className="w-full" onClick={() => handlePost()}>
-                {loading ? (
+              <Button className="w-full" onClick={() => handleSubmit()}>
+                {submitLoading ? (
                   <VscLoading className="animate-spin" />
                 ) : (
                   "Post Now!"
