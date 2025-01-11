@@ -7,10 +7,7 @@ import httpClient from "@/lib/httpClient";
 import { cn } from "@/lib/utils";
 import moment from "moment";
 import { useState } from "react";
-import { LiaShareSolid } from "react-icons/lia";
 import { MdArrowOutward } from "react-icons/md";
-import { SlLike } from "react-icons/sl";
-import { TfiCommentAlt } from "react-icons/tfi";
 
 const iconLogos: any = {
   linkedin:
@@ -124,11 +121,13 @@ export default function PostItem({ post }: { post: any }) {
             </Badge>
           )} */}
 
-          <Link to={`/create/carousel/${post?.contentReference}`}>
-            <Button variant="link" size="sm">
-              View <MdArrowOutward />
-            </Button>
-          </Link>
+          {post?.type === "carousel" && (
+            <Link to={`/create/carousel/${post?.contentReference}`}>
+              <Button variant="link" size="sm">
+                View <MdArrowOutward />
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </div>
