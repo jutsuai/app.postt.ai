@@ -1,4 +1,6 @@
 import BoringAvatar from "@/components/BoringAvatar";
+import Link from "@/components/custom/Link";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,11 +11,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import {
   SidebarFooter,
   SidebarMenu,
@@ -28,14 +25,8 @@ import { cn } from "@/lib/utils";
 import { FiLogOut } from "react-icons/fi";
 
 export default function AppSidebarFooter() {
-  const {
-    logout,
-    user,
-    linkedinProfiles,
-    getLinkedinProfiles,
-    selectedProfile,
-    setSelectedProfile,
-  } = useAuth();
+  const { logout, linkedinProfiles, selectedProfile, setSelectedProfile } =
+    useAuth();
   const { open: sidebarMode } = useSidebar();
 
   console.log("linkedinProfiles", linkedinProfiles);
@@ -168,12 +159,20 @@ export default function AppSidebarFooter() {
                       "hover:!bg-primary/15 active:bg-primary/10",
                     )}
                   >
-                    <BoringAvatar
-                      name={profile?.name}
-                      src={profile?.logo}
-                      alt={profile?.name}
-                      className="w-9"
-                    />
+                    <div className="relative">
+                      <BoringAvatar
+                        name={profile?.name}
+                        src={profile?.logo}
+                        alt={profile?.name}
+                        className="w-9"
+                      />
+
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/f/f8/LinkedIn_icon_circle.svg"
+                        alt={`${profile?.name}'s linkedin`}
+                        className="absolute -bottom-0.5 -right-0.5 size-4"
+                      />
+                    </div>
 
                     <div
                       className={cn(
@@ -190,7 +189,23 @@ export default function AppSidebarFooter() {
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuGroup>
+              <DropdownMenuItem
+                asChild
+                onClick={logout}
+                className={cn("rounded-xl !ring-0 hover:!bg-primary/15")}
+              >
+                <Link to="/settings">
+                  <Button
+                    variant="ghost"
+                    className="h-12 w-full cursor-pointer justify-start px-4 !text-foreground !ring-0 hover:!bg-primary/15"
+                  >
+                    Manage Channels
+                  </Button>
+                </Link>
+              </DropdownMenuItem>
+
               <DropdownMenuSeparator />
+
               <DropdownMenuItem
                 asChild
                 onClick={logout}
