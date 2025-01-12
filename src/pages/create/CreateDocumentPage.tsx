@@ -18,6 +18,20 @@ import { Label } from "@/components/ui/label";
 import { ImageUploadDialog } from "./carousel/_components/ContentTab";
 import { GrFormEdit } from "react-icons/gr";
 import DateTimeSelectorDialog from "@/dialog/DateTimeSelectorDialog";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export default function CreateDocumentPage() {
   const { selectedProfile } = useAuth();
@@ -28,6 +42,10 @@ export default function CreateDocumentPage() {
   const [commentary, setCommentary] = useState("This is a commentary");
   const [media, setMedia] = useState<any>(null);
   const [activeTab, setActiveTab] = useState("Content");
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [time, setTime] = useState<string>("05:00");
+  const [date, setDate] = useState<Date | null>(null);
 
   const [loading, setLoading] = useState(false);
   const handleSubmit = ({ scheduledAt }: { scheduledAt?: string }) => {
@@ -108,8 +126,6 @@ export default function CreateDocumentPage() {
             {activeTab === "Content" && (
               <ContentTab media={media} setMedia={setMedia} />
             )}
-
-            {/*  */}
 
             <div className="flex w-full gap-4">
               <Button
