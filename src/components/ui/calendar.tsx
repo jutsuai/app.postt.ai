@@ -19,7 +19,7 @@ function Calendar({
   classNames,
   showOutsideDays = true,
   ...props
-}: CalendarProps) {
+}: any) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -62,7 +62,7 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Dropdown: ({ value, onChange, children, ...props }: DropdownProps) => {
+        Dropdown: ({ value, onChange, children, ...props }: any) => {
           const options = React.Children.toArray(
             children,
           ) as React.ReactElement<React.HTMLProps<HTMLOptionElement>>[];
