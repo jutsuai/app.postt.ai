@@ -103,44 +103,16 @@ export default function PostItem({ post }: { post: any }) {
             className={cn(
               "rounded-full border-none capitalize text-background",
 
-              post?.status === "failed" && "bg-error",
+              post?.status === "failed" && "bg-red-500/15 text-red-500",
               post?.status === "draft" && "bg-yellow-500/15 text-yellow-500",
-              post?.status === "scheduled" &&
-                "bg-yellow-500/15 text-yellow-500",
+              post?.status === "scheduled" && "bg-green-500/10 text-green-500",
               post?.status === "published" && "bg-primary/15 text-primary",
             )}
           >
             {post?.status === "scheduled"
-              ? `scheduled for ${moment(post?.scheduledAt).fromNow()}`
+              ? `scheduled ${moment(post?.scheduledAt).fromNow()}`
               : post?.status}
           </Badge>
-          {/* {post?.status === "published" ? (
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1 text-xs font-medium">
-                <SlLike className="-scale-x-[1] text-sm" />
-                10
-              </div>
-              <div className="flex items-center gap-1 text-xs font-medium">
-                <TfiCommentAlt className="-scale-x-[1] text-sm" />4
-              </div>
-              <div className="flex items-center gap-1 text-xs font-medium">
-                <LiaShareSolid className="text-sm" />1
-              </div>
-            </div>
-          ) : (
-            <Badge
-              variant="outline"
-              className={cn(
-                "rounded-full border-none capitalize text-background",
-                post?.status === "scheduled" && "bg-primary",
-
-                post?.status === "failed" && "bg-error",
-                post?.status === "draft" && "bg-yellow-500/60",
-              )}
-            >
-              {post?.status}
-            </Badge>
-          )} */}
 
           {/* {post?.type === "carousel" && ( */}
           <Link
