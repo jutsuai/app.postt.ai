@@ -4,6 +4,8 @@ import ScheduleCalendar from "./_components/ScheduleCalendar";
 import { useMemo, useState } from "react";
 import RenderDateSection from "./_components/RenderDateSection";
 import { PiCalendarXDuotone } from "react-icons/pi";
+import { fetchPosts } from "@/services/fetchPosts";
+import { useQuery } from "@tanstack/react-query";
 
 export type DaysTypes =
   | "Sun"
@@ -14,6 +16,33 @@ export type DaysTypes =
   | "Fri"
   | "Sat"
   | string;
+const transformData = (data) => {
+  return data.map((item, index) => {
+    const date = new Date(item.scheduledAt || item.createdAt);
+    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    const slots = [
+      {
+        id: `slot-${index + 1}`,
+        time: "09:00",
+        posts: [
+          {
+            id: `post-${index + 1}`,
+            title: item.commentary || "Default Title",
+            platform: item.platform || "Unknown Platform",
+            image: item.media ? item.media.url : "",
+            caption: item.commentary || "No Caption Provided",
+          },
+        ],
+      },
+    ];
+
+    return {
+      id: `day-${index + 1}`,
+      date: formattedDate,
+      slots,
+    };
+  });
+};
 
 const data = [
   {
@@ -186,39 +215,50 @@ const data = [
 ];
 
 export default function SocialMediaSchedule() {
+  const { data: posts, isLoading: loading } = useQuery<any>({
+    queryKey: ["posts"],
+    queryFn: () => fetchPosts(),
+  });
+
+  console.log(posts);
+
+  const updatedData = transformData(posts || []);
+
+  console.log(updatedData);
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [startDay, setStartDay] = useState<DaysTypes>(
-    localStorage?.getItem("weekStartDay") || "Sun"
+    localStorage?.getItem("weekStartDay") || "Sun",
   );
 
   const scheduleData = useMemo(() => {
-    return data.filter(
+    return updatedData.filter(
       (section) =>
         new Date(section.date).toLocaleDateString() ==
-        selectedDate.toLocaleDateString()
+        selectedDate.toLocaleDateString(),
     );
   }, [selectedDate]);
 
   return (
     <Wrapper>
-      <WrapperContent className="md:bg-muted bg-primary-foreground/60 md:grid gap-4 grid-cols-6 pb-0 w-full">
+      <WrapperContent className="w-full grid-cols-6 gap-4 bg-primary-foreground/60 pb-0 md:grid md:bg-muted">
         <ScheduleCalendar
-          data={data}
+          data={updatedData}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
           startDay={startDay}
           setStartDay={setStartDay}
-          className="col-span-4 md:h-[calc(100dvh-1rem)] pb-4 md:pb-8 md:px-4"
+          className="col-span-4 pb-4 md:h-[calc(100dvh-1rem)] md:px-4 md:pb-8"
         />
 
-        <div className="rounded-t-[4rem] md:rounded-xl md:bg-background col-span-2 relative p-8 pb-10 -mx-4 md:-mx-0 md:mb-4 px-8">
+        <div className="relative col-span-2 -mx-4 rounded-t-[4rem] p-8 px-8 pb-10 md:-mx-0 md:mb-4 md:rounded-xl md:bg-background">
           {scheduleData && scheduleData?.length > 0 ? (
             <RenderDateSection section={scheduleData[0]} />
           ) : (
-            <div className="flex items-center flex-col relative z-10 md:mt-0  pb-24 md:pb-0 mt-10 gap-2 justify-center h-full opacity-70">
+            <div className="relative z-10 mt-10 flex h-full flex-col items-center justify-center gap-2 pb-24 opacity-70 md:mt-0 md:pb-0">
               <PiCalendarXDuotone className="text-6xl text-muted-foreground/100" />
 
-              <p className=" text-lg font-semibold">
+              <p className="text-lg font-semibold">
                 No posts scheduled for this day
               </p>
               <h4 className="text-sm font-medium text-muted-foreground">
@@ -232,8 +272,8 @@ export default function SocialMediaSchedule() {
           )}
           {/* )
           )} */}
-          <div className="absolute md:hidden inset-0 bg-background rounded-t-[4rem] z-[1]" />
-          <div className="absolute md:hidden bottom-0 -top-6 max-w-[95%] mx-auto left-0 right-0 bg-muted/50 rounded-t-[6rem]" />
+          <div className="absolute inset-0 z-[1] rounded-t-[4rem] bg-background md:hidden" />
+          <div className="absolute -top-6 bottom-0 left-0 right-0 mx-auto max-w-[95%] rounded-t-[6rem] bg-muted/50 md:hidden" />
         </div>
       </WrapperContent>
     </Wrapper>

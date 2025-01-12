@@ -1,4 +1,3 @@
-import BoringAvatar from "@/components/images/BoringAvatar";
 import Link from "@/components/custom/Link";
 import Image from "@/components/Image";
 import { Badge } from "@/components/ui/badge";
