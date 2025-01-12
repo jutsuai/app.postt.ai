@@ -47,6 +47,8 @@ export default function CreateTextPage() {
         setLoading(false);
       });
   };
+
+  const [refreshRefs, setRefreshRefs] = useState(false);
   return (
     <>
       <Wrapper>
@@ -54,7 +56,9 @@ export default function CreateTextPage() {
           <PreviewSection
             createdBy={selectedProfile}
             commentary={commentary}
+            setCommentary={setCommentary}
             customizations={customizations}
+            refreshRefs={refreshRefs}
           />
 
           {/* Right Sidebar */}
@@ -96,6 +100,7 @@ export default function CreateTextPage() {
               <ContentTab
                 commentary={commentary}
                 setCommentary={setCommentary}
+                setRefreshRefs={setRefreshRefs}
               />
             )}
 
@@ -138,10 +143,42 @@ export default function CreateTextPage() {
 const ContentTab = ({
   commentary,
   setCommentary,
+  setRefreshRefs,
 }: {
   commentary: string;
   setCommentary: (value: string) => void;
+  setRefreshRefs: any;
 }) => {
+  const [loading, setLoading] = useState(false);
+  const [prompt, setPrompt] = useState("AI is the future of humanity");
+  const handleGenerate = () => {
+    setLoading(true);
+    console.log("Generate Carousel");
+
+    const payload = {
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      model: "gpt-4o",
+    };
+    httpClient(import.meta.env.VITE_COPILOT_URL)
+      .post("/postt", payload)
+      .then((res) => {
+        console.log("Generate Carousel Success", res.data);
+
+        setCommentary(res.data);
+        setRefreshRefs(Math.random());
+      })
+      .catch((err) => {
+        console.error("Generate Carousel Error", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
   return (
     <div className="flex h-full w-full flex-col gap-4">
       <div className="flex flex-col gap-2">
@@ -154,6 +191,8 @@ const ContentTab = ({
             rows={5}
             placeholder="Type your caption here...."
             className="resize-none rounded-lg rounded-b-none border-0 bg-background shadow-none !ring-0"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
           />
           <div className="ml-auto flex items-center gap-1 px-1 py-1">
             <Button
@@ -166,9 +205,16 @@ const ContentTab = ({
             <Button
               variant="ghost"
               size="sm"
-              className="rounded-full bg-muted-foreground/15 text-foreground hover:bg-muted-foreground/10"
+              className="min-w-28 rounded-full bg-muted-foreground/15 text-foreground hover:bg-muted-foreground/10"
+              onClick={handleGenerate}
             >
-              <HiSparkles /> Generate
+              {loading ? (
+                <VscLoading className="animate-spin" />
+              ) : (
+                <>
+                  <HiSparkles /> Generate
+                </>
+              )}
             </Button>
           </div>
         </div>
@@ -184,11 +230,14 @@ const ContentTab = ({
           className="flex w-full flex-col rounded-lg border bg-muted"
         >
           <Textarea
-            rows={5}
+            rows={15}
             placeholder="Type your caption here...."
             className="resize-none rounded-lg border-0 bg-background shadow-none !ring-0"
             value={commentary}
-            onChange={(e) => setCommentary(e.target.value)}
+            onChange={(e) => {
+              setCommentary(e.target.value);
+              setRefreshRefs(Math.random());
+            }}
           />
         </div>
       </div>

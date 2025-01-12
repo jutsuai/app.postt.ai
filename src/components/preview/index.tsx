@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { IoChevronForward } from "react-icons/io5";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import BoringAvatar from "@/components/BoringAvatar";
 import Header from "./_components/Header";
 import Footer from "./_components/Footer";
@@ -23,8 +23,9 @@ export default function PreviewSection({
   commentary,
   setCommentary,
 
-  // type = image
   image,
+
+  refreshRefs,
 }: {
   hideHeader?: boolean;
   hideFooter?: boolean;
@@ -43,10 +44,16 @@ export default function PreviewSection({
   commentary?: any;
   setCommentary?: any;
 
-  // type = image
   image?: any;
+
+  refreshRefs?: any;
 }) {
   const initialCommentary = useRef(commentary);
+  useEffect(() => {
+    console.log("refreshRefs", refreshRefs);
+    initialCommentary.current = commentary;
+  }, [refreshRefs]);
+
   const [onHover, setOnHover] = useState(false);
 
   const slide = type === "carousel" ? slides[selectedSlide] : {};
