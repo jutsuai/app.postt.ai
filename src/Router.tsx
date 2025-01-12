@@ -2,7 +2,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/home/HomePage";
 import AuthLayout from "./layout/AuthLayout";
 import LoginPage from "./pages/auth/LoginPage";
-import LinkedinPage from "./pages/_unused/LinkedinPage";
 import CreatePostPage from "./pages/linkedin/CreatePostPage";
 import LinkedinCallbackPage from "./pages/auth/linkedin/LinkedinCallbackPage";
 import Layout from "./layout/Layout";
@@ -21,11 +20,14 @@ import ConnectLinkedinSuccessPage from "./pages/linkedin/connection/ConnectLinke
 import CreateTextPage from "./pages/create/text/CreateTextPage";
 import SettingsPage from "./pages/settings/SettingsPage";
 import OnboardingLayout from "./layout/OnboardingLayout";
-import CreateDocumentPage from "./pages/create/CreateDocumentPage";
+import CreateDocumentPage from "./pages/create/image/CreateImagePage";
 import { VscLoading } from "react-icons/vsc";
 import PostsPage from "./pages/posts/PostsPage";
 import InitializeCarouselPage from "./pages/create/carousel/InitializeCarouselPage";
 import ChannelsPage from "./pages/channels/ChannelsPage";
+import InitializeTextPage from "./pages/create/text/InitializeTextPage";
+import InitializeImagePage from "./pages/create/image/InitializeImagePage";
+import CreateImagePage from "./pages/create/image/CreateImagePage";
 
 export default function Router() {
   const { isAuthenticated } = useAuth();
@@ -104,8 +106,18 @@ const AppRouter = () => {
         <Route path="create">
           <Route index element={<CreatePage />} />
           <Route path="post" element={<CreatePostPage />} />
-          <Route path="text" element={<CreateTextPage />} />
-          <Route path="image" element={<CreateDocumentPage />} />
+
+          <Route path="text">
+            <Route index element={<InitializeTextPage />} />
+            <Route path=":postId" element={<CreateTextPage />} />
+          </Route>
+
+          <Route path="image">
+            <Route index element={<InitializeImagePage />} />
+            <Route path=":postId" element={<CreateImagePage />} />
+          </Route>
+          {/* <Route path="image" element={<CreateDocumentPage />} /> */}
+
           <Route path="carousel">
             <Route index element={<InitializeCarouselPage />} />
             <Route path=":carouselId" element={<CreateCarouselPage />} />

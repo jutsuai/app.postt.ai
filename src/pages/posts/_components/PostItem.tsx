@@ -1,3 +1,4 @@
+import BoringAvatar from "@/components/images/BoringAvatar";
 import Link from "@/components/custom/Link";
 import Image from "@/components/Image";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +9,8 @@ import { cn } from "@/lib/utils";
 import moment from "moment";
 import { useState } from "react";
 import { MdArrowOutward } from "react-icons/md";
+import BoringImage from "@/components/images/bordingImage";
+import capitalizeFirstLetter from "@/lib/capitalizeFirstLetter";
 
 const iconLogos: any = {
   linkedin:
@@ -56,15 +59,24 @@ export default function PostItem({ post }: { post: any }) {
             <h6 className="line-clamp-2 text-xl font-semibold">
               {post?.commentary ? post?.commentary : "No caption"}
             </h6>
-            <Image
-              src="https://img.freepik.com/free-psd/instagram-post-template_1393-166.jpg"
-              alt=""
-              className="h-full w-14 rounded-md object-cover object-center"
-            />
+
+            {(post?.type === "carousel" && (
+              <Image
+                src="https://img.freepik.com/free-psd/instagram-post-template_1393-166.jpg"
+                alt=""
+                className="h-full w-14 rounded-md object-cover object-center"
+              />
+            )) || (
+              <BoringImage
+                src={post?.media?.url}
+                alt={capitalizeFirstLetter(post?.type)}
+                className="h-16 w-16 rounded-lg object-cover"
+              />
+            )}
           </div>
         </div>
 
-        {post?.media && (
+        {/* {post?.media && (
           <div className="flex gap-2">
             {post?.media?.fileType?.includes("image") ? (
               <Image
@@ -81,7 +93,7 @@ export default function PostItem({ post }: { post: any }) {
               </Badge>
             )}
           </div>
-        )}
+        )} */}
 
         <Separator className="my-1" />
 
@@ -98,7 +110,9 @@ export default function PostItem({ post }: { post: any }) {
               post?.status === "published" && "bg-primary/15 text-primary",
             )}
           >
-            {post?.status}
+            {post?.status === "scheduled"
+              ? `scheduled for ${moment(post?.scheduledAt).fromNow()}`
+              : post?.status}
           </Badge>
           {/* {post?.status === "published" ? (
             <div className="flex items-center gap-4">
@@ -128,13 +142,23 @@ export default function PostItem({ post }: { post: any }) {
             </Badge>
           )} */}
 
-          {post?.type === "carousel" && (
-            <Link to={`/create/carousel/${post?.contentReference}`}>
-              <Button variant="link" size="sm">
-                View <MdArrowOutward />
-              </Button>
-            </Link>
-          )}
+          {/* {post?.type === "carousel" && ( */}
+          <Link
+            to={
+              post.type === "carousel"
+                ? `/create/carousel/${post?.contentReference}`
+                : post?.type === "text"
+                  ? `/create/text/${post?._id}`
+                  : post?.type === "image"
+                    ? `/create/image/${post?._id}`
+                    : `#`
+            }
+          >
+            <Button variant="link" size="sm">
+              View <MdArrowOutward />
+            </Button>
+          </Link>
+          {/* )} */}
         </div>
       </div>
     </div>

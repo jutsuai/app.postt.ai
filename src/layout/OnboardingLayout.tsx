@@ -1,28 +1,28 @@
 import Image from "@/components/Image";
 import { Outlet } from "react-router";
 import { useAuth } from "@/context/AuthContext";
-import BoringAvatar from "@/components/BoringAvatar";
+import BoringAvatar from "@/components/images/BoringAvatar";
 
 export default function OnboardingLayout() {
   const { user } = useAuth();
   return (
-    <div className="w-full max-h-[100dvh] h-full relative flex overflow-y-auto">
-      <div className="z-10 flex-1 min-h-[768px] h-full relative flex-col flex items-center ">
+    <div className="relative flex h-full max-h-[100dvh] w-full overflow-y-auto">
+      <div className="relative z-10 flex h-full min-h-[768px] flex-1 flex-col items-center">
         <Outlet />
-        <p className="py-10 mt-auto text-xs text-muted-foreground uppercase ">
+        <p className="mt-auto py-10 text-xs uppercase text-muted-foreground">
           &copy;{new Date().getFullYear()} All Right Reserved
         </p>
       </div>
-      <div className="p-6 flex-1 min-h-[768px] max-h-full sticky top-0 lg:block hidden">
+      <div className="sticky top-0 hidden max-h-full min-h-[768px] flex-1 p-6 lg:block">
         <Image
           src="/background.svg"
           alt=""
-          className="h-full w-full object-cover object-center  rounded-3xl"
+          className="h-full w-full rounded-3xl object-cover object-center"
         />
-        <div className="absolute flex justify-center items-center inset-0 z-10">
+        <div className="absolute inset-0 z-10 flex items-center justify-center">
           <div className="relative z-20 w-full max-w-lg">
             <Image src="/linkedinCard.svg" alt="" className="w-full" />
-            <div className="flex items-center gap-3 z-30 absolute top-14 left-10">
+            <div className="absolute left-10 top-14 z-30 flex items-center gap-3">
               <BoringAvatar
                 src={user?.avatar}
                 alt={user?.username}

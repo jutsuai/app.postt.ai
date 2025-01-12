@@ -4,24 +4,26 @@ import Wrapper from "@/components/wrapper/Wrapper";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import PreviewSection from "../../../components/preview";
 import { Textarea } from "@/components/ui/textarea";
 import httpClient from "@/lib/httpClient";
 import { VscLoading } from "react-icons/vsc";
+import PreviewSection from "../../../components/preview";
 import { toast } from "sonner";
+import { LuCopy, LuImage } from "react-icons/lu";
 import { IoIosSettings } from "react-icons/io";
 import { RxText } from "react-icons/rx";
 import { cn } from "@/lib/utils";
-import { LuCopy } from "react-icons/lu";
 import { HiSparkles } from "react-icons/hi2";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { useDebouncedCallback } from "use-debounce";
+import { ImageUploadDialog } from "../carousel/_components/ContentTab";
+import { GrFormEdit } from "react-icons/gr";
 import DateTimeSelectorDialog from "@/dialog/DateTimeSelectorDialog";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDebouncedCallback } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";
+import { Separator } from "@/components/ui/separator";
 
-export default function CreateTextPage() {
+export default function CreateImagePage() {
   const navigate = useNavigate();
   const { postId } = useParams();
   const { data: post, isLoading: loading } = useQuery<any>({
@@ -31,6 +33,7 @@ export default function CreateTextPage() {
         .get(`/posts/${postId}`)
         .then((res) => res.data.data),
   });
+  console.log("Post", post);
   const { selectedProfile } = useAuth();
 
   const [refreshRefs, setRefreshRefs] = useState(0);
@@ -40,6 +43,7 @@ export default function CreateTextPage() {
   const [activeTab, setActiveTab] = useState("Content");
   const [prompt, setPrompt] = useState("");
   const [commentary, setCommentary] = useState("");
+  const [media, setMedia] = useState<any>(null);
   const debouncedCommentary = useDebouncedCallback(
     () => handleUpdatePost(),
     2000,
@@ -50,25 +54,40 @@ export default function CreateTextPage() {
     if (post) {
       setCommentary(post.commentary);
       setPrompt(post.prompt);
+      setMedia(post.media);
       setRefreshRefs(Math.random());
     }
   }, [post]);
 
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
   const handleUpdatePost = () => {
+    setLoadingUpdate(true);
     console.log("Update Post");
-    httpClient().put(`/posts/${postId}`, { commentary, prompt });
+    httpClient()
+      .put(`/posts/${postId}`, { commentary, prompt, media })
+      .finally(() => {
+        setLoadingUpdate(false);
+      });
   };
 
   const [loadingSubmit, setLoadingSubmit] = useState(false);
-  const handleSubmit = ({ scheduledAt }: { scheduledAt?: Date }) => {
+  const handleSubmit = ({ scheduledAt }: { scheduledAt?: string }) => {
+    // const name = generateRandomWord(10) + image?.name.split(".").pop();
+
+    if (!media) {
+      toast.error("Please upload an image");
+      return;
+    }
+
     if (commentary.length < 4) {
       toast.error("Commentary should be more than 5 characters");
       return;
     }
+
     const payload = {
       commentary,
-      scheduledAt,
-
+      media,
+      scheduledAt: scheduledAt || null,
       author: selectedProfile?.linkedinId,
       authorType: selectedProfile?.type,
     };
@@ -77,21 +96,21 @@ export default function CreateTextPage() {
     httpClient()
       .post(`/posts/${postId}/publish`, payload)
       .then((res) => {
-        console.log("Post Success", res.data);
+        console.log("Post Success", res);
 
-        if (!scheduledAt) {
-          toast.success("Post Successful");
+        if (scheduledAt) {
+          toast.info("Post scheduled successfully");
         } else {
-          toast.success("Post Scheduled");
+          toast.success("Post successful");
         }
 
-        navigate("/");
+        navigate("/posts");
       })
       .catch((err) => {
         console.error("Post Error", err);
       })
       .finally(() => {
-        setLoadingSubmit(false);
+        setLoadingSubmit(true);
       });
   };
 
@@ -100,14 +119,21 @@ export default function CreateTextPage() {
       <Wrapper>
         <WrapperContent className="h-full flex-row gap-8">
           <PreviewSection
+            type="image"
             createdBy={selectedProfile}
             commentary={commentary}
             setCommentary={setCommentary}
             customizations={customizations}
             refreshRefs={refreshRefs}
+            image={
+              media?.url ||
+              "https://placehold.co/512x512@2x/6b7280/ffffff?text=Add+Image"
+            }
           />
 
-          {/* Right Sidebar */}
+          {loadingUpdate && (
+            <VscLoading className="absolute left-10 top-10 size-8 animate-spin text-primary" />
+          )}
 
           <div className="flex h-full w-full max-w-md flex-col gap-4 px-4">
             <div className="flex items-center justify-between">
@@ -135,7 +161,7 @@ export default function CreateTextPage() {
                       ? "border bg-background"
                       : "bg-muted",
                   )}
-                  disabled
+                  onClick={() => setActiveTab("Customization")}
                 >
                   <IoIosSettings className="text-sm" />
                 </button>
@@ -145,14 +171,19 @@ export default function CreateTextPage() {
             {activeTab === "Content" && (
               <ContentTab
                 commentary={commentary}
-                setCommentary={(e) => {
+                setCommentary={(e: any) => {
                   setCommentary(e);
                   debouncedCommentary();
                 }}
                 setRefreshRefs={setRefreshRefs}
                 prompt={prompt}
-                setPrompt={(e) => {
+                setPrompt={(e: any) => {
                   setPrompt(e);
+                  debouncedCommentary();
+                }}
+                media={media}
+                setMedia={(e: any) => {
+                  setMedia(e);
                   debouncedCommentary();
                 }}
               />
@@ -162,11 +193,22 @@ export default function CreateTextPage() {
               <Button
                 variant="secondary"
                 className="w-full text-foreground"
-                onClick={() => setShowDateTimeSelectorDialog(true)}
+                onClick={() => {
+                  if (!media) {
+                    toast.error("Please upload or generate an image");
+                    return;
+                  }
+
+                  if (commentary.length < 4) {
+                    toast.error("Commentary should be more than 5 characters");
+                    return;
+                  }
+
+                  setShowDateTimeSelectorDialog(true);
+                }}
               >
                 Schedule Post
               </Button>
-
               <Button className="w-full" onClick={() => handleSubmit({})}>
                 {loadingSubmit ? (
                   <VscLoading className="animate-spin" />
@@ -196,12 +238,18 @@ const ContentTab = ({
   setRefreshRefs,
   prompt,
   setPrompt,
+
+  media,
+  setMedia,
 }: {
   commentary: string;
-  setCommentary: (value: string) => void;
+  setCommentary: any;
   setRefreshRefs: any;
   prompt: string;
-  setPrompt: (value: string) => void;
+  setPrompt: any;
+
+  media: string;
+  setMedia: any;
 }) => {
   const [loading, setLoading] = useState(false);
   const handleGenerate = () => {
@@ -263,7 +311,7 @@ const ContentTab = ({
             <Button
               variant="ghost"
               size="sm"
-              className="min-w-28 rounded-full bg-muted-foreground/15 text-foreground hover:bg-muted-foreground/10"
+              className="rounded-full bg-muted-foreground/15 text-foreground hover:bg-muted-foreground/10"
               onClick={handleGenerate}
             >
               {loading ? (
@@ -288,7 +336,7 @@ const ContentTab = ({
           className="flex w-full flex-col rounded-lg border bg-muted"
         >
           <Textarea
-            rows={15}
+            rows={10}
             placeholder="Type your caption here...."
             className="resize-none rounded-lg border-0 bg-background shadow-none !ring-0"
             value={commentary}
@@ -298,6 +346,21 @@ const ContentTab = ({
             }}
           />
         </div>
+      </div>
+
+      {/* <Label htmlFor="background-image-url">Image</Label> */}
+      <div className="flex items-center justify-between gap-2 rounded-lg bg-muted p-2 pl-3">
+        <div className="flex items-center gap-2">
+          <LuImage />
+          <p className="text-sm font-medium">
+            {media ? "1 image added" : "Image"}
+          </p>
+        </div>
+        <ImageUploadDialog onClick={(e: string) => setMedia(e)}>
+          <Button variant="outline" className="rounded-full" size="sm">
+            <GrFormEdit /> Edit
+          </Button>
+        </ImageUploadDialog>
       </div>
     </div>
   );

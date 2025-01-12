@@ -1,4 +1,4 @@
-import BoringAvatar from "@/components/BoringAvatar";
+import BoringAvatar from "@/components/images/BoringAvatar";
 import Header from "@/components/header/Header";
 import { Button } from "@/components/ui/button";
 import Wrapper from "@/components/wrapper/Wrapper";

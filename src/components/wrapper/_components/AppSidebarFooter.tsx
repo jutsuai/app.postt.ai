@@ -1,4 +1,4 @@
-import BoringAvatar from "@/components/BoringAvatar";
+import BoringAvatar from "@/components/images/BoringAvatar";
 import Link from "@/components/custom/Link";
 import { Button } from "@/components/ui/button";
 import {

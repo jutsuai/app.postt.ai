@@ -1,6 +1,6 @@
 import { AiTwotoneHeart, AiTwotoneLike } from "react-icons/ai";
 import { Separator } from "@/components/ui/separator";
-import BoringAvatar from "@/components/BoringAvatar";
+import BoringAvatar from "@/components/images/BoringAvatar";
 import { SlLike } from "react-icons/sl";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { LiaShareSolid } from "react-icons/lia";

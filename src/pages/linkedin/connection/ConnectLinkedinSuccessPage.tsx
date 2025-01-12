@@ -1,4 +1,4 @@
-import BoringAvatar from "@/components/BoringAvatar";
+import BoringAvatar from "@/components/images/BoringAvatar";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/context/AuthContext";

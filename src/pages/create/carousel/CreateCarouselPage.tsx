@@ -13,31 +13,23 @@ import { RxText } from "react-icons/rx";
 import { IoIosSettings } from "react-icons/io";
 import { VscLoading } from "react-icons/vsc";
 import { cn } from "@/lib/utils";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import CarouselUpdater from "./_components/CarouselUpdater";
 import DateTimeSelectorDialog from "@/dialog/DateTimeSelectorDialog";
 import { FaDownload } from "react-icons/fa";
-import { Tooltip } from "@/components/ui/tooltip";
 
 export default function CreateCarouselPage() {
-  const { selectedProfile } = useAuth();
+  const navigate = useNavigate();
   const { carouselId } = useParams();
-
-  const [fetchLoading, setFetchLoading] = useState(true);
-  const [post, setPost] = useState<any>(null);
-  const [carousel, setCarousel] = useState<any>(null);
-  const [commentary, setCommentary] = useState("This is a commentary");
-
-  const [slides, setSlides] = useState([]);
-  const [customizations, setCustomizations] = useState({});
-  const [showDateTimeSelectorDialog, setShowDateTimeSelectorDialog] =
-    useState(false);
-
+  const { selectedProfile } = useAuth();
   useEffect(() => {
     fetchCarouselById();
   }, []);
 
+  const [fetchLoading, setFetchLoading] = useState(true);
+  const [post, setPost] = useState<any>(null);
+  const [carousel, setCarousel] = useState<any>(null);
   const fetchCarouselById = async () => {
     const url = `/assets/carousels/${carouselId}`;
     setFetchLoading(true);
@@ -64,27 +56,48 @@ export default function CreateCarouselPage() {
       });
   };
 
+  const [refreshRefs, setRefreshRefs] = useState(0);
+  const [showDateTimeSelectorDialog, setShowDateTimeSelectorDialog] =
+    useState(false);
+
+  const [activeTab, setActiveTab] = useState("Content");
+  const [prompt, setPrompt] = useState(false);
+  const [commentary, setCommentary] = useState("This is a commentary");
+  const [slides, setSlides] = useState([]);
+  const [customizations, setCustomizations] = useState({});
+
   //
   const [selectedSlide, setSelectedSlide] = useState(0);
-  const [activeTab, setActiveTab] = useState("Content");
 
   const [submitLoading, setSubmitLoading] = useState(false);
   const handleSubmit = ({ scheduledAt }: { scheduledAt?: Date }) => {
+    if (commentary.length < 4) {
+      toast.error("Commentary must be at least 5 characters long");
+      return;
+    }
+
     setSubmitLoading(true);
+    const payload = {
+      commentary,
+      scheduledAt,
 
-    // .post(`/linkedin/profiles/${linkedinId}/post/carousel`, {
+      author: selectedProfile?.linkedinId,
+      authorType: selectedProfile?.type,
+    };
+
     httpClient()
-      .post(`/posts/${post?._id}/carousel/publish`, {
-        commentary,
-        scheduledAt,
-
-        author: selectedProfile?.linkedinId,
-        authorType: selectedProfile?.type,
-      })
+      .post(`/posts/${post?._id}/publish`, payload)
       .then((res) => {
         console.log("Post Success", res.data);
         toast.success("Post Successful");
-        // navigate("/");
+
+        if (scheduledAt) {
+          toast.info("Post scheduled successfully");
+        } else {
+          toast.success("Post successful");
+        }
+
+        navigate("/posts");
       })
       .catch((err) => {
         console.error("Post Error", err);
@@ -101,10 +114,21 @@ export default function CreateCarouselPage() {
       .get(`/assets/carousels/${carouselId}/download`)
       .then((res) => {
         const data = res.data.data;
-        console.log("Download Success", data);
+        console.log("Generated Success", data);
 
         const url = data.url;
-        window.open(url, "_blank");
+
+        console.log("Opening URL: ", url);
+        // window.open(url, "_blank");
+
+        // Download the file, itss a pdf
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "carousel.pdf");
+        link.setAttribute("target", "_blank");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       })
       .catch((err) => {
         console.error("Download Error", err);
@@ -117,6 +141,8 @@ export default function CreateCarouselPage() {
   if (fetchLoading) {
     return <LoadingOverlay />;
   }
+  const fileUrl =
+    "https://s3.us-east-1.amazonaws.com/cdn.postt.ai/linkedin/67810ecbac2ed5cf218bfa61/pdfs/slides_1736697200904.pdf";
 
   return (
     <>
@@ -222,7 +248,11 @@ export default function CreateCarouselPage() {
                 )}
               </Button>
 
-              <Button variant="secondary" onClick={() => downloadCarousel()}>
+              <Button
+                variant="secondary"
+                disabled={downloadLoading}
+                onClick={() => downloadCarousel()}
+              >
                 {downloadLoading ? (
                   <VscLoading className="animate-spin" />
                 ) : (
@@ -233,7 +263,6 @@ export default function CreateCarouselPage() {
           </div>
         </WrapperContent>
       </Wrapper>
-
       <DateTimeSelectorDialog
         open={showDateTimeSelectorDialog}
         setOpen={() => setShowDateTimeSelectorDialog(false)}

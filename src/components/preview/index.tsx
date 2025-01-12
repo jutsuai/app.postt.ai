@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { IoChevronForward } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
-import BoringAvatar from "@/components/BoringAvatar";
+import BoringAvatar from "@/components/images/BoringAvatar";
 import Header from "./_components/Header";
 import Footer from "./_components/Footer";
 import Arrows from "./_components/Arrows";
@@ -68,17 +68,20 @@ export default function PreviewSection({
       >
         {!hideHeader && <Header createdBy={createdBy} />}
 
-        <p
-          contentEditable
-          suppressContentEditableWarning
-          onInput={(e) => setCommentary(e.currentTarget.textContent)}
-          className={cn(
-            "whitespace-pre-wrap px-4 text-sm",
-            slides && "col-span-6",
-          )}
-        >
-          {initialCommentary.current}
-        </p>
+        <div className="relative px-2">
+          <p
+            contentEditable
+            suppressContentEditableWarning
+            onInput={(e) => setCommentary(e.currentTarget.textContent)}
+            className={cn(
+              "z-50 whitespace-pre-wrap px-2 text-sm",
+              slides && "col-span-6",
+              commentary?.length <= 0 && "rounded-sm bg-muted-foreground/10",
+            )}
+          >
+            {initialCommentary.current}
+          </p>
+        </div>
 
         {type === "carousel" ? (
           <CarouselPreview
@@ -94,7 +97,11 @@ export default function PreviewSection({
           />
         ) : (
           type === "image" && (
-            <img className="w-full" src={image} alt={slide._id} />
+            <img
+              className="max-h-[600px] w-full object-cover"
+              src={image}
+              alt={slide._id}
+            />
           )
         )}
 

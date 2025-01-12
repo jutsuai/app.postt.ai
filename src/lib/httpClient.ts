@@ -15,6 +15,22 @@ const httpClient = (baseURL = API_URL) => {
     // validateStatus: false,
   });
 
+  // Add a response interceptor
+  instance.interceptors.response.use(
+    (response) => {
+      // Check if success is false in response data
+      if (response.status === 200 && response.data?.success === false) {
+        // Throw an error with the message from the response
+        throw new Error(JSON.stringify(response.data) || "An error occurred.");
+      }
+      return response;
+    },
+    (error) => {
+      // Handle any other errors (like network issues or non-200 responses)
+      return Promise.reject(error);
+    },
+  );
+
   return instance;
 };
 

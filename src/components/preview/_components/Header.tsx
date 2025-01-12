@@ -1,4 +1,4 @@
-import BoringAvatar from "@/components/BoringAvatar";
+import BoringAvatar from "@/components/images/BoringAvatar";
 import { Button } from "@/components/ui/button";
 import { FaGlobeAmericas } from "react-icons/fa";
 import { LuPlus } from "react-icons/lu";

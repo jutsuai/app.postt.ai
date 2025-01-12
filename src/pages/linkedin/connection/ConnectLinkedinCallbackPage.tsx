@@ -1,6 +1,5 @@
 import { useEffect, useRef, memo, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
 import { VscLoading } from "react-icons/vsc";
 import httpClient from "@/lib/httpClient";
