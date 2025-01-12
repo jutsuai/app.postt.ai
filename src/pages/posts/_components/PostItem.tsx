@@ -39,7 +39,7 @@ export default function PostItem({ post }: { post: any }) {
       }}
     >
       <div className="flex h-full w-full flex-col gap-2">
-        <div className="mb-2 flex h-full flex-col gap-2">
+        <div className="mb-2 flex h-full flex-col gap-3">
           <div className="flex items-center gap-1">
             {/* <div className="h-8 w-8 rounded-full border bg-background p-1.5"> */}
             <Image src={iconLogos[post?.platform]} alt="" className="h-4 w-4" />
@@ -52,9 +52,16 @@ export default function PostItem({ post }: { post: any }) {
             </p>
           </div>
 
-          <h6 className="line-clamp-2 text-xl font-semibold">
-            {post?.commentary ? post?.commentary : "No caption"}
-          </h6>
+          <div className="flex items-start justify-between gap-3">
+            <h6 className="line-clamp-2 text-xl font-semibold">
+              {post?.commentary ? post?.commentary : "No caption"}
+            </h6>
+            <Image
+              src="https://img.freepik.com/free-psd/instagram-post-template_1393-166.jpg"
+              alt=""
+              className="h-full w-14 rounded-md object-cover object-center"
+            />
+          </div>
         </div>
 
         {post?.media && (
