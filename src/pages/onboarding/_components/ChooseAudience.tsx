@@ -172,7 +172,7 @@ export default function ChooseAudience() {
           <div
             key={option.text}
             onClick={() => handleSelect(stepKey, option.text)}
-            className={`flex cursor-pointer items-center gap-2 rounded-xl border-2 px-4 py-2 ${
+            className={`flex cursor-pointer items-center gap-2 rounded-xl border-2 bg-muted px-4 py-2 ${
               selectedOptions[stepKey]?.includes(option.text)
                 ? "border-primary"
                 : ""
