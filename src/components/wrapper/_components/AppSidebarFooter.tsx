@@ -1,6 +1,5 @@
 import BoringAvatar from "@/components/BoringAvatar";
 import Link from "@/components/custom/Link";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -149,13 +148,10 @@ export default function AppSidebarFooter() {
                     key={profile?._id}
                     onClick={() => setSelectedProfile(profile)}
                     className={cn(
-                      "m-0 h-12 rounded-xl transition",
-
-                      // index === selectedProfile ? "bg-[#ecebff]" : "ring-transparent")
+                      "m-0 h-12 cursor-pointer rounded-xl transition",
                       profile?._id === selectedProfile?._id
                         ? "!bg-primary/25"
                         : "ring-transparent",
-
                       "hover:!bg-primary/15 active:bg-primary/10",
                     )}
                   >
@@ -191,16 +187,12 @@ export default function AppSidebarFooter() {
               </DropdownMenuGroup>
               <DropdownMenuItem
                 asChild
-                onClick={logout}
-                className={cn("rounded-xl !ring-0 hover:!bg-primary/15")}
+                className={cn(
+                  "cursor-pointer rounded-xl !ring-0 hover:!bg-primary/15 hover:text-foreground",
+                )}
               >
-                <Link to="/settings">
-                  <Button
-                    variant="ghost"
-                    className="h-12 w-full cursor-pointer justify-start px-4 !text-foreground !ring-0 hover:!bg-primary/15"
-                  >
-                    Manage Channels
-                  </Button>
+                <Link to="/linkedin/connect" className="pl- text-xs">
+                  Manage Channels
                 </Link>
               </DropdownMenuItem>
 
