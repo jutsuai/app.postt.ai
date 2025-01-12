@@ -1,10 +1,10 @@
+import MenuCard from "@/components/MenuCard";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import MenuCard from "../MenuCard";
 
 export const menus = [
   {

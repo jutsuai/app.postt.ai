@@ -17,7 +17,7 @@ import { HiSparkles } from "react-icons/hi2";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useDebouncedCallback } from "use-debounce";
-import DateTimeSelectorDialog from "@/dialog/DateTimeSelectorDialog";
+import DateTimeSelectorDialog from "@/dialog/dateTimeSelector/DateTimeSelectorDialog";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 

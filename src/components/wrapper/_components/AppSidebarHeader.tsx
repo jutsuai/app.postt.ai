@@ -13,10 +13,8 @@ import {
   MdOutlineKeyboardArrowLeft,
 } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { TbClick } from "react-icons/tb";
-import { LuMousePointerClick } from "react-icons/lu";
 import { useState } from "react";
-import CreateMenuDialog from "@/components/dialog/CreateMenuDialog";
+import CreateMenuDialog from "@/dialog/CreateMenuDialog";
 
 export default function AppSidebarHeader() {
   const { open: sidebarMode, toggleSidebar } = useSidebar();
@@ -126,6 +124,7 @@ export default function AppSidebarHeader() {
           )}
         </Button>
       </SidebarHeader>
+
       <CreateMenuDialog open={openMenuDialog} setOpen={setOpenMenuDialog} />
     </>
   );

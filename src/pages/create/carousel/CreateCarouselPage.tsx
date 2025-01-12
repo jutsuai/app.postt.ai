@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingOverlay from "@/components/LoadingOverlay";
 import CarouselUpdater from "./_components/CarouselUpdater";
-import DateTimeSelectorDialog from "@/dialog/DateTimeSelectorDialog";
+import DateTimeSelectorDialog from "@/dialog/dateTimeSelector/DateTimeSelectorDialog";
 import { FaDownload } from "react-icons/fa";
 
 export default function CreateCarouselPage() {

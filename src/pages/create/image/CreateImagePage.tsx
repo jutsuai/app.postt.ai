@@ -17,7 +17,7 @@ import { HiSparkles } from "react-icons/hi2";
 import { Label } from "@/components/ui/label";
 import { ImageUploadDialog } from "../carousel/_components/ContentTab";
 import { GrFormEdit } from "react-icons/gr";
-import DateTimeSelectorDialog from "@/dialog/DateTimeSelectorDialog";
+import DateTimeSelectorDialog from "@/dialog/dateTimeSelector/DateTimeSelectorDialog";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDebouncedCallback } from "use-debounce";
 import { useQuery } from "@tanstack/react-query";

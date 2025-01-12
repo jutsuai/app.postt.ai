@@ -4,7 +4,6 @@ import { MdOutlineInfo } from "react-icons/md";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -26,6 +25,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
+import "./dateTimeSelecotr.css";
 
 interface DateTimeSelectorDialogProps {
   open: boolean;

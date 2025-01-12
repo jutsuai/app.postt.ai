@@ -2,13 +2,13 @@ import Wrapper from "@/components/wrapper/Wrapper";
 import Image from "@/components/Image";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import Header from "@/components/header/Header";
-import { menus } from "@/components/dialog/CreateMenuDialog";
 import { Link } from "react-router-dom";
 
 import { cn } from "@/lib/utils";
 import SchedulePosts from "./_components/SchedulePosts";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPosts } from "@/services/fetchPosts";
+import { menus } from "@/dialog/CreateMenuDialog";
 
 export default function HomePage() {
   const { data: posts, isLoading } = useQuery<any>({
