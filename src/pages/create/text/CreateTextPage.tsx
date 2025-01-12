@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import { LuCopy } from "react-icons/lu";
 import { HiSparkles } from "react-icons/hi2";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 
 export default function CreateTextPage() {
   const navigate = useNavigate();
@@ -84,14 +85,19 @@ export default function CreateTextPage() {
                       ? "border bg-background"
                       : "bg-muted",
                   )}
-                  onClick={() => setActiveTab("Customization")}
+                  disabled
                 >
                   <IoIosSettings className="text-sm" />
                 </button>
               </div>
             </div>
 
-            {activeTab === "Content" && <ContentTab />}
+            {activeTab === "Content" && (
+              <ContentTab
+                commentary={commentary}
+                setCommentary={setCommentary}
+              />
+            )}
 
             <div className="flex w-full gap-4">
               <Button
@@ -129,7 +135,13 @@ export default function CreateTextPage() {
   );
 }
 
-const ContentTab = () => {
+const ContentTab = ({
+  commentary,
+  setCommentary,
+}: {
+  commentary: string;
+  setCommentary: (value: string) => void;
+}) => {
   return (
     <div className="flex h-full w-full flex-col gap-4">
       <div className="flex flex-col gap-2">
@@ -159,6 +171,25 @@ const ContentTab = () => {
               <HiSparkles /> Generate
             </Button>
           </div>
+        </div>
+      </div>
+
+      <Separator className="my-4" />
+
+      {/*  */}
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="caption-field">Caption</Label>
+        <div
+          id="caption-field"
+          className="flex w-full flex-col rounded-lg border bg-muted"
+        >
+          <Textarea
+            rows={5}
+            placeholder="Type your caption here...."
+            className="resize-none rounded-lg border-0 bg-background shadow-none !ring-0"
+            value={commentary}
+            onChange={(e) => setCommentary(e.target.value)}
+          />
         </div>
       </div>
     </div>

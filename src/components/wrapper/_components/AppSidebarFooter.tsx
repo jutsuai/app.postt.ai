@@ -28,7 +28,7 @@ export default function AppSidebarFooter() {
     useAuth();
   const { open: sidebarMode } = useSidebar();
 
-  console.log("linkedinProfiles", linkedinProfiles);
+  // console.log("linkedinProfiles", linkedinProfiles);
 
   // useEffect(() => {
   //   getLinkedinProfiles();
@@ -191,7 +191,7 @@ export default function AppSidebarFooter() {
                   "cursor-pointer rounded-xl !ring-0 hover:!bg-primary/15 hover:text-foreground",
                 )}
               >
-                <Link to="/linkedin/connect" className="pl- text-xs">
+                <Link to="/channels" className="pl- text-xs">
                   Manage Channels
                 </Link>
               </DropdownMenuItem>

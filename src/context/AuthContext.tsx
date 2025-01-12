@@ -15,10 +15,8 @@ export const AuthProvider = ({ children }: { children: any }) => {
 
   const [user, setUser] = useState<any>(null);
   const [selectedProfile, setSelectedProfile] = useState<any>(null);
-  const [linkedinProfiles, setLinkedinProfiles] = useState<any>(null);
+  const [linkedinProfiles, setLinkedinProfiles] = useState<any>([]);
   const [accessToken, setAccessToken] = useState<any>(null);
-
-  // const [linkedin, setLinkedin] = useState<any>(null);
 
   useEffect(() => {
     checkAuth();
@@ -233,6 +231,30 @@ export const AuthProvider = ({ children }: { children: any }) => {
       });
   };
 
+  const deleteLinkedinProfile = async (profileId: string) => {
+    setLoading(true);
+
+    httpClient()
+      .delete(`/linkedin/profiles/${profileId}`)
+      .then((res) => {
+        const data = res.data.data;
+
+        setLinkedinProfiles((array: any) =>
+          array.filter((i: any) => i._id !== profileId),
+        );
+
+        if (selectedProfile?._id === profileId) {
+          setSelectedProfile(data[0]);
+        }
+      })
+      .catch((err) => {
+        console.log("====== deleteLinkedinProfile error: ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const logout = async () => {
     setLoading(true);
 
@@ -278,6 +300,7 @@ export const AuthProvider = ({ children }: { children: any }) => {
     loginWithLinkedin,
     linkedinCallback,
     getLinkedinProfiles,
+    deleteLinkedinProfile,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
