@@ -45,6 +45,56 @@ const transformData = (data: any) => {
   });
 };
 
+function organizePostsByDate(
+  posts: any[],
+): { date: string; slots: { time: string; posts: any[] }[] }[] {
+  // Filter out posts that have a valid `scheduledAt` date
+  const validPosts = posts.filter((post) => post.scheduledAt !== null);
+
+  // Sort posts by `scheduledAt` date
+  validPosts.sort(
+    (a, b) =>
+      new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime(),
+  );
+
+  // Organize posts by date and 15-minute slots
+  const organizedPosts: Record<
+    string,
+    { date: string; slots: { time: string; posts: any[] }[] }
+  > = {};
+
+  validPosts.forEach((post) => {
+    const scheduledDate = new Date(post.scheduledAt);
+    const date = scheduledDate.toISOString().split("T")[0];
+
+    if (!organizedPosts[date]) {
+      organizedPosts[date] = {
+        date,
+        slots: [],
+      };
+    }
+
+    const timeSlot = `${scheduledDate.getHours().toString().padStart(2, "0")}:${
+      Math.floor(scheduledDate.getMinutes() / 15) *
+      (15).toString().padStart(2, "0")
+    }`;
+
+    let slot = organizedPosts[date].slots.find((s) => s.time === timeSlot);
+
+    if (!slot) {
+      slot = { time: timeSlot, posts: [] };
+      organizedPosts[date].slots.push(slot);
+    }
+
+    slot.posts.push(post);
+  });
+
+  // Convert the organized posts object into an array sorted by date
+  return Object.values(organizedPosts).sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+  );
+}
+
 // const data = [
 //   {
 //     id: "friday-25",
@@ -221,7 +271,11 @@ export default function SocialMediaSchedule() {
     queryFn: () => fetchPosts(),
   });
 
-  const updatedData = transformData(posts || []);
+  console.log(posts);
+
+  const updatedData = organizePostsByDate(posts || []);
+
+  console.log("+=====", updatedData);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [startDay, setStartDay] = useState<DaysTypes>(
