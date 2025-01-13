@@ -9,6 +9,7 @@ import SchedulePosts from "./_components/SchedulePosts";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPosts } from "@/services/fetchPosts";
 import { menus } from "@/dialog/CreateMenuDialog";
+import { ReportCard } from "../reports/ReportsPage";
 
 export default function HomePage() {
   const { data: posts, isLoading } = useQuery<any>({
@@ -22,24 +23,51 @@ export default function HomePage() {
     <Wrapper>
       <WrapperContent className="h-dvh gap-4 overflow-y-auto sm:bg-muted/80">
         <Header />
-        <div className="flex w-full flex-col items-start gap-4 sm:gap-8 sm:px-4">
-          <div className="flex w-full flex-col gap-8 overflow-hidden rounded-2xl bg-background p-8 pb-0 shadow-2xl shadow-blue-500/10">
-            <h2 className="w-max whitespace-nowrap text-2xl font-semibold">
-              Quick Access
-            </h2>
-            <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6">
-              {menus?.map((menu) => (
-                <MenuCard
-                  key={menu.name}
-                  name={menu.name}
-                  url={menu.url}
-                  icon={menu.icon}
-                />
-              ))}
-            </div>
+        <div
+          className="grid w-full flex-col items-start gap-4 sm:gap-8 sm:px-4"
+          style={{
+            gridTemplateColumns: "1fr 400px",
+          }}
+        >
+          <div className="flex w-full flex-col gap-8">
+            <section className="flex w-full flex-col gap-8 overflow-hidden rounded-2xl bg-background p-8 pb-0 shadow-2xl shadow-blue-500/10">
+              <h2 className="w-max whitespace-nowrap text-2xl font-semibold">
+                Quick Access
+              </h2>
+              <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6">
+                {menus?.map((menu) => (
+                  <MenuCard
+                    key={menu.name}
+                    name={menu.name}
+                    url={menu.url}
+                    icon={menu.icon}
+                  />
+                ))}
+              </div>
+            </section>
+
+            <ReportCard />
+            {/* <section className="flex h-fit w-full max-w-xs flex-col gap-2 rounded-2xl bg-background px-4 pt-4">
+              <h4 className="text-xl font-semibold">Helpful Insights</h4>
+              <div className="flex h-full w-full flex-col items-center gap-2 rounded-[3rem] rounded-b-none border-b-0 p-3 transition-all duration-200">
+                <div className="flex h-full w-full flex-col items-center justify-center gap-4 overflow-y-hidden rounded-[2.5rem] rounded-b-none border bg-primary-accent/60">
+                  <Image
+                    src="/dialog-menu/single-post-image.svg"
+                    alt=""
+                    className="h-full w-full transition-all duration-200"
+                    height={130}
+                    width={160}
+                  />
+                </div>
+                <h6 className="py-1 text-center text-sm font-medium">
+                  Accessibility in Social Media: 10 Tips for Inclusive Content
+                </h6>
+              </div>
+              <div></div>
+            </section> */}
           </div>
 
-          <div className="flex w-full flex-col gap-8 sm:flex-row">
+          <section>
             {hasSchedulePost ? (
               <SchedulePosts posts={posts} />
             ) : (
@@ -72,26 +100,7 @@ export default function HomePage() {
                 </div>
               </div>
             )}
-
-            <div className="flex h-fit w-full max-w-xs flex-col gap-2 rounded-2xl bg-background px-4 pt-4">
-              <h4 className="text-xl font-semibold">Helpful Insights</h4>
-              <div className="flex h-full w-full flex-col items-center gap-2 rounded-[3rem] rounded-b-none border-b-0 p-3 transition-all duration-200">
-                <div className="flex h-full w-full flex-col items-center justify-center gap-4 overflow-y-hidden rounded-[2.5rem] rounded-b-none border bg-primary-accent/60">
-                  <Image
-                    src="/dialog-menu/single-post-image.svg"
-                    alt=""
-                    className="h-full w-full transition-all duration-200"
-                    height={130}
-                    width={160}
-                  />
-                </div>
-                <h6 className="py-1 text-center text-sm font-medium">
-                  Accessibility in Social Media: 10 Tips for Inclusive Content
-                </h6>
-              </div>
-              <div></div>
-            </div>
-          </div>
+          </section>
         </div>
       </WrapperContent>
     </Wrapper>
