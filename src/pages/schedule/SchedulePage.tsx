@@ -44,7 +44,6 @@ const transformData = (data: any) => {
     };
   });
 };
-
 function organizePostsByDate(
   posts: any[],
 ): { date: string; slots: { time: string; posts: any[] }[] }[] {
@@ -74,10 +73,11 @@ function organizePostsByDate(
       };
     }
 
-    const timeSlot = `${scheduledDate.getHours().toString().padStart(2, "0")}:${
-      Math.floor(scheduledDate.getMinutes() / 15) *
-      (15).toString().padStart(2, "0")
-    }`;
+    const hours = scheduledDate.getHours().toString().padStart(2, "0");
+    const minutes = (Math.floor(scheduledDate.getMinutes() / 15) * 15)
+      .toString()
+      .padStart(2, "0");
+    const timeSlot = `${hours}:${minutes}`;
 
     let slot = organizedPosts[date].slots.find((s) => s.time === timeSlot);
 
@@ -94,7 +94,6 @@ function organizePostsByDate(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
   );
 }
-
 // const data = [
 //   {
 //     id: "friday-25",
