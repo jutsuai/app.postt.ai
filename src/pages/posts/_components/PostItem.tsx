@@ -43,9 +43,7 @@ export default function PostItem({ post }: { post: any }) {
       <div className="flex h-full w-full flex-col gap-2">
         <div className="mb-2 flex h-full flex-col gap-3">
           <div className="flex items-center gap-1">
-            {/* <div className="h-8 w-8 rounded-full border bg-background p-1.5"> */}
             <Image src={iconLogos[post?.platform]} alt="" className="h-4 w-4" />
-            {/* </div> */}
 
             <h6 className="text-xs font-medium capitalize">{post?.platform}</h6>
             <span className="text-xs">•</span>
@@ -75,25 +73,6 @@ export default function PostItem({ post }: { post: any }) {
           </div>
         </div>
 
-        {/* {post?.media && (
-          <div className="flex gap-2">
-            {post?.media?.fileType?.includes("image") ? (
-              <Image
-                src={post?.media?.url}
-                alt=""
-                className="h-16 w-16 rounded-lg object-cover"
-              />
-            ) : (
-              <Badge
-                className="w-fit rounded-full capitalize"
-                variant="outline"
-              >
-                1 Attachment
-              </Badge>
-            )}
-          </div>
-        )} */}
-
         <Separator className="my-1" />
 
         <div className="flex items-center justify-between">
@@ -113,7 +92,6 @@ export default function PostItem({ post }: { post: any }) {
               : post?.status}
           </Badge>
 
-          {/* {post?.type === "carousel" && ( */}
           <Link
             to={
               post.type === "carousel"
@@ -129,7 +107,6 @@ export default function PostItem({ post }: { post: any }) {
               View <MdArrowOutward />
             </Button>
           </Link>
-          {/* )} */}
         </div>
       </div>
     </div>

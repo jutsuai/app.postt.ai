@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import UploadTool from "@/components/UploadTool";
+import httpClient from "@/lib/httpClient";
 import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";
 import { GrFormEdit } from "react-icons/gr";
@@ -16,6 +17,8 @@ import {
   MdVerticalAlignCenter,
   MdVerticalAlignTop,
 } from "react-icons/md";
+import { VscLoading } from "react-icons/vsc";
+import { toast } from "sonner";
 
 export default function ContentTab({
   slides,
@@ -25,6 +28,13 @@ export default function ContentTab({
   //
   customizations,
   setCustomizations,
+
+  //
+  prompt,
+  setPrompt,
+  commentary,
+  setCommentary,
+  setRefreshRefs,
 }: {
   slides: any;
   setSlides: any;
@@ -33,10 +43,82 @@ export default function ContentTab({
   //
   customizations: any;
   setCustomizations: any;
+
+  //
+  prompt: any;
+  setPrompt: any;
+  commentary: any;
+  setCommentary: any;
+  setRefreshRefs: any;
 }) {
   console.log("slides", slides);
   console.log("selectedSlide", selectedSlide);
+  const [loading, setLoading] = useState(false);
+  const handleGenerate = () => {
+    if (prompt?.length <= 3) {
+      toast.error("Prompt should be more than 3 characters");
+      return;
+    }
 
+    setLoading(true);
+    console.log("Generate Carousel");
+
+    const payload = {
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      model: "gpt-4o",
+    };
+    httpClient(import.meta.env.VITE_COPILOT_URL)
+      .post("/postt/carousel", payload)
+      .then((res) => {
+        console.log("Generate Carousel Success", res.data);
+
+        let output: any = {};
+        try {
+          output = JSON.parse(res.data);
+        } catch (error) {
+          console.error("Error parsing JSON", error);
+        }
+
+        console.log("Output", output);
+
+        setCommentary(output?.commentary);
+
+        // Update the slides with  title and description from the output, also if the output is larger than the current slides, add more slides with last image, if the output is smaller than the current slides, remove the extra slides
+        const newSlides = [...slides];
+        output?.slides?.forEach((slide: any, index: number) => {
+          newSlides[index] = {
+            ...newSlides[index],
+            title: slide?.title,
+            description: slide?.description,
+          };
+        });
+
+        if (output?.slides.length < slides.length) {
+          for (let i = output?.slides.length; i < slides.length; i++) {
+            newSlides[i] = {
+              ...newSlides[i],
+              title: slides[i]?.title,
+              description: slides[i]?.description,
+            };
+          }
+        }
+
+        setSlides(newSlides);
+
+        setRefreshRefs(Math.random());
+      })
+      .catch((err) => {
+        console.error("Generate Carousel Error", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
   return (
     <div className="h-full w-full space-y-6 rounded-lg">
       {/* {slides[selectedSlide]?.pageType !== "end" && (
@@ -87,6 +169,8 @@ export default function ContentTab({
             rows={5}
             placeholder="Type your caption here...."
             className="resize-none rounded-lg rounded-b-none border-0 bg-background shadow-none !ring-0"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
           />
           <div className="ml-auto flex items-center gap-1 px-1 py-1">
             <Button
@@ -100,8 +184,15 @@ export default function ContentTab({
               variant="ghost"
               size="sm"
               className="rounded-full bg-muted-foreground/15 text-foreground hover:bg-muted-foreground/10"
+              onClick={handleGenerate}
             >
-              <HiSparkles /> Generate
+              {loading ? (
+                <VscLoading className="animate-spin" />
+              ) : (
+                <>
+                  <HiSparkles /> Generate
+                </>
+              )}{" "}
             </Button>
           </div>
         </div>

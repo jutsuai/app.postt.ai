@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-
 import Wrapper from "@/components/wrapper/Wrapper";
 import WrapperContent from "@/components/wrapper/WrapperContent";
 import { useEffect, useState } from "react";
@@ -271,11 +270,19 @@ const ContentTab = ({
       model: "gpt-4o",
     };
     httpClient(import.meta.env.VITE_COPILOT_URL)
-      .post("/postt", payload)
+      .post("/postt/image", payload)
       .then((res) => {
         console.log("Generate Carousel Success", res.data);
+        const { text, image } = res.data;
 
-        setCommentary(res.data);
+        setCommentary(text);
+
+        setMedia({
+          url: image,
+          name: "generated-image.png",
+          fileType: "image/png",
+        });
+
         setRefreshRefs(Math.random());
       })
       .catch((err) => {

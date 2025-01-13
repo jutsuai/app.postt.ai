@@ -161,6 +161,7 @@ export default function CreateCarouselPage() {
             setCommentary={setCommentary}
             //
             type={"carousel"}
+            refreshRefs={refreshRefs}
           />
 
           <CarouselUpdater
@@ -215,6 +216,12 @@ export default function CreateCarouselPage() {
                 //
                 customizations={customizations}
                 setCustomizations={setCustomizations}
+                //
+                prompt={prompt}
+                setPrompt={setPrompt}
+                commentary={commentary}
+                setCommentary={setCommentary}
+                setRefreshRefs={setRefreshRefs}
               />
             )}
 

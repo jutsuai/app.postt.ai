@@ -223,7 +223,7 @@ const ContentTab = ({
       model: "gpt-4o",
     };
     httpClient(import.meta.env.VITE_COPILOT_URL)
-      .post("/postt", payload)
+      .post("/postt/text", payload)
       .then((res) => {
         console.log("Generate Carousel Success", res.data);
 
