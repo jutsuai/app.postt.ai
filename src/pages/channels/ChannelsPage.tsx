@@ -69,9 +69,9 @@ export default function ChannelsPage() {
                     />
                   ))}
 
-                  {[...Array(3 - linkedinProfiles?.length)].map((_, i) => (
+                  {/* {[...Array(3 - linkedinProfiles?.length)].map((_, i) => (
                     <div className="h-2 w-6 rounded-full bg-muted-foreground/25" />
-                  ))}
+                  ))} */}
                 </div>
               </div>
 
