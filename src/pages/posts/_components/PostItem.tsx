@@ -43,7 +43,7 @@ export default function PostItem({ post, className, pageType }: { post: any, cla
             ? `/create/image/${post?._id}`
             : `#`
     }>
-    <div className={cn("flex h-full items-end justify-between gap-2 overflow-hidden rounded-2xl p-6 pb-3 shadow-[2px_10px_40px_10px_#4a3aff16] transition-all duration-200 hover:shadow-[2px_0px_40px_30px_#4a3aff16]", className)}>
+    <div className={cn("flex h-full items-end justify-between gap-2 overflow-hidden rounded-2xl p-6 pb-3 shadow-[2px_20px_40px_10px_#4a3aff16] transition-all duration-200 hover:shadow-[2px_0px_40px_30px_#4a3aff16]", className)}>
       <div className="flex h-full w-full flex-col gap-2">
         <div className="mb-2 flex h-full flex-col gap-3">
           <div className="flex items-center gap-1">

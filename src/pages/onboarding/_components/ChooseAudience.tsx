@@ -207,16 +207,16 @@ export default function ChooseAudience() {
       <h3 className="mb-8 text-center text-2xl font-semibold">
         {stepData.question}
       </h3>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         {stepData.options.map((option: any) => (
           <div
             key={option.text}
             onClick={() => handleSelect(stepKey, option.text)}
-            className={`group/onboardingCard flex cursor-pointer flex-col items-center justify-between gap-4 rounded-xl border border-muted-foreground p-4 shadow-md transition-all duration-200 ${
+            className={cn("group/onboardingCard flex cursor-pointer flex-col items-center justify-between gap-4 rounded-xl border p-4 shadow-md transition-all duration-200",
               selectedOptions[stepKey]?.includes(option.text)
-                ? "border-primary"
-                : "border-transparent"
-            }`}
+                && "border-primary bg-primary/5"
+                
+            )}
           >
             <span
               className={cn(

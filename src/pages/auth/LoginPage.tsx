@@ -16,8 +16,9 @@ import CustomInput from "@/components/custom/CustomInput";
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/context/AuthContext";
 import { FaLinkedin } from "react-icons/fa";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { DotLottie, DotLottieReact } from "@lottiefiles/dotlottie-react";
 import useBreakpoint from "@/lib/useBreakpoint";
+import { useEffect, useRef, useState } from "react";
 
 type FormValue = {
   email: string;
@@ -43,10 +44,24 @@ export default function LoginPage() {
 
   const { sm } = useBreakpoint();
 
+  const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+
+      if (dotLottie) {
+        dotLottie?.pause();
+      }
+      
+    }, 7000);
+
+    // Cleanup timer on component unmount
+    return () => clearTimeout(timer);
+  }, [dotLottie]);
   return (
     <div className="h-[calc(100dvh-4rem)] min-h-[500px] w-full sm:max-w-md flex items-center sm:bg-transparent bg-background">
       <Card className=" sm:h-auto w-full border-none shadow-none  rounded-none sm:rounded-3xl">
-        <CardHeader>
+        <CardHeader className="sm:-mb-12 -mb-4 ">
           <CardTitle className="text-2xl text-center">
             Connect your account
           </CardTitle>
@@ -54,7 +69,7 @@ export default function LoginPage() {
             You're so close to transforming your LinkedIn experience.
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col  items-center justify-center">
+        <CardContent className="flex flex-col  items-center justify-center gap-8 ">
           {/* <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-4">
               <CustomInput
@@ -93,8 +108,10 @@ export default function LoginPage() {
 
           <DotLottieReact
             src="/auth/loginPageAnimation.lottie"
-            loop
+            loop={false}
             autoplay
+           dotLottieRefCallback={setDotLottie}
+            speed={1.2}
             style={
               sm
                 ? {
@@ -118,7 +135,7 @@ export default function LoginPage() {
           />
           <Button
             onClick={() => loginWithLinkedin("code")}
-            className="w-full text-sm rounded-full bg-primary"
+            className="w-full text-sm rounded-full  bg-primary"
           >
             <FaLinkedin className="h-12 size-12 w-12" /> LinkedIn
           </Button>
