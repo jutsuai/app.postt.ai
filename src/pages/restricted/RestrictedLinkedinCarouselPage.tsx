@@ -4,7 +4,7 @@ import httpClient from "@/lib/httpClient";
 import { useQuery } from "@tanstack/react-query";
 import LoadingOverlay from "@/components/LoadingOverlay";
 
-const getCaroselData = ({
+const getCarouselData = ({
   carouselId,
   slideId,
 }: {
@@ -57,21 +57,19 @@ export default function RestrictedLinkedinCarouselPage() {
     data: carousel,
     isLoading,
     error,
-    refetch,
   } = useQuery({
     queryKey: ["carousel", carouselId, slideId],
-    queryFn: () => getCaroselData({ carouselId, slideId }),
+    queryFn: () => getCarouselData({ carouselId, slideId }),
   });
 
-  // Show loading spinner while data is being fetched
   if (isLoading) {
-    return <LoadingOverlay />; // You can replace this with a spinner or other loading indicator
+    return <LoadingOverlay />;
   }
 
-  // Handle error if the API call fails
   if (error) {
-    return <div>Error loading carousel data.</div>; // Show error message
+    return <div>Error loading carousel data.</div>;
   }
+
   return (
     <CarouselPreview
       slide={carousel?.slide}

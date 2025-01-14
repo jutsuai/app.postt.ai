@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
 export default function BottomPreviewCard({
@@ -33,20 +32,32 @@ export default function BottomPreviewCard({
           // slide?.visible ? "opacity-100" : "opacity-25",
         )}
       >
-        <img
-          src={slide?.image}
-          className="pointer-events-none absolute inset-0 z-0 rounded-lg"
-          style={{
-            objectFit: "cover",
-            width: "100%",
-            height: "100%",
-          }}
-        />
+        <div className="absolute left-0 h-full w-full overflow-hidden rounded-lg">
+          {slide?.image ? (
+            <img
+              src={slide?.image}
+              className="pointer-events-none absolute inset-0 z-0"
+              style={{
+                objectFit: "cover",
+                width: "100%",
+                height: "100%",
+              }}
+            />
+          ) : (
+            <div
+              className="absolute inset-0 z-0 h-full w-full"
+              style={{
+                backgroundColor: customizations?.backgroundColor,
+              }}
+            />
+          )}
+        </div>
 
         <p
           className="z-20 text-lg font-semibold"
           style={{
             color: customizations?.fontColor,
+            textShadow: "0px 0px 2px rgba(0,0,0,1)",
           }}
         >
           {slide?.pageType === "start"
@@ -79,7 +90,7 @@ export default function BottomPreviewCard({
 
       <Button
         variant="ghost"
-        disabled={slide?.pageType === "start" || slide?.pageType === "end"}
+        // disabled={slide?.pageType === "start" || slide?.pageType === "end"}
         onClick={() => {
           setSlides((prev: any) => {
             return prev.filter((_: any, index: any) => index !== pageIndex);
@@ -90,7 +101,7 @@ export default function BottomPreviewCard({
           }
         }}
         className={cn(
-          "absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-md bg-background p-1 text-muted-foreground hover:text-red-600",
+          "absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-md bg-background p-1 text-muted-foreground hover:bg-background hover:text-red-600",
           hovered ? "opacity-100" : "opacity-0",
         )}
       >

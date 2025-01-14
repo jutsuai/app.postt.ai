@@ -325,14 +325,25 @@ const EndPage = ({
         maxHeight: customizations?.size?.height,
       }}
     >
-      <img
-        src={image || "/carousel/bg-light.webp"}
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
-        style={{
-          aspectRatio:
-            customizations?.size?.height / customizations?.size?.width,
-        }}
-      />
+      <div className="absolute left-0 h-full w-full">
+        {image ? (
+          <img
+            src={image || "/carousel/bg-light.webp"}
+            className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
+            style={{
+              aspectRatio:
+                customizations?.size?.height / customizations?.size?.width,
+            }}
+          />
+        ) : (
+          <div
+            className="absolute inset-0 z-0 h-full w-full"
+            style={{
+              backgroundColor: customizations?.backgroundColor,
+            }}
+          />
+        )}
+      </div>
 
       <p
         className="absolute bottom-0 right-0 p-4 text-xs"
@@ -416,14 +427,25 @@ const SlidePage = ({
         maxHeight: customizations?.size?.height,
       }}
     >
-      <img
-        src={image}
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
-        style={{
-          aspectRatio:
-            customizations?.size?.height / customizations?.size?.width,
-        }}
-      />
+      <div className="absolute left-0 h-full w-full">
+        {image ? (
+          <img
+            src={image}
+            className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
+            style={{
+              aspectRatio:
+                customizations?.size?.height / customizations?.size?.width,
+            }}
+          />
+        ) : (
+          <div
+            className="absolute inset-0 z-0 h-full w-full"
+            style={{
+              backgroundColor: customizations?.backgroundColor,
+            }}
+          />
+        )}
+      </div>
 
       <div
         className={cn(
