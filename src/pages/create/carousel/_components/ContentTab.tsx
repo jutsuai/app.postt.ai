@@ -1,14 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import UploadTool from "@/components/UploadTool";
 import httpClient from "@/lib/httpClient";
 import { cn } from "@/lib/utils";
-import { useRef, useState } from "react";
-import { GrFormEdit } from "react-icons/gr";
+import { useState } from "react";
 import { HiSparkles } from "react-icons/hi2";
-import { LuCopy, LuImage } from "react-icons/lu";
+import { LuCopy } from "react-icons/lu";
 import {
   MdFormatAlignCenter,
   MdFormatAlignLeft,
@@ -19,6 +16,8 @@ import {
 } from "react-icons/md";
 import { VscLoading } from "react-icons/vsc";
 import { toast } from "sonner";
+import ImageUploader from "./ImageUploader";
+import AdjustDesign from "./AdjustDesign";
 
 export default function ContentTab({
   slides,
@@ -249,104 +248,20 @@ export default function ContentTab({
         {...{ customizations, setCustomizations }}
       />
 
-      <div className="flex flex-col gap-2">
-        <Label>Adjust Design</Label>
-        <div className="flex items-center gap-3 rounded-lg bg-muted p-3">
-          {customizations?.backgroundColor && (
-            <DesignColor color={customizations?.backgroundColor} />
-          )}
-        </div>
-      </div>
+      <AdjustDesign
+        customizations={customizations}
+        setCustomizations={setCustomizations}
+      />
 
       {/* Background Image URL */}
-      <div className="flex flex-col gap-2 rounded-lg bg-muted p-2 pl-3">
-        <div className="flex items-center justify-between gap-2">
-          {/* <Label htmlFor="background-image-url">Image</Label> */}
-          <div className="flex items-center gap-2">
-            <LuImage />
-            <span className="text-sm font-medium">Image</span>
-          </div>
-          <ImageUploadDialog
-            onClick={(url: any) => {
-              const newSlides = [...slides];
-              newSlides[selectedSlide] = {
-                ...newSlides[selectedSlide],
-                image: url,
-              };
-              setSlides(newSlides);
-            }}
-          >
-            <Button variant="outline" className="rounded-full" size="sm">
-              <GrFormEdit /> Edit
-            </Button>
-          </ImageUploadDialog>
-        </div>
-
-        {slides[selectedSlide]?.pageType === "start" && (
-          <p
-            className="w-fit cursor-pointer text-xs text-primary hover:underline"
-            onClick={() => {
-              const newSlides = [...slides];
-              newSlides.forEach((slide, index) => {
-                newSlides[index] = {
-                  ...newSlides[index],
-                  image: slides[selectedSlide].image,
-                };
-              });
-              setSlides(newSlides);
-            }}
-          >
-            Use Same Image for All Slides
-          </p>
-        )}
-      </div>
+      <ImageUploader
+        slides={slides}
+        setSlides={setSlides}
+        selectedSlide={selectedSlide}
+      />
     </div>
   );
 }
-
-export const ImageUploadDialog = ({
-  children,
-  onClick,
-}: {
-  children: any;
-  onClick?: any;
-}) => {
-  const [open, setOpen] = useState(false);
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
-        <div className="flex flex-col gap-4">
-          <UploadTool
-            label="Image"
-            // value={backgroundImageUrl}
-            onChange={(e: any) => {
-              onClick(e);
-              setOpen(false);
-            }}
-          />
-        </div>
-        {/* {slides[selectedSlide]?.pageType === "start" && (
-          <p
-            className="w-fit cursor-pointer text-xs text-primary hover:underline"
-            onClick={() => {
-              const newSlides = [...slides];
-              newSlides.forEach((slide, index) => {
-                newSlides[index] = {
-                  ...newSlides[index],
-                  image: slides[selectedSlide].image,
-                };
-              });
-              setSlides(newSlides);
-            }}
-          >
-            Use Same Image for All Slides
-          </p>
-        )} */}
-      </DialogContent>
-    </Dialog>
-  );
-};
 
 const PositionButtons = ({
   customizations,
@@ -489,46 +404,3 @@ const PositionButtons = ({
     </div>
   );
 };
-
-function DesignColor({
-  color = "#00d5f6",
-  setColor,
-  className,
-}: {
-  color?: any;
-  setColor?: any;
-  className?: string;
-}) {
-  const colorInputRef = useRef<HTMLInputElement>(null);
-
-  const handleCardClick = () => {
-    if (colorInputRef?.current) {
-      colorInputRef?.current?.click();
-    }
-  };
-
-  const handleColorChange = (event: any) => {
-    const selectedColor = event?.target?.value;
-    setColor(selectedColor);
-  };
-
-  return (
-    <div
-      onClick={handleCardClick}
-      className={cn(
-        "relative cursor-pointer rounded-full border p-4",
-        className,
-      )}
-      style={{
-        backgroundColor: color,
-      }}
-    >
-      <input
-        type="color"
-        ref={colorInputRef}
-        onChange={handleColorChange}
-        className="pointer-events-none absolute top-0 opacity-0"
-      />
-    </div>
-  );
-}

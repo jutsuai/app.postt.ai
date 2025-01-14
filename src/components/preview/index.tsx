@@ -202,25 +202,34 @@ const StartPage = ({
         maxHeight: customizations?.size?.height,
       }}
     >
-      <img
-        src={image || "/carousel/bg-light.webp"}
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
-        style={{
-          aspectRatio:
-            customizations?.size?.height / customizations?.size?.width,
-        }}
-      />
+      <div className="absolute left-0 h-full w-full">
+        {image ? (
+          <img
+            src={image}
+            className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
+            style={{
+              aspectRatio:
+                customizations?.size?.height / customizations?.size?.width,
+            }}
+          />
+        ) : (
+          <div
+            className="absolute inset-0 z-0 h-full w-full"
+            style={{
+              backgroundColor: customizations?.backgroundColor,
+            }}
+          />
+        )}
+      </div>
 
       <div
         className={cn(
           "z-10 my-auto flex h-full w-full space-y-2",
-
           customizations?.content?.horizontal === "left"
             ? "justify-start"
             : customizations?.content?.horizontal === "center"
               ? "justify-center"
               : "justify-end",
-
           customizations?.content?.vertical === "top"
             ? "items-start"
             : customizations?.content?.vertical === "center"
@@ -240,7 +249,7 @@ const StartPage = ({
               };
               setSlides(newSlides);
             }}
-            className="text-4xl font-semibold leading-normal text-gray-800"
+            className="text-4xl font-semibold leading-normal"
             style={{
               textAlign:
                 customizations?.content?.horizontal === "left"
@@ -248,6 +257,7 @@ const StartPage = ({
                   : customizations?.content?.horizontal === "center"
                     ? "center"
                     : "end",
+              color: customizations?.fontColor,
             }}
           >
             {initialTitle.current}
@@ -259,13 +269,11 @@ const StartPage = ({
         <div
           className={cn(
             "z-10 mt-auto flex h-11 items-center space-x-2",
-
             customizations?.createdBy?.horizontal === "left"
               ? "justify-start"
               : customizations?.createdBy?.horizontal === "center"
                 ? "justify-center"
                 : "justify-end",
-
             customizations?.createdBy?.vertical === "top"
               ? "items-start"
               : customizations?.createdBy?.vertical === "center"
@@ -276,12 +284,20 @@ const StartPage = ({
           <BoringAvatar
             src={createdBy?.logo}
             alt={createdBy?.name}
-            className="h-9 w-9 rounded-full object-cover"
+            className="h-10 w-10 rounded-full object-cover"
           />
 
           <div>
-            <div className="text-sm font-bold">{createdBy?.name}</div>
-            <div className="text-xs">{`@${createdBy?.slug}`}</div>
+            <div
+              className="text-sm font-bold"
+              style={{ color: customizations?.fontColor }}
+            >
+              {createdBy?.name}
+            </div>
+            <div
+              className="text-xs"
+              style={{ color: customizations?.fontColor + "bb" }}
+            >{`@${createdBy?.slug}`}</div>
           </div>
         </div>
       )}
@@ -411,7 +427,7 @@ const SlidePage = ({
 
       <div
         className={cn(
-          "relative z-10 my-auto ml-20 flex h-full flex-col gap-0",
+          "relative z-10 my-auto ml-20 flex h-full flex-col gap-2",
           customizations?.content?.horizontal === "left"
             ? "items-start"
             : customizations?.content?.horizontal === "center"
@@ -426,7 +442,10 @@ const SlidePage = ({
         )}
       >
         {customizations?.pageIndex?.visible && (
-          <p className="outlined-text absolute left-0 top-0 -translate-x-24 -translate-y-[10%] text-[350px] font-extrabold opacity-10">
+          <p
+            className="outlined-text absolute left-0 top-0 -translate-x-24 -translate-y-[10%] text-[350px] font-extrabold opacity-10"
+            style={{ color: customizations?.fontColor }}
+          >
             {selectedSlide}
           </p>
         )}
@@ -443,6 +462,7 @@ const SlidePage = ({
             setSlides(newSlides);
           }}
           className="z-10 w-full text-xl font-semibold"
+          style={{ color: customizations?.fontColor }}
         >
           {initialTitle.current}
         </h6>
@@ -459,6 +479,7 @@ const SlidePage = ({
             setSlides(newSlides);
           }}
           className="z-10 w-full text-base"
+          style={{ color: customizations?.fontColor + "bb" }}
         >
           {initialDescription.current}
         </p>
@@ -492,8 +513,16 @@ const SlidePage = ({
           />
 
           <div className="">
-            <div className="text-sm font-bold">{createdBy?.name}</div>
-            <div className="text-xs">{`@${createdBy?.slug}`}</div>
+            <div
+              className="text-sm font-bold"
+              style={{ color: customizations?.fontColor }}
+            >
+              {createdBy?.name}
+            </div>
+            <div
+              className="text-xs"
+              style={{ color: customizations?.fontColor + "bb" }}
+            >{`@${createdBy?.slug}`}</div>
           </div>
         </div>
 
@@ -501,7 +530,6 @@ const SlidePage = ({
           className="flex h-9 w-9 min-w-9 items-center justify-center rounded-full"
           style={{
             backgroundColor: customizations?.fontColor,
-
             color: customizations?.backgroundColor,
           }}
         >
