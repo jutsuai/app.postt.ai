@@ -141,8 +141,6 @@ export default function CreateCarouselPage() {
   if (fetchLoading) {
     return <LoadingOverlay />;
   }
-  const fileUrl =
-    "https://s3.us-east-1.amazonaws.com/cdn.postt.ai/linkedin/67810ecbac2ed5cf218bfa61/pdfs/slides_1736697200904.pdf";
 
   return (
     <>
