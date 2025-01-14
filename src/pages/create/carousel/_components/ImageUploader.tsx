@@ -12,10 +12,14 @@ export default function ImageUploader({
   slides,
   setSlides,
   selectedSlide,
+  customizations,
+  setCustomizations
 }: {
   slides: any;
   setSlides: any;
-  selectedSlide: any;
+    selectedSlide: any;
+    customizations: any;
+    setCustomizations: any;
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -32,13 +36,20 @@ export default function ImageUploader({
           <span className="text-sm font-medium">Image</span>
         </div>
         <ImageUploadDialog
-          onClick={(url: any) => {
+          onClick={(url: any, custom?: any) => {
             const newSlides = [...slides];
             newSlides[selectedSlide] = {
               ...newSlides[selectedSlide],
               image: url,
             };
+            if (custom) {
+              setCustomizations({
+                ...customizations,
+                fontColor: custom?.fontColor,
+              })
+            }
             setSlides(newSlides);
+
           }}
         >
           <Button variant="outline" className="rounded-full" size="sm">
@@ -98,6 +109,20 @@ export default function ImageUploader({
   );
 }
 
+const templates = [
+  { fontColor: "#FFFFFF", imageUrl: "https://s3.amazonaws.com/cdn.postt.ai/background-templates/1.svg" },
+  { fontColor: "#000000", imageUrl: "https://s3.amazonaws.com/cdn.postt.ai/background-templates/2.svg" },
+  { fontColor: "#000000", imageUrl: "https://s3.amazonaws.com/cdn.postt.ai/background-templates/3.svg" },
+  { fontColor: "#FFFFFF", imageUrl: "https://s3.amazonaws.com/cdn.postt.ai/background-templates/4.svg" },
+  { fontColor: "#FFFFFF", imageUrl: "https://s3.amazonaws.com/cdn.postt.ai/background-templates/5.svg" },
+  { fontColor: "#FFFFFF", imageUrl: "https://s3.amazonaws.com/cdn.postt.ai/background-templates/6.svg" },
+  { fontColor: "#FFFFFF", imageUrl: "https://s3.amazonaws.com/cdn.postt.ai/background-templates/7.svg" },
+  { fontColor: "#1b00c2", imageUrl: "https://s3.amazonaws.com/cdn.postt.ai/background-templates/8.svg" },
+  { fontColor: "#FFFFFF", imageUrl: "https://s3.amazonaws.com/cdn.postt.ai/background-templates/9.svg" },
+  { fontColor: "#000000", imageUrl: "https://s3.amazonaws.com/cdn.postt.ai/background-templates/10.svg" }
+];
+
+
 export const ImageUploadDialog = ({
   children,
   onClick,
@@ -125,8 +150,8 @@ export const ImageUploadDialog = ({
           </p>
 
           <div className="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] animate-in duration-200 gap-4 max-h-[300px] overflow-y-auto">
-            {[...Array(10)].map((_, index) => <Image loading="lazy" key={index} src={`https://s3.amazonaws.com/cdn.postt.ai/background-templates/${index + 1}.svg`} alt='' onClick={() => {
-              onClick(`https://s3.amazonaws.com/cdn.postt.ai/background-templates/${index + 1}.svg`);
+            {templates?.map((item, index) => <Image loading="lazy" key={index} src={item?.imageUrl} alt='tempalte' onClick={() => {
+              onClick(item?.imageUrl, {fontColor: item?.fontColor,});
               setOpen(false);
            }} className="border-4 rounded-xl"/>)}
           </div>

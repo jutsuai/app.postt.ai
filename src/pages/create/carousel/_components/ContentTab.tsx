@@ -165,7 +165,7 @@ export default function ContentTab({
           className="flex w-full flex-col rounded-lg border bg-muted"
         >
           <Textarea
-            rows={5}
+            rows={4}
             placeholder="Type your caption here...."
             className="resize-none rounded-lg rounded-b-none border-0 bg-background shadow-none !ring-0"
             value={prompt}
@@ -258,6 +258,8 @@ export default function ContentTab({
         slides={slides}
         setSlides={setSlides}
         selectedSlide={selectedSlide}
+        customizations={customizations}
+        setCustomizations={setCustomizations}
       />
     </div>
   );
