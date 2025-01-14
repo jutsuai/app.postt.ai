@@ -34,7 +34,7 @@ export default function PostItem({ post, className, pageType }: { post: any, cla
   };
 
   return (
-    <Link className="h-full min-h-max"  to={
+    <Link className="h-fit min-h-max"  to={
       post.type === "carousel"
         ? `/create/carousel/${post?.contentReference}`
         : post?.type === "text"
