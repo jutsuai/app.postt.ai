@@ -1,3 +1,4 @@
+import Image from "@/components/Image";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import UploadTool from "@/components/UploadTool";
@@ -108,7 +109,7 @@ export const ImageUploadDialog = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="w-full max-w-xl"> 
         <div className="flex flex-col gap-4">
           <UploadTool
             label="Image"
@@ -118,6 +119,17 @@ export const ImageUploadDialog = ({
               setOpen(false);
             }}
           />
+
+          <p className="text-sm font-medium text-muted-foreground text-center my-4">
+            or Choose an image from the gallery
+          </p>
+
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] animate-in duration-200 gap-4 max-h-[300px] overflow-y-auto">
+            {[...Array(10)].map((_, index) => <Image loading="lazy" key={index} src={`https://s3.amazonaws.com/cdn.postt.ai/background-templates/${index + 1}.svg`} alt='' onClick={() => {
+              onClick(`https://s3.amazonaws.com/cdn.postt.ai/background-templates/${index + 1}.svg`);
+              setOpen(false);
+           }} className="border-4 rounded-xl"/>)}
+          </div>
         </div>
 
         {/* {slides[selectedSlide]?.pageType === "start" && (

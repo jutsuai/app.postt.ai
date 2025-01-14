@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { MdArrowOutward, MdOutlineAvTimer } from "react-icons/md";
 import { IoStopwatchOutline } from "react-icons/io5";
 import Header from "@/components/header/Header";
+import Link from "@/components/custom/Link";
 
 export default function ReportsPage() {
   return (
@@ -62,11 +63,12 @@ export const ReportCard = () => {
               <MdArrowOutward />
             </Button>
           </div>
+          <Link to="/posts?status=draft">
           <div className="mt-4 flex flex-col gap-2 sm:mt-8">
             <p className="text-base font-medium text-background sm:text-xl">
-              Video Content
+             Draft Posts
             </p>
-          </div>
+          </div></Link>
         </div>
         <div className="flex flex-col gap-4 rounded-2xl bg-secondary-accent/40 p-4">
           <div className="flex items-center justify-between">

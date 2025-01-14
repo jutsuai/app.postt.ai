@@ -17,8 +17,9 @@ import {
 } from "@/components/ui/select";
 import { useMemo, useState } from "react";
 import { BsFilePost } from "react-icons/bs";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-const statuses = ["all", "draft", "scheduled", "published", "failed"];
+const statuses = ['all',"draft", "scheduled", "published", "failed"];
 
 export default function PostsPage() {
   const { data: initialPosts, isLoading: loading } = useQuery<any>({
@@ -26,10 +27,14 @@ export default function PostsPage() {
     queryFn: () => fetchPosts(),
   });
 
-  const [filter, setFilter] = useState("all");
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const filter = searchParams.get("status")
+  console.log(filter)
 
   const posts = useMemo(() => {
-    if (filter === "all") {
+
+    if (filter=== null || filter === "all") {
       return initialPosts;
     } else {
       return initialPosts?.filter((post: any) => post?.status === filter);
@@ -43,7 +48,7 @@ export default function PostsPage() {
 
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-xl font-semibold">All posts</h2>
-          <Select defaultValue="all" onValueChange={setFilter}>
+          <Select defaultValue="all" value={filter|| 'all'} onValueChange={(value) => navigate(`?status=${value}`)}>
             <SelectTrigger className="h-10 w-40 rounded-3xl capitalize">
               <SelectValue className="capitalize" />
             </SelectTrigger>
@@ -74,9 +79,7 @@ export default function PostsPage() {
                 No posts found
               </p>
 
-              {/* <Link to="/create?type=text">
-                <Button className="rounded-3xl">Create Post</Button>
-              </Link> */}
+          
             </div>
           )}
         </div>

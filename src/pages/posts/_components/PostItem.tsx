@@ -16,7 +16,7 @@ const iconLogos: any = {
     "https://upload.wikimedia.org/wikipedia/commons/f/f8/LinkedIn_icon_circle.svg",
 };
 
-export default function PostItem({ post }: { post: any }) {
+export default function PostItem({ post, className, pageType }: { post: any, className?: string;pageType?: string }) {
   const [loading, setLoading] = useState(false);
   const getData = async () => {
     setLoading(true);
@@ -34,12 +34,16 @@ export default function PostItem({ post }: { post: any }) {
   };
 
   return (
-    <div
-      className="flex min-h-max items-end justify-between gap-2 overflow-hidden rounded-2xl p-6 pb-3"
-      style={{
-        boxShadow: "2px 10px 40px 10px rgba(74, 58, 255, 0.09)",
-      }}
-    >
+    <Link className="h-full min-h-max"  to={
+      post.type === "carousel"
+        ? `/create/carousel/${post?.contentReference}`
+        : post?.type === "text"
+          ? `/create/text/${post?._id}`
+          : post?.type === "image"
+            ? `/create/image/${post?._id}`
+            : `#`
+    }>
+    <div className={cn("flex h-full items-end justify-between gap-2 overflow-hidden rounded-2xl p-6 pb-3 shadow-[2px_10px_40px_10px_#4a3aff16] transition-all duration-200 hover:shadow-[2px_0px_40px_30px_#4a3aff16]", className)}>
       <div className="flex h-full w-full flex-col gap-2">
         <div className="mb-2 flex h-full flex-col gap-3">
           <div className="flex items-center gap-1">
@@ -53,29 +57,37 @@ export default function PostItem({ post }: { post: any }) {
           </div>
 
           <div className="flex items-start justify-between gap-3">
-            <h6 className="line-clamp-2 text-xl font-semibold">
+            <h6 className={cn("line-clamp-2  ",
+              pageType === "home" ?"text-base font-medium":"text-xl font-semibold"
+            )}>
               {post?.commentary ? post?.commentary : "No caption"}
             </h6>
 
-            {(post?.type === "carousel" && (
+            {(post?.type === "carousel" || post?.type === "image" && (
               <Image
                 src="https://img.freepik.com/free-psd/instagram-post-template_1393-166.jpg"
                 alt=""
-                className="h-full w-14 rounded-md object-cover object-center"
+                className={cn("h-full  rounded-md object-cover object-center",
+                  pageType === "home" ? "w-10" : "w-14"
+                )}
               />
-            )) || (
-              <BoringImage
-                src={post?.media?.url}
-                alt={capitalizeFirstLetter(post?.type)}
-                className="h-16 w-16 rounded-lg object-cover"
-              />
-            )}
+            ))
+              // || (
+              // <BoringImage
+              //   src={post?.media?.url}
+              //   alt={capitalizeFirstLetter(post?.type)}
+              //   className={cn("h-14 w-14 rounded-lg object-cover",
+              //     pageType === "home" ? "w-10" : "w-14"
+              //   )}
+              // />)
+            }
           </div>
         </div>
 
         <Separator className="my-1" />
 
         <div className="flex items-center justify-between">
+          <Badge variant='secondary' className="rounded-full border-none capitalize text-foreground">{post?.type}</Badge>
           <Badge
             variant="outline"
             className={cn(
@@ -92,7 +104,7 @@ export default function PostItem({ post }: { post: any }) {
               : post?.status}
           </Badge>
 
-          <Link
+          {/* <Link
             to={
               post.type === "carousel"
                 ? `/create/carousel/${post?.contentReference}`
@@ -106,9 +118,9 @@ export default function PostItem({ post }: { post: any }) {
             <Button variant="link" size="sm">
               View <MdArrowOutward />
             </Button>
-          </Link>
+          </Link> */}
         </div>
       </div>
-    </div>
+    </div></Link>
   );
 }
