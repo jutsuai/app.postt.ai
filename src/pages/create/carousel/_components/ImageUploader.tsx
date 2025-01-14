@@ -153,7 +153,7 @@ export const ImageUploadDialog = ({
             {templates?.map((item, index) => <Image loading="lazy" key={index} src={item?.imageUrl} alt='tempalte' onClick={() => {
               onClick(item?.imageUrl, {fontColor: item?.fontColor,});
               setOpen(false);
-           }} className="border-4 rounded-xl"/>)}
+           }} className="border rounded-xl transition-all duration-200 hover:shadow-lg"/>)}
           </div>
         </div>
 
