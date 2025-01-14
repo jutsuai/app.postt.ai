@@ -17,7 +17,7 @@ export default function SchedulePosts({ posts }: { posts: any[] }) {
         </Link>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(275px,1fr))] gap-6">
+      <div className="flex h-[calc(100dvh-240px)] flex-col gap-6 overflow-y-auto">
         {posts
           ?.filter((i) => i.status !== "published")
           ?.map((post, index) => <PostItem key={index} post={post} />)}

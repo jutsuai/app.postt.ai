@@ -31,56 +31,64 @@ import {
   FaCircleNotch,
 } from "react-icons/fa";
 import {
+  IoBriefcaseOutline,
   IoCheckmarkCircleOutline,
   IoCheckmarkCircleSharp,
 } from "react-icons/io5";
 import { MdOutlineRadioButtonUnchecked } from "react-icons/md";
 
-const step1 = {
-  question: "Who is your primary audience on LinkedIn?",
-  dataId: "targetAudience",
-  options: [
-    { text: "Entrepreneurs", icon: <FaRocket /> },
-    { text: "Tech Enthusiasts", icon: <FaUsers /> },
-    { text: "Recruiters", icon: <FaBriefcase /> },
-    { text: "Clients", icon: <FaHandHoldingUsd /> },
-    { text: "Other", icon: <FaCircleNotch /> },
-  ],
-  question2: "What types of content do you post most often?",
-  dataId2: "industry",
-  options2: [
-    { text: "Text Posts", icon: <FaFileAlt /> },
-    { text: "Carousels", icon: <FaImages /> },
-    { text: "Articles", icon: <FaNewspaper /> },
-    { text: "Videos", icon: <FaVideo /> },
-  ],
-};
+import {
+  LiaFileAlt,
+  LiaHandHoldingUsdSolid,
+  LiaUserTieSolid,
+} from "react-icons/lia";
+import { CiBullhorn } from "react-icons/ci";
+import { PiChartLineUpThin, PiImagesSquareLight } from "react-icons/pi";
+import { PiCircleNotch } from "react-icons/pi";
+import { GoRocket } from "react-icons/go";
+import { LuUsers } from "react-icons/lu";
+import { PiNewspaper } from "react-icons/pi";
+import { BsCameraVideo } from "react-icons/bs";
 
-const step2 = {
-  question: "What tone or style best represents your voice?",
-  dataId: "valueProposition",
-  options: [
-    { text: "Professional", icon: <FaSuitcase /> },
-    { text: "Conversational", icon: <FaComments /> },
-    { text: "Witty", icon: <FaSmile /> },
-    { text: "Casual", icon: <FaBeer /> },
-    { text: "Other", icon: <FaCircleNotch /> },
-  ],
-  question2: "What's your primary goal for using Postt?",
-  dataId2: "brandPersonality",
-  options2: [
-    {
-      text: "Build a Personal Brand",
-      icon: <FaUserTie />,
-    },
-    { text: "Generate Leads", icon: <FaBullhorn /> },
-    {
-      text: "Increase Engagement",
-      icon: <FaChartLine />,
-    },
-    { text: "Other", icon: <FaCircleNotch /> },
-  ],
-};
+const steps = [
+  {
+    question: "What's your primary goal for using Postt?",
+    dataId: "brandPersonality",
+    options: [
+      {
+        text: "Build a Personal Brand",
+        icon: <LiaUserTieSolid />,
+      },
+      { text: "Generate Leads", icon: <CiBullhorn /> },
+      {
+        text: "Increase Engagement",
+        icon: <PiChartLineUpThin />,
+      },
+      { text: "Other", icon: <PiCircleNotch /> },
+    ],
+  },
+  {
+    question: "Who is your primary audience on LinkedIn?",
+    dataId: "targetAudience",
+    options: [
+      { text: "Entrepreneurs", icon: <GoRocket /> },
+      { text: "Tech Enthusiasts", icon: <LuUsers /> },
+      { text: "Recruiters", icon: <IoBriefcaseOutline /> },
+      { text: "Clients", icon: <LiaHandHoldingUsdSolid /> },
+      { text: "Other", icon: <PiCircleNotch /> },
+    ],
+  },
+  {
+    question: "What types of content do you post most often?",
+    dataId: "industry",
+    options: [
+      { text: "Text Posts", icon: <LiaFileAlt /> },
+      { text: "Carousels", icon: <PiImagesSquareLight /> },
+      { text: "Articles", icon: <PiNewspaper /> },
+      { text: "Videos", icon: <BsCameraVideo /> },
+    ],
+  },
+];
 export default function ChooseAudience() {
   const accountUpdate = useAccountUpdater();
 
@@ -105,6 +113,7 @@ export default function ChooseAudience() {
         (value as string[]).join(", "),
       ]),
     );
+
     console.log(data);
 
     httpClient()
@@ -162,17 +171,17 @@ export default function ChooseAudience() {
   };
 
   // Render options for a step
-  const renderOptions = (stepData: any, stepKey: any) => (
+  const renderOptionsSlim = (stepData: any, stepKey: any) => (
     <div className="mb-8">
-      <h3 className="mb-4 text-center text-lg font-semibold">
+      <h3 className="mb-4 text-center text-2xl font-semibold">
         {stepData.question}
       </h3>
-      <div className="flex flex-wrap justify-center gap-4">
+      <div className="flex flex-col justify-center gap-4">
         {stepData.options.map((option: any) => (
           <div
             key={option.text}
             onClick={() => handleSelect(stepKey, option.text)}
-            className={`flex cursor-pointer items-center gap-2 rounded-xl border-2 bg-muted px-4 py-2 ${
+            className={`flex h-12 cursor-pointer items-center gap-2 rounded-xl border-2 bg-muted px-4 py-2 ${
               selectedOptions[stepKey]?.includes(option.text)
                 ? "border-primary"
                 : ""
@@ -182,10 +191,47 @@ export default function ChooseAudience() {
 
             <span className="text-xs font-medium">{option.text}</span>
             {selectedOptions[stepKey]?.includes(option.text) ? (
-              <IoCheckmarkCircleSharp className="ml-2 text-primary" />
+              <IoCheckmarkCircleSharp className="ml-auto text-primary" />
             ) : (
-              <MdOutlineRadioButtonUnchecked className="ml-2 text-muted-foreground" />
+              <MdOutlineRadioButtonUnchecked className="ml-auto text-muted-foreground" />
             )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // Render options for a step
+  const renderOptions = (stepData: any, stepKey: any) => (
+    <div className="mb-8">
+      <h3 className="mb-8 text-center text-2xl font-semibold">
+        {stepData.question}
+      </h3>
+      <div className="grid grid-cols-3 gap-4">
+        {stepData.options.map((option: any) => (
+          <div
+            key={option.text}
+            onClick={() => handleSelect(stepKey, option.text)}
+            className={`group/onboardingCard flex cursor-pointer flex-col items-center justify-between gap-4 rounded-xl border border-muted-foreground p-4 shadow-md transition-all duration-200 ${
+              selectedOptions[stepKey]?.includes(option.text)
+                ? "border-primary"
+                : "border-transparent"
+            }`}
+          >
+            <span
+              className={cn(
+                "my-auto text-4xl transition-all duration-200 group-hover/onboardingCard:text-primary",
+                selectedOptions[stepKey]?.includes(option.text)
+                  ? "text-primary"
+                  : "text-muted-foreground",
+              )}
+            >
+              {option.icon}
+            </span>
+
+            <span className="text-center text-xs font-semibold">
+              {option.text}
+            </span>
           </div>
         ))}
       </div>
@@ -199,31 +245,17 @@ export default function ChooseAudience() {
         className="flex h-full w-full flex-col gap-4"
       >
         <ProgressIndicator
-          steps={2}
+          steps={steps?.length}
           currentStep={currentStep}
           handlePrevStep={handlePrevStep}
         />
 
-        {currentStep === 1 && (
-          <>
-            {renderOptions(step1, step1.dataId)}
-            {renderOptions(
-              { question: step1.question2, options: step1.options2 },
-              step1.dataId2,
-            )}
-          </>
-        )}
-        {currentStep === 2 && (
-          <>
-            {renderOptions(step2, step2.dataId)}
-            {renderOptions(
-              { question: step2.question2, options: step2.options2 },
-              step2.dataId2,
-            )}
-          </>
+        {steps?.map(
+          (step, index) =>
+            index + 1 === currentStep && renderOptions(step, step?.dataId),
         )}
 
-        {currentStep === 2 && (
+        {currentStep === steps?.length && (
           <div className="mt-auto flex w-full items-center gap-2">
             <Button
               className="mt-2 w-full rounded-full text-foreground hover:text-foreground/80"
@@ -249,7 +281,7 @@ export default function ChooseAudience() {
           </div>
         )}
       </form>
-      {currentStep === 1 && (
+      {currentStep < steps?.length && (
         <div className="mt-auto flex w-full items-center gap-2">
           <Button
             className="mt-2 w-full rounded-full text-foreground hover:text-foreground/80"
@@ -281,12 +313,12 @@ const ProgressIndicator = ({
   handlePrevStep,
 }: any) => {
   return (
-    <div className="mb-12 flex w-full items-center px-4">
+    <div className="mb-12 flex w-full items-center px-4 transition-all duration-200">
       {[...Array(steps)].map((step, index) => (
         <React.Fragment key={index}>
           {index !== 0 && (
             <div
-              className={`h-0.5 flex-1 ${
+              className={`h-0.5 flex-1 transition-all duration-200 ${
                 currentStep > index ? "bg-primary" : "bg-gray-300"
               }`}
             />
@@ -294,7 +326,7 @@ const ProgressIndicator = ({
 
           <div
             className={cn(
-              "relative",
+              "relative transition-all duration-200",
               currentStep > index + 1 ? "cursor-pointer" : "cursor-default",
             )}
             onClick={() => {
@@ -304,7 +336,7 @@ const ProgressIndicator = ({
             }}
           >
             <div
-              className={`flex aspect-square w-6 items-center justify-center rounded-full ${
+              className={`flex aspect-square w-6 items-center justify-center rounded-full transition-all duration-200 ${
                 currentStep === index + 1
                   ? "bg-primary text-background"
                   : currentStep > index
@@ -314,14 +346,14 @@ const ProgressIndicator = ({
             >
               <span className="text-background">●</span>
             </div>
-            <span className="absolute -bottom-5 right-0 translate-x-[25%] whitespace-nowrap text-xs font-semibold text-foreground">
+            <span className="absolute -bottom-5 right-0 translate-x-[25%] whitespace-nowrap text-xs font-semibold text-foreground transition-all duration-200">
               Step {index + 1}
             </span>
           </div>
 
           {index !== steps - 1 && (
             <div
-              className={`h-0.5 flex-1 ${
+              className={`h-0.5 flex-1 transition-all duration-200 ${
                 currentStep > index + 1 ? "bg-primary" : "bg-gray-300"
               }`}
             />

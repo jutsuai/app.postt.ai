@@ -19,11 +19,11 @@ export default function MenuCard({
     <Link to={url} onClick={() => setOpen && setOpen(false)}>
       <div
         className={cn(
-          "flex hover:shadow-lg group/createCard transition-all duration-200 flex-col items-center gap-2 w-full border h-full rounded-2xl p-2",
-          className
+          "group/createCard flex h-full w-full flex-col items-center gap-2 rounded-2xl border p-2 transition-all duration-200 hover:shadow-lg",
+          className,
         )}
       >
-        <div className="flex bg-primary-accent/60 overflow-y-hidden w-full h-full flex-col items-center justify-center gap-4 border  rounded-[8px]">
+        <div className="flex h-full w-full flex-col items-center justify-center overflow-y-hidden rounded-[8px] border bg-primary-accent/60 px-2">
           <motion.img
             initial={{ scale: 0.5, rotate: 15 }}
             animate={{
@@ -33,10 +33,10 @@ export default function MenuCard({
             transition={{ duration: 0.2 }}
             src={icon}
             alt={name}
-            className="w-full h-full transition-all duration-200 group-hover/createCard:!translate-y-0 !translate-y-2"
+            className="h-full w-full !translate-y-2 transition-all duration-200 group-hover/createCard:!translate-y-0"
           />
         </div>
-        <h6 className="text-sm text-center font-medium py-1">{name}</h6>
+        <h6 className="py-1 text-center text-sm font-medium">{name}</h6>
       </div>
     </Link>
   );

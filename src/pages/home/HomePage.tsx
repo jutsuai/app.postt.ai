@@ -34,7 +34,7 @@ export default function HomePage() {
               <h2 className="w-max whitespace-nowrap text-2xl font-semibold">
                 Quick Access
               </h2>
-              <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6">
+              <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-8">
                 {menus?.map((menu) => (
                   <MenuCard
                     key={menu.name}
@@ -128,9 +128,9 @@ function MenuCard({
           <Image
             src={icon}
             alt={name}
-            className="h-full w-full !translate-y-2 transition-all duration-200 group-hover/createCard:!translate-y-0"
-            height={130}
-            width={160}
+            className="h-full w-full !translate-y-2 px-3 transition-all duration-200 group-hover/createCard:!translate-y-0"
+            // height={100}
+            // width={160}
           />
         </div>
         <h6 className="py-1 text-center text-sm font-medium">{name}</h6>

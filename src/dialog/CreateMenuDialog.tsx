@@ -26,7 +26,7 @@ export const menus = [
   {
     name: "Document",
     url: "/create?type=document",
-    icon: "/dialog-menu/single-post-image.svg",
+    icon: "/dialog-menu/document-post-image.svg",
   },
 ];
 

@@ -35,7 +35,7 @@ export default function PostItem({ post }: { post: any }) {
 
   return (
     <div
-      className="flex items-end justify-between gap-2 overflow-hidden rounded-2xl p-6 pb-3"
+      className="flex min-h-max items-end justify-between gap-2 overflow-hidden rounded-2xl p-6 pb-3"
       style={{
         boxShadow: "2px 10px 40px 10px rgba(74, 58, 255, 0.09)",
       }}
