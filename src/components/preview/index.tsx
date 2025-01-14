@@ -551,8 +551,8 @@ const SlidePage = ({
         <div
           className="flex h-9 w-9 min-w-9 items-center justify-center rounded-full"
           style={{
-            backgroundColor: customizations?.fontColor,
-            color: customizations?.backgroundColor,
+            color: customizations?.fontColor,
+            backgroundColor: customizations?.backgroundColor,
           }}
         >
           <IoChevronForward />
