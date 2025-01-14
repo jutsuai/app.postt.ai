@@ -61,7 +61,7 @@ export default function CreateCarouselPage() {
     useState(false);
 
   const [activeTab, setActiveTab] = useState("Content");
-  const [prompt, setPrompt] = useState(false);
+  const [prompt, setPrompt] = useState("");
   const [commentary, setCommentary] = useState("This is a commentary");
   const [slides, setSlides] = useState([]);
   const [customizations, setCustomizations] = useState({});
